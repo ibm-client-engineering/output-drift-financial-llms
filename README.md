@@ -128,17 +128,6 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 - ❌ Not suitable for any regulated financial applications
 - Consistency: 12.5% across all tasks and temperatures
 
-## 📚 Citation
-
-```bibtex
-@inproceedings{khatchadourian2025drift,
-  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
-  author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={ACM International Conference on AI in Finance (ICAIF)},
-  year={2025}
-}
-```
-
 ## 🏢 Data Sources
 
 - **SEC 10-K Filings**: Citigroup, Goldman Sachs, JPMorgan Chase (2024) from [EDGAR](https://www.sec.gov/edgar/search/)
@@ -155,6 +144,6 @@ IBM watsonx.ai, IBM Research AI, and the open-source communities behind Ollama a
 
 ---
 
-**Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com
+**Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com or rfranco@us.ibm.com
 
 **Paper**: [arXiv:2025.XXXXX](https://arxiv.org/abs/XXXXX) | **Repository**: [http://github.com/ibm-client-engineering/output-drift-financial-llms](http://github.com/ibm-client-engineering/output-drift-financial-llms)
