@@ -138,6 +138,18 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 
 Apache 2.0 - See [LICENSE](LICENSE) for details.
 
+## 🔒 Patent Notice
+
+This project may be covered by one or more patent applications filed by IBM Corporation. The Apache 2.0 license includes explicit patent grant provisions (Section 3) that provide users with a royalty-free patent license for patents necessarily infringed by contributions.
+
+**Key points:**
+- The open source license is **fully compatible** with IBM's patent filing
+- Section 3 of Apache 2.0 provides defensive patent protection for users
+- Additional patent rights may exist beyond the Apache 2.0 grant
+- See [NOTICE](NOTICE) for detailed patent disclosure and third-party components
+
+For patent licensing inquiries, contact IBM Corporation's Intellectual Property Law Department.
+
 ## 🙏 Acknowledgments
 
 IBM watsonx.ai, IBM Research AI, and the open-source communities behind Ollama and Qwen.
