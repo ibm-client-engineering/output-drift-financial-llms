@@ -1,0 +1,105 @@
+{
+  "rag": {
+    "description": "RAG Q&A over SEC 10-K filings with citation validation",
+    "prompts": [
+      {
+        "id": "q1",
+        "question": "What were JPMorgan's net credit losses in 2023? Include a citation.",
+        "expected_citations": ["jpm_2024_10k"],
+        "task_type": "factual_retrieval"
+      },
+      {
+        "id": "q2",
+        "question": "List Citigroup's primary risk factors mentioned in the annual report. Include a citation.",
+        "expected_citations": ["citi_2024_10k"],
+        "task_type": "list_extraction"
+      },
+      {
+        "id": "q3",
+        "question": "Compare Goldman Sachs and JPMorgan's revenue trends. Cite both sources.",
+        "expected_citations": ["gs_2024_10k", "jpm_2024_10k"],
+        "task_type": "cross_document_analysis"
+      }
+    ],
+    "system_prompt": "You are a precise financial analyst. Answer the question using only the provided documents. CITE sources in square brackets using the file base name, e.g., [citi_2024_10k]. Only cite documents you actually reference in your answer.",
+    "temperature": 0.0,
+    "seed": 42
+  },
+  "summary": {
+    "description": "Policy-bounded JSON summarization with schema constraints",
+    "prompts": [
+      {
+        "id": "p1",
+        "profile": "Client: Jane Doe, institutional investor. Needs a concise update on portfolio performance. Summarize neutrally.",
+        "expected_schema": {
+          "client_name": "Jane Doe",
+          "summary": "<2-sentence update>",
+          "compliance_disclaimer": "This is not investment advice."
+        }
+      },
+      {
+        "id": "p2",
+        "profile": "Client: Acme Holdings LLC. Provide 2-sentence quarterly update. Avoid PII, include disclaimer exactly.",
+        "expected_schema": {
+          "client_name": "Acme Holdings LLC",
+          "summary": "<2-sentence update>",
+          "compliance_disclaimer": "This is not investment advice."
+        }
+      }
+    ],
+    "system_prompt": "You produce STRICT JSON with keys: client_name, summary, compliance_disclaimer. The disclaimer MUST be exactly: \"This is not investment advice.\" Return ONLY valid JSON, no additional text.",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "client_name": {"type": "string"},
+        "summary": {"type": "string"},
+        "compliance_disclaimer": {
+          "type": "string",
+          "enum": ["This is not investment advice."]
+        }
+      },
+      "required": ["client_name", "summary", "compliance_disclaimer"],
+      "additionalProperties": false
+    },
+    "temperature": 0.0,
+    "seed": 42
+  },
+  "sql": {
+    "description": "Text-to-SQL with invariant checking (±5% GAAP materiality)",
+    "prompts": [
+      {
+        "id": "s1",
+        "question": "Compute total \"amount\" across all transactions.",
+        "expected_sql": "SELECT SUM(amount) FROM transactions;",
+        "invariant": "sum_equals_total",
+        "tolerance_pct": 5.0
+      },
+      {
+        "id": "s2",
+        "question": "Sum \"amount\" for region = \"NA\" between 2025-01-01 and 2025-09-01.",
+        "expected_sql": "SELECT SUM(amount) FROM transactions WHERE region = \"NA\" AND date BETWEEN \"2025-01-01\" AND \"2025-09-01\";",
+        "invariant": "regional_sum",
+        "tolerance_pct": 5.0
+      },
+      {
+        "id": "s3",
+        "question": "Count transactions by category for 2025.",
+        "expected_sql": "SELECT category, COUNT(*) FROM transactions WHERE date >= \"2025-01-01\" GROUP BY category;",
+        "invariant": "valid_aggregation",
+        "tolerance_pct": null
+      }
+    ],
+    "system_prompt": "You write SQLite SQL ONLY. No prose, no explanations. Schema: transactions(id INT, date TEXT, region TEXT, amount REAL, category TEXT). Use double quotes for strings. Return ONLY the SQL query, nothing else.",
+    "schema_description": "transactions(id INT, date TEXT, region TEXT, amount REAL, category TEXT)",
+    "temperature": 0.0,
+    "seed": 42
+  },
+  "metadata": {
+    "version": "1.0.0",
+    "paper": "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows",
+    "conference": "ACM ICAIF 2025",
+    "authors": ["Raffi Khatchadourian", "Rolando Franco"],
+    "created": "2025-11-01",
+    "license": "Apache 2.0"
+  }
+}
