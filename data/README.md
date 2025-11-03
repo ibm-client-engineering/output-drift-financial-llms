@@ -29,8 +29,8 @@ The paper evaluates RAG tasks using actual SEC 10-K filings from Citigroup, Gold
 ```python
 #!/usr/bin/env python3
 """
-Minimal example for fetching SEC 10-K filings.
-Respects SEC EDGAR policies: User-Agent declaration and rate limits.
+eg. for fetching SEC 10-K filings.
+Following SEC EDGAR policies for user-agent declaration and rate limits.
 """
 from sec_edgar_downloader import Downloader
 import os
