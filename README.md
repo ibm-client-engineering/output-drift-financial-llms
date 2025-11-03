@@ -12,13 +12,20 @@ This repository contains the evaluation framework from our ACM ICAIF 2025 paper 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
+```
 
+```bash
 # Generate synthetic financial database
 python data/generate_toy_finance.py
+```
 
-# Run deterministic evaluation (requires Ollama)
+```bash
 # First, install Ollama: https://ollama.com/download
 ollama pull qwen2.5:7b-instruct
+```
+
+```bash
+# Run deterministic evaluation (requires Ollama)
 python run_evaluation.py
 ```
 
@@ -125,7 +132,7 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 - ❌ Avoid RAG tasks (56% consistency at T=0.0)
 
 **For Tier 3 models (GPT-OSS-120B):**
-- ❌ Not suitable for any regulated financial applications
+- ❌ Not suitable for regulated financial applications
 - Consistency: 12.5% across all tasks and temperatures
 
 ## 🏢 Data Sources
@@ -138,7 +145,7 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 
 Apache 2.0 - See [LICENSE](LICENSE) for details.
 
-## 🔒 Patent Notice
+## 🔒 Notice
 
 This project may be covered by one or more patent applications filed by IBM Corporation. The Apache 2.0 license includes explicit patent grant provisions (Section 3) that provide users with a royalty-free patent license for patents necessarily infringed by contributions.
 
@@ -152,7 +159,7 @@ For patent licensing inquiries, contact IBM Corporation's Intellectual Property 
 
 ## 🙏 Acknowledgments
 
-IBM watsonx.ai, IBM Research AI, and the open-source communities behind Ollama and Qwen.
+IBM watsonx.ai, IBM Research, and the open-source communities behind Ollama and Qwen.
 
 ---
 
