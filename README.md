@@ -1,7 +1,7 @@
 # LLM Output Drift: Financial AI Compliance Framework
 
 [![arXiv](https://img.shields.io/badge/arXiv-2025.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXXX)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 > **Key Finding**: 7-8B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
 
@@ -143,17 +143,11 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 
 ## 📄 License
 
-Apache 2.0 - See [LICENSE](LICENSE) for details.
+MIT License - See [LICENSE](LICENSE) for details.
 
 ## 🔒 Notice
 
-This project may be covered by one or more patent applications filed by IBM Corporation. The Apache 2.0 license includes explicit patent grant provisions (Section 3) that provide users with a royalty-free patent license for patents necessarily infringed by contributions.
-
-**Key points:**
-- The open source license is **fully compatible** with IBM's patent filing
-- Section 3 of Apache 2.0 provides defensive patent protection for users
-- Additional patent rights may exist beyond the Apache 2.0 grant
-- See [NOTICE](NOTICE) for detailed patent disclosure and third-party components
+This software may be covered by one or more patent applications filed by IBM Corporation. The MIT license does not include patent grants. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for complete details.
 
 For patent licensing inquiries, contact IBM Corporation's Intellectual Property Law Department.
 
