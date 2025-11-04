@@ -22,10 +22,10 @@ with IBM Corporation. This includes but is not limited to:
 - Task-specific invariant checking for RAG, JSON, and SQL outputs
 - Audit-ready attestation systems with dual-provider validation
 
-The Apache License 2.0 grant includes a patent license from contributors
-for patents necessarily infringed by their contributions (see Section 3 of
-the Apache License 2.0). However, users should be aware that additional
-patent rights may exist.
+This software is licensed under the MIT License. Users should be aware that
+while the MIT License provides broad permissions, additional patent rights
+related to the novel techniques implemented herein may exist and are not
+automatically granted by the MIT License.
 
 For patent licensing inquiries, please contact:
 IBM Corporation
