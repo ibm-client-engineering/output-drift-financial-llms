@@ -48,3 +48,7 @@ results/
 
 # Logs
 *.log
+
+# Workshop templates (reference only, not for commit)
+workshop-template/
+opensource-ai-workshop/
