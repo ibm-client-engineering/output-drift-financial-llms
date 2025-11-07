@@ -1,0 +1,1830 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="IBM Client Engineering">
+      
+      
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-3/">
+      
+      
+        <link rel="prev" href="../lab-2/">
+      
+      
+        <link rel="next" href="../lab-4/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Lab 3. Running Your First Experiment - Output Drift in Financial LLMs Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-3-running-your-first-experiment" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+      
+  <img src="../images/ibm-blue-background.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Output Drift in Financial LLMs Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 3. Running Your First Experiment
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    output-drift-financial-llms
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Welcome
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pre-work/" class="md-tabs__link">
+          
+  
+  
+  Workshop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../resources/paper/" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+      
+  <img src="../images/ibm-blue-background.png" alt="logo">
+
+    </a>
+    Output Drift in Financial LLMs Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    output-drift-financial-llms
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Welcome
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workshop
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Workshop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pre-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 0. Workshop Pre-Work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 1. Understanding Output Drift
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 2. Setting Up Your Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lab 3. Running Your First Experiment
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 3. Running Your First Experiment
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-design-paper-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Experimental Design (Paper Methodology)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-single-run-baseline-concurrency-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Single-Run Baseline (Concurrency = 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-low-concurrency-test-n4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Low Concurrency Test (n=4)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-paper-standard-test-n16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Paper-Standard Test (n=16)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-temperature-sensitivity-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Temperature Sensitivity Test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-rag-task-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: RAG Task Comparison
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-multi-task-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Multi-Task Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean-drift-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mean Drift Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paper-findings-reproduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paper Findings Reproduced
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-audit-trails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analyzing Audit Trails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-audit-trails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparing Audit Trails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-full-paper-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced: Full Paper Replication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inconsistent-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inconsistent Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out of Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-test-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz: Test Your Understanding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 4. Analyzing Drift Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 5. Cross-Provider Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 6. Extending the Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/paper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Research Paper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experimental-design-paper-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Experimental Design (Paper Methodology)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-single-run-baseline-concurrency-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Single-Run Baseline (Concurrency = 1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-low-concurrency-test-n4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Low Concurrency Test (n=4)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-paper-standard-test-n16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 3: Paper-Standard Test (n=16)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-temperature-sensitivity-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 4: Temperature Sensitivity Test
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-rag-task-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 5: RAG Task Comparison
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-6-multi-task-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 6: Multi-Task Evaluation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-the-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding the Results
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Understanding the Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#consistency-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Consistency Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mean-drift-metric" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mean Drift Metric
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paper-findings-reproduced" class="md-nav__link">
+    <span class="md-ellipsis">
+      Paper Findings Reproduced
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-audit-trails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Analyzing Audit Trails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparing-audit-trails" class="md-nav__link">
+    <span class="md-ellipsis">
+      Comparing Audit Trails
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-full-paper-replication" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced: Full Paper Replication
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inconsistent-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inconsistent Results
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rate-limiting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rate Limiting
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#out-of-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      Out of Memory
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-test-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz: Test Your Understanding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lab-3-running-your-first-experiment">Lab 3: Running Your First Experiment<a class="headerlink" href="#lab-3-running-your-first-experiment" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>In this lab, you'll run a complete drift evaluation experiment, just like the ones from the paper. You'll test different concurrency levels, temperatures, and task types to understand how these factors affect determinism.</p>
+<p><strong>Duration</strong>: ~30 minutes</p>
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this lab, you will:</p>
+<ul>
+<li>Run experiments with varying concurrency (1, 4, 16 runs)</li>
+<li>Compare drift at temperature 0.0 vs 0.2</li>
+<li>Understand how task types affect consistency</li>
+<li>Analyze JSONL audit trails</li>
+<li>Reproduce key findings from the paper</li>
+</ul>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Completed <a href="../lab-2/">Lab 2: Setting Up Your Environment</a></li>
+<li>At least one provider configured (Ollama with qwen2.5:7b-instruct recommended)</li>
+<li>Synthetic database generated (<code>data/toy_finance.sqlite</code>)</li>
+</ul>
+<h2 id="experimental-design-paper-methodology">Experimental Design (Paper Methodology)<a class="headerlink" href="#experimental-design-paper-methodology" title="Permanent link">&para;</a></h2>
+<p>Our paper evaluated 5 models across <strong>480 runs</strong> with the following design:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Models</strong></td>
+<td>Qwen2.5-7B, Granite-3-8B, Llama-3.3-70B, Mistral-Medium, GPT-OSS-120B</td>
+</tr>
+<tr>
+<td><strong>Temperatures</strong></td>
+<td>0.0, 0.2</td>
+</tr>
+<tr>
+<td><strong>Concurrency</strong></td>
+<td>n=16 per condition</td>
+</tr>
+<tr>
+<td><strong>Tasks</strong></td>
+<td>SQL generation, RAG (Text-to-SQL), JSON summarization</td>
+</tr>
+</tbody>
+</table>
+<p>In this lab, we'll run a subset to understand the methodology, then you can scale to full experiments.</p>
+<h2 id="step-1-single-run-baseline-concurrency-1">Step 1: Single-Run Baseline (Concurrency = 1)<a class="headerlink" href="#step-1-single-run-baseline-concurrency-1" title="Permanent link">&para;</a></h2>
+<p>Let's start with a single run to establish a baseline:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_single.jsonl
+</code></pre></div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight"><pre><span></span><code>🚀 Output Drift Evaluation Framework
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Configuration:
+  Provider: ollama
+  Model: qwen2.5:7b-instruct
+  Temperature: 0.0
+  Concurrency: 1
+  Task: sql
+
+Prompt: &quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;
+
+Run 1/1...
+  Response: SELECT customer_name, account_balance FROM accounts
+            WHERE account_balance &gt; 100000
+  Execution time: 1.2s
+
+Results:
+  Runs completed: 1
+  Schema valid: ✅ Yes
+
+Audit trail: traces/lab3_single.jsonl
+✅ Single-run baseline complete!
+</code></pre></div>
+<p><strong>Analysis</strong>: With n=1, we can't measure drift yet. We need multiple runs.</p>
+<h2 id="step-2-low-concurrency-test-n4">Step 2: Low Concurrency Test (n=4)<a class="headerlink" href="#step-2-low-concurrency-test-n4" title="Permanent link">&para;</a></h2>
+<p>Now let's run 4 concurrent queries:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_concurrent_4.jsonl
+</code></pre></div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight"><pre><span></span><code>Running 4 concurrent queries...
+████████████████████████████████ 4/4 [00:05]
+
+Results:
+  Consistency: 100.0% (4/4 identical)
+  Mean Drift: 0.000
+  Jaccard Similarity: 1.000
+  Schema Violations: 0
+  Decision Flips: 0
+
+Unique responses: 1
+Response 1 (4 occurrences):
+  &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
+
+✅ Perfect consistency at n=4!
+</code></pre></div>
+<div class="admonition success">
+<p class="admonition-title">Tier 1 Performance</p>
+<p>7-8B models maintain 100% consistency even with concurrent requests—critical for production workloads.</p>
+</div>
+<h2 id="step-3-paper-standard-test-n16">Step 3: Paper-Standard Test (n=16)<a class="headerlink" href="#step-3-paper-standard-test-n16" title="Permanent link">&para;</a></h2>
+<p>Now run the same configuration used in the paper (n=16):</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_concurrent_16.jsonl
+</code></pre></div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
+████████████████████████████████ 16/16 [00:12]
+
+Results:
+  Consistency: 100.0% (16/16 identical)
+  Mean Drift: 0.000
+  Jaccard Similarity: 1.000
+  Schema Violations: 0
+  Decision Flips: 0
+
+Unique responses: 1
+Response 1 (16 occurrences):
+  &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
+
+✅ Perfect consistency at n=16!
+</code></pre></div>
+<p><strong>Key Finding</strong>: Qwen2.5-7B achieves <strong>100% consistency</strong> at n=16, confirming Tier 1 classification.</p>
+<h2 id="step-4-temperature-sensitivity-test">Step 4: Temperature Sensitivity Test<a class="headerlink" href="#step-4-temperature-sensitivity-test" title="Permanent link">&para;</a></h2>
+<p>Now let's test what happens when we increase temperature to 0.2:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_temp02.jsonl
+</code></pre></div>
+<p><strong>Expected output (SQL task):</strong></p>
+<div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
+████████████████████████████████ 16/16 [00:12]
+
+Results:
+  Consistency: 100.0% (16/16 identical)
+  Mean Drift: 0.000
+  Temperature: 0.2
+
+✅ SQL generation remains deterministic at T=0.2!
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Structured Task Resilience</p>
+<p>SQL generation maintains 100% consistency even at T=0.2 because of its <strong>structured output format</strong> and <strong>deterministic syntax</strong>.</p>
+</div>
+<h2 id="step-5-rag-task-comparison">Step 5: RAG Task Comparison<a class="headerlink" href="#step-5-rag-task-comparison" title="Permanent link">&para;</a></h2>
+<p>Now let's test a RAG task, which our paper shows is more susceptible to drift:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_rag_t00.jsonl
+</code></pre></div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
+████████████████████████████████ 16/16 [00:18]
+
+Task: RAG (Retrieval-Augmented Generation)
+Prompt: &quot;What were Citigroup&#39;s net credit losses in 2023?&quot;
+
+Results:
+  Consistency: 93.75% (15/16 identical)
+  Mean Drift: 0.012
+  Factual Drift: 0.000
+  Citation Accuracy: 1.0
+
+Unique responses: 2
+Response 1 (15 occurrences):
+  &quot;According to Citigroup&#39;s 2024 10-K (page 145), net credit losses were $2.4 billion in 2023.&quot;
+
+Response 2 (1 occurrence):
+  &quot;Citigroup reported net credit losses of $2.4B in 2023 (10-K filing, page 145).&quot;
+
+✅ Minor syntactic drift, but factual consistency maintained!
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">RAG vs SQL</p>
+<p>RAG tasks show slightly lower consistency (93.75% vs 100%) due to:</p>
+<ul>
+<li>Broader output space (natural language)</li>
+<li>Retrieval context variations</li>
+<li>Formatting flexibility</li>
+</ul>
+</div>
+<p>Now test RAG at T=0.2:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--task<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_rag_t02.jsonl
+</code></pre></div>
+<p><strong>Expected output (from paper findings):</strong></p>
+<div class="highlight"><pre><span></span><code>Results:
+  Consistency: 56.25% (9/16 identical)
+  Mean Drift: 0.081
+  Factual Drift Range: 0.000 - 0.375
+
+⚠️ Substantial drift at T=0.2 for RAG tasks!
+</code></pre></div>
+<p><strong>Paper Finding Confirmed</strong>: RAG tasks at T=0.2 show <strong>56.25% consistency</strong>, making them unsuitable for compliance workflows without strict T=0.0.</p>
+<h2 id="step-6-multi-task-evaluation">Step 6: Multi-Task Evaluation<a class="headerlink" href="#step-6-multi-task-evaluation" title="Permanent link">&para;</a></h2>
+<p>Run all three task types in sequence:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># SQL</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>sql<span class="w"> </span>--output<span class="w"> </span>traces/lab3_sql.jsonl
+
+<span class="c1"># Summarization</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>summarize<span class="w"> </span>--output<span class="w"> </span>traces/lab3_summarize.jsonl
+
+<span class="c1"># RAG</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>rag<span class="w"> </span>--output<span class="w"> </span>traces/lab3_rag.jsonl
+</code></pre></div>
+<p><strong>Summary script</strong> to compare results:</p>
+<p>Create <code>analyze_lab3.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="s2">&quot;summarize&quot;</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">]</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;traces/lab3_</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="n">consistency</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">consistency_pct</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="k">if</span> <span class="n">consistency</span> <span class="k">else</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)))</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Task&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="s2">&quot;Runs&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="s2">&quot;Consistency&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Mean Drift&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;compliance_metrics&#39;</span><span class="p">][</span><span class="s1">&#39;factual_drift&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">})</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Multi-Task Evaluation Results (T=0.0, n=16)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</code></pre></div>
+<p>Run it:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>analyze_lab3.py
+</code></pre></div>
+<p><strong>Expected output:</strong></p>
+<div class="highlight"><pre><span></span><code>📊 Multi-Task Evaluation Results (T=0.0, n=16)
+============================================================
+      Task  Runs Consistency Mean Drift
+       SQL    16       100.0%      0.000
+SUMMARIZE    16       100.0%      0.000
+       RAG    16        93.8%      0.012
+</code></pre></div>
+<h2 id="understanding-the-results">Understanding the Results<a class="headerlink" href="#understanding-the-results" title="Permanent link">&para;</a></h2>
+<h3 id="consistency-metric">Consistency Metric<a class="headerlink" href="#consistency-metric" title="Permanent link">&para;</a></h3>
+<p><strong>Formula</strong>: <code>consistency = (identical_responses / total_runs) * 100</code></p>
+<ul>
+<li><strong>100%</strong>: All responses identical (byte-for-byte)</li>
+<li><strong>93.75%</strong>: 15/16 responses identical, 1 syntactic variant</li>
+<li><strong>&lt;90%</strong>: Significant drift, not compliance-safe</li>
+</ul>
+<h3 id="mean-drift-metric">Mean Drift Metric<a class="headerlink" href="#mean-drift-metric" title="Permanent link">&para;</a></h3>
+<p><strong>Formula</strong>: Jaccard distance between token sets</p>
+<ul>
+<li><strong>0.000</strong>: Perfect determinism</li>
+<li><strong>0.012</strong>: Minor syntactic variation</li>
+<li><strong>&gt;0.05</strong>: Semantic drift</li>
+<li><strong>&gt;0.1</strong>: Factual inconsistencies</li>
+</ul>
+<h3 id="paper-findings-reproduced">Paper Findings Reproduced<a class="headerlink" href="#paper-findings-reproduced" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Expected (Paper)</th>
+<th>Your Results</th>
+<th>Match?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL (T=0.0)</td>
+<td>100%</td>
+<td>100%</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Summarize (T=0.0)</td>
+<td>100%</td>
+<td>100%</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>RAG (T=0.0)</td>
+<td>93.75%</td>
+<td>~94%</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<h2 id="analyzing-audit-trails">Analyzing Audit Trails<a class="headerlink" href="#analyzing-audit-trails" title="Permanent link">&para;</a></h2>
+<p>Audit trails are stored as JSONL (JSON Lines)—one JSON object per line.</p>
+<p><strong>View a specific run:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Pretty-print the 5th run</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#39;</span><span class="w"> </span>traces/lab3_concurrent_16.jsonl<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+</code></pre></div>
+<p><strong>Example entry:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-07T14:23:45.123Z&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab3_concurrent_16_005&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;concurrency_idx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;task_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;prompt_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256:a3d8f92b1c4e5f6789abcdef&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;response_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256:b2c1e7d8a9f6543210fedcba&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;execution_time_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1245</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;compliance_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;schema_valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;citation_accuracy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;decision_flip&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;factual_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;regulatory_mappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;FSB&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;consistent_decisions&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;CFTC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_ai_outcomes&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;SR_11_7&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model_validation&quot;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Key fields for audits:</strong></p>
+<ul>
+<li><code>prompt_hash</code>: SHA-256 of input (for duplicate detection)</li>
+<li><code>response_hash</code>: SHA-256 of output (for consistency checking)</li>
+<li><code>compliance_metrics</code>: Drift measures</li>
+<li><code>regulatory_mappings</code>: Compliance framework mappings</li>
+</ul>
+<h2 id="comparing-audit-trails">Comparing Audit Trails<a class="headerlink" href="#comparing-audit-trails" title="Permanent link">&para;</a></h2>
+<p>Compare two runs to find differences:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="c1"># Load two runs</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;traces/lab3_concurrent_16.jsonl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+<span class="n">run1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">run2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1 response hash:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2 response hash:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Identical?&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
+
+<span class="k">if</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Response Diff:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Responses are identical!&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="advanced-full-paper-replication">Advanced: Full Paper Replication<a class="headerlink" href="#advanced-full-paper-replication" title="Permanent link">&para;</a></h2>
+<p>To fully reproduce the paper's 480 runs:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># This will take ~30-45 minutes</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b<span class="w"> </span>granite-3-8b<span class="w"> </span>llama-3.3-70b<span class="w"> </span>mistral-medium<span class="w"> </span>gpt-oss-120b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span>summarize<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/full_replication/
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Resource Intensive</p>
+<p>Full replication requires:
+- All 5 models available (some may require API keys)
+- ~45 minutes of runtime
+- ~500 MB of trace data</p>
+</div>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="inconsistent-results">Inconsistent Results<a class="headerlink" href="#inconsistent-results" title="Permanent link">&para;</a></h3>
+<p>If you're seeing drift where you shouldn't (e.g., SQL at T=0.0):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Check model version</span>
+ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct
+
+<span class="c1"># Ensure seed is set</span>
+<span class="c1"># In run_evaluation.py, verify: seed=42</span>
+</code></pre></div>
+<h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
+<p>If using cloud providers (watsonx, OpenAI):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add rate limiting in configuration</span>
+<span class="o">--</span><span class="n">rate</span><span class="o">-</span><span class="n">limit</span> <span class="mi">10</span>  <span class="c1"># requests per minute</span>
+<span class="o">--</span><span class="n">retry</span><span class="o">-</span><span class="n">delay</span> <span class="mi">5</span>  <span class="c1"># seconds between retries</span>
+</code></pre></div>
+<h3 id="out-of-memory">Out of Memory<a class="headerlink" href="#out-of-memory" title="Permanent link">&para;</a></h3>
+<p>For large concurrency (n=16):</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Reduce batch size</span>
+--batch-size<span class="w"> </span><span class="m">4</span><span class="w">  </span><span class="c1"># Process 4 at a time instead of 16</span>
+</code></pre></div>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>7-8B models</strong> (Tier 1) achieve 100% consistency at T=0.0 for all tasks</li>
+<li><strong>Concurrency doesn't affect consistency</strong> for Tier 1 models (n=1, 4, or 16)</li>
+<li><strong>Task structure matters</strong>: SQL/summarization &gt; RAG for determinism</li>
+<li><strong>Temperature sensitivity</strong>: RAG tasks degrade significantly at T=0.2</li>
+<li><strong>Audit trails</strong> provide complete reproducibility for regulatory review</li>
+</ol>
+<h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>Why does SQL maintain 100% consistency even at T=0.2?</summary>
+<p><strong>Answer</strong>: SQL has a structured output format with deterministic syntax, limiting the output space and making it more resistant to temperature-induced drift.</p>
+</details>
+<details class="question">
+<summary>What consistency % did RAG tasks achieve at T=0.2 in the paper?</summary>
+<p><strong>Answer</strong>: 56.25% (9/16 runs identical), showing substantial drift that makes them unsuitable for compliance workflows at elevated temperatures.</p>
+</details>
+<details class="question">
+<summary>What is the purpose of the response_hash field in audit trails?</summary>
+<p><strong>Answer</strong>: SHA-256 hash enables fast consistency checking across runs without string comparison—critical for large-scale audits.</p>
+</details>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Now that you've run experiments and understand the methodology:</p>
+<ol>
+<li><strong>Proceed to <a href="../lab-4/">Lab 4: Analyzing Drift Metrics</a></strong> to visualize and interpret results</li>
+<li>Explore different prompts in <code>prompts/templates.json</code></li>
+<li>Try modifying temperature and concurrency parameters</li>
+</ol>
+<hr />
+<div class="admonition success">
+<p class="admonition-title">Lab 3 Complete!</p>
+<p>You've successfully run drift evaluations and reproduced key paper findings! Ready to analyze the data? Move on to <a href="../lab-4/">Lab 4: Analyzing Drift Metrics</a>!</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../lab-2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 2. Setting Up Your Environment">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 2. Setting Up Your Environment
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab-4/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 4. Analyzing Drift Metrics">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 4. Analyzing Drift Metrics
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ibm-client-engineering" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/ibm/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1923 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="IBM Client Engineering">
+      
+      
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-1/">
+      
+      
+        <link rel="prev" href="../pre-work/">
+      
+      
+        <link rel="next" href="../lab-2/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.23">
+    
+    
+      
+        <title>Lab 1. Understanding Output Drift - Output Drift in Financial LLMs Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,300i,400,400i,700,700i%7CIBM+Plex+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lab-1-understanding-output-drift" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+      
+  <img src="../images/ibm-blue-background.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Output Drift in Financial LLMs Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lab 1. Understanding Output Drift
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    output-drift-financial-llms
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  
+  Welcome
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../pre-work/" class="md-tabs__link">
+          
+  
+  
+  Workshop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../resources/paper/" class="md-tabs__link">
+          
+  
+  
+  Resources
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+      
+  <img src="../images/ibm-blue-background.png" alt="logo">
+
+    </a>
+    Output Drift in Financial LLMs Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    output-drift-financial-llms
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Welcome
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Welcome
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workshop
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Workshop
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pre-work/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 0. Workshop Pre-Work
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Lab 1. Understanding Output Drift
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 1. Understanding Output Drift
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-output-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Output Drift?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Output Drift?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-does-this-happen" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Does This Happen?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-vs-data-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift vs. Data Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#financial-impact-real-world-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Financial Impact: Real-World Scenarios
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Financial Impact: Real-World Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-loan-approval-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 1: Loan Approval Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-financial-document-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 2: Financial Document Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-regulatory-compliance-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 3: Regulatory Compliance Queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#research-findings-by-the-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Research Findings: By the Numbers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Research Findings: By the Numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-drift-rates-temperature-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall Drift Rates (Temperature = 0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-by-task-type-temperature-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift by Task Type (Temperature = 0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-of-temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impact of Temperature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualizing-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualizing Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualizing Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-consistency-across-model-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Consistency Across Model Tiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-drift-heat-map-temperature-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Drift Heat map (Temperature Sensitivity)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-types-of-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Three Types of Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three Types of Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-syntactic-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Syntactic Drift
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-semantic-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Semantic Drift
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-factual-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Factual Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regulatory-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regulatory Context
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regulatory Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-financial-services-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Financial Services Care
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-drift-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Drift Challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hands-on-observe-drift-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hands-On: Observe Drift in Action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hands-On: Observe Drift in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-a-test-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Create a Test Script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Run the Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expected Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-test-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz: Test Your Understanding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 2. Setting Up Your Environment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 3. Running Your First Experiment
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 4. Analyzing Drift Metrics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 5. Cross-Provider Testing
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lab 6. Extending the Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/paper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Research Paper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../resources/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-output-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is Output Drift?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What is Output Drift?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-does-this-happen" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Does This Happen?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-vs-data-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift vs. Data Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#financial-impact-real-world-scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      Financial Impact: Real-World Scenarios
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Financial Impact: Real-World Scenarios">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scenario-1-loan-approval-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 1: Loan Approval Recommendations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-2-financial-document-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 2: Financial Document Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenario-3-regulatory-compliance-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scenario 3: Regulatory Compliance Queries
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#research-findings-by-the-numbers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Research Findings: By the Numbers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Research Findings: By the Numbers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-drift-rates-temperature-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overall Drift Rates (Temperature = 0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#drift-by-task-type-temperature-00" class="md-nav__link">
+    <span class="md-ellipsis">
+      Drift by Task Type (Temperature = 0.0)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impact-of-temperature" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impact of Temperature
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualizing-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Visualizing Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualizing Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-consistency-across-model-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Consistency Across Model Tiers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-drift-heat-map-temperature-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example: Drift Heat map (Temperature Sensitivity)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-types-of-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Three Types of Drift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three Types of Drift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-syntactic-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Syntactic Drift
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-semantic-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Semantic Drift
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-factual-drift" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Factual Drift
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regulatory-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      Regulatory Context
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regulatory Context">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-financial-services-care" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Financial Services Care
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-drift-challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Drift Challenge
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hands-on-observe-drift-in-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hands-On: Observe Drift in Action
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hands-On: Observe Drift in Action">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-create-a-test-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1: Create a Test Script
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-run-the-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2: Run the Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expected-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expected Output
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-test-your-understanding" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quiz: Test Your Understanding
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lab-1-understanding-output-drift">Lab 1: Understanding Output Drift<a class="headerlink" href="#lab-1-understanding-output-drift" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>In this lab, you'll learn what output drift is, why it matters for financial AI systems, and see real examples of non-deterministic behavior in large language models.</p>
+<p><strong>Duration</strong>: ~20 minutes</p>
+<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this lab, you will:</p>
+<ul>
+<li>Understand what output drift is and how it differs from data drift</li>
+<li>Learn why temperature=0.0 doesn't guarantee determinism</li>
+<li>See real examples of drift in financial tasks</li>
+<li>Understand the regulatory implications for financial services</li>
+<li>Know which tasks are most susceptible to drift</li>
+</ul>
+<h2 id="what-is-output-drift">What is Output Drift?<a class="headerlink" href="#what-is-output-drift" title="Permanent link">&para;</a></h2>
+<p><strong>Output drift</strong> refers to inconsistent outputs from an LLM given identical inputs and settings. Even when temperature is set to 0.0 (supposed to be deterministic), models can produce different responses across repeated queries.</p>
+<h3 id="why-does-this-happen">Why Does This Happen?<a class="headerlink" href="#why-does-this-happen" title="Permanent link">&para;</a></h3>
+<p>Several factors contribute to output drift:</p>
+<ol>
+<li><strong>Non-deterministic Operations</strong>: GPU floating-point arithmetic, parallel processing</li>
+<li><strong>Model Updates</strong>: Provider-side model changes without version control</li>
+<li><strong>Infrastructure Variability</strong>: Load balancing, server selection</li>
+<li><strong>Sampling Strategies</strong>: Even at temp=0.0, implementation details vary</li>
+</ol>
+<h3 id="drift-vs-data-drift">Drift vs. Data Drift<a class="headerlink" href="#drift-vs-data-drift" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Definition</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Output Drift</strong></td>
+<td>Inconsistent model responses for <strong>identical inputs</strong></td>
+<td>Model behavior</td>
+</tr>
+<tr>
+<td><strong>Data Drift</strong></td>
+<td>Changes in input data distribution over time</td>
+<td>Input data</td>
+</tr>
+</tbody>
+</table>
+<p>This workshop focuses on <strong>output drift</strong>—the model's internal inconsistency.</p>
+<h2 id="financial-impact-real-world-scenarios">Financial Impact: Real-World Scenarios<a class="headerlink" href="#financial-impact-real-world-scenarios" title="Permanent link">&para;</a></h2>
+<h3 id="scenario-1-loan-approval-recommendations">Scenario 1: Loan Approval Recommendations<a class="headerlink" href="#scenario-1-loan-approval-recommendations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Input: &quot;Analyze credit risk for applicant with 680 credit score, $75K income,
+        20% debt-to-income ratio. Recommend approval decision.&quot;
+
+Run 1 (temp=0.0): &quot;APPROVE - Low risk profile&quot;
+Run 2 (temp=0.0): &quot;DENY - Moderate risk, recommend manual review&quot;
+Run 3 (temp=0.0): &quot;APPROVE with conditions - Reduce credit limit to $10K&quot;
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Regulatory Risk</p>
+<p>Inconsistent decisions can violate fair lending laws (ECOA, FCRA) and lead to:</p>
+<ul>
+<li>Discrimination claims</li>
+<li>Regulatory fines</li>
+<li>Reputational damage</li>
+<li>Loss of consumer trust</li>
+</ul>
+</div>
+<h3 id="scenario-2-financial-document-analysis">Scenario 2: Financial Document Analysis<a class="headerlink" href="#scenario-2-financial-document-analysis" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Input: SEC 10-K filing, Question: &quot;What is the company&#39;s total debt?&quot;
+
+Run 1: &quot;$2.4 billion&quot;
+Run 2: &quot;$2.4B in long-term debt, excluding short-term obligations&quot;
+Run 3: &quot;Total debt: $2.4 billion (page 42, footnote 7)&quot;
+</code></pre></div>
+<p><strong>Issue</strong>: All factually correct, but inconsistent formatting breaks downstream automation.</p>
+<h3 id="scenario-3-regulatory-compliance-queries">Scenario 3: Regulatory Compliance Queries<a class="headerlink" href="#scenario-3-regulatory-compliance-queries" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Input: &quot;Is this transaction reportable under FinCEN SAR requirements?&quot;
+
+Run 1: &quot;Yes, meets threshold for suspicious activity reporting&quot;
+Run 2: &quot;Insufficient information to determine. Request additional details.&quot;
+Run 3: &quot;No, transaction appears routine&quot;
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Compliance Failure</p>
+<p>Missed Suspicious Activity Reports (SARs) can result in:</p>
+<ul>
+<li>Multi-million dollar fines</li>
+<li>Criminal liability</li>
+<li>License revocation</li>
+</ul>
+</div>
+<h2 id="research-findings-by-the-numbers">Research Findings: By the Numbers<a class="headerlink" href="#research-findings-by-the-numbers" title="Permanent link">&para;</a></h2>
+<p>Our research quantified drift across multiple dimensions using 480 total runs (n=16 concurrent runs per condition):</p>
+<h3 id="overall-drift-rates-temperature-00">Overall Drift Rates (Temperature = 0.0)<a class="headerlink" href="#overall-drift-rates-temperature-00" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Size</th>
+<th>Consistency</th>
+<th>Tier</th>
+<th>Compliance Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qwen2.5-7B</strong></td>
+<td>7B</td>
+<td><strong>100%</strong></td>
+<td>Tier 1</td>
+<td>✅ Audit-ready</td>
+</tr>
+<tr>
+<td><strong>IBM Granite-3-8B</strong></td>
+<td>8B</td>
+<td><strong>100%</strong></td>
+<td>Tier 1</td>
+<td>✅ Audit-ready</td>
+</tr>
+<tr>
+<td><strong>Meta Llama-3.3-70B</strong></td>
+<td>70B</td>
+<td>56-100%</td>
+<td>Tier 2</td>
+<td>⚠️ Task-specific</td>
+</tr>
+<tr>
+<td><strong>Mistral Medium</strong></td>
+<td>40B</td>
+<td>56-100%</td>
+<td>Tier 2</td>
+<td>⚠️ Task-specific</td>
+</tr>
+<tr>
+<td><strong>GPT-OSS-120B</strong></td>
+<td>120B</td>
+<td><strong>12.5% [CI: 3.5–36.0%]</strong></td>
+<td>Tier 3</td>
+<td>❌ Non-compliant</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Counterintuitive finding</strong>: 7-8B models achieve perfect determinism while 120B models show only 12.5% consistency!</p>
+<div class="admonition note">
+<p class="admonition-title">Understanding Statistical Notation</p>
+<p>Throughout this workshop, we report <strong>95% Confidence Intervals (CI)</strong> for our findings. For example, "12.5% [CI: 3.5–36.0%]" means we measured 12.5% consistency, but the true value likely falls between 3.5% and 36.0%.</p>
+<p>All Tier 1 vs Tier 3 comparisons showed 𝑝 &lt; 0.0001, meaning these differences are highly statistically significant and not due to chance.</p>
+</div>
+<h3 id="drift-by-task-type-temperature-00">Drift by Task Type (Temperature = 0.0)<a class="headerlink" href="#drift-by-task-type-temperature-00" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Consistency</th>
+<th>Why?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SQL Generation</td>
+<td>100%</td>
+<td>Structured output, deterministic syntax</td>
+</tr>
+<tr>
+<td>Summarization</td>
+<td>100%</td>
+<td>Well-defined task, narrow output space</td>
+</tr>
+<tr>
+<td>RAG (Text-to-SQL)</td>
+<td>93.75%</td>
+<td>Retrieval adds complexity</td>
+</tr>
+<tr>
+<td>RAG (General)</td>
+<td>75-87.5%</td>
+<td>Context-dependent, broader output space</td>
+</tr>
+</tbody>
+</table>
+<h3 id="impact-of-temperature">Impact of Temperature<a class="headerlink" href="#impact-of-temperature" title="Permanent link">&para;</a></h3>
+<p>At <strong>temperature = 0.2</strong> (common in production):</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Consistency</th>
+<th>Mean Drift</th>
+<th>Factual Drift Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RAG</td>
+<td>56.25%</td>
+<td>0.081</td>
+<td>0.000 - 0.375</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>100%</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+<tr>
+<td>Summarization</td>
+<td>100%</td>
+<td>0.000</td>
+<td>0.000</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition insight">
+<p class="admonition-title">Key Takeaway</p>
+<p>Even small temperature increases (0.0 → 0.2) can <strong>double drift rates</strong> for retrieval-augmented tasks!</p>
+</div>
+<h2 id="visualizing-drift">Visualizing Drift<a class="headerlink" href="#visualizing-drift" title="Permanent link">&para;</a></h2>
+<h3 id="example-consistency-across-model-tiers">Example: Consistency Across Model Tiers<a class="headerlink" href="#example-consistency-across-model-tiers" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Tier Classification (16 concurrent runs, temp=0.0)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Tier 1 (7-8B):
+Qwen2.5-7B      ████████████████████  100% ✅
+Granite-3-8B    ████████████████████  100% ✅
+
+Tier 2 (40-70B):
+Llama-3.3-70B   ████████████████      80%  △
+Mistral Medium  ████████████████      80%  △
+
+Tier 3 (120B+):
+GPT-OSS-120B    ██▌                   12.5% ❌
+</code></pre></div>
+<h3 id="example-drift-heat-map-temperature-sensitivity">Example: Drift Heat map (Temperature Sensitivity)<a class="headerlink" href="#example-drift-heat-map-temperature-sensitivity" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Task Type vs. Temperature
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+             T=0.0   T=0.1   T=0.2   T=0.5
+SQL          🟢100%  🟢100%  🟢100%  🟡95%
+Summarize    🟢100%  🟢100%  🟢100%  🟡92%
+RAG-SQL      🟢94%   🟡88%   🟡75%   🔴45%
+RAG-General  🟡87%   🟡70%   🔴56%   🔴25%
+
+🟢 Low drift  🟡 Moderate  🔴 High drift
+</code></pre></div>
+<h2 id="three-types-of-drift">Three Types of Drift<a class="headerlink" href="#three-types-of-drift" title="Permanent link">&para;</a></h2>
+<h3 id="1-syntactic-drift">1. <strong>Syntactic Drift</strong><a class="headerlink" href="#1-syntactic-drift" title="Permanent link">&para;</a></h3>
+<p>Changes in formatting, whitespace, or presentation without semantic changes.</p>
+<div class="highlight"><pre><span></span><code>Run 1: &quot;Total Assets: $2,400,000,000&quot;
+Run 2: &quot;Total Assets: $2.4B&quot;
+Run 3: &quot;Total Assets: 2.4 billion USD&quot;
+</code></pre></div>
+<p><strong>Impact</strong>: Breaks parsing logic, automation fails</p>
+<h3 id="2-semantic-drift">2. <strong>Semantic Drift</strong><a class="headerlink" href="#2-semantic-drift" title="Permanent link">&para;</a></h3>
+<p>Changes in meaning or interpretation.</p>
+<div class="highlight"><pre><span></span><code>Run 1: &quot;High risk - recommend denial&quot;
+Run 2: &quot;Moderate risk - manual review suggested&quot;
+Run 3: &quot;Acceptable risk with conditions&quot;
+</code></pre></div>
+<p><strong>Impact</strong>: Different business outcomes, inconsistent decisions</p>
+<h3 id="3-factual-drift">3. <strong>Factual Drift</strong><a class="headerlink" href="#3-factual-drift" title="Permanent link">&para;</a></h3>
+<p>Contradictory or incorrect information across runs.</p>
+<div class="highlight"><pre><span></span><code>Run 1: &quot;Company reported $500M revenue in Q4&quot;
+Run 2: &quot;Q4 revenue was $550M according to the filing&quot;
+Run 3: &quot;Revenue not disclosed in available documents&quot;
+</code></pre></div>
+<p><strong>Impact</strong>: Compliance violations, incorrect recommendations</p>
+<h2 id="regulatory-context">Regulatory Context<a class="headerlink" href="#regulatory-context" title="Permanent link">&para;</a></h2>
+<h3 id="why-financial-services-care">Why Financial Services Care<a class="headerlink" href="#why-financial-services-care" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Model Risk Management (SR 11-7)</strong>: Federal Reserve requires "validation" of models</li>
+<li><strong>Fair Lending (ECOA)</strong>: Consistent treatment of similar applicants</li>
+<li><strong>Explainability (GDPR, FCRA)</strong>: "Right to explanation" for automated decisions</li>
+<li><strong>Audit Trail</strong>: Must reproduce past decisions for regulatory review</li>
+</ol>
+<h3 id="the-drift-challenge">The Drift Challenge<a class="headerlink" href="#the-drift-challenge" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>"An AI system that produces different recommendations for identical inputs fails the fundamental requirement of <strong>consistency</strong> needed for regulatory compliance."</p>
+<p>— Financial Services AI Governance Guidelines</p>
+</blockquote>
+<h2 id="hands-on-observe-drift-in-action">Hands-On: Observe Drift in Action<a class="headerlink" href="#hands-on-observe-drift-in-action" title="Permanent link">&para;</a></h2>
+<p>Let's see drift firsthand with a simple example:</p>
+<h3 id="step-1-create-a-test-script">Step 1: Create a Test Script<a class="headerlink" href="#step-1-create-a-test-script" title="Permanent link">&para;</a></h3>
+<p>Create a file called <code>test_drift_simple.py</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
+
+<span class="c1"># Use Ollama (or change to your provider)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span>  <span class="c1"># Not actually used by Ollama</span>
+<span class="p">)</span>
+
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;What is 2+2? Answer with just the number.&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing drift with 5 identical runs:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>  <span class="c1"># Explicit seed</span>
+    <span class="p">)</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="step-2-run-the-test">Step 2: Run the Test<a class="headerlink" href="#step-2-run-the-test" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_drift_simple.py
+</code></pre></div>
+<h3 id="expected-output">Expected Output<a class="headerlink" href="#expected-output" title="Permanent link">&para;</a></h3>
+<p>You'll likely see variation even for this simple task:</p>
+<div class="highlight"><pre><span></span><code>Testing drift with 5 identical runs:
+
+Run 1: 4
+Run 2: 4
+Run 3: The answer is 4
+Run 4: 4
+Run 5: 2 + 2 = 4
+</code></pre></div>
+<div class="admonition question">
+<p class="admonition-title">Discussion Point</p>
+<p>Why do you think even a simple arithmetic question shows drift?</p>
+</div>
+<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Temperature=0.0 ≠ Determinism</strong>: Even "deterministic" settings show drift</li>
+<li><strong>Task Matters</strong>: Structured tasks (SQL) are more stable than open-ended tasks (RAG)</li>
+<li><strong>Regulatory Risk</strong>: Inconsistency threatens compliance in regulated industries</li>
+<li><strong>Provider Variance</strong>: Different models/providers show different drift characteristics</li>
+<li><strong>Measurement is Essential</strong>: You can't manage what you don't measure</li>
+</ol>
+<h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
+<details class="question">
+<summary>Question 1: What is output drift?</summary>
+<p><strong>Answer</strong>: Inconsistent outputs from an LLM given identical inputs and settings.</p>
+</details>
+<details class="question">
+<summary>Question 2: Why is drift a problem for financial services?</summary>
+<p><strong>Answer</strong>: It creates inconsistent decisions that violate regulatory requirements for fairness, explainability, and auditability.</p>
+</details>
+<details class="question">
+<summary>Question 3: Which task showed the highest drift in research?</summary>
+<p><strong>Answer</strong>: RAG (Retrieval-Augmented Generation) tasks, especially at temperature &gt; 0.0.</p>
+</details>
+<details class="question">
+<summary>Question 4: Does setting temperature=0.0 eliminate drift?</summary>
+<p><strong>Answer</strong>: It depends on model size! Tier 1 models (7-8B) achieve 100% consistency at T=0.0, but Tier 3 models (120B+) show only 12.5% consistency even at T=0.0.</p>
+</details>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
+<p>Now that you understand what output drift is and why it matters:</p>
+<ol>
+<li><strong>Proceed to <a href="../lab-2/">Lab 2: Setting Up Your Environment</a></strong> to configure API keys and providers</li>
+<li>Review the full research paper in <code>docs/resources/paper.md</code></li>
+<li>Think about how drift might affect your own AI applications</li>
+</ol>
+<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.federalreserve.gov/supervisionreg/srletters/sr1107.htm">Model Risk Management (SR 11-7)</a></li>
+<li><a href="https://www.nist.gov/itl/ai-risk-management-framework">NIST AI Risk Management Framework</a></li>
+<li><a href="https://www.consumerfinance.gov/about-us/newsroom/cfpb-acts-to-protect-the-public-from-black-box-credit-models-using-complex-algorithms/">Fair Lending and AI</a></li>
+</ul>
+<hr />
+<div class="admonition success">
+<p class="admonition-title">Lab 1 Complete!</p>
+<p>You now understand output drift and its implications. Ready to configure your environment? Move on to <a href="../lab-2/">Lab 2: Setting Up Your Environment</a>!</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../pre-work/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 0. Workshop Pre-Work">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Lab 0. Workshop Pre-Work
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../lab-2/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 2. Setting Up Your Environment">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Lab 2. Setting Up Your Environment
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/ibm-client-engineering" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/ibm/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
