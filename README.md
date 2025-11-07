@@ -2,8 +2,11 @@
 
 [![arXiv](https://img.shields.io/badge/arXiv-2025.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXXX)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
 
 > **Key Finding**: 7-8B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
+
+**📚 [Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** | Complete hands-on labs (0-6) covering setup, experiments, analysis, and framework extension.
 
 This repository contains the evaluation framework from our ACM ICAIF 2025 paper demonstrating how to achieve audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls.
 
