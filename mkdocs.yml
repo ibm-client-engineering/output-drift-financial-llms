@@ -36,7 +36,6 @@ theme:
   icon:
     logo: material/library
   logo: images/ibm-blue-background.png
-  favicon: images/favicon.ico
   features:
     - navigation.tabs
     - navigation.footer
@@ -52,7 +51,6 @@ theme:
 # Plugins
 plugins:
   - search
-  - social
 
 # Customization
 extra:
