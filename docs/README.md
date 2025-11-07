@@ -133,7 +133,7 @@ This project is licensed under the MIT License. See [LICENSE](../LICENSE) for de
 
 ## Contributors & Acknowledgments
 
-This workshop and framework were developed by IBM Financial Services in collaboration with researchers focused on responsible AI deployment in regulated industries.
+This workshop and framework were developed by Raffi Khatchadourian and Rolando Franco in IBM Financial Services in collaboration with researchers focused on responsible AI deployment in regulated industries.
 
 Special thanks to the open-source community and the contributors who helped build and test this framework.
 
