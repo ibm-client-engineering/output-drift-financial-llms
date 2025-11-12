@@ -50,7 +50,7 @@ This workshop is based on the peer-reviewed paper:
 
 **"Output Drift in Financial LLMs: Quantifying Non-Determinism and Its Implications for Regulatory Compliance"**
 
-📄 [Read the full paper on arXiv](https://arxiv.org/abs/XXXXX) *(link will be updated upon publication)*
+📄 [Read the full paper on arXiv](https://arxiv.org/abs/2511.07585)
 
 **Key Findings:**
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
@@ -119,13 +119,15 @@ git checkout v0.1.0
 If you use this framework in your research, please cite:
 
 ```bibtex
-@article{outputdrift2025,
-  title={Output Drift in Financial LLMs: Quantifying Non-Determinism and Its Implications for Regulatory Compliance},
-  author={[Authors]},
-  journal={arXiv preprint arXiv:XXXXX},
+@article{khatchadourian2025output,
+  title={LLM Output Drift: Financial AI Compliance Framework},
+  author={Khatchadourian, Raffi and Franco, Rolando},
+  journal={arXiv preprint arXiv:2511.07585},
   year={2025}
 }
 ```
+
+**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
 
 ## License
 
