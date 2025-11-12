@@ -144,22 +144,6 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 - **Synthetic Database**: Generated via Faker library (see `data/generate_toy_finance.py`)
 - **Prompt Templates**: Complete templates in `prompts/templates.json`
 
-## 📄 License
-
-MIT License - See [LICENSE](LICENSE) for details.
-
-## 🔒 Notice
-
-This software may be covered by one or more patent applications filed by IBM Corporation. The MIT license does not include patent grants. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for complete details.
-
-For patent licensing inquiries, contact IBM Corporation's Intellectual Property Law Department.
-
-## 🙏 Acknowledgments
-
-IBM watsonx.ai, IBM Research, and the open-source communities behind Ollama and Qwen.
-
----
-
 ## 📄 Citation
 
 If you use this framework in your research, please cite our paper:
@@ -177,6 +161,22 @@ If you use this framework in your research, please cite our paper:
 
 ---
 
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details.
+
+## 🔒 Notice
+
+This software may be covered by one or more patent applications filed by IBM Corporation. The MIT license does not include patent grants. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for complete details.
+
+For patent licensing inquiries, contact IBM Corporation's Intellectual Property Law Department.
+
+## 🙏 Acknowledgments
+
+IBM watsonx.ai, IBM Research, and the open-source communities behind Ollama and Qwen.
+
+---
+
 **Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com or rfranco@us.ibm.com
 
-**Repository**: [http://github.com/ibm-client-engineering/output-drift-financial-llms](http://github.com/ibm-client-engineering/output-drift-financial-llms)
+**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **Repository**: [http://github.com/ibm-client-engineering/output-drift-financial-llms](http://github.com/ibm-client-engineering/output-drift-financial-llms)

@@ -207,19 +207,21 @@ JSONL format capturing:
 If you use this framework or findings in your research, please cite:
 
 ```bibtex
-@article{output_drift_financial_llms_2025,
-  title={Output Drift in Financial LLMs: Why Smaller Models Win for Compliance},
-  author={IBM Client Engineering},
-  year={2025},
-  url={https://github.com/ibm-client-engineering/output-drift-financial-llms}
+@article{khatchadourian2025output,
+  title={LLM Output Drift: Financial AI Compliance Framework},
+  author={Khatchadourian, Raffi and Franco, Rolando},
+  journal={arXiv preprint arXiv:2511.07585},
+  year={2025}
 }
 ```
+
+**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
 
 ---
 
 ## Related Resources
 
-- **Full Paper**: [arXiv preprint](https://arxiv.org/) (submitted)
+- **Full Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 - **Code Repository**: [GitHub](https://github.com/ibm-client-engineering/output-drift-financial-llms)
 - **API Documentation**: [API Reference](api.md)
 - **Workshop Labs**: [Lab 0-6](../lab-1/README.md)
