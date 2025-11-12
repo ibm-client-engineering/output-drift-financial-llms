@@ -49,6 +49,17 @@ results/
 # Logs
 *.log
 
+# LaTeX
+*.tex
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+.latexmkrc
+
 # Workshop templates (reference only, not for commit)
 workshop-template/
 opensource-ai-workshop/
