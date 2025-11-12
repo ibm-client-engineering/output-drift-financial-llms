@@ -1,6 +1,6 @@
 # LLM Output Drift: Financial AI Compliance Framework
 
-[![arXiv](https://img.shields.io/badge/arXiv-2025.XXXXX-b31b1b.svg)](https://arxiv.org/abs/XXXXX)
+[![arXiv](https://img.shields.io/badge/arXiv-2511.07585-b31b1b.svg)](https://arxiv.org/abs/2511.07585)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
 
@@ -160,6 +160,23 @@ IBM watsonx.ai, IBM Research, and the open-source communities behind Ollama and 
 
 ---
 
+## 📄 Citation
+
+If you use this framework in your research, please cite our paper:
+
+```bibtex
+@article{khatchadourian2025output,
+  title={LLM Output Drift: Financial AI Compliance Framework},
+  author={Khatchadourian, Raffi and Franco, Rolando},
+  journal={arXiv preprint arXiv:2511.07585},
+  year={2025}
+}
+```
+
+**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
+
+---
+
 **Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com or rfranco@us.ibm.com
 
-**Paper**: [arXiv:2025.XXXXX](https://arxiv.org/abs/XXXXX) | **Repository**: [http://github.com/ibm-client-engineering/output-drift-financial-llms](http://github.com/ibm-client-engineering/output-drift-financial-llms)
+**Repository**: [http://github.com/ibm-client-engineering/output-drift-financial-llms](http://github.com/ibm-client-engineering/output-drift-financial-llms)
