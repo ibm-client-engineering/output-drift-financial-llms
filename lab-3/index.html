@@ -1484,12 +1484,12 @@
 <h2 id="step-1-single-run-baseline-concurrency-1">Step 1: Single-Run Baseline (Concurrency = 1)<a class="headerlink" href="#step-1-single-run-baseline-concurrency-1" title="Permanent link">&para;</a></h2>
 <p>Let's start with a single run to establish a baseline:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_single.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">1</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>🚀 Output Drift Evaluation Framework
@@ -1520,12 +1520,12 @@ Audit trail: traces/lab3_single.jsonl
 <h2 id="step-2-low-concurrency-test-n4">Step 2: Low Concurrency Test (n=4)<a class="headerlink" href="#step-2-low-concurrency-test-n4" title="Permanent link">&para;</a></h2>
 <p>Now let's run 4 concurrent queries:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_concurrent_4.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">4</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 4 concurrent queries...
@@ -1551,12 +1551,12 @@ Response 1 (4 occurrences):
 <h2 id="step-3-paper-standard-test-n16">Step 3: Paper-Standard Test (n=16)<a class="headerlink" href="#step-3-paper-standard-test-n16" title="Permanent link">&para;</a></h2>
 <p>Now run the same configuration used in the paper (n=16):</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_concurrent_16.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1579,12 +1579,12 @@ Response 1 (16 occurrences):
 <h2 id="step-4-temperature-sensitivity-test">Step 4: Temperature Sensitivity Test<a class="headerlink" href="#step-4-temperature-sensitivity-test" title="Permanent link">&para;</a></h2>
 <p>Now let's test what happens when we increase temperature to 0.2:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_temp02.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p><strong>Expected output (SQL task):</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1604,12 +1604,12 @@ Results:
 <h2 id="step-5-rag-task-comparison">Step 5: RAG Task Comparison<a class="headerlink" href="#step-5-rag-task-comparison" title="Permanent link">&para;</a></h2>
 <p>Now let's test a RAG task, which our paper shows is more susceptible to drift:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_rag_t00.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1644,12 +1644,12 @@ Response 2 (1 occurrence):
 </div>
 <p>Now test RAG at T=0.2:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--provider<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperature<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--task<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/lab3_rag_t02.jsonl
+<span class="w">  </span>--tasks<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p><strong>Expected output (from paper findings):</strong></p>
 <div class="highlight"><pre><span></span><code>Results:
@@ -1662,14 +1662,14 @@ Response 2 (1 occurrence):
 <p><strong>Paper Finding Confirmed</strong>: RAG tasks at T=0.2 show <strong>56.25% consistency</strong>, making them unsuitable for compliance workflows without strict T=0.0.</p>
 <h2 id="step-6-multi-task-evaluation">Step 6: Multi-Task Evaluation<a class="headerlink" href="#step-6-multi-task-evaluation" title="Permanent link">&para;</a></h2>
 <p>Run all three task types in sequence:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># SQL</span>
-python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>sql<span class="w"> </span>--output<span class="w"> </span>traces/lab3_sql.jsonl
-
-<span class="c1"># Summarization</span>
-python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>summarize<span class="w"> </span>--output<span class="w"> </span>traces/lab3_summarize.jsonl
-
-<span class="c1"># RAG</span>
-python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--temperature<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--task<span class="w"> </span>rag<span class="w"> </span>--output<span class="w"> </span>traces/lab3_rag.jsonl
+<div class="highlight"><pre><span></span><code><span class="c1"># Run all three tasks at once</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tasks<span class="w"> </span>rag,summary,sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <p><strong>Summary script</strong> to compare results:</p>
 <p>Create <code>analyze_lab3.py</code>:</p>
@@ -1823,11 +1823,12 @@ sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#3
 <p>To fully reproduce the paper's 480 runs:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># This will take ~30-45 minutes</span>
 python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b<span class="w"> </span>granite-3-8b<span class="w"> </span>llama-3.3-70b<span class="w"> </span>mistral-medium<span class="w"> </span>gpt-oss-120b<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span>summarize<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>traces/full_replication/
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0,0.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span>,4,16<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tasks<span class="w"> </span>rag,summary,sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Resource Intensive</p>

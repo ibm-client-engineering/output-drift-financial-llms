@@ -1583,8 +1583,12 @@
 <p>All experiments are reproducible using release v0.1.0:</p>
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ibm-client-engineering/output-drift-financial-llms
 <span class="nb">cd</span><span class="w"> </span>output-drift-financial-llms
-git<span class="w"> </span>checkout<span class="w"> </span>v0.1.0
-python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--config<span class="w"> </span>experiments/baseline_config.yaml
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0,0.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span>,4,16<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div>
 <hr />
 <h2 id="key-findings">Key Findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h2>

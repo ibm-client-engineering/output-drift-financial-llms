@@ -1228,9 +1228,15 @@
 <p>📄 <a href="https://arxiv.org/abs/2511.07585">Read the full paper on arXiv</a></p>
 <p><strong>Key Findings:</strong>
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
+- 7-8B models (Granite-3-8B, Qwen2.5-7B) achieve 100% determinism at T=0.0
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
 - Structured output tasks (SQL, summarization) maintain better determinism
 - Cross-provider experiments reveal significant reliability gaps</p>
+<p><strong>Community Validation</strong> (Paul Merrison, FINOS):
+- Determinism is model-specific, not size-based
+- <strong>Gemma2-9B</strong>: 100% deterministic (new Tier 1 candidate)
+- <strong>Mistral-7B</strong>: Task-dependent (33% RAG, 100% SQL)
+- Architecture and training matter more than parameter count</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p><strong>Required:</strong>
 - Python 3.11+
@@ -1264,12 +1270,17 @@
 </ol>
 <h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>output-drift-financial-llms/
-├── docs/               # Workshop documentation
-├── harness/            # Core framework code
-├── prompts/            # Task definitions
-├── data/               # Test datasets
-├── examples/           # Sample configurations
-└── requirements.txt    # Python dependencies
+├── run_evaluation.py       # Main experiment orchestrator
+├── COMMUNITY_FINDINGS.md   # Independent validation results
+├── docs/                   # Workshop documentation (labs 0-6)
+├── harness/                # Core framework code
+│   ├── deterministic_retriever.py
+│   ├── task_definitions.py
+│   └── cross_provider_validation.py
+├── prompts/                # Versioned prompt templates
+├── data/                   # Test datasets &amp; generators
+├── examples/               # Sample audit trails
+└── requirements.txt        # Python dependencies
 </code></pre></div>
 <h2 id="reproducibility-citations">Reproducibility &amp; Citations<a class="headerlink" href="#reproducibility-citations" title="Permanent link">&para;</a></h2>
 <p>All experiments use <strong>release v0.1.0 (commit c19dac5)</strong> for reproducibility:</p>
