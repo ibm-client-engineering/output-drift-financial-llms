@@ -1,6 +1,6 @@
 # Research Paper Summary
 
-## Output Drift in Financial LLMs: A Compliance-Focused Analysis
+## LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows
 
 This page summarizes the key findings from our research paper on output drift in large language models used for financial applications.
 

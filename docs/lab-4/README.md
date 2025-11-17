@@ -79,7 +79,43 @@ Our research revealed that **model size inversely correlates with deterministic 
 
 ---
 
-## Step 1: Load and Analyze Audit Trails
+## Option A: Use Built-in Analysis Tools (Quick Start)
+
+The repository includes production-ready analysis tools. Use these if you want quick results:
+
+### Generate Visualizations
+
+```bash
+# Generate drift visualizations from your experimental results
+python plot_results.py traces/lab3_sql.jsonl traces/lab3_rag.jsonl
+```
+
+This creates:
+- Consistency comparison charts
+- Temperature sensitivity plots
+- Cross-provider validation graphs
+
+**Output**: PNG files in `results/` directory
+
+### Generate LaTeX Tables
+
+```bash
+# Generate publication-ready tables from results
+python make_tables.py results/*.csv
+```
+
+This generates LaTeX table code that you can include in reports or papers.
+
+!!! tip "Production-Ready Tools"
+    These are the same tools used to generate figures and tables in the research paper. They include all statistical analysis and proper formatting.
+
+---
+
+## Option B: Build Your Own Analysis Scripts (Learning Path)
+
+For deeper understanding, create custom analysis scripts:
+
+### Step 1: Load and Analyze Audit Trails
 
 Create `analyze_metrics.py`:
 
@@ -164,7 +200,7 @@ Unique responses: 2
 Mean drift: 0.012
 ```
 
-## Step 2: Visualize Tier Classification
+### Step 2: Visualize Tier Classification
 
 Create `visualize_tiers.py`:
 
@@ -235,7 +271,7 @@ GPT-OSS-120B    ██▌                  12.5% (Tier 3)
 !!! warning "The 120B Failure"
     GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched—completely unsuitable for audit trails or regulated decisions.
 
-## Step 3: Temperature Sensitivity Analysis
+### Step 3: Temperature Sensitivity Analysis
 
 Visualize how temperature affects different tasks:
 
