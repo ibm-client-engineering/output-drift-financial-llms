@@ -48,7 +48,7 @@ By the end of this workshop, you will:
 
 This workshop is based on the peer-reviewed paper:
 
-**"Output Drift in Financial LLMs: Quantifying Non-Determinism and Its Implications for Regulatory Compliance"**
+**"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
 
 📄 [Read the full paper on arXiv](https://arxiv.org/abs/2511.07585)
 
@@ -107,12 +107,18 @@ If you encounter issues or have questions:
 ```
 output-drift-financial-llms/
 ├── run_evaluation.py       # Main experiment orchestrator
+├── make_tables.py          # Generate LaTeX tables from results
+├── plot_results.py         # Generate drift visualizations
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
 ├── docs/                   # Workshop documentation (labs 0-6)
 ├── harness/                # Core framework code
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
+├── providers/              # LLM provider implementations
+│   └── watsonx.py          # IBM watsonx.ai integration
+├── scripts/                # Data fetching & utilities
+│   └── fetch_sec_texts.py  # SEC EDGAR downloader
 ├── prompts/                # Versioned prompt templates
 ├── data/                   # Test datasets & generators
 ├── examples/               # Sample audit trails
