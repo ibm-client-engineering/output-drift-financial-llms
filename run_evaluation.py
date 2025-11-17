@@ -75,7 +75,7 @@ except ImportError:
 
 # ----------------------------- Config ----------------------------------------
 DEFAULT_MODELS = ["qwen2.5:7b-instruct"]
-DEFAULT_PROVIDERS = ["ollama"]  # "ollama", "mock"
+DEFAULT_PROVIDERS = ["ollama"]  # Available: "ollama", "watsonx", "mock"
 REPEATS = 16  # n=16 per condition as in paper
 MAX_TOKENS = 512
 CITATION_PATTERN = re.compile(r"\[([^\]]+)\]")
@@ -199,6 +199,58 @@ class MockProvider(LLMProvider):
             return "SELECT SUM(amount) FROM transactions;"
 
         return "Mock response generated."
+
+
+class WatsonxProviderAdapter(LLMProvider):
+    """Adapter to make WatsonxProvider compatible with async interface."""
+
+    def __init__(self):
+        self.name = "watsonx"
+        try:
+            from providers.watsonx import WatsonxProvider
+            self._provider = WatsonxProvider()
+            self.enabled = True
+        except (ImportError, ValueError) as e:
+            print(f"[warn] Watsonx provider initialization failed: {e}")
+            print("[info] Set WATSONX_API_KEY, WATSONX_URL, WATSONX_PROJECT_ID to enable")
+            self.enabled = False
+            self._provider = None
+
+    def supports_listing(self) -> bool:
+        return self._provider and self._provider.supports_listing()
+
+    def list_models(self) -> List[str]:
+        if not self._provider:
+            return []
+        return self._provider.list_models()
+
+    async def acomplete(
+        self,
+        model,
+        messages,
+        *,
+        temperature=0.0,
+        top_p=1.0,
+        seed=None,
+        max_tokens=MAX_TOKENS,
+        stream=False,
+        extra=None
+    ):
+        if not self.enabled:
+            raise RuntimeError("Watsonx provider not enabled. Check environment variables.")
+
+        prompt = _concat_messages(messages)
+        result = self._provider.generate(
+            model=model,
+            prompt=prompt,
+            temperature=temperature,
+            top_p=top_p,
+            seed=seed,
+            max_new_tokens=max_tokens,
+            stream=stream,
+            extra=extra
+        )
+        return result["text"]
 
 
 def _concat_messages(messages: List[Dict[str, str]]) -> str:
@@ -545,7 +597,7 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
         "--providers",
         type=str,
         default=",".join(DEFAULT_PROVIDERS),
-        help="Providers to use: ollama,mock"
+        help="Providers to use: ollama,watsonx,mock (watsonx requires WATSONX_API_KEY, WATSONX_URL, WATSONX_PROJECT_ID)"
     )
     parser.add_argument(
         "--repeats",
@@ -632,6 +684,14 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
     if "ollama" in providers:
         prov_objs.append(OllamaProvider())
         print("[✓] Ollama provider initialized")
+
+    if "watsonx" in providers:
+        wx = WatsonxProviderAdapter()
+        if wx.enabled:
+            prov_objs.append(wx)
+            print("[✓] Watsonx provider initialized")
+        else:
+            print("[!] Watsonx provider skipped (check environment variables)")
 
     if "mock" in providers:
         prov_objs.append(MockProvider())
