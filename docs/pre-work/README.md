@@ -95,21 +95,22 @@ pip install -r requirements.txt
 ```
 
 This will install:
-- `openai` - OpenAI API client
-- `anthropic` - Anthropic API client
-- `ibm-watsonx-ai` - IBM watsonx.ai client
-- `pandas` - Data analysis
-- `matplotlib` - Visualization
-- `seaborn` - Statistical visualization
+- `ollama` - Ollama API client for local models
+- `pandas`, `numpy` - Data analysis and numerical computing
+- `matplotlib`, `scipy` - Visualization and statistical analysis
+- `rapidfuzz`, `python-Levenshtein` - Drift detection metrics
+- `sec-edgar-downloader`, `beautifulsoup4` - SEC filing data
+- `faker` - Synthetic financial data generation
 - `python-dotenv` - Environment variable management
-- And other dependencies
+- `pytest` - Testing framework
+- And other dependencies (see requirements.txt for full list)
 
 ## Step 4: Verify Installation
 
 Test that the framework can import correctly:
 
 ```bash
-python -c "from harness.runner import DriftRunner; print('✅ Installation successful!')"
+python -c "from harness.task_definitions import TaskDefinition; print('✅ Installation successful!')"
 ```
 
 If you see "✅ Installation successful!", you're all set!
@@ -178,31 +179,42 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
 
 ## Step 6: Test Your Setup
 
-Run the environment test script to verify everything is configured correctly:
+Test your providers to verify everything is configured correctly:
+
+### Test Ollama (Local)
+
+If you installed Ollama:
 
 ```bash
-python examples/test_setup.py
+# Check if Ollama is running
+curl http://localhost:11434/api/tags
+
+# Test with a simple query (requires qwen2.5:7b-instruct)
+python -c "
+from openai import OpenAI
+client = OpenAI(base_url='http://localhost:11434/v1', api_key='ollama')
+response = client.chat.completions.create(
+    model='qwen2.5:7b-instruct',
+    messages=[{'role': 'user', 'content': 'Say hello!'}],
+    temperature=0.0
+)
+print('✅ Ollama is working!')
+print(f'Response: {response.choices[0].message.content}')
+"
 ```
 
-Expected output:
+### Test watsonx.ai (Optional)
 
-```
-🔍 Testing Output Drift Framework Setup
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+If you configured watsonx.ai:
 
-✅ Python version: 3.11.0
-✅ Dependencies installed
-✅ Framework imports working
-✅ Environment variables loaded
-
-Provider Availability:
-✅ Ollama: Available (http://localhost:11434)
-⚠️  watsonx.ai: API key not configured
-⚠️  OpenAI: API key not configured
-⚠️  Anthropic: API key not configured
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Setup complete! You're ready for Lab 1.
+```bash
+python -c "
+import os
+from dotenv import load_dotenv
+load_dotenv()
+print('✅ watsonx API key:', 'configured' if os.getenv('WATSONX_API_KEY') else 'NOT configured')
+print('✅ watsonx Project ID:', 'configured' if os.getenv('WATSONX_PROJECT_ID') else 'NOT configured')
+"
 ```
 
 !!! success "At Least One Provider"
