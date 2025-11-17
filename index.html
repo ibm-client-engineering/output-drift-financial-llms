@@ -1224,7 +1224,7 @@
 <p><strong>Total Duration</strong>: Approximately 2.5-3 hours</p>
 <h2 id="research-foundation">Research Foundation<a class="headerlink" href="#research-foundation" title="Permanent link">&para;</a></h2>
 <p>This workshop is based on the peer-reviewed paper:</p>
-<p><strong>"Output Drift in Financial LLMs: Quantifying Non-Determinism and Its Implications for Regulatory Compliance"</strong></p>
+<p><strong>"LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows"</strong></p>
 <p>📄 <a href="https://arxiv.org/abs/2511.07585">Read the full paper on arXiv</a></p>
 <p><strong>Key Findings:</strong>
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
@@ -1271,12 +1271,18 @@
 <h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>output-drift-financial-llms/
 ├── run_evaluation.py       # Main experiment orchestrator
+├── make_tables.py          # Generate LaTeX tables from results
+├── plot_results.py         # Generate drift visualizations
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
 ├── docs/                   # Workshop documentation (labs 0-6)
 ├── harness/                # Core framework code
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
+├── providers/              # LLM provider implementations
+│   └── watsonx.py          # IBM watsonx.ai integration
+├── scripts/                # Data fetching &amp; utilities
+│   └── fetch_sec_texts.py  # SEC EDGAR downloader
 ├── prompts/                # Versioned prompt templates
 ├── data/                   # Test datasets &amp; generators
 ├── examples/               # Sample audit trails
