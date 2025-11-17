@@ -48,7 +48,7 @@ By the end of this workshop, you will:
 
 This workshop is based on the peer-reviewed paper:
 
-**"Output Drift in Financial LLMs: Quantifying Non-Determinism and Its Implications for Regulatory Compliance"**
+**"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
 
 📄 [Read the full paper on arXiv](https://arxiv.org/abs/2511.07585)
 
