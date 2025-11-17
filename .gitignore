@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+secrets.env
+*secret*
+*credential*
+*.key
+*.pem
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints
+
+# Experiments
+traces/
+results/
+*.sqlite
+*.db
+
+# Logs
+*.log
+
+# Workshop templates (reference only, not for commit)
+workshop-template/
+opensource-ai-workshop/
+
+# Paper files and internal documentation (IBM internal only, not for public repo)
+main.tex/
+*.pdf
+*.tex
+*.bib
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
+docs-internal/
+.claude/
+sync_to_external.sh
