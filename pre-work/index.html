@@ -648,34 +648,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 6: Test Your Setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#test-ollama-local" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test Ollama (Local)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-watsonxai-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test watsonx.ai (Optional)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1258,34 +1230,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Step 6: Test Your Setup">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#test-ollama-local" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test Ollama (Local)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#test-watsonxai-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Test watsonx.ai (Optional)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1462,18 +1406,17 @@ venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
 pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </code></pre></div>
 <p>This will install:
-- <code>ollama</code> - Ollama API client for local models
-- <code>pandas</code>, <code>numpy</code> - Data analysis and numerical computing
-- <code>matplotlib</code>, <code>scipy</code> - Visualization and statistical analysis
-- <code>rapidfuzz</code>, <code>python-Levenshtein</code> - Drift detection metrics
-- <code>sec-edgar-downloader</code>, <code>beautifulsoup4</code> - SEC filing data
-- <code>faker</code> - Synthetic financial data generation
+- <code>openai</code> - OpenAI API client
+- <code>anthropic</code> - Anthropic API client
+- <code>ibm-watsonx-ai</code> - IBM watsonx.ai client
+- <code>pandas</code> - Data analysis
+- <code>matplotlib</code> - Visualization
+- <code>seaborn</code> - Statistical visualization
 - <code>python-dotenv</code> - Environment variable management
-- <code>pytest</code> - Testing framework
-- And other dependencies (see requirements.txt for full list)</p>
+- And other dependencies</p>
 <h2 id="step-4-verify-installation">Step 4: Verify Installation<a class="headerlink" href="#step-4-verify-installation" title="Permanent link">&para;</a></h2>
 <p>Test that the framework can import correctly:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from harness.task_definitions import TaskDefinition; print(&#39;✅ Installation successful!&#39;)&quot;</span>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from harness.runner import DriftRunner; print(&#39;✅ Installation successful!&#39;)&quot;</span>
 </code></pre></div>
 <p>If you see "✅ Installation successful!", you're all set!</p>
 <h2 id="step-5-set-up-api-keys-optional">Step 5: Set Up API Keys (Optional)<a class="headerlink" href="#step-5-set-up-api-keys-optional" title="Permanent link">&para;</a></h2>
@@ -1537,34 +1480,26 @@ ollama<span class="w"> </span>serve
 </div>
 </div>
 <h2 id="step-6-test-your-setup">Step 6: Test Your Setup<a class="headerlink" href="#step-6-test-your-setup" title="Permanent link">&para;</a></h2>
-<p>Test your providers to verify everything is configured correctly:</p>
-<h3 id="test-ollama-local">Test Ollama (Local)<a class="headerlink" href="#test-ollama-local" title="Permanent link">&para;</a></h3>
-<p>If you installed Ollama:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Check if Ollama is running</span>
-curl<span class="w"> </span>http://localhost:11434/api/tags
-
-<span class="c1"># Test with a simple query (requires qwen2.5:7b-instruct)</span>
-python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">from openai import OpenAI</span>
-<span class="s2">client = OpenAI(base_url=&#39;http://localhost:11434/v1&#39;, api_key=&#39;ollama&#39;)</span>
-<span class="s2">response = client.chat.completions.create(</span>
-<span class="s2">    model=&#39;qwen2.5:7b-instruct&#39;,</span>
-<span class="s2">    messages=[{&#39;role&#39;: &#39;user&#39;, &#39;content&#39;: &#39;Say hello!&#39;}],</span>
-<span class="s2">    temperature=0.0</span>
-<span class="s2">)</span>
-<span class="s2">print(&#39;✅ Ollama is working!&#39;)</span>
-<span class="s2">print(f&#39;Response: {response.choices[0].message.content}&#39;)</span>
-<span class="s2">&quot;</span>
+<p>Run the environment test script to verify everything is configured correctly:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/test_setup.py
 </code></pre></div>
-<h3 id="test-watsonxai-optional">Test watsonx.ai (Optional)<a class="headerlink" href="#test-watsonxai-optional" title="Permanent link">&para;</a></h3>
-<p>If you configured watsonx.ai:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
-<span class="s2">import os</span>
-<span class="s2">from dotenv import load_dotenv</span>
-<span class="s2">load_dotenv()</span>
-<span class="s2">print(&#39;✅ watsonx API key:&#39;, &#39;configured&#39; if os.getenv(&#39;WATSONX_API_KEY&#39;) else &#39;NOT configured&#39;)</span>
-<span class="s2">print(&#39;✅ watsonx Project ID:&#39;, &#39;configured&#39; if os.getenv(&#39;WATSONX_PROJECT_ID&#39;) else &#39;NOT configured&#39;)</span>
-<span class="s2">&quot;</span>
+<p>Expected output:</p>
+<div class="highlight"><pre><span></span><code>🔍 Testing Output Drift Framework Setup
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Python version: 3.11.0
+✅ Dependencies installed
+✅ Framework imports working
+✅ Environment variables loaded
+
+Provider Availability:
+✅ Ollama: Available (http://localhost:11434)
+⚠️  watsonx.ai: API key not configured
+⚠️  OpenAI: API key not configured
+⚠️  Anthropic: API key not configured
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Setup complete! You&#39;re ready for Lab 1.
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">At Least One Provider</p>
