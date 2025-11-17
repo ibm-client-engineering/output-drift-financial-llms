@@ -1,0 +1,99 @@
+# Project information
+site_name: Output Drift in Financial LLMs Workshop
+site_url: https://ibm-client-engineering.github.io/output-drift-financial-llms
+site_author: IBM Client Engineering
+
+# Repository
+repo_name: output-drift-financial-llms
+repo_url: https://github.com/ibm-client-engineering/output-drift-financial-llms
+edit_uri: edit/main/docs
+
+# Navigation
+nav:
+  - Welcome:
+    - Introduction: README.md
+  - Workshop:
+    - Lab 0. Workshop Pre-Work: pre-work/README.md
+    - Lab 1. Understanding Output Drift: lab-1/README.md
+    - Lab 2. Setting Up Your Environment: lab-2/README.md
+    - Lab 3. Running Your First Experiment: lab-3/README.md
+    - Lab 4. Analyzing Drift Metrics: lab-4/README.md
+    - Lab 5. Cross-Provider Testing: lab-5/README.md
+    - Lab 6. Extending the Framework: lab-6/README.md
+  - Resources:
+    - Research Paper: resources/paper.md
+    - API Reference: resources/api.md
+    - Troubleshooting: resources/troubleshooting.md
+
+## DO NOT CHANGE BELOW THIS LINE
+
+# Theme
+theme:
+  name: material
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
+  icon:
+    logo: material/library
+  logo: images/ibm-blue-background.png
+  features:
+    - navigation.tabs
+    - navigation.footer
+    - content.code.copy
+    - content.tabs.link
+    - navigation.sections
+    - navigation.expand
+  palette:
+    scheme: default
+    primary: blue
+    accent: blue
+
+# Plugins
+plugins:
+  - search
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/ibm-client-engineering
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/ibm/
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      check_paths: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
