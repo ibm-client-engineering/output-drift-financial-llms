@@ -702,6 +702,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#option-a-use-built-in-analysis-tools-quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Use Built-in Analysis Tools (Quick Start)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option A: Use Built-in Analysis Tools (Quick Start)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-latex-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate LaTeX Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#option-b-build-your-own-analysis-scripts-learning-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Build Your Own Analysis Scripts (Learning Path)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option B: Build Your Own Analysis Scripts (Learning Path)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#step-1-load-and-analyze-audit-trails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -711,8 +762,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-2-visualize-tier-classification" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -722,8 +773,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-3-temperature-sensitivity-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -731,6 +782,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1127,6 +1183,57 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#option-a-use-built-in-analysis-tools-quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Use Built-in Analysis Tools (Quick Start)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option A: Use Built-in Analysis Tools (Quick Start)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generate-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate Visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generate-latex-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generate LaTeX Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#option-b-build-your-own-analysis-scripts-learning-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Build Your Own Analysis Scripts (Learning Path)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Option B: Build Your Own Analysis Scripts (Learning Path)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#step-1-load-and-analyze-audit-trails" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1136,8 +1243,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-2-visualize-tier-classification" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1147,8 +1254,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-3-temperature-sensitivity-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1156,6 +1263,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1307,7 +1419,30 @@
 - <strong>Do not use</strong> for financial compliance workflows
 - High-scale models trade determinism for capability</p>
 <hr />
-<h2 id="step-1-load-and-analyze-audit-trails">Step 1: Load and Analyze Audit Trails<a class="headerlink" href="#step-1-load-and-analyze-audit-trails" title="Permanent link">&para;</a></h2>
+<h2 id="option-a-use-built-in-analysis-tools-quick-start">Option A: Use Built-in Analysis Tools (Quick Start)<a class="headerlink" href="#option-a-use-built-in-analysis-tools-quick-start" title="Permanent link">&para;</a></h2>
+<p>The repository includes production-ready analysis tools. Use these if you want quick results:</p>
+<h3 id="generate-visualizations">Generate Visualizations<a class="headerlink" href="#generate-visualizations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate drift visualizations from your experimental results</span>
+python<span class="w"> </span>plot_results.py<span class="w"> </span>traces/lab3_sql.jsonl<span class="w"> </span>traces/lab3_rag.jsonl
+</code></pre></div>
+<p>This creates:
+- Consistency comparison charts
+- Temperature sensitivity plots
+- Cross-provider validation graphs</p>
+<p><strong>Output</strong>: PNG files in <code>results/</code> directory</p>
+<h3 id="generate-latex-tables">Generate LaTeX Tables<a class="headerlink" href="#generate-latex-tables" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Generate publication-ready tables from results</span>
+python<span class="w"> </span>make_tables.py<span class="w"> </span>results/*.csv
+</code></pre></div>
+<p>This generates LaTeX table code that you can include in reports or papers.</p>
+<div class="admonition tip">
+<p class="admonition-title">Production-Ready Tools</p>
+<p>These are the same tools used to generate figures and tables in the research paper. They include all statistical analysis and proper formatting.</p>
+</div>
+<hr />
+<h2 id="option-b-build-your-own-analysis-scripts-learning-path">Option B: Build Your Own Analysis Scripts (Learning Path)<a class="headerlink" href="#option-b-build-your-own-analysis-scripts-learning-path" title="Permanent link">&para;</a></h2>
+<p>For deeper understanding, create custom analysis scripts:</p>
+<h3 id="step-1-load-and-analyze-audit-trails">Step 1: Load and Analyze Audit Trails<a class="headerlink" href="#step-1-load-and-analyze-audit-trails" title="Permanent link">&para;</a></h3>
 <p>Create <code>analyze_metrics.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -1382,7 +1517,7 @@ Consistency: 93.8%
 Unique responses: 2
 Mean drift: 0.012
 </code></pre></div>
-<h2 id="step-2-visualize-tier-classification">Step 2: Visualize Tier Classification<a class="headerlink" href="#step-2-visualize-tier-classification" title="Permanent link">&para;</a></h2>
+<h3 id="step-2-visualize-tier-classification">Step 2: Visualize Tier Classification<a class="headerlink" href="#step-2-visualize-tier-classification" title="Permanent link">&para;</a></h3>
 <p>Create <code>visualize_tiers.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
@@ -1444,7 +1579,7 @@ GPT-OSS-120B    ██▌                  12.5% (Tier 3)
 <p class="admonition-title">The 120B Failure</p>
 <p>GPT-OSS-120B's <strong>12.5% consistency</strong> means only 2 out of 16 runs matched—completely unsuitable for audit trails or regulated decisions.</p>
 </div>
-<h2 id="step-3-temperature-sensitivity-analysis">Step 3: Temperature Sensitivity Analysis<a class="headerlink" href="#step-3-temperature-sensitivity-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="step-3-temperature-sensitivity-analysis">Step 3: Temperature Sensitivity Analysis<a class="headerlink" href="#step-3-temperature-sensitivity-analysis" title="Permanent link">&para;</a></h3>
 <p>Visualize how temperature affects different tasks:</p>
 <p>Create <code>visualize_temperature.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
