@@ -107,12 +107,18 @@ If you encounter issues or have questions:
 ```
 output-drift-financial-llms/
 ├── run_evaluation.py       # Main experiment orchestrator
+├── make_tables.py          # Generate LaTeX tables from results
+├── plot_results.py         # Generate drift visualizations
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
 ├── docs/                   # Workshop documentation (labs 0-6)
 ├── harness/                # Core framework code
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
+├── providers/              # LLM provider implementations
+│   └── watsonx.py          # IBM watsonx.ai integration
+├── scripts/                # Data fetching & utilities
+│   └── fetch_sec_texts.py  # SEC EDGAR downloader
 ├── prompts/                # Versioned prompt templates
 ├── data/                   # Test datasets & generators
 ├── examples/               # Sample audit trails
