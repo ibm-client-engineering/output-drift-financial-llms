@@ -41,12 +41,12 @@ Let's start with a single run to establish a baseline:
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.0 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.0 \
   --concurrency 1 \
-  --task sql \
-  --output traces/lab3_single.jsonl
+  --tasks sql \
+  --repeats 1
 ```
 
 **Expected output:**
@@ -85,12 +85,12 @@ Now let's run 4 concurrent queries:
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.0 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.0 \
   --concurrency 4 \
-  --task sql \
-  --output traces/lab3_concurrent_4.jsonl
+  --tasks sql \
+  --repeats 4
 ```
 
 **Expected output:**
@@ -122,12 +122,12 @@ Now run the same configuration used in the paper (n=16):
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.0 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.0 \
   --concurrency 16 \
-  --task sql \
-  --output traces/lab3_concurrent_16.jsonl
+  --tasks sql \
+  --repeats 16
 ```
 
 **Expected output:**
@@ -158,12 +158,12 @@ Now let's test what happens when we increase temperature to 0.2:
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.2 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.2 \
   --concurrency 16 \
-  --task sql \
-  --output traces/lab3_temp02.jsonl
+  --tasks sql \
+  --repeats 16
 ```
 
 **Expected output (SQL task):**
@@ -189,12 +189,12 @@ Now let's test a RAG task, which our paper shows is more susceptible to drift:
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.0 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.0 \
   --concurrency 16 \
-  --task rag \
-  --output traces/lab3_rag_t00.jsonl
+  --tasks rag \
+  --repeats 16
 ```
 
 **Expected output:**
@@ -233,12 +233,12 @@ Now test RAG at T=0.2:
 
 ```bash
 python run_evaluation.py \
-  --provider ollama \
-  --model qwen2.5:7b-instruct \
-  --temperature 0.2 \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.2 \
   --concurrency 16 \
-  --task rag \
-  --output traces/lab3_rag_t02.jsonl
+  --tasks rag \
+  --repeats 16
 ```
 
 **Expected output (from paper findings):**
@@ -259,14 +259,14 @@ Results:
 Run all three task types in sequence:
 
 ```bash
-# SQL
-python run_evaluation.py --model qwen2.5:7b-instruct --temperature 0.0 --concurrency 16 --task sql --output traces/lab3_sql.jsonl
-
-# Summarization
-python run_evaluation.py --model qwen2.5:7b-instruct --temperature 0.0 --concurrency 16 --task summarize --output traces/lab3_summarize.jsonl
-
-# RAG
-python run_evaluation.py --model qwen2.5:7b-instruct --temperature 0.0 --concurrency 16 --task rag --output traces/lab3_rag.jsonl
+# Run all three tasks at once
+python run_evaluation.py \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --temperatures 0.0 \
+  --concurrency 16 \
+  --tasks rag,summary,sql \
+  --repeats 16
 ```
 
 **Summary script** to compare results:
@@ -426,11 +426,12 @@ To fully reproduce the paper's 480 runs:
 ```bash
 # This will take ~30-45 minutes
 python run_evaluation.py \
-  --models qwen2.5:7b granite-3-8b llama-3.3-70b mistral-medium gpt-oss-120b \
-  --temperatures 0.0 0.2 \
-  --concurrency 16 \
-  --tasks sql summarize rag \
-  --output traces/full_replication/
+  --providers ollama \
+  --models qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b \
+  --temperatures 0.0,0.2 \
+  --concurrency 1,4,16 \
+  --tasks rag,summary,sql \
+  --repeats 16
 ```
 
 !!! warning "Resource Intensive"

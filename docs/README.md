@@ -54,9 +54,16 @@ This workshop is based on the peer-reviewed paper:
 
 **Key Findings:**
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
+- 7-8B models (Granite-3-8B, Qwen2.5-7B) achieve 100% determinism at T=0.0
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
 - Structured output tasks (SQL, summarization) maintain better determinism
 - Cross-provider experiments reveal significant reliability gaps
+
+**Community Validation** (Paul Merrison, FINOS):
+- Determinism is model-specific, not size-based
+- **Gemma2-9B**: 100% deterministic (new Tier 1 candidate)
+- **Mistral-7B**: Task-dependent (33% RAG, 100% SQL)
+- Architecture and training matter more than parameter count
 
 ## Prerequisites
 
@@ -99,12 +106,17 @@ If you encounter issues or have questions:
 
 ```
 output-drift-financial-llms/
-├── docs/               # Workshop documentation
-├── harness/            # Core framework code
-├── prompts/            # Task definitions
-├── data/               # Test datasets
-├── examples/           # Sample configurations
-└── requirements.txt    # Python dependencies
+├── run_evaluation.py       # Main experiment orchestrator
+├── COMMUNITY_FINDINGS.md   # Independent validation results
+├── docs/                   # Workshop documentation (labs 0-6)
+├── harness/                # Core framework code
+│   ├── deterministic_retriever.py
+│   ├── task_definitions.py
+│   └── cross_provider_validation.py
+├── prompts/                # Versioned prompt templates
+├── data/                   # Test datasets & generators
+├── examples/               # Sample audit trails
+└── requirements.txt        # Python dependencies
 ```
 
 ## Reproducibility & Citations
