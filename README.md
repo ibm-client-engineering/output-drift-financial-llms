@@ -34,6 +34,37 @@ python run_evaluation.py
 
 **Don't have Ollama?** Install from https://ollama.com/download (macOS, Linux, Windows)
 
+### Optional: Cloud Provider Setup (IBM watsonx.ai)
+
+To use IBM watsonx.ai provider for cross-provider validation:
+
+```bash
+# Set environment variables
+export WATSONX_API_KEY="your-api-key"
+export WATSONX_URL="https://us-south.ml.cloud.ibm.com"
+export WATSONX_PROJECT_ID="your-project-id"
+
+# Uncomment ibm-watsonx-ai in requirements.txt, then:
+pip install ibm-watsonx-ai>=1.1.0
+
+# Run evaluation with watsonx
+python run_evaluation.py --providers watsonx --models ibm/granite-3-8b-instruct
+```
+
+### Optional: Fetch Real SEC Data
+
+By default, the framework uses synthetic data. To fetch real SEC 10-K filings:
+
+```bash
+# Set SEC User-Agent (required by SEC EDGAR)
+export SEC_USER_AGENT="YourName YourEmail@company.com"
+
+# Download 2024 10-K filings for Citigroup, Goldman Sachs, JPMorgan
+python scripts/fetch_sec_texts.py
+
+# Creates: data/sec/*.txt (used by RAG task)
+```
+
 ## 📊 Model Tiers for Financial Compliance
 
 Our experiments across 480 runs (n=16 per condition) reveal **model size inversely correlates with deterministic behavior**:
@@ -104,9 +135,17 @@ Bi-temporal JSONL logging with regulatory mappings (FSB "consistent decisions", 
   - `deterministic_retriever.py`: SEC-aware retrieval with stable ordering
   - `task_definitions.py`: RAG, SQL, and JSON summarization tasks
   - `cross_provider_validation.py`: Multi-provider consistency gates
+- **`providers/`**: LLM provider implementations
+  - `watsonx.py`: IBM watsonx.ai cloud provider (requires API credentials)
+- **`scripts/`**: Data acquisition and utilities
+  - `fetch_sec_texts.py`: Download SEC 10-K filings from EDGAR
 - **`data/`**: Synthetic database generation scripts
+  - `generate_toy_finance.py`: Create SQLite database for SQL tasks
 - **`prompts/`**: Versioned prompt templates from paper (Appendix D)
 - **`examples/`**: Sample audit trails demonstrating regulatory traceability
+- **`make_tables.py`**: Generate LaTeX tables from results (for paper reproduction)
+- **`plot_results.py`**: Create visualizations from aggregate statistics
+- **`run_evaluation.py`**: Main orchestrator supporting Ollama and watsonx providers
 
 ## 🔬 Reproducing Paper Results
 
@@ -122,6 +161,16 @@ python run_evaluation.py \
 ```
 
 Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproducibility manifests.
+
+### Analysis and Visualization
+
+After running evaluations, generate visualizations from your results:
+
+```bash
+# Create drift analysis plots (requires results/aggregate.csv)
+python plot_results.py
+# Output: figs/*.png (drift vs concurrency, latency, etc.)
+```
 
 ## 🚀 Deployment Guidance
 
@@ -143,6 +192,18 @@ Results will be saved as JSONL traces in `traces/*.jsonl` with complete reproduc
 - **SEC 10-K Filings**: Citigroup, Goldman Sachs, JPMorgan Chase (2024) from [EDGAR](https://www.sec.gov/edgar/search/)
 - **Synthetic Database**: Generated via Faker library (see `data/generate_toy_finance.py`)
 - **Prompt Templates**: Complete templates in `prompts/templates.json`
+
+## 📂 About This Repository
+
+**Community-focused, fully-featured framework** for LLM output drift evaluation in financial applications.
+
+**Key Features**:
+- **Ollama-first**: Local evaluation without cloud dependencies
+- **Multi-provider**: Optional IBM watsonx.ai and other cloud providers
+- **Complete tooling**: Analysis, visualization, and SEC data fetching
+- **Workshop materials**: Interactive labs for hands-on learning
+
+**Development**: Maintained by IBM with community contributions. We welcome issues, pull requests, and validation results (see `COMMUNITY_FINDINGS.md`).
 
 ## 📄 Citation
 

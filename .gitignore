@@ -26,6 +26,17 @@ ENV/
 env/
 .venv
 
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+secrets.env
+*secret*
+*credential*
+*.key
+*.pem
+
 # IDEs
 .vscode/
 .idea/
@@ -52,3 +63,20 @@ results/
 # Workshop templates (reference only, not for commit)
 workshop-template/
 opensource-ai-workshop/
+
+# Paper files and internal documentation (IBM internal only, not for public repo)
+main.tex/
+*.pdf
+*.tex
+*.bib
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
+docs-internal/
+.claude/
+sync_to_external.sh
