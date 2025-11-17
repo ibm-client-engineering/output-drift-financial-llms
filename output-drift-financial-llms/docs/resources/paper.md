@@ -60,8 +60,12 @@ All experiments are reproducible using release v0.1.0:
 ```bash
 git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
 cd output-drift-financial-llms
-git checkout v0.1.0
-python run_evaluation.py --config experiments/baseline_config.yaml
+pip install -r requirements.txt
+python run_evaluation.py \
+  --models qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b \
+  --temperatures 0.0,0.2 \
+  --concurrency 1,4,16 \
+  --repeats 16
 ```
 
 ---
