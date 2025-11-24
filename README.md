@@ -3,6 +3,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2511.07585-b31b1b.svg)](https://arxiv.org/abs/2511.07585)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
+[![Hugging Face Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-blue)](https://huggingface.co/datasets/raffi-souren/llm-drift-financial-eval)
+[![Hugging Face Framework](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Framework-blue)](https://huggingface.co/raffi-souren/llm-output-drift-financial-workflows)
 
 > **Key Finding**: 7-8B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
 
