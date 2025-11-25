@@ -3,6 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2511.07585-b31b1b.svg)](https://arxiv.org/abs/2511.07585)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
+[![Hugging Face Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-blue)](https://huggingface.co/datasets/raffi-souren/llm-drift-financial-eval)
 
 > **Key Finding**: 7-8B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
 
@@ -67,15 +68,16 @@ python scripts/fetch_sec_texts.py
 
 ## 📊 Model Tiers for Financial Compliance
 
-Our experiments across 480 runs (n=16 per condition) reveal **model size inversely correlates with deterministic behavior**:
+Our experiments across 480+ runs (n=16 per condition) reveal **model size inversely correlates with deterministic behavior**:
 
 | Tier | Models | Consistency @ T=0.0 | Compliance | Recommended Use |
 |------|--------|---------------------|------------|-----------------|
-| **Tier 1** | 7-8B (Granite-3-8B, Qwen2.5-7B) | **100%** | ✅ Audit-Ready | **All regulated tasks** |
+| **Tier 1** | 7-8B (Granite-3-8B, Qwen2.5-7B, Claude Sonnet 4) | **100%** | ✅ Audit-Ready | **All regulated tasks** |
 | **Tier 2** | 40-70B (Llama-3.3-70B, Mistral) | 56-100% | △ Task-Specific | SQL/structured only |
+| **Frontier** | 120B+ (Claude Opus 4.5, Gemini 2.5 Pro) | **50-100%** | △ Task-Dependent | SQL only (100%), avoid RAG |
 | **Tier 3** | 120B (GPT-OSS-120B) | **12.5%** | ❌ Non-Compliant | **Avoid for compliance** |
 
-**Key insight**: Smaller, well-engineered models (7-8B) outperform larger models (120B+) for regulated financial applications. Granite-3-8B and Qwen2.5-7B achieve perfect output consistency required for audit trails, while GPT-OSS-120B's 12.5% consistency makes it unsuitable for credit decisions, regulatory reporting, or any workflow requiring reproducibility.
+**Key insight**: Smaller, well-engineered models (7-8B) outperform larger models (120B+) for regulated financial applications. Frontier models (Claude Opus, Gemini) show a **task-structure effect**: 100% SQL determinism but only 50-62% RAG consistency under load. This suggests schema constraints enforce determinism while unstructured generation exposes architectural non-determinism.
 
 ## 🔧 Framework Components
 
@@ -137,6 +139,8 @@ Bi-temporal JSONL logging with regulatory mappings (FSB "consistent decisions", 
   - `cross_provider_validation.py`: Multi-provider consistency gates
 - **`providers/`**: LLM provider implementations
   - `watsonx.py`: IBM watsonx.ai cloud provider (requires API credentials)
+  - `anthropic.py`: Anthropic Claude API (requires `ANTHROPIC_API_KEY`)
+  - `gemini.py`: Google Gemini API (requires `GEMINI_API_KEY`)
 - **`scripts/`**: Data acquisition and utilities
   - `fetch_sec_texts.py`: Download SEC 10-K filings from EDGAR
 - **`data/`**: Synthetic database generation scripts
