@@ -144,7 +144,9 @@ class OllamaProvider(LLMProvider):
         if seed is not None:
             payload["options"]["seed"] = int(seed)
 
-        async with httpx.AsyncClient(timeout=180) as client:
+        # Increased timeout for slower models and initial model loading
+        # Granite4 and other large models can take 5+ minutes on first run
+        async with httpx.AsyncClient(timeout=600) as client:
             r = await client.post(f"{self.host}/api/chat", json=payload)
             r.raise_for_status()
             data = r.json()
@@ -241,6 +243,110 @@ class WatsonxProviderAdapter(LLMProvider):
 
         prompt = _concat_messages(messages)
         result = self._provider.generate(
+            model=model,
+            prompt=prompt,
+            temperature=temperature,
+            top_p=top_p,
+            seed=seed,
+            max_new_tokens=max_tokens,
+            stream=stream,
+            extra=extra
+        )
+        return result["text"]
+
+
+class AnthropicProviderAdapter(LLMProvider):
+    """Adapter to make AnthropicProvider compatible with async interface."""
+
+    def __init__(self):
+        self.name = "anthropic"
+        try:
+            from providers.anthropic import AnthropicProvider
+            self._provider = AnthropicProvider()
+            self.enabled = True
+        except (ImportError, ValueError) as e:
+            print(f"[warn] Anthropic provider initialization failed: {e}")
+            print("[info] Set ANTHROPIC_API_KEY environment variable to enable")
+            self.enabled = False
+            self._provider = None
+
+    def supports_listing(self) -> bool:
+        return self._provider and self._provider.supports_listing()
+
+    def list_models(self) -> List[str]:
+        if not self._provider:
+            return []
+        return self._provider.list_models()
+
+    async def acomplete(
+        self,
+        model,
+        messages,
+        *,
+        temperature=0.0,
+        top_p=1.0,
+        seed=None,
+        max_tokens=MAX_TOKENS,
+        stream=False,
+        extra=None
+    ):
+        if not self.enabled:
+            raise RuntimeError("Anthropic provider not enabled. Set ANTHROPIC_API_KEY.")
+
+        prompt = _concat_messages(messages)
+        result = await self._provider.agenerate(
+            model=model,
+            prompt=prompt,
+            temperature=temperature,
+            top_p=top_p,
+            seed=seed,
+            max_new_tokens=max_tokens,
+            stream=stream,
+            extra=extra
+        )
+        return result["text"]
+
+
+class GeminiProviderAdapter(LLMProvider):
+    """Adapter to make GeminiProvider compatible with async interface."""
+
+    def __init__(self):
+        self.name = "gemini"
+        try:
+            from providers.gemini import GeminiProvider
+            self._provider = GeminiProvider()
+            self.enabled = True
+        except (ImportError, ValueError) as e:
+            print(f"[warn] Gemini provider initialization failed: {e}")
+            print("[info] Set GEMINI_API_KEY environment variable to enable")
+            self.enabled = False
+            self._provider = None
+
+    def supports_listing(self) -> bool:
+        return self._provider and self._provider.supports_listing()
+
+    def list_models(self) -> List[str]:
+        if not self._provider:
+            return []
+        return self._provider.list_models()
+
+    async def acomplete(
+        self,
+        model,
+        messages,
+        *,
+        temperature=0.0,
+        top_p=1.0,
+        seed=None,
+        max_tokens=MAX_TOKENS,
+        stream=False,
+        extra=None
+    ):
+        if not self.enabled:
+            raise RuntimeError("Gemini provider not enabled. Set GEMINI_API_KEY.")
+
+        prompt = _concat_messages(messages)
+        result = await self._provider.agenerate(
             model=model,
             prompt=prompt,
             temperature=temperature,
@@ -546,7 +652,7 @@ async def run_condition(
 def build_prompts() -> Dict[str, List[Tuple[str, str]]]:
     """Build test prompts for all tasks."""
     rag_questions = [
-        ("q1", "What were JPMorgan's net credit losses in 2023? Include a citation."),
+        ("q1", "What were JPMorgan's net credit losses in 2024? Include a citation."),
         ("q2", "List Citigroup's primary risk factors mentioned in the annual report. Include a citation.")
     ]
 
@@ -597,7 +703,7 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
         "--providers",
         type=str,
         default=",".join(DEFAULT_PROVIDERS),
-        help="Providers to use: ollama,watsonx,mock (watsonx requires WATSONX_API_KEY, WATSONX_URL, WATSONX_PROJECT_ID)"
+        help="Providers: ollama,watsonx,anthropic,gemini,mock (set env vars: WATSONX_*, ANTHROPIC_API_KEY, GEMINI_API_KEY)"
     )
     parser.add_argument(
         "--repeats",
@@ -692,6 +798,22 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
             print("[✓] Watsonx provider initialized")
         else:
             print("[!] Watsonx provider skipped (check environment variables)")
+
+    if "anthropic" in providers:
+        anth = AnthropicProviderAdapter()
+        if anth.enabled:
+            prov_objs.append(anth)
+            print("[✓] Anthropic provider initialized")
+        else:
+            print("[!] Anthropic provider skipped (set ANTHROPIC_API_KEY)")
+
+    if "gemini" in providers:
+        gem = GeminiProviderAdapter()
+        if gem.enabled:
+            prov_objs.append(gem)
+            print("[✓] Gemini provider initialized")
+        else:
+            print("[!] Gemini provider skipped (set GEMINI_API_KEY)")
 
     if "mock" in providers:
         prov_objs.append(MockProvider())
