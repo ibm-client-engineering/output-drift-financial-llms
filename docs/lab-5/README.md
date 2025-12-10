@@ -338,7 +338,7 @@ Even with identical model versions, providers may differ in:
 4. **Load balancing**: Multiple model replicas
 
 !!! info "Tier 1 Advantage"
-    Tier 1 models (7-8B) are **small enough** to fit on a single GPU consistently, reducing infrastructure-induced variance.
+    Tier 1 models (7-20B) are **small enough** to fit on a single GPU consistently, reducing infrastructure-induced variance.
 
 ## Troubleshooting
 
@@ -379,7 +379,7 @@ print("watsonx output:", repr(watsonx_output))
 ## Key Takeaways
 
 1. **Cross-provider validation** ensures migration safety
-2. **Tier 1 models** (7-8B) achieve perfect cross-provider consistency
+2. **Tier 1 models** (7-20B) achieve perfect cross-provider consistency
 3. **GAAP materiality (±5%)** provides finance-calibrated tolerance
 4. **Framework's `CrossProviderValidator`** automates testing
 5. **Audit trails** document cross-provider equivalence
@@ -390,7 +390,7 @@ print("watsonx output:", repr(watsonx_output))
     **Answer**: ±5%, based on GAAP auditing standards for financial statement materiality.
 
 ??? question "Why do Tier 1 models show better cross-provider consistency?"
-    **Answer**: They're small enough (7-8B params) to fit on a single GPU, reducing infrastructure-induced variance from distributed processing.
+    **Answer**: They're small enough (7-20B params) to fit on a single GPU, reducing infrastructure-induced variance from distributed processing.
 
 ??? question "When is migration from Tier 1 to Tier 2 safe?"
     **Answer**: Only for structured tasks (SQL, summarization). RAG tasks require explicit validation due to Tier 2's lower RAG consistency.

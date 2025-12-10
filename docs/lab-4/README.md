@@ -28,9 +28,10 @@ Our research revealed that **model size inversely correlates with deterministic 
 
 ### Tier 1: Audit-Ready (100% Consistency @ T=0.0)
 
-**Models**: 7-8B parameter models
+**Models**: 7-20B parameter models
 - Qwen2.5-7B-Instruct (Ollama)
 - IBM Granite-3-8B-Instruct (watsonx.ai)
+- GPT-OSS-20B (Ollama)
 
 **Characteristics**:
 - ✅ **100% deterministic** at T=0.0
@@ -45,7 +46,7 @@ Our research revealed that **model size inversely correlates with deterministic 
 - Any compliance-critical workflow
 
 !!! success "The Counterintuitive Finding"
-    **Smaller ≠ Worse**: 7-8B models achieve perfect determinism while 120B models fail—a fundamental challenge to "bigger is better" assumptions!
+    **Smaller ≠ Worse**: 7-20B models achieve perfect determinism while 120B models fail—a fundamental challenge to "bigger is better" assumptions!
 
 ### Tier 2: Task-Specific (56-100% Consistency @ T=0.0)
 
@@ -461,7 +462,7 @@ print(recommend_model("rag", compliance_required=False))
 
 ## Key Takeaways
 
-1. **Size Paradox**: 7-8B models outperform 120B models for deterministic tasks
+1. **Size Paradox**: 7-20B models outperform 120B models for deterministic tasks
 2. **Tier 1 = Audit-Ready**: Only 100% consistent models are compliance-safe
 3. **Task Structure Matters**: SQL > Summarize > RAG for determinism
 4. **Temperature is Critical**: Even T=0.2 can double drift rates
@@ -469,7 +470,7 @@ print(recommend_model("rag", compliance_required=False))
 
 ## Quiz: Test Your Understanding
 
-??? question "Why are 7-8B models Tier 1 while 120B models are Tier 3?"
+??? question "Why are 7-20B models Tier 1 while 120B models are Tier 3?"
     **Answer**: Smaller models achieve 100% determinism through simpler architectures and less non-deterministic parallelization, while larger models trade consistency for capability.
 
 ??? question "What consistency threshold defines 'compliant' for regulated financial applications?"

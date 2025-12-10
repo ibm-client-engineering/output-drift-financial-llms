@@ -362,7 +362,7 @@ mkdir -p traces
 
 ### `RuntimeError: Found no NVIDIA driver on your system`
 
-**Not an error** - Ollama will use CPU, which is fine for 7-8B models.
+**Not an error** - Ollama will use CPU, which is fine for 7-20B models.
 
 ### `ImportError: cannot import name 'DeterministicRetriever'`
 

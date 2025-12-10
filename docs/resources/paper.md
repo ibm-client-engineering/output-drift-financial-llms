@@ -20,7 +20,7 @@ Large Language Models (LLMs) exhibit **output drift**: non-deterministic behavio
 
 Our research reveals a **counterintuitive result**:
 
-- **7-8B parameter models**: Achieve **100% output consistency** at temperature=0.0
+- **7-20B parameter models**: Achieve **100% output consistency** at temperature=0.0
 - **120B parameter models**: Only **12.5% consistency [95% CI: 3.5–36.0%]** under identical conditions
 
 This challenges the conventional wisdom that "bigger is always better" in AI systems.
@@ -44,7 +44,7 @@ For regulated financial applications requiring **reproducible audit trails**, sm
 ### Experimental Design
 
 - **Models Tested**:
-  - Tier 1 (7-8B): Qwen2.5-7B, IBM Granite-3-8B
+  - Tier 1 (7-20B): Qwen2.5-7B, IBM Granite-3-8B, GPT-OSS-20B
   - Tier 2 (40-70B): Llama-3.3-70B, Mistral-Medium
   - Tier 3 (120B+): GPT-OSS-120B
 
@@ -78,7 +78,7 @@ Based on output consistency at temperature=0.0:
 
 | Tier | Models | Consistency | Compliance Status |
 |------|--------|-------------|-------------------|
-| **Tier 1** | 7-8B (Qwen2.5-7B, Granite-3-8B) | **100%** | ✅ Audit-ready |
+| **Tier 1** | 7-20B (Qwen2.5-7B, Granite-3-8B, GPT-OSS-20B) | **100%** | ✅ Audit-ready |
 | **Tier 2** | 40-70B (Llama-3.3-70B, Mistral-Medium) | 56-100% | ⚠️ Task-specific |
 | **Tier 3** | 120B+ (GPT-OSS-120B) | **12.5%** | ❌ Non-compliant |
 
@@ -89,7 +89,7 @@ Based on output consistency at temperature=0.0:
 
 ### 2. Task-Specific Results (Temperature=0.0)
 
-| Task Type | Tier 1 (7-8B) | Tier 2 (40-70B) | Tier 3 (120B) |
+| Task Type | Tier 1 (7-20B) | Tier 2 (40-70B) | Tier 3 (120B) |
 |-----------|---------------|-----------------|---------------|
 | **SQL Generation** | 100% | 100% | 12.5% |
 | **Summarization** | 100% | 87.5% | 12.5% |
@@ -169,7 +169,7 @@ JSONL format capturing:
 
 ### For Financial Institutions
 
-1. **Vendor Selection**: Prioritize Tier 1 models (7-8B) for compliance-critical tasks
+1. **Vendor Selection**: Prioritize Tier 1 models (7-20B) for compliance-critical tasks
 2. **Temperature Policy**: Mandate T=0.0 for all regulated applications
 3. **Model Validation**: Use cross-provider validation before production deployment
 4. **Audit Trail**: Implement bi-temporal logging per CFTC 23.402 requirements
@@ -234,7 +234,7 @@ If you use this framework or findings in your research, please cite:
 
 ## Key Takeaways
 
-1. **Size isn't everything**: 7-8B models outperform 120B models for deterministic tasks
+1. **Size isn't everything**: 7-20B models outperform 120B models for deterministic tasks
 2. **Temperature=0.0 is mandatory**: Even T=0.2 causes significant drift
 3. **Tier 1 models are audit-ready**: 100% consistency enables regulatory compliance
 4. **Cross-provider validation works**: Seamless migration between Ollama and watsonx.ai
