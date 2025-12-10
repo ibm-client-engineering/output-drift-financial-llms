@@ -42,7 +42,7 @@ ollama pull qwen2.5:7b-instruct
 ```
 
 !!! tip "Why Qwen2.5:7B?"
-    According to our research, **7-8B models achieve 100% deterministic outputs at T=0.0**, making them ideal for regulated financial applications. Qwen2.5:7B is a Tier 1 model—audit-ready and compliance-safe.
+    According to our research, **7-20B models achieve 100% deterministic outputs at T=0.0**, making them ideal for regulated financial applications. Qwen2.5:7B is a Tier 1 model—audit-ready and compliance-safe.
 
 ## Step 2: Configure Environment Variables
 
@@ -215,7 +215,7 @@ Consistency: ✅ 100%
 ```
 
 !!! success "Tier 1 Determinism"
-    7-8B models achieve **100% consistency at T=0.0**—this is what makes them audit-ready!
+    7-20B models achieve **100% consistency at T=0.0**—this is what makes them audit-ready!
 
 ## Step 5: Understanding Task Definitions
 
@@ -379,7 +379,7 @@ pip install -r requirements.txt
 
 ## Key Takeaways
 
-1. **Tier 1 Models**: 7-8B models (Qwen2.5, Granite-3-8B) achieve 100% determinism
+1. **Tier 1 Models**: 7-20B models (Qwen2.5, Granite-3-8B, GPT-OSS-20B) achieve 100% determinism
 2. **DeterministicRetriever**: Ensures reproducible SEC 10-K retrieval
 3. **Audit Trails**: Bi-temporal JSONL logging enables regulatory review
 4. **Task Types**: SQL and summarization are perfectly deterministic; RAG requires careful configuration
@@ -390,7 +390,7 @@ pip install -r requirements.txt
 ??? question "Why use multi-key ordering in DeterministicRetriever?"
     **Answer**: To ensure retrieval order is deterministic and reproducible for compliance. Even if chunks have the same relevance score, they must return in a consistent order for audit trails.
 
-??? question "What makes 7-8B models Tier 1 (audit-ready)?"
+??? question "What makes 7-20B models Tier 1 (audit-ready)?"
     **Answer**: They achieve 100% consistency at T=0.0 across all task types, meeting regulatory requirements for reproducibility.
 
 ??? question "What is the GAAP materiality threshold used in cross-provider validation?"

@@ -5,7 +5,7 @@
 [![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
 [![Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Framework-blue)](https://huggingface.co/raffi-souren/llm-output-drift-financial-workflows)
 
-> **Key Finding**: 7-8B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
+> **Key Finding**: 7-20B models achieve 100% deterministic outputs at T=0.0, while 120B models exhibit only 12.5% consistency—fundamentally challenging assumptions about model scale for regulated applications.
 
 **📚 [Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** | Complete hands-on labs (0-6) covering setup, experiments, analysis, and framework extension.
 
@@ -78,12 +78,12 @@ Our experiments across 480+ runs (n=16 per condition) reveal **model size invers
 
 | Tier | Models | Consistency @ T=0.0 | Compliance | Recommended Use |
 |------|--------|---------------------|------------|-----------------|
-| **Tier 1** | 7-8B (Granite-3-8B, Qwen2.5-7B, Claude Sonnet 4) | **100%** | ✅ Audit-Ready | **All regulated tasks** |
+| **Tier 1** | 7-20B (Granite-3-8B, Qwen2.5-7B, GPT-OSS-20B, Claude Sonnet 4) | **100%** | ✅ Audit-Ready | **All regulated tasks** |
 | **Tier 2** | 40-70B (Llama-3.3-70B, Mistral) | 56-100% | △ Task-Specific | SQL/structured only |
 | **Frontier** | 120B+ (Claude Opus 4.5, Gemini 2.5 Pro) | **50-100%** | △ Task-Dependent | SQL only (100%), avoid RAG |
 | **Tier 3** | 120B (GPT-OSS-120B) | **12.5%** | ❌ Non-Compliant | **Avoid for compliance** |
 
-**Key insight**: Smaller, well-engineered models (7-8B) outperform larger models (120B+) for regulated financial applications. Frontier models (Claude Opus, Gemini) show a **task-structure effect**: 100% SQL determinism but only 50-62% RAG consistency under load. This suggests schema constraints enforce determinism while unstructured generation exposes architectural non-determinism.
+**Key insight**: Smaller, well-engineered models (7-20B) outperform larger models (120B+) for regulated financial applications. Frontier models (Claude Opus, Gemini) show a **task-structure effect**: 100% SQL determinism but only 50-62% RAG consistency under load. This suggests schema constraints enforce determinism while unstructured generation exposes architectural non-determinism.
 
 ## 🔧 Framework Components
 

@@ -54,7 +54,7 @@ This workshop is based on the peer-reviewed paper:
 
 **Key Findings:**
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
-- 7-8B models (Granite-3-8B, Qwen2.5-7B) achieve 100% determinism at T=0.0
+- 7-20B models (Granite-3-8B, Qwen2.5-7B, GPT-OSS-20B) achieve 100% determinism at T=0.0
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
 - Structured output tasks (SQL, summarization) maintain better determinism
 - Cross-provider experiments reveal significant reliability gaps
