@@ -114,7 +114,7 @@ Response 1 (4 occurrences):
 ```
 
 !!! success "Tier 1 Performance"
-    7-8B models maintain 100% consistency even with concurrent requests—critical for production workloads.
+    7-20B models maintain 100% consistency even with concurrent requests—critical for production workloads.
 
 ## Step 3: Paper-Standard Test (n=16)
 
@@ -475,7 +475,7 @@ For large concurrency (n=16):
 
 ## Key Takeaways
 
-1. **7-8B models** (Tier 1) achieve 100% consistency at T=0.0 for all tasks
+1. **7-20B models** (Tier 1) achieve 100% consistency at T=0.0 for all tasks
 2. **Concurrency doesn't affect consistency** for Tier 1 models (n=1, 4, or 16)
 3. **Task structure matters**: SQL/summarization > RAG for determinism
 4. **Temperature sensitivity**: RAG tasks degrade significantly at T=0.2

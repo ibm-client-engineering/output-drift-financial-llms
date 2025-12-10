@@ -2,7 +2,7 @@
 
 > **Work in Progress** - Community members are actively experimenting with the framework. Results below are preliminary.
 
-## Independent Validation (November 2024)
+## Independent Validation (November 17, 2025)
 
 **Paul Merrison** ([paul@paulmerrison.io](mailto:paul@paulmerrison.io), [FINOS](https://www.finos.org/)) tested 6 models (3B-20B) and found that determinism is **model-specific**, not size-based:
 
