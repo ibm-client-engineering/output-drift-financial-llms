@@ -102,7 +102,7 @@ Our research quantified drift across multiple dimensions using 480 total runs (n
 | **Mistral Medium** | 40B | 56-100% | Tier 2 | ⚠️ Task-specific |
 | **GPT-OSS-120B** | 120B | **12.5% [CI: 3.5–36.0%]** | Tier 3 | ❌ Non-compliant |
 
-**Counterintuitive finding**: 7-8B models achieve perfect determinism while 120B models show only 12.5% consistency!
+**Counterintuitive finding**: 7-20B models achieve perfect determinism while 120B models show only 12.5% consistency!
 
 !!! note "Understanding Statistical Notation"
     Throughout this workshop, we report **95% Confidence Intervals (CI)** for our findings. For example, "12.5% [CI: 3.5–36.0%]" means we measured 12.5% consistency, but the true value likely falls between 3.5% and 36.0%.
@@ -139,9 +139,10 @@ At **temperature = 0.2** (common in production):
 Tier Classification (16 concurrent runs, temp=0.0)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Tier 1 (7-8B):
+Tier 1 (7-20B):
 Qwen2.5-7B      ████████████████████  100% ✅
 Granite-3-8B    ████████████████████  100% ✅
+GPT-OSS-20B     ████████████████████  100% ✅
 
 Tier 2 (40-70B):
 Llama-3.3-70B   ████████████████      80%  △
@@ -291,7 +292,7 @@ Run 5: 2 + 2 = 4
     **Answer**: RAG (Retrieval-Augmented Generation) tasks, especially at temperature > 0.0.
 
 ??? question "Question 4: Does setting temperature=0.0 eliminate drift?"
-    **Answer**: It depends on model size! Tier 1 models (7-8B) achieve 100% consistency at T=0.0, but Tier 3 models (120B+) show only 12.5% consistency even at T=0.0.
+    **Answer**: It depends on model size! Tier 1 models (7-20B) achieve 100% consistency at T=0.0, but Tier 3 models (120B+) show only 12.5% consistency even at T=0.0.
 
 ## Next Steps
 
