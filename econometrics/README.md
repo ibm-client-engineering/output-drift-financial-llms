@@ -1,27 +1,26 @@
-# V3 Research: Econometric & Agentic Analysis of LLM Drift
+# Replayable Agents (v2): Econometric & Agentic Analysis of LLM Drift
 
-**Internal Reference: V3 Paper Development**
-
-> **Note for Management**: This represents our V3 research direction - a standalone, net-new research project that builds on V1 (LLM Output Drift paper, ICAIF 2025) and V2 (production load testing framework). While architecturally connected to the existing codebase, this is original research targeting new publication venues.
+> **v2 Extension** of the [LLM Output Drift framework](https://arxiv.org/abs/2511.07585) (v1, ICAIF 2025). This module adds econometric methods for LLMs as measurement instruments and replayability/auditability frameworks for tool-using agents.
 
 ---
 
-## Publication Targets
+## Version History
 
-| Track | Venue | Deadline | Status |
-|-------|-------|----------|--------|
-| **Agentic** | ICLR 2026 FinAI Workshop (Rio) | Jan 30, 2026 | 📝 Outline Complete |
-| **Econometric** | JFDS / Journal of Financial Economics | Rolling | 🔬 Framework Built |
+| Version | Focus | Status |
+|---------|-------|--------|
+| **v1** | Output drift measurement (single-turn tasks) | Published (ICAIF 2025) |
+| **v2** | Agent trajectory determinism & faithfulness | Current |
+| **v3** | Panel econometrics for drift-contaminated data | Planned |
 
 ---
 
 ## Overview
 
-This module extends the empirical findings from the [LLM Output Drift paper](../main.tex/) into two complementary research directions:
+This module extends the empirical findings from the LLM Output Drift paper into two complementary research directions:
 
 1. **Econometrics Track**: Rigorous framework for using LLMs as measurement instruments in social science research (extends Ludwig et al. 2024)
 
-2. **Agentic Track**: Replayability and auditability for tool-using LLM agents in financial workflows (ICLR 2026 FinAI submission)
+2. **Agentic Track**: Replayability and auditability for tool-using LLM agents in financial workflows
 
 ## Research Motivation
 
@@ -180,9 +179,11 @@ This framework requires:
 
 If building on the drift findings:
 ```bibtex
-@article{llm-output-drift-2024,
-  title={LLM Output Drift: Cross-Provider Validation for Financial Workflows},
-  year={2024}
+@article{khatchadourian2025output,
+  title={LLM Output Drift: Financial AI Compliance Framework},
+  author={Khatchadourian, Raffi and Franco, Rolando},
+  journal={arXiv preprint arXiv:2511.07585},
+  year={2025}
 }
 ```
 
@@ -198,7 +199,7 @@ If using the econometric framework:
 
 ---
 
-## Agentic Track: ICLR 2026 FinAI Workshop
+## Agentic Track: Replayable Financial Agents
 
 **Working Title**: *Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents*
 
@@ -230,15 +231,13 @@ Agentic AI in finance becomes auditable and safe when we can replay an agent's t
 - OpenAI (2024): CoT Monitorability - Reasoning may not reflect decision process
 - Ludwig et al. (2024): Econometric Framework for LLMs
 
-See [paper/ICLR_FINAI_2026_OUTLINE.md](paper/ICLR_FINAI_2026_OUTLINE.md) for full outline.
-
 ---
 
 ## Module Structure
 
 ```
 econometrics/
-├── README.md                           # This file (V3 research overview)
+├── README.md                           # This file
 ├── __init__.py                         # Package exports
 │
 ├── # Econometric Track
@@ -247,7 +246,7 @@ econometrics/
 ├── validation_debiasing.py             # Ludwig et al. extension
 ├── leakage_detection.py                # Training data leakage
 │
-├── # Agentic Track (ICLR 2026)
+├── # Agentic Track
 ├── agentic/
 │   ├── __init__.py
 │   ├── metrics/
@@ -255,34 +254,15 @@ econometrics/
 │   │   └── faithfulness.py             # Evidence-conditioned faithfulness
 │   ├── harness/
 │   │   └── stress_test_runner.py       # Drift stress-test harness
-│   ├── tasks/                          # (Planned) Benchmark tasks
-│   └── experiments/                    # (Planned) Full experiments
+│   ├── benchmarks/                     # Financial task benchmarks
+│   └── agents/                         # Agent implementations
 │
-├── paper/
-│   ├── ICLR_FINAI_2026_OUTLINE.md     # Full paper outline
-│   └── references.bib                  # Bibliography
-│
+├── paper/                              # Paper materials
 ├── data/                               # Experiment data
 ├── experiments/                        # Experiment runners
 ├── analysis/                           # Analysis notebooks
 └── figures/                            # Generated figures
 ```
-
----
-
-## Integration with Existing V2 Infrastructure
-
-This V3 research builds on and reuses V2 components:
-
-| V2 Component | V3 Usage |
-|--------------|----------|
-| `harness/load_models.py` | Load testing infrastructure |
-| `metrics/faithfulness.py` | 2x2 determinism matrix |
-| `metrics/semantic_divergence_light.py` | PRSD framework |
-| `providers/watsonx.py` | Cloud model testing |
-| `experiments/agentic/compound_drift_analyzer.py` | Multi-step analysis |
-
-**Design Principle**: Reuse V2 infrastructure for experimentation, create new abstractions only for V3-specific concepts (trajectory metrics, stress-test harness).
 
 ---
 
