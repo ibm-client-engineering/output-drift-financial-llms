@@ -9,7 +9,21 @@
 
 **📚 [Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** | Complete hands-on labs (0-6) covering setup, experiments, analysis, and framework extension.
 
-This repository contains the evaluation framework from our ACM ICAIF 2025 paper demonstrating how to achieve audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls.
+This repository contains the evaluation framework from our AI4F workshop @ ACM ICAIF 2025 paper demonstrating how to achieve audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls.
+
+## 📑 Research Evolution
+
+This framework supports an evolving line of research on LLM determinism for financial compliance:
+
+| Version | Focus | Key Contribution |
+|---------|-------|------------------|
+| **v1** | Output Drift | Cross-provider validation, model tier classification ([arXiv:2511.07585](https://arxiv.org/abs/2511.07585)) |
+| **v2** | Econometric Validation | Measurement error correction, semantic divergence metrics |
+| **v3** | Replayable Agents | Agent determinism, faithfulness metrics, stress testing |
+
+**Code Organization**:
+- **Root** (`harness/`, `providers/`, `run_evaluation.py`): v1 evaluation framework
+- **`econometrics/`**: v2/v3 extensions—agent benchmarks, stress testing, econometric modules
 
 ## 🎯 Quick Start (5 Minutes)
 
@@ -156,9 +170,26 @@ Bi-temporal JSONL logging with regulatory mappings (FSB "consistent decisions", 
 - **`make_tables.py`**: Generate LaTeX tables from results (for paper reproduction)
 - **`plot_results.py`**: Create visualizations from aggregate statistics
 - **`run_evaluation.py`**: Main orchestrator supporting Ollama and watsonx providers
-- **`econometrics/`**: v2 Replayable Agents experiments
-  - `agentic/`: Trajectory determinism & faithfulness metrics
-  - `benchmarks/`: 3 financial tasks × 50 test cases each
+- **`econometrics/`**: Replayable Agents research (v2/v3 extensions)
+  - `agentic/benchmarks/`: Financial task benchmarks (Compliance Triage, Portfolio Constraint, DataOps)
+  - `agentic/agents/`: Agent architectures (schema-first, unconstrained ReAct)
+  - `agentic/metrics/`: Trajectory determinism, faithfulness measurement
+  - `agentic/harness/`: Stress-test runner (redeployment, data faults, volatility shocks)
+  - `validation_debiasing.py`: Measurement error correction framework
+  - `drift_variance_estimator.py`: Multi-run variance analysis
+  - `VALIDATION_RESULTS.md`: Full experimental results
+  - `FINDINGS_EXPLAINED.md`: Plain-language summary
+
+## 🧭 Quick Navigation
+
+| I want to... | Go to |
+|--------------|-------|
+| Run basic drift evaluation (v1) | `python run_evaluation.py` |
+| Run agent benchmarks (v3) | `python -m econometrics.agentic.run_benchmarks` |
+| See experimental results | `econometrics/VALIDATION_RESULTS.md` |
+| Understand the findings | `econometrics/FINDINGS_EXPLAINED.md` |
+| Learn about model tiers | See table above + `econometrics/README.md` |
+| Interactive workshop | [Workshop Labs →](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
 
 ## 🔬 Reproducing Paper Results
 
@@ -217,19 +248,6 @@ python plot_results.py
 - **Workshop materials**: Interactive labs for hands-on learning
 
 **Development**: Maintained by IBM with community contributions. We welcome issues, pull requests, and validation results (see `COMMUNITY_FINDINGS.md`).
-
-## 📚 Paper Lineage
-
-This repository supports two related research papers:
-
-| Paper | Venue | Focus | Code Location |
-|-------|-------|-------|---------------|
-| **LLM Output Drift** | ACM ICAIF 2025 | Cross-provider determinism validation | Root folder (`harness/`, `providers/`) |
-| **Replayable Financial Agents** | *Upcoming* | Agent trajectory determinism & faithfulness | `econometrics/` folder |
-
-**v1 → v2 Evolution**: The original work measured output consistency for single-turn tasks (SQL, RAG, summarization). The follow-up extends to **tool-using agents**, introducing trajectory determinism metrics and stress-test harnesses for production disruptions.
-
-> 📖 Workshop materials in `docs/` are for the v1 paper only.
 
 ## 📄 Citation
 
