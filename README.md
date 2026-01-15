@@ -156,6 +156,9 @@ Bi-temporal JSONL logging with regulatory mappings (FSB "consistent decisions", 
 - **`make_tables.py`**: Generate LaTeX tables from results (for paper reproduction)
 - **`plot_results.py`**: Create visualizations from aggregate statistics
 - **`run_evaluation.py`**: Main orchestrator supporting Ollama and watsonx providers
+- **`econometrics/`**: v2 Replayable Agents experiments
+  - `agentic/`: Trajectory determinism & faithfulness metrics
+  - `benchmarks/`: 3 financial tasks × 50 test cases each
 
 ## 🔬 Reproducing Paper Results
 
@@ -214,6 +217,19 @@ python plot_results.py
 - **Workshop materials**: Interactive labs for hands-on learning
 
 **Development**: Maintained by IBM with community contributions. We welcome issues, pull requests, and validation results (see `COMMUNITY_FINDINGS.md`).
+
+## 📚 Paper Lineage
+
+This repository supports two related research papers:
+
+| Paper | Venue | Focus | Code Location |
+|-------|-------|-------|---------------|
+| **LLM Output Drift** | ACM ICAIF 2025 | Cross-provider determinism validation | Root folder (`harness/`, `providers/`) |
+| **Replayable Financial Agents** | *Upcoming* | Agent trajectory determinism & faithfulness | `econometrics/` folder |
+
+**v1 → v2 Evolution**: The original work measured output consistency for single-turn tasks (SQL, RAG, summarization). The follow-up extends to **tool-using agents**, introducing trajectory determinism metrics and stress-test harnesses for production disruptions.
+
+> 📖 Workshop materials in `docs/` are for the v1 paper only.
 
 ## 📄 Citation
 
