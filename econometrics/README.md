@@ -85,15 +85,6 @@ For prediction tasks (vs. estimation), training data leakage invalidates out-of-
 | `validation_debiasing.py` | Drift-augmented debiasing | Extends Ludwig et al. (2024) |
 | `leakage_detection.py` | Training data leakage | Temporal + n-gram detection |
 
-### Planned Extensions
-
-| Module | Status | Description |
-|--------|--------|-------------|
-| `panel_drift_analysis.py` | Planned | Time-series drift with fixed effects |
-| `bootstrap_inference.py` | Planned | Cluster-robust standard errors |
-| `causal_estimation.py` | Planned | IV methods for drift-contaminated data |
-| `simulation_studies.py` | Planned | Monte Carlo validation of methods |
-
 ## Relationship to Ludwig et al. (2024)
 
 This work builds directly on the foundational framework in:
@@ -140,34 +131,6 @@ print(f"Naive beta: {results.beta_naive[1]:.3f}")
 print(f"Drift-corrected beta: {results.beta_drift_debiased[1]:.3f}")
 ```
 
-## Research Agenda
-
-### Phase 1: Foundation (Current)
-- [x] Drift variance estimation framework
-- [x] Semantic divergence metrics
-- [x] Validation debiasing with drift correction
-- [x] Leakage detection for prediction tasks
-
-### Phase 2: Panel Methods
-- [ ] Panel drift models with fixed effects
-- [ ] Time-varying drift estimation
-- [ ] Cross-sectional dependence in drift
-
-### Phase 3: Inference
-- [ ] Bootstrap methods for drift-contaminated data
-- [ ] Cluster-robust standard errors
-- [ ] Sensitivity analysis for unobserved drift
-
-### Phase 4: Causal Estimation
-- [ ] Instrumental variables with drift
-- [ ] Regression discontinuity with LLM outcomes
-- [ ] Difference-in-differences with measurement error
-
-### Phase 5: Applications
-- [ ] Sentiment analysis for asset pricing
-- [ ] ESG scoring and investment returns
-- [ ] Earnings call analysis for forecasting
-
 ## Data Requirements
 
 This framework requires:
@@ -179,11 +142,15 @@ This framework requires:
 
 If building on the drift findings:
 ```bibtex
-@article{khatchadourian2025output,
-  title={LLM Output Drift: Financial AI Compliance Framework},
+@misc{khatchadourian2025llm,
+  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  journal={arXiv preprint arXiv:2511.07585},
-  year={2025}
+  year={2025},
+  howpublished={AI4F Workshop at ACM ICAIF '25, Singapore},
+  eprint={2511.07585},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2511.07585}
 }
 ```
 
