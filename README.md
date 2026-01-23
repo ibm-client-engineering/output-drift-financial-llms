@@ -17,7 +17,7 @@ This framework enables audit-ready AI deployments through deterministic configur
 
 | Paper | Focus | Links |
 |-------|-------|-------|
-| **Replayable Agents** (2026) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
+| **Replayable Financial Agents** (2026) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | **Output Drift** (2025) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
 **Code Organization**:
@@ -173,7 +173,7 @@ If you use this framework, please cite:
 
 ```bibtex
 @article{khatchadourian2026replayable,
-  title={Replayable Agents: Determinism and Faithfulness Assurance for Tool-Using LLM Agents in Financial Workflows},
+  title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
   journal={arXiv preprint arXiv:2601.15322},
   year={2026}
