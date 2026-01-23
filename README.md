@@ -174,7 +174,7 @@ If you use this framework, please cite:
 ```bibtex
 @article{khatchadourian2026replayable,
   title={Replayable Agents: Determinism and Faithfulness Assurance for Tool-Using LLM Agents in Financial Workflows},
-  author={Khatchadourian, Raffi and Franco, Rolando},
+  author={Khatchadourian, Raffi},
   journal={arXiv preprint arXiv:2601.15322},
   year={2026}
 }
