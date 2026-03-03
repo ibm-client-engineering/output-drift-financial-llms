@@ -319,6 +319,34 @@ def validate_sql_query(
 
     sql_clean = sql.strip().strip("`").strip()
 
+    # Guard against non-SELECT statements from LLM-generated SQL
+    _sql_upper = sql_clean.upper().lstrip()
+    _FORBIDDEN = ("INSERT", "UPDATE", "DELETE", "DROP", "ALTER", "CREATE",
+                  "TRUNCATE", "REPLACE", "ATTACH", "DETACH", "PRAGMA")
+    if not _sql_upper.startswith("SELECT") and not _sql_upper.startswith("WITH"):
+        return {
+            "executable": False,
+            "gaap_compliant": False,
+            "decision_ok": False,
+            "result": None,
+            "error": f"Only SELECT/WITH queries are permitted, got: {_sql_upper[:20]}",
+            "materiality_deviation": None,
+            "regulatory_threshold": gaap_materiality_threshold,
+            "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+        }
+    for keyword in _FORBIDDEN:
+        if keyword in _sql_upper:
+            return {
+                "executable": False,
+                "gaap_compliant": False,
+                "decision_ok": False,
+                "result": None,
+                "error": f"Forbidden SQL keyword detected: {keyword}",
+                "materiality_deviation": None,
+                "regulatory_threshold": gaap_materiality_threshold,
+                "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+            }
+
     try:
         df = pd.read_sql_query(sql_clean, connection)
 
