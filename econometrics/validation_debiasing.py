@@ -48,6 +48,7 @@ class ValidationSample:
     y_true: np.ndarray  # shape (n,) for binary/categorical
     y_llm: np.ndarray   # shape (n,) - primary LLM run
     y_llm_runs: Optional[np.ndarray] = None  # shape (n, k) for k runs
+    indices: Optional[np.ndarray] = None  # original row indices in full dataset
     metadata: Optional[Dict] = None
 
     def __post_init__(self):
@@ -284,7 +285,10 @@ def debiased_ols_regression(
     # True model: R = alpha + beta * Y_true + epsilon
     # We compare MSE(beta_naive) vs MSE(beta_drift_debiased)
     # For simplicity, use validation sample prediction error
-    val_idx = range(len(validation.texts))  # assume first n_v samples are validation
+    if validation.indices is not None:
+        val_idx = validation.indices
+    else:
+        val_idx = range(len(validation.texts))
     X_val = X_full[val_idx]
     y_val_true = validation.y_true
 
@@ -449,14 +453,16 @@ def example_headline_sentiment_regression():
         texts=[f"headline_{i}" for i in val_idx],
         y_true=y_true_sentiment[val_idx],
         y_llm=y_llm_tier1[val_idx],
-        y_llm_runs=y_llm_tier1_runs[val_idx]
+        y_llm_runs=y_llm_tier1_runs[val_idx],
+        indices=val_idx
     )
 
     validation_tier3 = ValidationSample(
         texts=[f"headline_{i}" for i in val_idx],
         y_true=y_true_sentiment[val_idx],
         y_llm=y_llm_tier3[val_idx],
-        y_llm_runs=y_llm_tier3_runs[val_idx]
+        y_llm_runs=y_llm_tier3_runs[val_idx],
+        indices=val_idx
     )
 
     # Debiased regressions

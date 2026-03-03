@@ -15,10 +15,10 @@ This framework enables audit-ready AI deployments through deterministic configur
 
 ## Publications
 
-| Paper | Focus | Links |
-|-------|-------|-------|
-| **Replayable Financial Agents** (2026) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
-| **Output Drift** (2025) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
+| Paper | Venue | Focus | Links |
+|-------|-------|-------|-------|
+| **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
+| **LLM Output Drift** (2025) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
 **Code Organization**:
 - **Root** (`harness/`, `providers/`, `run_evaluation.py`): Output Drift evaluation framework
@@ -172,18 +172,20 @@ Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
 If you use this framework, please cite:
 
 ```bibtex
-@article{khatchadourian2026replayable,
+@inproceedings{khatchadourian2026replayable,
   title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
-  journal={arXiv preprint arXiv:2601.15322},
-  year={2026}
+  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  year={2026},
+  url={https://arxiv.org/abs/2601.15322}
 }
 
-@article{khatchadourian2025output,
-  title={LLM Output Drift: Financial AI Compliance Framework},
+@inproceedings{khatchadourian2025output,
+  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  journal={arXiv preprint arXiv:2511.07585},
-  year={2025}
+  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  year={2025},
+  url={https://arxiv.org/abs/2511.07585}
 }
 ```
 
