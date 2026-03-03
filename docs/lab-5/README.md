@@ -165,55 +165,60 @@ Create `run_cross_provider_validation.py`:
 #!/usr/bin/env python3
 """
 Use framework's CrossProviderValidator for automated testing.
+
+Note: The validator works with pre-collected outputs. You first run
+experiments on each provider, then validate the outputs for consistency.
 """
 from harness.cross_provider_validation import CrossProviderValidator
 
 # Initialize validator with GAAP materiality threshold
 validator = CrossProviderValidator(
     providers=["ollama", "watsonx"],
-    tolerance_pct=5.0  # ±5% from GAAP auditing standards
+    tolerance_pct=5.0  # +/-5% from GAAP auditing standards
 )
 
-# SQL generation task
-prompt_sql = "Generate SQL to find all customers with account balance > $100,000"
-result_sql = validator.validate(
-    prompt=prompt_sql,
-    task_type="sql",
-    model_ollama="qwen2.5:7b-instruct",
-    model_watsonx="ibm/granite-3-8b-instruct",
-    temperature=0.0,
-    seed=42
-)
+# Assume you've already collected outputs from each provider
+# (e.g., from running run_evaluation.py with --providers ollama and --providers watsonx)
+sql_outputs = {
+    "ollama": "SELECT customer_id, name, balance FROM accounts WHERE balance > 100000;",
+    "watsonx": "SELECT customer_id, name, balance FROM accounts WHERE balance > 100000;"
+}
 
-print("\n📊 SQL Generation Task")
+# Validate SQL outputs
+result_sql = validator.validate(sql_outputs, task_type="sql")
+
+print("\nSQL Generation Task")
 print("=" * 60)
 print(f"Consistent: {result_sql['consistent']}")
-print(f"Similarity: {result_sql['similarity']:.1%}")
-print(f"Validation: {'✅ PASS' if result_sql['consistent'] else '❌ FAIL'}")
+print(f"Similarity: {result_sql['similarity_scores']}")
+print(f"Validation: {'PASS' if result_sql['consistent'] else 'FAIL'}")
 
-# RAG task
-prompt_rag = "What were Citigroup's net credit losses in 2023?"
+# Validate RAG outputs
+rag_outputs = {
+    "ollama": "Citigroup reported net credit losses of $1.2B in 2023. [citi_2024_10k]",
+    "watsonx": "Citigroup reported net credit losses of $1.2 billion in 2023. [citi_2024_10k]"
+}
+rag_citations = {
+    "ollama": ["citi_2024_10k"],
+    "watsonx": ["citi_2024_10k"]
+}
+
 result_rag = validator.validate(
-    prompt=prompt_rag,
-    task_type="rag",
-    model_ollama="qwen2.5:7b-instruct",
-    model_watsonx="ibm/granite-3-8b-instruct",
-    temperature=0.0,
-    seed=42
+    rag_outputs, task_type="rag", citations=rag_citations
 )
 
-print("\n📊 RAG Task")
+print("\nRAG Task")
 print("=" * 60)
 print(f"Consistent: {result_rag['consistent']}")
-print(f"Similarity: {result_rag['similarity']:.1%}")
-print(f"Factual consistency: {result_rag['factual_match']}")
-print(f"Validation: {'✅ PASS' if result_rag['consistent'] else '⚠️  MINOR DRIFT'}")
+print(f"Similarity: {result_rag['similarity_scores']}")
+print(f"Validation: {'PASS' if result_rag['consistent'] else 'MINOR DRIFT'}")
 
-# Generate audit report
-print("\n📄 Cross-Provider Audit Report")
+# Audit trail
+print("\nCross-Provider Audit Report")
 print("=" * 60)
-for provider, output in result_sql['outputs'].items():
-    print(f"{provider:15s}: {output[:80]}...")
+for record in result_sql['audit_trail']:
+    print(f"Providers: {record['providers']}")
+    print(f"Output hashes: {record['output_hashes']}")
 ```
 
 Run it:
