@@ -197,12 +197,14 @@ class WatsonxProvider:
         Returns:
             Generated text string
         """
-        # Convert messages to single prompt string
-        # Typically messages is [{"role": "user", "content": "..."}]
-        prompt = "\n".join(msg.get("content", "") for msg in messages)
+        # Convert messages to single prompt string with role markers
+        prompt = "\n".join(
+            f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}"
+            for msg in messages
+        )
 
         # Call synchronous generate method in thread pool
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(
             None,
             lambda: self.generate(

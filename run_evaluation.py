@@ -63,7 +63,8 @@ from harness.task_definitions import (
     format_sql_prompt,
     validate_summary_json,
     validate_sql_query,
-    SUMMARY_SCHEMA
+    SUMMARY_SCHEMA,
+    GAAP_MATERIALITY_THRESHOLD
 )
 
 # Load environment variables from .env file
@@ -138,6 +139,7 @@ class OllamaProvider(LLMProvider):
             "stream": False,
             "options": {
                 "temperature": float(temperature),
+                "top_p": float(top_p),
                 "num_predict": int(max_tokens)
             }
         }
@@ -360,7 +362,12 @@ class GeminiProviderAdapter(LLMProvider):
 
 
 def _concat_messages(messages: List[Dict[str, str]]) -> str:
-    """Concatenate messages for logging."""
+    """Concatenate structured messages into a single prompt string.
+
+    Used by provider adapters (Watsonx, Anthropic, Gemini) that accept a single
+    prompt string rather than structured messages. Format: "ROLE: content" per line.
+    This ensures consistent prompt formatting across all non-Ollama providers.
+    """
     return "\n".join([f"{m['role'].upper()}: {m['content']}" for m in messages])
 
 
@@ -548,7 +555,7 @@ async def run_sql(
             sql_clean,
             dbi["conn"],
             expected_total=dbi["total_amount"],
-            tolerance_pct=5.0
+            gaap_materiality_threshold=GAAP_MATERIALITY_THRESHOLD
         )
         decision_ok = validation["decision_ok"]
     except Exception as e:

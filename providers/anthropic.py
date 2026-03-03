@@ -90,6 +90,13 @@ class AnthropicProvider:
         """
         model_id = self._normalize_model_id(model)
 
+        if seed is not None:
+            self.logger.warning(
+                "Anthropic API does not support seed parameter. "
+                "Results will be non-deterministic even at temperature=0.0. "
+                "Seed=%d was requested but will be ignored.", seed
+            )
+
         headers = {
             "x-api-key": self.api_key,
             "anthropic-version": "2023-06-01",
@@ -155,6 +162,13 @@ class AnthropicProvider:
     ) -> Dict[str, Any]:
         """Async version of generate."""
         model_id = self._normalize_model_id(model)
+
+        if seed is not None:
+            self.logger.warning(
+                "Anthropic API does not support seed parameter. "
+                "Results will be non-deterministic even at temperature=0.0. "
+                "Seed=%d was requested but will be ignored.", seed
+            )
 
         headers = {
             "x-api-key": self.api_key,
