@@ -1411,55 +1411,60 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Use framework&#39;s CrossProviderValidator for automated testing.</span>
+
+<span class="sd">Note: The validator works with pre-collected outputs. You first run</span>
+<span class="sd">experiments on each provider, then validate the outputs for consistency.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
 <span class="c1"># Initialize validator with GAAP materiality threshold</span>
 <span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span>
     <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span>
-    <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># ±5% from GAAP auditing standards</span>
+    <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># +/-5% from GAAP auditing standards</span>
 <span class="p">)</span>
 
-<span class="c1"># SQL generation task</span>
-<span class="n">prompt_sql</span> <span class="o">=</span> <span class="s2">&quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;</span>
-<span class="n">result_sql</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="n">prompt</span><span class="o">=</span><span class="n">prompt_sql</span><span class="p">,</span>
-    <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
-    <span class="n">model_ollama</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">model_watsonx</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
-<span class="p">)</span>
+<span class="c1"># Assume you&#39;ve already collected outputs from each provider</span>
+<span class="c1"># (e.g., from running run_evaluation.py with --providers ollama and --providers watsonx)</span>
+<span class="n">sql_outputs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+<span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 SQL Generation Task&quot;</span><span class="p">)</span>
+<span class="c1"># Validate SQL outputs</span>
+<span class="n">result_sql</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">sql_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SQL Generation Task&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FAIL&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># RAG task</span>
-<span class="n">prompt_rag</span> <span class="o">=</span> <span class="s2">&quot;What were Citigroup&#39;s net credit losses in 2023?&quot;</span>
+<span class="c1"># Validate RAG outputs</span>
+<span class="n">rag_outputs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="s2">&quot;Citigroup reported net credit losses of $1.2B in 2023. [citi_2024_10k]&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="s2">&quot;Citigroup reported net credit losses of $1.2 billion in 2023. [citi_2024_10k]&quot;</span>
+<span class="p">}</span>
+<span class="n">rag_citations</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;citi_2024_10k&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;citi_2024_10k&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+
 <span class="n">result_rag</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="n">prompt</span><span class="o">=</span><span class="n">prompt_rag</span><span class="p">,</span>
-    <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;rag&quot;</span><span class="p">,</span>
-    <span class="n">model_ollama</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">model_watsonx</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+    <span class="n">rag_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;rag&quot;</span><span class="p">,</span> <span class="n">citations</span><span class="o">=</span><span class="n">rag_citations</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 RAG Task&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">RAG Task&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Factual consistency: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;factual_match&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️  MINOR DRIFT&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;MINOR DRIFT&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># Generate audit report</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📄 Cross-Provider Audit Report&quot;</span><span class="p">)</span>
+<span class="c1"># Audit trail</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cross-Provider Audit Report&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">provider</span><span class="p">,</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;outputs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">provider</span><span class="si">:</span><span class="s2">15s</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">output</span><span class="p">[:</span><span class="mi">80</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;audit_trail&#39;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Providers: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;providers&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output hashes: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;output_hashes&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_cross_provider_validation.py

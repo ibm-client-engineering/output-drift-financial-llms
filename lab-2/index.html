@@ -1505,29 +1505,27 @@ Database: data/toy_finance.sqlite (45 KB)
 <h3 id="test-1-deterministicretriever">Test 1: DeterministicRetriever<a class="headerlink" href="#test-1-deterministicretriever" title="Permanent link">&para;</a></h3>
 <p>The <strong>DeterministicRetriever</strong> (harness/deterministic_retriever.py) is crucial for compliance—it ensures SEC 10-K retrieval order is deterministic and reproducible.</p>
 <p>Create <code>test_retriever.py</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_from_files</span>
 
-<span class="c1"># Initialize retriever</span>
-<span class="n">retriever</span> <span class="o">=</span> <span class="n">DeterministicRetriever</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec_filings/&quot;</span><span class="p">,</span>  <span class="c1"># SEC 10-K filings</span>
-    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+<span class="c1"># Initialize retriever from SEC filings directory</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_files</span><span class="p">(</span>
+    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec&quot;</span><span class="p">,</span>  <span class="c1"># SEC 10-K filings</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
 
 <span class="c1"># Test query</span>
 <span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What were net credit losses in 2023?&quot;</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Deterministic Retrieval Test&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deterministic Retrieval Test&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">snippet_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Source: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Score: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Snippet ID: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;snippet_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Text: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Snippet ID: </span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Text: </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Retrieval is deterministic with stable ordering!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Retrieval is deterministic with stable ordering!&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_retriever.py
@@ -1673,11 +1671,11 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 <h2 id="understanding-framework-components">Understanding Framework Components<a class="headerlink" href="#understanding-framework-components" title="Permanent link">&para;</a></h2>
 <h3 id="1-deterministicretriever">1. DeterministicRetriever<a class="headerlink" href="#1-deterministicretriever" title="Permanent link">&para;</a></h3>
 <p><strong>File</strong>: harness/deterministic_retriever.py</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_from_files</span>
 
-<span class="n">retriever</span> <span class="o">=</span> <span class="n">DeterministicRetriever</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec_filings/&quot;</span><span class="p">,</span>
-    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_files</span><span class="p">(</span>
+    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec&quot;</span><span class="p">,</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
 </code></pre></div>
@@ -1700,21 +1698,21 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 <tr>
 <td><strong>SQL</strong></td>
 <td>Text-to-SQL generation from natural language</td>
-<td><strong>100%</strong> ✅</td>
+<td><strong>100%</strong></td>
 </tr>
 <tr>
-<td><strong>Summarize</strong></td>
+<td><strong>Summary</strong></td>
 <td>JSON summarization of financial data</td>
-<td><strong>100%</strong> ✅</td>
+<td><strong>100%</strong></td>
 </tr>
 <tr>
 <td><strong>RAG</strong></td>
 <td>Retrieval-augmented Q&amp;A over SEC 10-Ks</td>
-<td><strong>93.75%</strong> ✅</td>
+<td><strong>93.75%</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Why SQL and Summarize achieve perfect scores:</strong>
+<p><strong>Why SQL and Summary achieve perfect scores:</strong>
 - Structured output formats
 - Deterministic syntax
 - Narrow output space</p>
@@ -1726,10 +1724,15 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
     <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span>
     <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># GAAP materiality threshold</span>
 <span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
+
+<span class="c1"># Validate pre-collected outputs from different providers</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_result</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_result</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Purpose</strong>: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments.</p>
-<p><strong>GAAP Materiality</strong>: Uses ±5% threshold from GAAP auditing standards for financial statement materiality.</p>
+<p><strong>Purpose</strong>: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments using pre-collected outputs.</p>
+<p><strong>GAAP Materiality</strong>: Uses &plusmn;5% threshold from GAAP auditing standards for financial statement materiality.</p>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="ollama-connection-failed">Ollama Connection Failed<a class="headerlink" href="#ollama-connection-failed" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Check if Ollama is running</span>

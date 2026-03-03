@@ -1798,10 +1798,8 @@ ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct<sp
     <span class="n">response</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1 second delay</span>
 </code></pre></div></p>
-<p>Or use built-in rate limiting:
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--rate-limit<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="se">\ </span><span class="w"> </span><span class="c1"># Max 10 requests/minute</span>
-<span class="w">  </span>--retry-delay<span class="w"> </span><span class="m">5</span><span class="w">    </span><span class="c1"># 5 seconds between retries</span>
+<p>The framework includes built-in retry with exponential backoff for cloud providers (Anthropic, Gemini, Watsonx). Transient errors (429, 500-504) are automatically retried up to 3 times. To reduce load, lower the concurrency:
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># Sequential requests</span>
 </code></pre></div></p>
 <hr />
 <h2 id="database-issues">Database Issues<a class="headerlink" href="#database-issues" title="Permanent link">&para;</a></h2>
@@ -1858,10 +1856,7 @@ sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><s
 3. <strong>Semantic drift not captured</strong>: Same tokens, different meaning</p>
 <p><strong>Solution</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># Always use n=16 (as in paper)</span>
---concurrency<span class="w"> </span><span class="m">16</span>
-
-<span class="c1"># Additionally check factual consistency (for RAG)</span>
---validate-facts<span class="w"> </span><span class="nb">true</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span>--repeats<span class="w"> </span><span class="m">16</span>
 </code></pre></div></p>
 <hr />
 <h2 id="api-errors">API Errors<a class="headerlink" href="#api-errors" title="Permanent link">&para;</a></h2>
@@ -1897,10 +1892,8 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;i
 --concurrency<span class="w"> </span><span class="m">4</span><span class="w">  </span><span class="c1"># Instead of 16</span>
 
 <span class="c1"># Process in batches</span>
---batch-size<span class="w"> </span><span class="m">4</span>
-
-<span class="c1"># Use smaller model</span>
-qwen2.5:7b-instruct<span class="w">  </span><span class="c1"># Instead of larger models</span>
+<span class="c1"># Use smaller model for faster runs</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span>--concurrency<span class="w"> </span><span class="m">1</span>
 </code></pre></div></p>
 <h3 id="slow-experiments">Slow Experiments<a class="headerlink" href="#slow-experiments" title="Permanent link">&para;</a></h3>
 <p><strong>Problem</strong>: Experiments taking &gt;1 hour</p>

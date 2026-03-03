@@ -719,10 +719,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-understanding-template-structure" class="md-nav__link">
+  <a href="#step-1-understanding-task-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Understanding Template Structure
+        Step 1: Understanding Task Structure
       
     </span>
   </a>
@@ -1071,10 +1071,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-understanding-template-structure" class="md-nav__link">
+  <a href="#step-1-understanding-task-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Understanding Template Structure
+        Step 1: Understanding Task Structure
       
     </span>
   </a>
@@ -1218,7 +1218,7 @@
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <p>By the end of this lab, you will:</p>
 <ul>
-<li>Add custom tasks to <code>prompts/templates.json</code></li>
+<li>Add custom tasks to <code>run_evaluation.py</code></li>
 <li>Modify existing prompts for your domain</li>
 <li>Integrate the framework into CI/CD pipelines</li>
 <li>Create custom compliance validators</li>
@@ -1244,23 +1244,23 @@
 │   └── toy_finance.sqlite      # ← Use your database
 └── examples/                   # ← Reference implementations
 </code></pre></div>
-<h2 id="step-1-understanding-template-structure">Step 1: Understanding Template Structure<a class="headerlink" href="#step-1-understanding-template-structure" title="Permanent link">&para;</a></h2>
-<p>Open <code>prompts/templates.json</code> to see the existing tasks:</p>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>prompts/templates.json
+<h2 id="step-1-understanding-task-structure">Step 1: Understanding Task Structure<a class="headerlink" href="#step-1-understanding-task-structure" title="Permanent link">&para;</a></h2>
+<p>Task prompts are defined in <code>run_evaluation.py</code> (see the <code>build_prompts()</code> function) and task formatting/validation lives in <code>harness/task_definitions.py</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># View the prompt builder</span>
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s2">&quot;def build_prompts&quot;</span><span class="w"> </span>run_evaluation.py
 </code></pre></div>
 <p><strong>Current tasks:</strong>
 - <code>rag</code>: RAG Q&amp;A over SEC 10-K filings
 - <code>summary</code>: JSON summarization with schema validation
 - <code>sql</code>: Text-to-SQL generation</p>
-<p>Each task has:
-- <strong>description</strong>: What the task does
-- <strong>prompts</strong>: Array of test cases
-- <strong>system_prompt</strong>: Instructions for the LLM
+<p>Each task uses:
+- <strong>Task formatting functions</strong> in <code>harness/task_definitions.py</code>
+- <strong>System prompts</strong> built into the formatting functions
 - <strong>temperature</strong>: 0.0 for determinism
 - <strong>seed</strong>: 42 for reproducibility</p>
 <h2 id="step-2-add-a-custom-task-credit-risk-analysis">Step 2: Add a Custom Task - Credit Risk Analysis<a class="headerlink" href="#step-2-add-a-custom-task-credit-risk-analysis" title="Permanent link">&para;</a></h2>
 <p>Let's add a new task for credit risk assessment:</p>
-<p><strong>Edit <code>prompts/templates.json</code></strong> and add after the <code>sql</code> section:</p>
+<p>To add a custom task, define a new task configuration. Here's an example credit risk assessment task structure:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;credit_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Credit risk classification with explainability requirements&quot;</span><span class="p">,</span>
@@ -1313,10 +1313,12 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
-<span class="c1"># Load custom task template</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;prompts/templates.json&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">templates</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-    <span class="n">credit_risk_task</span> <span class="o">=</span> <span class="n">templates</span><span class="p">[</span><span class="s2">&quot;credit_risk&quot;</span><span class="p">]</span>
+<span class="c1"># Define custom task configuration inline</span>
+<span class="n">credit_risk_task</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+<span class="p">}</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span><span class="p">)</span>
 
@@ -1383,7 +1385,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <h2 id="step-4-add-domain-specific-documents">Step 4: Add Domain-Specific Documents<a class="headerlink" href="#step-4-add-domain-specific-documents" title="Permanent link">&para;</a></h2>
 <p>To use RAG with your own documents:</p>
 <ol>
-<li><strong>Add documents to <code>data/sec_filings/</code></strong> (or create a new folder):</li>
+<li><strong>Add documents to <code>data/sec/</code></strong> (or create a new folder):</li>
 </ol>
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>data/custom_docs
 </code></pre></div>
@@ -1719,7 +1721,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
 <details class="question">
 <summary>Where do you add custom tasks?</summary>
-<p><strong>Answer</strong>: <code>prompts/templates.json</code> - add a new top-level key with task configuration.</p>
+<p><strong>Answer</strong>: <code>run_evaluation.py</code> - add a new top-level key with task configuration.</p>
 </details>
 <details class="question">
 <summary>What's the minimum number of runs recommended for drift testing?</summary>

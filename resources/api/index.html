@@ -816,10 +816,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#retrievequery-top_k5" class="md-nav__link">
+  <a href="#retrievequery-k5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        retrieve(query, top_k=5)
+        retrieve(query, k=5)
       
     </span>
   </a>
@@ -844,10 +844,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#validateprompt-task_type-kwargs" class="md-nav__link">
+  <a href="#validateoutputs-task_type-citationsnone-sql_resultsnone" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate(prompt, task_type, **kwargs)
+        validate(outputs, task_type, citations=None, sql_results=None)
       
     </span>
   </a>
@@ -1120,10 +1120,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#retrievequery-top_k5" class="md-nav__link">
+  <a href="#retrievequery-k5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        retrieve(query, top_k=5)
+        retrieve(query, k=5)
       
     </span>
   </a>
@@ -1148,10 +1148,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#validateprompt-task_type-kwargs" class="md-nav__link">
+  <a href="#validateoutputs-task_type-citationsnone-sql_resultsnone" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate(prompt, task_type, **kwargs)
+        validate(outputs, task_type, citations=None, sql_results=None)
       
     </span>
   </a>
@@ -1355,26 +1355,26 @@
 <h3 id="deterministicretriever">DeterministicRetriever<a class="headerlink" href="#deterministicretriever" title="Permanent link">&para;</a></h3>
 <p><strong>Location</strong>: <code>harness/deterministic_retriever.py</code></p>
 <p>Ensures reproducible SEC 10-K retrieval with multi-key ordering.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_from_files</span>
 
-<span class="n">retriever</span> <span class="o">=</span> <span class="n">DeterministicRetriever</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec_filings/&quot;</span><span class="p">,</span>
-    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
+<span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_files</span><span class="p">(</span>
+    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec&quot;</span><span class="p">,</span>
+    <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
 </code></pre></div>
 <p><strong>Methods</strong>:</p>
-<h4 id="retrievequery-top_k5"><code>retrieve(query, top_k=5)</code><a class="headerlink" href="#retrievequery-top_k5" title="Permanent link">&para;</a></h4>
+<h4 id="retrievequery-k5"><code>retrieve(query, k=5)</code><a class="headerlink" href="#retrievequery-k5" title="Permanent link">&para;</a></h4>
 <p>Retrieve top-k chunks with deterministic ordering.</p>
 <p><strong>Parameters</strong>:
 - <code>query</code> (str): Search query
-- <code>top_k</code> (int, default=5): Number of chunks to return</p>
+- <code>k</code> (int, default=5): Number of chunks to return</p>
 <p><strong>Returns</strong>:
-- List[Dict]: Chunks with keys <code>["snippet_id", "text", "score", "source", "metadata"]</code></p>
+- <code>List[Tuple[str, str, Dict]]</code>: List of <code>(snippet_id, text, metadata)</code> tuples</p>
 <p><strong>Example</strong>:
-<div class="highlight"><pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="s2">&quot;What were net credit losses?&quot;</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="s2">&quot;What were net credit losses?&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">snippet_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">metadata</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <hr />
 <h3 id="crossprovidervalidator">CrossProviderValidator<a class="headerlink" href="#crossprovidervalidator" title="Permanent link">&para;</a></h3>
@@ -1388,33 +1388,32 @@
 <span class="p">)</span>
 </code></pre></div>
 <p><strong>Methods</strong>:</p>
-<h4 id="validateprompt-task_type-kwargs"><code>validate(prompt, task_type, **kwargs)</code><a class="headerlink" href="#validateprompt-task_type-kwargs" title="Permanent link">&para;</a></h4>
-<p>Validate output consistency across providers.</p>
+<h4 id="validateoutputs-task_type-citationsnone-sql_resultsnone"><code>validate(outputs, task_type, citations=None, sql_results=None)</code><a class="headerlink" href="#validateoutputs-task_type-citationsnone-sql_resultsnone" title="Permanent link">&para;</a></h4>
+<p>Validate output consistency across providers using pre-collected outputs.</p>
 <p><strong>Parameters</strong>:
-- <code>prompt</code> (str): Input prompt
+- <code>outputs</code> (Dict[str, str]): Provider name to output text mapping
 - <code>task_type</code> (str): One of <code>"rag"</code>, <code>"sql"</code>, <code>"summary"</code>
-- <code>**kwargs</code>: Provider-specific configs (model, temperature, seed)</p>
+- <code>citations</code> (Dict[str, List[str]], optional): Provider to citation list (for RAG)
+- <code>sql_results</code> (Dict[str, Any], optional): Provider to numeric result (for SQL)</p>
 <p><strong>Returns</strong>:
 - Dict with keys:
-    - <code>consistent</code> (bool): Whether outputs match
-    - <code>outputs</code> (Dict[str, str]): Provider → output mapping
-    - <code>similarity</code> (float): Normalized similarity score (0.0-1.0)
-    - <code>factual_match</code> (bool): Factual consistency (for RAG)</p>
+    - <code>consistent</code> (bool): Whether outputs match within tolerance
+    - <code>similarity_scores</code> (Dict[str, float]): Pairwise similarity scores
+    - <code>task_validation</code> (Dict): Task-specific validation details
+    - <code>audit_trail</code> (List[Dict]): Validation audit records</p>
 <p><strong>Example</strong>:
-<div class="highlight"><pre><span></span><code><span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="n">prompt</span><span class="o">=</span><span class="s2">&quot;Generate SQL to find customers with balance &gt; $100k&quot;</span><span class="p">,</span>
-    <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
-    <span class="n">model_ollama</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">model_watsonx</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
-<span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Collect outputs from each provider first, then validate</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id FROM accounts WHERE balance &gt; 100000&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id FROM accounts WHERE balance &gt; 100000&quot;</span>
+<span class="p">}</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;similarity&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <hr />
 <h2 id="task-definitions">Task Definitions<a class="headerlink" href="#task-definitions" title="Permanent link">&para;</a></h2>
-<p><strong>Location</strong>: <code>prompts/templates.json</code></p>
+<p><strong>Location</strong>: <code>harness/task_definitions.py</code> (formatting functions) and <code>run_evaluation.py</code> (prompt templates)</p>
 <h3 id="rag-task">RAG Task<a class="headerlink" href="#rag-task" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;rag&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1521,8 +1520,9 @@
     <span class="n">traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
 
 <span class="n">response_hashes</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">]</span>
-<span class="n">unique_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">response_hashes</span><span class="p">))</span>
-<span class="n">consistency_pct</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">unique_count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">unique_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">100.0</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">response_hashes</span><span class="p">)</span>
+<span class="n">most_common_count</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">consistency_pct</span> <span class="o">=</span> <span class="p">(</span><span class="n">most_common_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">response_hashes</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistency: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </code></pre></div>
