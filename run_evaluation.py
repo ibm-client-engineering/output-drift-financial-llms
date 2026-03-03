@@ -46,6 +46,7 @@ import random
 import sqlite3
 import glob
 import pathlib
+import itertools
 from dataclasses import dataclass
 from typing import List, Dict, Any, Optional, Tuple
 
@@ -886,43 +887,40 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
 
     # Run experiments
     results_rows: List[Dict[str, Any]] = []
-    for prov in prov_objs:
-        for model in models:
-            for temp in temps:
-                for top_p in top_ps:
-                    for seed in seeds:
-                        for conc in concs:
-                            cfg = RunConfig(
-                                provider=prov.name,
-                                model=model,
-                                temperature=temp,
-                                top_p=top_p,
-                                concurrency=conc,
-                                seed=seed,
-                                stream=stream,
-                                repeats=repeats
-                            )
+    for prov, model, temp, top_p, seed, conc in itertools.product(
+        prov_objs, models, temps, top_ps, seeds, concs
+    ):
+        cfg = RunConfig(
+            provider=prov.name,
+            model=model,
+            temperature=temp,
+            top_p=top_p,
+            concurrency=conc,
+            seed=seed,
+            stream=stream,
+            repeats=repeats
+        )
 
-                            print(f"\n▶ Running {prov.name}:{model} T={temp} seed={seed} conc={conc} repeats={repeats}")
-                            traces: List[Dict[str, Any]] = []
+        print(f"\n▶ Running {prov.name}:{model} T={temp} seed={seed} conc={conc} repeats={repeats}")
+        traces: List[Dict[str, Any]] = []
 
-                            # Run selected tasks
-                            if "rag" in tasks and retr is not None:
-                                print("  → RAG task...")
-                                await run_condition("rag", prompts["rag"], cfg, prov, retr, None, results_rows, traces)
+        # Run selected tasks
+        if "rag" in tasks and retr is not None:
+            print("  → RAG task...")
+            await run_condition("rag", prompts["rag"], cfg, prov, retr, None, results_rows, traces)
 
-                            if "summary" in tasks:
-                                print("  → Summary task...")
-                                await run_condition("summary", prompts["summary"], cfg, prov, None, None, results_rows, traces)
+        if "summary" in tasks:
+            print("  → Summary task...")
+            await run_condition("summary", prompts["summary"], cfg, prov, None, None, results_rows, traces)
 
-                            if "sql" in tasks and dbi is not None:
-                                print("  → SQL task...")
-                                await run_condition("sql", prompts["sql"], cfg, prov, None, dbi, results_rows, traces)
+        if "sql" in tasks and dbi is not None:
+            print("  → SQL task...")
+            await run_condition("sql", prompts["sql"], cfg, prov, None, dbi, results_rows, traces)
 
-                            # Write trace file
-                            trace_filename = f"trace_{prov.name}_{model.replace('/','_')}_t{temp}_tp{top_p}_s{seed}_str{stream}_c{conc}.jsonl"
-                            write_trace(trace_filename, traces)
-                            print(f"  ✓ Wrote {len(traces)} trace records")
+        # Write trace file
+        trace_filename = f"trace_{prov.name}_{model.replace('/','_')}_t{temp}_tp{top_p}_s{seed}_str{stream}_c{conc}.jsonl"
+        write_trace(trace_filename, traces)
+        print(f"  ✓ Wrote {len(traces)} trace records")
 
     if not results_rows:
         print("\n[warn] No results generated. Check your configuration and data files.")

@@ -12,6 +12,8 @@ import asyncio
 from typing import Dict, List, Optional, Any
 import httpx
 
+from providers import retry_on_transient
+
 
 class WatsonxProvider:
     """WatsonX.AI provider with SDK-first, REST fallback strategy."""
@@ -137,6 +139,7 @@ class WatsonxProvider:
         except Exception as e:
             raise RuntimeError(f"Failed to get IAM token: {e}")
 
+    @retry_on_transient()
     def generate(self, *, model: str, prompt: str, temperature: float, top_p: float,
                  seed: Optional[int] = None, max_new_tokens: Optional[int] = None,
                  stream: bool = False, extra: Optional[Dict] = None) -> Dict[str, Any]:

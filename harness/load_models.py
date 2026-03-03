@@ -809,9 +809,9 @@ async def main():
     )
     parser.add_argument(
         "--strict-models",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
         default=True,
-        help="Fail fast on unsupported models (default: true)"
+        help="Fail fast on unsupported models (default: true, use --no-strict-models to disable)"
     )
     parser.add_argument(
         "--dry-run",
