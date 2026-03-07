@@ -114,29 +114,27 @@ The **DeterministicRetriever** (harness/deterministic_retriever.py) is crucial f
 Create `test_retriever.py`:
 
 ```python
-from harness.deterministic_retriever import DeterministicRetriever
+from harness.deterministic_retriever import create_retriever_from_files
 
-# Initialize retriever
-retriever = DeterministicRetriever(
-    corpus_path="data/sec_filings/",  # SEC 10-K filings
-    chunk_size=512,
+# Initialize retriever from SEC filings directory
+retriever = create_retriever_from_files(
+    corpus_path="data/sec",  # SEC 10-K filings
+    chunk_size=200,
     overlap=50
 )
 
 # Test query
 query = "What were net credit losses in 2023?"
-results = retriever.retrieve(query, top_k=5)
+results = retriever.retrieve(query, k=5)
 
-print("🔍 Deterministic Retrieval Test")
+print("Deterministic Retrieval Test")
 print("=" * 50)
-for i, chunk in enumerate(results, 1):
+for i, (snippet_id, text, metadata) in enumerate(results, 1):
     print(f"\nChunk {i}:")
-    print(f"  Source: {chunk['source']}")
-    print(f"  Score: {chunk['score']:.4f}")
-    print(f"  Snippet ID: {chunk['snippet_id']}")
-    print(f"  Text: {chunk['text'][:100]}...")
+    print(f"  Snippet ID: {snippet_id}")
+    print(f"  Text: {text[:100]}...")
 
-print("\n✅ Retrieval is deterministic with stable ordering!")
+print("\nRetrieval is deterministic with stable ordering!")
 ```
 
 Run it:
@@ -287,11 +285,11 @@ head -n 1 examples/sample_audit_trail.jsonl | python -m json.tool
 **File**: harness/deterministic_retriever.py
 
 ```python
-from harness.deterministic_retriever import DeterministicRetriever
+from harness.deterministic_retriever import create_retriever_from_files
 
-retriever = DeterministicRetriever(
-    corpus_path="data/sec_filings/",
-    chunk_size=512,
+retriever = create_retriever_from_files(
+    corpus_path="data/sec",
+    chunk_size=200,
     overlap=50
 )
 ```
@@ -309,11 +307,11 @@ The framework includes 3 core task types:
 
 | Task | Description | Tier 1 Consistency |
 |------|-------------|-------------------|
-| **SQL** | Text-to-SQL generation from natural language | **100%** ✅ |
-| **Summarize** | JSON summarization of financial data | **100%** ✅ |
-| **RAG** | Retrieval-augmented Q&A over SEC 10-Ks | **93.75%** ✅ |
+| **SQL** | Text-to-SQL generation from natural language | **100%** |
+| **Summary** | JSON summarization of financial data | **100%** |
+| **RAG** | Retrieval-augmented Q&A over SEC 10-Ks | **93.75%** |
 
-**Why SQL and Summarize achieve perfect scores:**
+**Why SQL and Summary achieve perfect scores:**
 - Structured output formats
 - Deterministic syntax
 - Narrow output space
@@ -329,12 +327,17 @@ validator = CrossProviderValidator(
     providers=["ollama", "watsonx"],
     tolerance_pct=5.0  # GAAP materiality threshold
 )
-results = validator.validate(prompt, task_type="sql")
+
+# Validate pre-collected outputs from different providers
+outputs = {"ollama": ollama_result, "watsonx": watsonx_result}
+results = validator.validate(outputs, task_type="sql")
+print(f"Consistent: {results['consistent']}")
+print(f"Similarity: {results['similarity_scores']}")
 ```
 
-**Purpose**: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments.
+**Purpose**: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments using pre-collected outputs.
 
-**GAAP Materiality**: Uses ±5% threshold from GAAP auditing standards for financial statement materiality.
+**GAAP Materiality**: Uses +/-5% threshold from GAAP auditing standards for financial statement materiality.
 
 ## Troubleshooting
 

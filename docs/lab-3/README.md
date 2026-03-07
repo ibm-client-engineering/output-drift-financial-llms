@@ -277,7 +277,7 @@ Create `analyze_lab3.py`:
 import json
 import pandas as pd
 
-tasks = ["sql", "summarize", "rag"]
+tasks = ["sql", "summary", "rag"]
 results = []
 
 for task in tasks:

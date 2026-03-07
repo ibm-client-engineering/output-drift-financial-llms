@@ -11,33 +11,33 @@ Complete reference documentation for the Output Drift framework components.
 Ensures reproducible SEC 10-K retrieval with multi-key ordering.
 
 ```python
-from harness.deterministic_retriever import DeterministicRetriever
+from harness.deterministic_retriever import create_retriever_from_files
 
-retriever = DeterministicRetriever(
-    corpus_path="data/sec_filings/",
-    chunk_size=512,
+retriever = create_retriever_from_files(
+    corpus_path="data/sec",
+    chunk_size=200,
     overlap=50
 )
 ```
 
 **Methods**:
 
-#### `retrieve(query, top_k=5)`
+#### `retrieve(query, k=5)`
 
 Retrieve top-k chunks with deterministic ordering.
 
 **Parameters**:
 - `query` (str): Search query
-- `top_k` (int, default=5): Number of chunks to return
+- `k` (int, default=5): Number of chunks to return
 
 **Returns**:
-- List[Dict]: Chunks with keys `["snippet_id", "text", "score", "source", "metadata"]`
+- `List[Tuple[str, str, Dict]]`: List of `(snippet_id, text, metadata)` tuples
 
 **Example**:
 ```python
-results = retriever.retrieve("What were net credit losses?", top_k=5)
-for chunk in results:
-    print(f"{chunk['source']}: {chunk['text'][:100]}...")
+results = retriever.retrieve("What were net credit losses?", k=5)
+for snippet_id, text, metadata in results:
+    print(f"{snippet_id}: {text[:100]}...")
 ```
 
 ---
@@ -59,41 +59,40 @@ validator = CrossProviderValidator(
 
 **Methods**:
 
-#### `validate(prompt, task_type, **kwargs)`
+#### `validate(outputs, task_type, citations=None, sql_results=None)`
 
-Validate output consistency across providers.
+Validate output consistency across providers using pre-collected outputs.
 
 **Parameters**:
-- `prompt` (str): Input prompt
+- `outputs` (Dict[str, str]): Provider name to output text mapping
 - `task_type` (str): One of `"rag"`, `"sql"`, `"summary"`
-- `**kwargs`: Provider-specific configs (model, temperature, seed)
+- `citations` (Dict[str, List[str]], optional): Provider to citation list (for RAG)
+- `sql_results` (Dict[str, Any], optional): Provider to numeric result (for SQL)
 
 **Returns**:
 - Dict with keys:
-    - `consistent` (bool): Whether outputs match
-    - `outputs` (Dict[str, str]): Provider → output mapping
-    - `similarity` (float): Normalized similarity score (0.0-1.0)
-    - `factual_match` (bool): Factual consistency (for RAG)
+    - `consistent` (bool): Whether outputs match within tolerance
+    - `similarity_scores` (Dict[str, float]): Pairwise similarity scores
+    - `task_validation` (Dict): Task-specific validation details
+    - `audit_trail` (List[Dict]): Validation audit records
 
 **Example**:
 ```python
-result = validator.validate(
-    prompt="Generate SQL to find customers with balance > $100k",
-    task_type="sql",
-    model_ollama="qwen2.5:7b-instruct",
-    model_watsonx="ibm/granite-3-8b-instruct",
-    temperature=0.0,
-    seed=42
-)
+# Collect outputs from each provider first, then validate
+outputs = {
+    "ollama": "SELECT customer_id FROM accounts WHERE balance > 100000",
+    "watsonx": "SELECT customer_id FROM accounts WHERE balance > 100000"
+}
+result = validator.validate(outputs, task_type="sql")
 print(f"Consistent: {result['consistent']}")
-print(f"Similarity: {result['similarity']:.1%}")
+print(f"Similarity: {result['similarity_scores']}")
 ```
 
 ---
 
 ## Task Definitions
 
-**Location**: `prompts/templates.json`
+**Location**: `harness/task_definitions.py` (formatting functions) and `run_evaluation.py` (prompt templates)
 
 ### RAG Task
 
@@ -229,8 +228,9 @@ with open("traces/experiment.jsonl") as f:
     traces = [json.loads(line) for line in f]
 
 response_hashes = [t["response_hash"] for t in traces]
-unique_count = len(set(response_hashes))
-consistency_pct = (1 / unique_count) * 100 if unique_count > 0 else 100.0
+counts = Counter(response_hashes)
+most_common_count = counts.most_common(1)[0][1]
+consistency_pct = (most_common_count / len(response_hashes)) * 100
 
 print(f"Consistency: {consistency_pct:.1f}%")
 ```
