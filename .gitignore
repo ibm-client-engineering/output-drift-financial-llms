@@ -54,6 +54,7 @@ Thumbs.db
 # Experiments
 traces/
 results/
+dfah_results/
 *.sqlite
 *.db
 

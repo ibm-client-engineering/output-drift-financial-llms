@@ -155,11 +155,11 @@ WATSONX_API_KEY=your_api_key
 WATSONX_PROJECT_ID=your_project_id
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
 
-# OpenAI (optional)
-OPENAI_API_KEY=your_key
-
 # Anthropic (optional)
 ANTHROPIC_API_KEY=your_key
+
+# Google Gemini (optional)
+GEMINI_API_KEY=your_key
 ```
 
 ---

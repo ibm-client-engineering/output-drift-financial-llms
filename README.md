@@ -30,10 +30,13 @@ This framework enables audit-ready AI deployments through deterministic configur
 
 ```bash
 pip install -r requirements.txt
-python data/generate_toy_finance.py
 
-# Install Ollama: https://ollama.com/download
-ollama pull qwen2.5:7b-instruct
+# Try the DFAH demo (no LLM needed, runs in seconds)
+python run_dfah_demo.py
+
+# Or run the full output drift evaluation (requires Ollama)
+python data/generate_toy_finance.py
+ollama pull qwen2.5:7b-instruct   # https://ollama.com/download
 python run_evaluation.py
 ```
 
@@ -95,11 +98,45 @@ Our experiments across 5,185+ runs (480+ non-agentic + 4,705 agentic) reveal **m
 
 | I want to... | Go to |
 |--------------|-------|
-| Run drift evaluation | `python run_evaluation.py` |
-| Run agent benchmarks | `python -m econometrics.agentic.run_benchmarks` |
-| See experimental results | `econometrics/VALIDATION_RESULTS.md` |
-| Understand findings | `econometrics/FINDINGS_EXPLAINED.md` |
+| Try DFAH (no LLM needed) | `python run_dfah_demo.py` |
+| Run drift evaluation (v1) | `python run_evaluation.py` |
+| Run agent benchmarks (v2) | `python econometrics/benchmarks/run_all.py` |
+| Learn about agent benchmarks | [`econometrics/benchmarks/README.md`](econometrics/benchmarks/README.md) |
+| Learn about econometric modules | [`econometrics/README.md`](econometrics/README.md) |
 | Interactive workshop | [Workshop Labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
+
+---
+
+## DFAH: Determinism-Faithfulness Assurance Harness
+
+DFAH measures whether your LLM agent produces consistent behavior across repeated runs. It reports **action determinism** (same tools called?), **signature determinism** (same arguments?), **decision determinism** (same final output?), and **accuracy** (correct vs. ground truth).
+
+```bash
+python run_dfah_demo.py            # No LLM needed, runs in seconds
+# Results saved to dfah_results/dfah_results.json
+```
+
+**Use it with your own agent** — see [`examples/dfah_custom_task.py`](examples/dfah_custom_task.py) for a bring-your-own-cases template using the core API:
+
+```python
+from econometrics.agentic.metrics.trajectory_determinism import (
+    ToolCall, AgentTrajectory, analyze_trajectory_determinism
+)
+
+trajectories = [
+    AgentTrajectory(
+        run_id=f"run_{i}",
+        input_context={"alert_id": "TXN-001", "amount": 50000},
+        tool_calls=[ToolCall(tool_name="check_sanctions", arguments={"entity": "Acme Corp"})],
+        final_decision="escalate",
+    )
+    for i in range(8)
+]
+metrics = analyze_trajectory_determinism(trajectories)
+print(f"Decision determinism: {metrics.decision_determinism:.1%}")
+```
+
+**Full documentation**: [`DFAH.md`](DFAH.md) — output schema, customization guide, benchmark tasks, behavioral profiles.
 
 ---
 
@@ -111,10 +148,10 @@ Our experiments across 5,185+ runs (480+ non-agentic + 4,705 agentic) reveal **m
 SEC 10-K structure-aware retrieval with multi-key ordering that treats retrieval order as a **compliance requirement**.
 
 ```python
-from harness.deterministic_retriever import DeterministicRetriever
+from harness.deterministic_retriever import create_retriever_from_files
 
-retriever = DeterministicRetriever(corpus_path="data/sec_filings/", chunk_size=512, overlap=50)
-results = retriever.retrieve(query="net credit losses 2024", top_k=5)
+retriever = create_retriever_from_files(corpus_path="data/sec/", chunk_size=200, overlap=50)
+results = retriever.retrieve(query="net credit losses 2024", k=5)
 ```
 
 </details>
@@ -128,7 +165,8 @@ Validates consistency across local (Ollama) and cloud deployments with finance-c
 from harness.cross_provider_validation import CrossProviderValidator
 
 validator = CrossProviderValidator(providers=["ollama", "watsonx"], tolerance_pct=5.0)
-results = validator.validate(prompt, task_type="sql")
+outputs = {"ollama": ollama_result, "watsonx": watsonx_result}
+results = validator.validate(outputs, task_type="sql")
 ```
 
 </details>
@@ -156,8 +194,11 @@ Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
 
 ## Repository Structure
 
-| Directory | Purpose |
-|-----------|---------|
+| Path | Purpose |
+|------|---------|
+| `run_dfah_demo.py` | DFAH entry point (no LLM needed) |
+| `DFAH.md` | DFAH documentation, output schema, customization |
+| `examples/dfah_custom_task.py` | Bring-your-own-cases template |
 | `harness/` | Core evaluation framework (retriever, tasks, validation) |
 | `providers/` | LLM providers (watsonx, anthropic, gemini) |
 | `econometrics/` | Replayable Agents research (benchmarks, metrics, stress tests) |

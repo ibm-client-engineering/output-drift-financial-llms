@@ -168,7 +168,8 @@ If using the econometric framework:
 
 ## Agentic Track: Replayable Financial Agents
 
-**Working Title**: *Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents*
+*Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents*
+**Accepted**: [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
 
 ### Thesis
 
@@ -215,20 +216,18 @@ econometrics/
 │
 ├── # Agentic Track
 ├── agentic/
-│   ├── __init__.py
 │   ├── metrics/
 │   │   ├── trajectory_determinism.py   # Trajectory/decision determinism
 │   │   └── faithfulness.py             # Evidence-conditioned faithfulness
-│   ├── harness/
-│   │   └── stress_test_runner.py       # Drift stress-test harness
-│   ├── benchmarks/                     # Financial task benchmarks
-│   └── agents/                         # Agent implementations
+│   └── harness/
+│       └── stress_test_runner.py       # Drift stress-test harness
 │
-├── paper/                              # Paper materials
-├── data/                               # Experiment data
-├── experiments/                        # Experiment runners
-├── analysis/                           # Analysis notebooks
-└── figures/                            # Generated figures
+└── benchmarks/                         # Financial agent benchmarks
+    ├── run_all.py                      # Run all 3 benchmarks
+    ├── run_agentic_benchmark.py        # Agentic (tool-calling) benchmark runner
+    ├── compliance_triage/              # Compliance triage task + 50 test cases
+    ├── portfolio_constraint/           # Portfolio constraint task + 50 test cases
+    └── dataops_exception/              # DataOps exception task + 50 test cases
 ```
 
 ---
