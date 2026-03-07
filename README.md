@@ -7,7 +7,7 @@
 
 > **Key Finding**: 7-20B models achieve 100% deterministic outputs at T=0.0, while 120B+ models exhibit only 12.5-50% consistency—challenging assumptions about model scale for regulated applications.
 
-This framework enables audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls for financial services.
+This framework enables audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls for financial services. It includes **[DFAH](DFAH.md)** (Determinism-Faithfulness Assurance Harness), the public harness behind *Replayable Financial Agents* (ICLR 2026).
 
 **[Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** | Hands-on labs covering setup, experiments, and analysis.
 

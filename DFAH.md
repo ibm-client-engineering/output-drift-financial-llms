@@ -36,6 +36,8 @@ python run_dfah_demo.py
 
 No LLM or API keys needed. Runs in seconds using deterministic simulation.
 
+> **Note**: The quick demo uses fixed agent logic (no LLM) to demonstrate the DFAH workflow and output format. It measures determinism-style metrics (action, signature, and decision determinism) but does not wire in full faithfulness scoring. For real-LLM evaluation with behavioral variation, use the [benchmark path](#with-a-real-llm) via Ollama.
+
 ### Output
 
 Results are saved to `dfah_results/dfah_results.json`:
