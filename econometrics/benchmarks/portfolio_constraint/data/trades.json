@@ -1,0 +1,587 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-12-19",
+    "description": "50 portfolio constraint test trades for benchmark evaluation",
+    "portfolio_context": {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 10000000,
+      "cash": 500000,
+      "region": "US"
+    },
+    "constraints": {
+      "single_stock_max_pct": 5.0,
+      "sector_max_pct": 25.0,
+      "cash_reserve_min_pct": 2.0,
+      "liquidity_coverage_days": 3
+    },
+    "ground_truth_distribution": {
+      "approve": 25,
+      "reject": 18,
+      "modify": 7
+    }
+  },
+  "current_holdings": {
+    "AAPL": {"quantity": 2000, "market_value": 390000, "sector": "Technology"},
+    "MSFT": {"quantity": 1000, "market_value": 400000, "sector": "Technology"},
+    "GOOGL": {"quantity": 1500, "market_value": 255000, "sector": "Technology"},
+    "JPM": {"quantity": 2000, "market_value": 400000, "sector": "Financial"},
+    "BAC": {"quantity": 3000, "market_value": 120000, "sector": "Financial"},
+    "JNJ": {"quantity": 1500, "market_value": 240000, "sector": "Healthcare"},
+    "PFE": {"quantity": 4000, "market_value": 120000, "sector": "Healthcare"},
+    "XOM": {"quantity": 2000, "market_value": 220000, "sector": "Energy"},
+    "CVX": {"quantity": 1000, "market_value": 150000, "sector": "Energy"},
+    "PG": {"quantity": 1000, "market_value": 160000, "sector": "Consumer"},
+    "KO": {"quantity": 2000, "market_value": 120000, "sector": "Consumer"},
+    "VZ": {"quantity": 3000, "market_value": 135000, "sector": "Telecom"},
+    "T": {"quantity": 5000, "market_value": 100000, "sector": "Telecom"},
+    "DIS": {"quantity": 1000, "market_value": 95000, "sector": "Media"},
+    "NFLX": {"quantity": 200, "market_value": 95000, "sector": "Media"},
+    "CASH": {"quantity": 1, "market_value": 500000, "sector": "Cash"}
+  },
+  "market_data": {
+    "AAPL": {"price": 195.00, "volume_3d_avg": 50000000, "sector": "Technology"},
+    "MSFT": {"price": 400.00, "volume_3d_avg": 20000000, "sector": "Technology"},
+    "GOOGL": {"price": 170.00, "volume_3d_avg": 25000000, "sector": "Technology"},
+    "NVDA": {"price": 480.00, "volume_3d_avg": 40000000, "sector": "Technology"},
+    "META": {"price": 500.00, "volume_3d_avg": 15000000, "sector": "Technology"},
+    "JPM": {"price": 200.00, "volume_3d_avg": 10000000, "sector": "Financial"},
+    "BAC": {"price": 40.00, "volume_3d_avg": 30000000, "sector": "Financial"},
+    "GS": {"price": 450.00, "volume_3d_avg": 2000000, "sector": "Financial"},
+    "JNJ": {"price": 160.00, "volume_3d_avg": 8000000, "sector": "Healthcare"},
+    "PFE": {"price": 30.00, "volume_3d_avg": 25000000, "sector": "Healthcare"},
+    "UNH": {"price": 550.00, "volume_3d_avg": 3000000, "sector": "Healthcare"},
+    "XOM": {"price": 110.00, "volume_3d_avg": 15000000, "sector": "Energy"},
+    "CVX": {"price": 150.00, "volume_3d_avg": 8000000, "sector": "Energy"},
+    "PG": {"price": 160.00, "volume_3d_avg": 7000000, "sector": "Consumer"},
+    "KO": {"price": 60.00, "volume_3d_avg": 12000000, "sector": "Consumer"},
+    "WMT": {"price": 165.00, "volume_3d_avg": 6000000, "sector": "Consumer"},
+    "VZ": {"price": 45.00, "volume_3d_avg": 15000000, "sector": "Telecom"},
+    "T": {"price": 20.00, "volume_3d_avg": 30000000, "sector": "Telecom"},
+    "DIS": {"price": 95.00, "volume_3d_avg": 10000000, "sector": "Media"},
+    "NFLX": {"price": 475.00, "volume_3d_avg": 5000000, "sector": "Media"},
+    "SMALL_TECH": {"price": 25.00, "volume_3d_avg": 50000, "sector": "Technology"},
+    "SMALL_FIN": {"price": 15.00, "volume_3d_avg": 30000, "sector": "Financial"},
+    "PENNY_STOCK": {"price": 2.50, "volume_3d_avg": 10000, "sector": "Technology"}
+  },
+  "trades": [
+    {
+      "trade_id": "TRADE-001",
+      "action": "buy",
+      "ticker": "AAPL",
+      "quantity": 500,
+      "price": 195.00,
+      "reason": "Add to core tech position",
+      "ground_truth": "approve",
+      "rationale": "Within position limit, good liquidity"
+    },
+    {
+      "trade_id": "TRADE-002",
+      "action": "buy",
+      "ticker": "NVDA",
+      "quantity": 1500,
+      "price": 480.00,
+      "reason": "AI exposure",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "$720K = 7.2% exceeds 5% limit"
+    },
+    {
+      "trade_id": "TRADE-003",
+      "action": "buy",
+      "ticker": "SMALL_TECH",
+      "quantity": 50000,
+      "price": 25.00,
+      "reason": "Small cap opportunity",
+      "ground_truth": "reject",
+      "violation": "liquidity",
+      "rationale": "50K shares vs 50K avg volume = 1000 days to trade"
+    },
+    {
+      "trade_id": "TRADE-004",
+      "action": "sell",
+      "ticker": "AAPL",
+      "quantity": 1000,
+      "price": 195.00,
+      "reason": "Reduce tech exposure",
+      "ground_truth": "approve",
+      "rationale": "Normal sale, improves diversification"
+    },
+    {
+      "trade_id": "TRADE-005",
+      "action": "buy",
+      "ticker": "META",
+      "quantity": 200,
+      "price": 500.00,
+      "reason": "Social media exposure",
+      "ground_truth": "approve",
+      "rationale": "$100K = 1% position, within limits"
+    },
+    {
+      "trade_id": "TRADE-006",
+      "action": "buy",
+      "ticker": "JPM",
+      "quantity": 3000,
+      "price": 200.00,
+      "reason": "Increase financial sector",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "Would bring JPM to 10% of portfolio"
+    },
+    {
+      "trade_id": "TRADE-007",
+      "action": "buy",
+      "ticker": "GS",
+      "quantity": 500,
+      "price": 450.00,
+      "reason": "Add Goldman Sachs",
+      "ground_truth": "approve",
+      "rationale": "$225K = 2.25%, within limits"
+    },
+    {
+      "trade_id": "TRADE-008",
+      "action": "buy",
+      "ticker": "PENNY_STOCK",
+      "quantity": 100000,
+      "price": 2.50,
+      "reason": "Speculative position",
+      "ground_truth": "reject",
+      "violation": "liquidity",
+      "rationale": "100K shares vs 10K avg volume = extreme illiquidity"
+    },
+    {
+      "trade_id": "TRADE-009",
+      "action": "sell",
+      "ticker": "CASH",
+      "quantity": 400000,
+      "price": 1.00,
+      "reason": "Deploy cash",
+      "ground_truth": "reject",
+      "violation": "cash_reserve",
+      "rationale": "Would leave only 1% cash, below 2% minimum"
+    },
+    {
+      "trade_id": "TRADE-010",
+      "action": "buy",
+      "ticker": "UNH",
+      "quantity": 100,
+      "price": 550.00,
+      "reason": "Healthcare diversification",
+      "ground_truth": "approve",
+      "rationale": "$55K = 0.55%, well within limits"
+    },
+    {
+      "trade_id": "TRADE-011",
+      "action": "buy",
+      "ticker": "WMT",
+      "quantity": 1500,
+      "price": 165.00,
+      "reason": "Consumer staples",
+      "ground_truth": "approve",
+      "rationale": "$247.5K = 2.47%, within limits"
+    },
+    {
+      "trade_id": "TRADE-012",
+      "action": "buy",
+      "ticker": "MSFT",
+      "quantity": 800,
+      "price": 400.00,
+      "reason": "Add to Microsoft",
+      "ground_truth": "modify",
+      "violation": "position_limit",
+      "rationale": "Would reach 7.2%, suggest reduce to 250 shares"
+    },
+    {
+      "trade_id": "TRADE-013",
+      "action": "sell",
+      "ticker": "XOM",
+      "quantity": 2000,
+      "price": 110.00,
+      "reason": "Exit energy position",
+      "ground_truth": "approve",
+      "rationale": "Normal sale, full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-014",
+      "action": "buy",
+      "ticker": "GOOGL",
+      "quantity": 1000,
+      "price": 170.00,
+      "reason": "Increase Google",
+      "ground_truth": "approve",
+      "rationale": "$170K = 1.7% additional, total 4.25%"
+    },
+    {
+      "trade_id": "TRADE-015",
+      "action": "buy",
+      "ticker": "SMALL_FIN",
+      "quantity": 30000,
+      "price": 15.00,
+      "reason": "Small cap financial",
+      "ground_truth": "reject",
+      "violation": "liquidity",
+      "rationale": "30K shares vs 30K avg volume = 1000 days"
+    },
+    {
+      "trade_id": "TRADE-016",
+      "action": "buy",
+      "ticker": "PFE",
+      "quantity": 5000,
+      "price": 30.00,
+      "reason": "Pharma position",
+      "ground_truth": "approve",
+      "rationale": "$150K = 1.5%, good liquidity"
+    },
+    {
+      "trade_id": "TRADE-017",
+      "action": "buy",
+      "ticker": "BAC",
+      "quantity": 10000,
+      "price": 40.00,
+      "reason": "Increase BofA",
+      "ground_truth": "modify",
+      "violation": "position_limit",
+      "rationale": "Would reach 5.2%, suggest reduce to 7500 shares"
+    },
+    {
+      "trade_id": "TRADE-018",
+      "action": "sell",
+      "ticker": "DIS",
+      "quantity": 500,
+      "price": 95.00,
+      "reason": "Reduce media",
+      "ground_truth": "approve",
+      "rationale": "Normal partial sale"
+    },
+    {
+      "trade_id": "TRADE-019",
+      "action": "buy",
+      "ticker": "VZ",
+      "quantity": 2000,
+      "price": 45.00,
+      "reason": "Telecom dividend",
+      "ground_truth": "approve",
+      "rationale": "$90K = 0.9%, within limits"
+    },
+    {
+      "trade_id": "TRADE-020",
+      "action": "buy",
+      "ticker": "NFLX",
+      "quantity": 800,
+      "price": 475.00,
+      "reason": "Streaming exposure",
+      "ground_truth": "modify",
+      "violation": "position_limit",
+      "rationale": "Would reach 4.75%, close to limit but OK"
+    },
+    {
+      "trade_id": "TRADE-021",
+      "action": "buy",
+      "ticker": "CVX",
+      "quantity": 500,
+      "price": 150.00,
+      "reason": "Energy diversification",
+      "ground_truth": "approve",
+      "rationale": "$75K = 0.75%, within limits"
+    },
+    {
+      "trade_id": "TRADE-022",
+      "action": "sell",
+      "ticker": "T",
+      "quantity": 5000,
+      "price": 20.00,
+      "reason": "Exit AT&T",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-023",
+      "action": "buy",
+      "ticker": "AAPL",
+      "quantity": 2000,
+      "price": 195.00,
+      "reason": "Double Apple position",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "Would bring AAPL to 7.8%"
+    },
+    {
+      "trade_id": "TRADE-024",
+      "action": "buy",
+      "ticker": "KO",
+      "quantity": 3000,
+      "price": 60.00,
+      "reason": "Consumer staples",
+      "ground_truth": "approve",
+      "rationale": "$180K = 1.8%, within limits"
+    },
+    {
+      "trade_id": "TRADE-025",
+      "action": "buy",
+      "ticker": "PG",
+      "quantity": 1000,
+      "price": 160.00,
+      "reason": "Defensive position",
+      "ground_truth": "approve",
+      "rationale": "$160K = 1.6%, within limits"
+    },
+    {
+      "trade_id": "TRADE-026",
+      "action": "buy",
+      "ticker": "NVDA",
+      "quantity": 400,
+      "price": 480.00,
+      "reason": "Small AI exposure",
+      "ground_truth": "approve",
+      "rationale": "$192K = 1.92%, within limits"
+    },
+    {
+      "trade_id": "TRADE-027",
+      "action": "sell",
+      "ticker": "GOOGL",
+      "quantity": 1500,
+      "price": 170.00,
+      "reason": "Exit Google",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-028",
+      "action": "buy",
+      "ticker": "META",
+      "quantity": 1000,
+      "price": 500.00,
+      "reason": "Large Meta position",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "$500K = 5% exactly, no room for appreciation"
+    },
+    {
+      "trade_id": "TRADE-029",
+      "action": "buy",
+      "ticker": "JNJ",
+      "quantity": 1500,
+      "price": 160.00,
+      "reason": "Healthcare allocation",
+      "ground_truth": "approve",
+      "rationale": "$240K = 2.4%, within limits"
+    },
+    {
+      "trade_id": "TRADE-030",
+      "action": "sell",
+      "ticker": "PFE",
+      "quantity": 4000,
+      "price": 30.00,
+      "reason": "Exit Pfizer",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-031",
+      "action": "buy",
+      "ticker": "GS",
+      "quantity": 1200,
+      "price": 450.00,
+      "reason": "Large Goldman position",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "$540K = 5.4%, exceeds limit"
+    },
+    {
+      "trade_id": "TRADE-032",
+      "action": "buy",
+      "ticker": "XOM",
+      "quantity": 1000,
+      "price": 110.00,
+      "reason": "Energy exposure",
+      "ground_truth": "approve",
+      "rationale": "$110K = 1.1%, within limits"
+    },
+    {
+      "trade_id": "TRADE-033",
+      "action": "buy",
+      "ticker": "T",
+      "quantity": 8000,
+      "price": 20.00,
+      "reason": "Telecom yield",
+      "ground_truth": "approve",
+      "rationale": "$160K = 1.6%, within limits"
+    },
+    {
+      "trade_id": "TRADE-034",
+      "action": "buy",
+      "ticker": "DIS",
+      "quantity": 2000,
+      "price": 95.00,
+      "reason": "Media allocation",
+      "ground_truth": "approve",
+      "rationale": "$190K = 1.9%, within limits"
+    },
+    {
+      "trade_id": "TRADE-035",
+      "action": "sell",
+      "ticker": "JPM",
+      "quantity": 1000,
+      "price": 200.00,
+      "reason": "Reduce JPM",
+      "ground_truth": "approve",
+      "rationale": "Partial sale allowed"
+    },
+    {
+      "trade_id": "TRADE-036",
+      "action": "buy",
+      "ticker": "MSFT",
+      "quantity": 300,
+      "price": 400.00,
+      "reason": "Add Microsoft",
+      "ground_truth": "approve",
+      "rationale": "$120K = 1.2% additional, total 5.2%"
+    },
+    {
+      "trade_id": "TRADE-037",
+      "action": "buy",
+      "ticker": "UNH",
+      "quantity": 1000,
+      "price": 550.00,
+      "reason": "Large healthcare",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "$550K = 5.5%, exceeds limit"
+    },
+    {
+      "trade_id": "TRADE-038",
+      "action": "sell",
+      "ticker": "BAC",
+      "quantity": 3000,
+      "price": 40.00,
+      "reason": "Exit BofA",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-039",
+      "action": "buy",
+      "ticker": "WMT",
+      "quantity": 500,
+      "price": 165.00,
+      "reason": "Consumer exposure",
+      "ground_truth": "approve",
+      "rationale": "$82.5K = 0.83%, within limits"
+    },
+    {
+      "trade_id": "TRADE-040",
+      "action": "buy",
+      "ticker": "PENNY_STOCK",
+      "quantity": 5000,
+      "price": 2.50,
+      "reason": "Small speculative",
+      "ground_truth": "reject",
+      "violation": "liquidity",
+      "rationale": "Still illiquid at 5K shares"
+    },
+    {
+      "trade_id": "TRADE-041",
+      "action": "buy",
+      "ticker": "VZ",
+      "quantity": 5000,
+      "price": 45.00,
+      "reason": "Telecom position",
+      "ground_truth": "modify",
+      "violation": "position_limit",
+      "rationale": "Would reach 3.6%, suggest 4000 shares"
+    },
+    {
+      "trade_id": "TRADE-042",
+      "action": "sell",
+      "ticker": "NFLX",
+      "quantity": 200,
+      "price": 475.00,
+      "reason": "Exit Netflix",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-043",
+      "action": "buy",
+      "ticker": "CVX",
+      "quantity": 2500,
+      "price": 150.00,
+      "reason": "Energy allocation",
+      "ground_truth": "reject",
+      "violation": "position_limit",
+      "rationale": "$375K + existing = 5.25%, exceeds limit"
+    },
+    {
+      "trade_id": "TRADE-044",
+      "action": "buy",
+      "ticker": "GOOGL",
+      "quantity": 500,
+      "price": 170.00,
+      "reason": "Add Google",
+      "ground_truth": "approve",
+      "rationale": "$85K = 0.85%, within limits"
+    },
+    {
+      "trade_id": "TRADE-045",
+      "action": "sell",
+      "ticker": "KO",
+      "quantity": 2000,
+      "price": 60.00,
+      "reason": "Exit Coke",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-046",
+      "action": "buy",
+      "ticker": "JPM",
+      "quantity": 500,
+      "price": 200.00,
+      "reason": "Add JPM",
+      "ground_truth": "approve",
+      "rationale": "$100K = 1%, total 5%, at limit"
+    },
+    {
+      "trade_id": "TRADE-047",
+      "action": "buy",
+      "ticker": "SMALL_TECH",
+      "quantity": 1000,
+      "price": 25.00,
+      "reason": "Small tech allocation",
+      "ground_truth": "modify",
+      "violation": "liquidity",
+      "rationale": "1000 vs 50K volume = 20 days, suggest 500 shares"
+    },
+    {
+      "trade_id": "TRADE-048",
+      "action": "sell",
+      "ticker": "VZ",
+      "quantity": 3000,
+      "price": 45.00,
+      "reason": "Exit Verizon",
+      "ground_truth": "approve",
+      "rationale": "Full position exit allowed"
+    },
+    {
+      "trade_id": "TRADE-049",
+      "action": "buy",
+      "ticker": "META",
+      "quantity": 600,
+      "price": 500.00,
+      "reason": "Meta position",
+      "ground_truth": "modify",
+      "violation": "position_limit",
+      "rationale": "$300K = 3%, suggest 500 shares to stay under 2.5%"
+    },
+    {
+      "trade_id": "TRADE-050",
+      "action": "buy",
+      "ticker": "PFE",
+      "quantity": 2000,
+      "price": 30.00,
+      "reason": "Pharma exposure",
+      "ground_truth": "approve",
+      "rationale": "$60K = 0.6%, within limits"
+    }
+  ]
+}

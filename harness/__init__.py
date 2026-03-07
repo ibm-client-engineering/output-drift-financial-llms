@@ -17,6 +17,7 @@ Regulatory Framework:
     - GAAP ASC 450-20: 5% materiality threshold
 
 ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+ICLR 2026 FinAI: "Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness"
 """
 
 __version__ = "1.1.0"  # Regulatory compliance refactor
@@ -52,6 +53,14 @@ from .regulatory_invariants import (
     validate_task_compliance,
     get_regulatory_metadata_for_task
 )
+from .compliance_judge import (
+    ComplianceJudge,
+    ComplianceQuadrant,
+    JudgeEvaluation,
+    ComplianceAttestation,
+    create_ollama_judge,
+    create_watsonx_judge
+)
 
 __all__ = [
     # Core retrieval
@@ -85,5 +94,13 @@ __all__ = [
     "validate_sec_citations",
     "validate_cftc_audit_trail",
     "validate_task_compliance",
-    "get_regulatory_metadata_for_task"
+    "get_regulatory_metadata_for_task",
+
+    # LLM-as-Judge compliance evaluation
+    "ComplianceJudge",
+    "ComplianceQuadrant",
+    "JudgeEvaluation",
+    "ComplianceAttestation",
+    "create_ollama_judge",
+    "create_watsonx_judge"
 ]

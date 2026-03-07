@@ -11,6 +11,7 @@ Welcome to the Output Drift in Financial LLMs Workshop! This hands-on workshop t
 ### Why This Matters
 
 Financial institutions deploying AI systems must ensure:
+
 - **Regulatory Compliance**: Consistent, auditable AI decisions
 - **Risk Management**: Predictable behavior in production
 - **Trust & Reliability**: Stakeholder confidence in AI-driven recommendations
@@ -46,15 +47,18 @@ By the end of this workshop, you will:
 
 ## Research Foundation
 
-This workshop is based on the peer-reviewed paper:
+This workshop is based on two peer-reviewed papers:
+
+**"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"**
+Accepted at the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (The 2nd ICLR Workshop on Advances in Financial AI) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
 
 **"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
-
-📄 [Read the full paper on arXiv](https://arxiv.org/abs/2511.07585)
+Presented at the [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 
 **Key Findings:**
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
 - 7-20B models (Granite-3-8B, Qwen2.5-7B, GPT-OSS-20B) achieve 100% determinism at T=0.0
+- Positive correlation (r=0.45) between determinism and faithfulness - no trade-off
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
 - Structured output tasks (SQL, summarization) maintain better determinism
 - Cross-provider experiments reveal significant reliability gaps
@@ -137,15 +141,24 @@ git checkout v0.1.0
 If you use this framework in your research, please cite:
 
 ```bibtex
-@article{khatchadourian2025output,
-  title={LLM Output Drift: Financial AI Compliance Framework},
+@inproceedings{khatchadourian2026replayable,
+  title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
+  author={Khatchadourian, Raffi},
+  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  year={2026},
+  url={https://arxiv.org/abs/2601.15322}
+}
+
+@inproceedings{khatchadourian2025output,
+  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  journal={arXiv preprint arXiv:2511.07585},
-  year={2025}
+  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  year={2025},
+  url={https://arxiv.org/abs/2511.07585}
 }
 ```
 
-**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
+**Replayable Agents**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) | **Output Drift**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 
 ## License
 

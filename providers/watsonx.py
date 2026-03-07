@@ -8,8 +8,11 @@ Supports both SDK and REST fallback for maximum compatibility.
 import os
 import time
 import logging
+import asyncio
 from typing import Dict, List, Optional, Any
 import httpx
+
+from providers import retry_on_transient
 
 
 class WatsonxProvider:
@@ -32,6 +35,7 @@ class WatsonxProvider:
 
     def __init__(self, api_key: Optional[str] = None, url: Optional[str] = None,
                  project_id: Optional[str] = None, logger = None):
+        self.name = "watsonx"
         self.api_key = api_key or os.getenv("WATSONX_API_KEY")
         self.url = url or os.getenv("WATSONX_URL")
         self.project_id = project_id or os.getenv("WATSONX_PROJECT_ID")
@@ -135,6 +139,7 @@ class WatsonxProvider:
         except Exception as e:
             raise RuntimeError(f"Failed to get IAM token: {e}")
 
+    @retry_on_transient()
     def generate(self, *, model: str, prompt: str, temperature: float, top_p: float,
                  seed: Optional[int] = None, max_new_tokens: Optional[int] = None,
                  stream: bool = False, extra: Optional[Dict] = None) -> Dict[str, Any]:
@@ -174,25 +179,81 @@ class WatsonxProvider:
         result["latency_s"] = time.time() - start_time
         return result
 
+    async def acomplete(
+        self,
+        model: str,
+        messages: List[Dict[str, str]],
+        temperature: float = 0.0,
+        seed: Optional[int] = None,
+        max_tokens: int = 512
+    ) -> str:
+        """
+        Complete a prompt asynchronously (compatible with load_models.py).
+
+        Args:
+            model: Model ID (supports aliases)
+            messages: List of message dicts with 'role' and 'content'
+            temperature: Temperature parameter
+            seed: Random seed for reproducibility
+            max_tokens: Maximum tokens to generate
+
+        Returns:
+            Generated text string
+        """
+        # Convert messages to single prompt string with role markers
+        prompt = "\n".join(
+            f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}"
+            for msg in messages
+        )
+
+        # Call synchronous generate method in thread pool
+        loop = asyncio.get_running_loop()
+        result = await loop.run_in_executor(
+            None,
+            lambda: self.generate(
+                model=model,
+                prompt=prompt,
+                temperature=temperature,
+                top_p=1.0,
+                seed=seed,
+                max_new_tokens=max_tokens,
+                stream=False
+            )
+        )
+
+        return result.get("text", "")
+
     def _generate_sdk(self, model: str, prompt: str, temperature: float, top_p: float,
                       seed: Optional[int], max_new_tokens: Optional[int],
                       stream: bool, extra: Optional[Dict]) -> Dict[str, Any]:
         """Generate using the watsonx SDK."""
         model = self._normalize_model_id(model)
+
+        # Minimal safe parameters - NO LOGPROBS (causes vLLM assertion errors)
         params = {
-            "temperature": temperature,
-            "top_p": top_p,
             "decoding_method": "greedy" if temperature == 0.0 else "sample",
-            "return_options": {"input_tokens": True, "generated_tokens": True}
+            "temperature": temperature,
+            "min_new_tokens": 1,
+            "max_new_tokens": max_new_tokens or 512,
+            "return_options": {
+                "input_tokens": True,
+                "generated_tokens": True
+                # NO prompt_logprobs or token_logprobs - causes vLLM crashes
+            }
         }
+
+        # Only add these if not using greedy decoding
+        if temperature > 0.0:
+            params["top_p"] = top_p if top_p is not None else 1.0
 
         if seed is not None:
             params["random_seed"] = seed
-        if max_new_tokens is not None:
-            params["max_new_tokens"] = max_new_tokens
 
         if extra:
-            params.update(extra)
+            # Filter out any logprobs-related keys
+            safe_extra = {k: v for k, v in extra.items()
+                         if 'logprob' not in k.lower()}
+            params.update(safe_extra)
 
         if not self._credentials:
             raise RuntimeError("Watson SDK credentials not initialized")
@@ -262,20 +323,31 @@ class WatsonxProvider:
             "Content-Type": "application/json"
         }
 
+        # Minimal safe parameters - NO LOGPROBS (causes vLLM assertion errors)
         parameters = {
-            "temperature": temperature,
-            "top_p": top_p,
             "decoding_method": "greedy" if temperature == 0.0 else "sample",
-            "return_options": {"input_tokens": True, "generated_tokens": True}
+            "temperature": temperature,
+            "min_new_tokens": 1,
+            "max_new_tokens": max_new_tokens or 512,
+            "return_options": {
+                "input_tokens": True,
+                "generated_tokens": True
+                # NO prompt_logprobs or token_logprobs - causes vLLM crashes
+            }
         }
+
+        # Only add these if not using greedy decoding
+        if temperature > 0.0:
+            parameters["top_p"] = top_p if top_p is not None else 1.0
 
         if seed is not None:
             parameters["random_seed"] = seed
-        if max_new_tokens is not None:
-            parameters["max_new_tokens"] = max_new_tokens
 
         if extra:
-            parameters.update(extra)
+            # Filter out any logprobs-related keys
+            safe_extra = {k: v for k, v in extra.items()
+                         if 'logprob' not in k.lower()}
+            parameters.update(safe_extra)
 
         payload = {
             "model_id": model,
@@ -289,8 +361,22 @@ class WatsonxProvider:
 
         try:
             response = httpx.post(url, headers=headers, json=payload, params=params, timeout=180)
+
+            # Check for HTTP errors
+            if response.status_code >= 500:
+                error_body = response.text
+                raise RuntimeError(f"WatsonX 5xx error (status {response.status_code}): {error_body}")
+            elif response.status_code >= 400:
+                error_body = response.text
+                raise RuntimeError(f"WatsonX 4xx error (status {response.status_code}): {error_body}")
+
             response.raise_for_status()
             data = response.json()
+
+            # Check for errors in response body
+            if "errors" in data:
+                error_msg = data["errors"][0].get("message", "Unknown error") if data["errors"] else "Unknown error"
+                raise RuntimeError(f"WatsonX API error: {error_msg}")
 
             text = ""
             tokens_prompt = None
@@ -315,6 +401,8 @@ class WatsonxProvider:
                 "raw": data
             }
 
+        except httpx.HTTPStatusError as e:
+            raise RuntimeError(f"HTTP {e.response.status_code}: {e.response.text}")
         except Exception as e:
             raise RuntimeError(f"REST API call failed: {e}")
 

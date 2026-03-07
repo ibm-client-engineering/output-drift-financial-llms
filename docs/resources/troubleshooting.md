@@ -129,11 +129,9 @@ for i in range(16):
     time.sleep(1)  # 1 second delay
 ```
 
-Or use built-in rate limiting:
+The framework includes built-in retry with exponential backoff for cloud providers (Anthropic, Gemini, Watsonx). Transient errors (429, 500-504) are automatically retried up to 3 times. To reduce load, lower the concurrency:
 ```bash
-python run_evaluation.py \
-  --rate-limit 10 \  # Max 10 requests/minute
-  --retry-delay 5    # 5 seconds between retries
+python run_evaluation.py --concurrency 1  # Sequential requests
 ```
 
 ---
@@ -212,10 +210,7 @@ match = (output1_norm == output2_norm)
 **Solution**:
 ```bash
 # Always use n=16 (as in paper)
---concurrency 16
-
-# Additionally check factual consistency (for RAG)
---validate-facts true
+python run_evaluation.py --concurrency 16 --repeats 16
 ```
 
 ---
@@ -267,10 +262,8 @@ python -c "import harness; print('✅ Import successful')"
 --concurrency 4  # Instead of 16
 
 # Process in batches
---batch-size 4
-
-# Use smaller model
-qwen2.5:7b-instruct  # Instead of larger models
+# Use smaller model for faster runs
+python run_evaluation.py --models qwen2.5:7b-instruct --concurrency 1
 ```
 
 ### Slow Experiments

@@ -10,7 +10,7 @@ In this lab, you'll learn how to customize the framework for your own use cases 
 
 By the end of this lab, you will:
 
-- Add custom tasks to `prompts/templates.json`
+- Add custom tasks to `run_evaluation.py`
 - Modify existing prompts for your domain
 - Integrate the framework into CI/CD pipelines
 - Create custom compliance validators
@@ -40,12 +40,13 @@ output-drift-financial-llms/
 └── examples/                   # ← Reference implementations
 ```
 
-## Step 1: Understanding Template Structure
+## Step 1: Understanding Task Structure
 
-Open `prompts/templates.json` to see the existing tasks:
+Task prompts are defined in `run_evaluation.py` (see the `build_prompts()` function) and task formatting/validation lives in `harness/task_definitions.py`.
 
 ```bash
-cat prompts/templates.json
+# View the prompt builder
+grep -A 30 "def build_prompts" run_evaluation.py
 ```
 
 **Current tasks:**
@@ -53,10 +54,9 @@ cat prompts/templates.json
 - `summary`: JSON summarization with schema validation
 - `sql`: Text-to-SQL generation
 
-Each task has:
-- **description**: What the task does
-- **prompts**: Array of test cases
-- **system_prompt**: Instructions for the LLM
+Each task uses:
+- **Task formatting functions** in `harness/task_definitions.py`
+- **System prompts** built into the formatting functions
 - **temperature**: 0.0 for determinism
 - **seed**: 42 for reproducibility
 
@@ -64,7 +64,7 @@ Each task has:
 
 Let's add a new task for credit risk assessment:
 
-**Edit `prompts/templates.json`** and add after the `sql` section:
+To add a custom task, define a new task configuration. Here's an example credit risk assessment task structure:
 
 ```json
 {
@@ -123,10 +123,12 @@ Custom credit risk classification task with drift testing.
 import json
 from openai import OpenAI
 
-# Load custom task template
-with open("prompts/templates.json") as f:
-    templates = json.load(f)
-    credit_risk_task = templates["credit_risk"]
+# Define custom task configuration inline
+credit_risk_task = {
+    "system_prompt": "You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence.",
+    "temperature": 0.0,
+    "seed": 42
+}
 
 client = OpenAI(base_url="http://localhost:11434/v1", api_key="ollama")
 
@@ -201,7 +203,7 @@ Run 5: {"risk_level": "LOW", "explanation": "Strong credit profile with good inc
 
 To use RAG with your own documents:
 
-1. **Add documents to `data/sec_filings/`** (or create a new folder):
+1. **Add documents to `data/sec/`** (or create a new folder):
 
 ```bash
 mkdir -p data/custom_docs
@@ -564,7 +566,7 @@ Open the HTML report in your browser to see a formatted compliance report.
 ## Quiz: Test Your Understanding
 
 ??? question "Where do you add custom tasks?"
-    **Answer**: `prompts/templates.json` - add a new top-level key with task configuration.
+    **Answer**: `run_evaluation.py` - add a new top-level key with task configuration.
 
 ??? question "What's the minimum number of runs recommended for drift testing?"
     **Answer**: 16 (n=16), as used in the paper's methodology.

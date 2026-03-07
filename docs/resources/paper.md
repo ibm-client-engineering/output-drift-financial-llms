@@ -1,8 +1,17 @@
-# Research Paper Summary
+# Research Papers
+
+## Publications
+
+| Paper | Venue | Year |
+|-------|-------|------|
+| [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | 2026 |
+| [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | 2025 |
+
+---
 
 ## LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows
 
-This page summarizes the key findings from our research paper on output drift in large language models used for financial applications.
+This page summarizes the key findings from our research papers on output drift and agent determinism in large language models used for financial applications.
 
 ---
 
@@ -211,15 +220,25 @@ JSONL format capturing:
 If you use this framework or findings in your research, please cite:
 
 ```bibtex
-@article{khatchadourian2025output,
-  title={LLM Output Drift: Financial AI Compliance Framework},
+@inproceedings{khatchadourian2026replayable,
+  title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
+  author={Khatchadourian, Raffi},
+  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  year={2026},
+  url={https://arxiv.org/abs/2601.15322}
+}
+
+@inproceedings{khatchadourian2025output,
+  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  journal={arXiv preprint arXiv:2511.07585},
-  year={2025}
+  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  year={2025},
+  url={https://arxiv.org/abs/2511.07585}
 }
 ```
 
-**Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
+**Replayable Agents**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) | **DOI**: [10.48550/arXiv.2601.15322](https://doi.org/10.48550/arXiv.2601.15322)
+**Output Drift**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
 
 ---
 
