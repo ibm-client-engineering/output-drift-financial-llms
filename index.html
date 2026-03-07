@@ -817,6 +817,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lab-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 7. Replayable Financial Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1221,22 +1249,30 @@
 <td style="text-align: left;">Add custom tasks and integrate with your workflows</td>
 <td style="text-align: left;">30 min</td>
 </tr>
+<tr>
+<td style="text-align: left;"><a href="lab-7/">Lab 7: Replayable Financial Agents</a></td>
+<td style="text-align: left;">Run agent benchmarks from the ICLR 2026 paper</td>
+<td style="text-align: left;">30 min</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Total Duration</strong>: Approximately 2.5-3 hours</p>
+<p><strong>Total Duration</strong>: Approximately 3-3.5 hours</p>
 <h2 id="research-foundation">Research Foundation<a class="headerlink" href="#research-foundation" title="Permanent link">&para;</a></h2>
 <p>This workshop is based on two peer-reviewed papers:</p>
 <p><strong>"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"</strong>
 Accepted at the <a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> (The 2<sup>nd</sup> ICLR Workshop on Advances in Financial AI) | <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
 <p><strong>"LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows"</strong>
 Presented at the <a href="https://ai4f-workshop.github.io/">ACM ICAIF 2025 AI4F Workshop</a> | <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a></p>
-<p><strong>Key Findings:</strong>
+<p><strong>Key Findings (v1, Output Drift):</strong>
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
 - 7-20B models (Granite-3-8B, Qwen2.5-7B, GPT-OSS-20B) achieve 100% determinism at T=0.0
-- Positive correlation (r=0.45) between determinism and faithfulness - no trade-off
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
-- Structured output tasks (SQL, summarization) maintain better determinism
-- Cross-provider experiments reveal significant reliability gaps</p>
+- Structured output tasks (SQL, summarization) maintain better determinism</p>
+<p><strong>Key Findings (v2, Replayable Agents, 4,705 runs):</strong>
+- Decision determinism and accuracy are <em>not detectably correlated</em> (r = -0.11, p = 0.63)
+- Small models achieve high determinism via pattern matching, not reasoning
+- Frontier models show "same conclusion, different reasoning" (decision det. &gt; signature det.)
+- No model simultaneously achieves high determinism AND high accuracy</p>
 <p><strong>Community Validation</strong> (Paul Merrison, FINOS):
 - Determinism is model-specific, not size-based
 - <strong>Gemma2-9B</strong>: 100% deterministic (new Tier 1 candidate)
@@ -1275,20 +1311,20 @@ Presented at the <a href="https://ai4f-workshop.github.io/">ACM ICAIF 2025 AI4F 
 </ol>
 <h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>output-drift-financial-llms/
-├── run_evaluation.py       # Main experiment orchestrator
+├── run_evaluation.py       # Main experiment orchestrator (v1 Output Drift)
 ├── make_tables.py          # Generate LaTeX tables from results
 ├── plot_results.py         # Generate drift visualizations
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
-├── docs/                   # Workshop documentation (labs 0-6)
+├── docs/                   # Workshop documentation (labs 0-7)
 ├── harness/                # Core framework code
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
-├── providers/              # LLM provider implementations
-│   └── watsonx.py          # IBM watsonx.ai integration
+├── providers/              # LLM providers (watsonx, anthropic, gemini)
+├── econometrics/           # Replayable Agents (v2) - benchmarks &amp; metrics
+│   ├── benchmarks/         # 3 financial agent benchmarks (50 cases each)
+│   └── agentic/            # Trajectory determinism &amp; faithfulness metrics
 ├── scripts/                # Data fetching &amp; utilities
-│   └── fetch_sec_texts.py  # SEC EDGAR downloader
-├── prompts/                # Versioned prompt templates
 ├── data/                   # Test datasets &amp; generators
 ├── examples/               # Sample audit trails
 └── requirements.txt        # Python dependencies

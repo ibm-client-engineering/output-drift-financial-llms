@@ -938,6 +938,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 7. Replayable Financial Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1473,9 +1501,9 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 - And other dependencies (see requirements.txt for full list)</p>
 <h2 id="step-4-verify-installation">Step 4: Verify Installation<a class="headerlink" href="#step-4-verify-installation" title="Permanent link">&para;</a></h2>
 <p>Test that the framework can import correctly:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from harness.task_definitions import TaskDefinition; print(&#39;✅ Installation successful!&#39;)&quot;</span>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from harness.task_definitions import format_rag_prompt, validate_sql_query; print(&#39;Installation successful&#39;)&quot;</span>
 </code></pre></div>
-<p>If you see "✅ Installation successful!", you're all set!</p>
+<p>If you see "Installation successful", you're all set!</p>
 <h2 id="step-5-set-up-api-keys-optional">Step 5: Set Up API Keys (Optional)<a class="headerlink" href="#step-5-set-up-api-keys-optional" title="Permanent link">&para;</a></h2>
 <p>To run experiments with cloud providers, you'll need API keys. <strong>Don't worry if you don't have all of these</strong>—you can start with Ollama (free and local) and add others later.</p>
 <h3 id="create-a-env-file">Create a <code>.env</code> File<a class="headerlink" href="#create-a-env-file" title="Permanent link">&para;</a></h3>
@@ -1491,18 +1519,18 @@ pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </s
 <span class="nv">WATSONX_API_KEY</span><span class="o">=</span>your_watsonx_api_key_here
 <span class="nv">WATSONX_PROJECT_ID</span><span class="o">=</span>your_project_id_here
 
-<span class="c1"># OpenAI (if you have access)</span>
-<span class="nv">OPENAI_API_KEY</span><span class="o">=</span>your_openai_api_key_here
-
 <span class="c1"># Anthropic (if you have access)</span>
 <span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>your_anthropic_api_key_here
+
+<span class="c1"># Google Gemini (if you have access)</span>
+<span class="nv">GEMINI_API_KEY</span><span class="o">=</span>your_gemini_api_key_here
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Keep Your Keys Secret</p>
 <p>Never commit your <code>.env</code> file to Git! It's already in <code>.gitignore</code> to prevent accidental commits.</p>
 </div>
 <h3 id="where-to-get-api-keys">Where to Get API Keys<a class="headerlink" href="#where-to-get-api-keys" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Ollama (Free)</label><label for="__tabbed_2_2">IBM watsonx.ai</label><label for="__tabbed_2_3">OpenAI</label><label for="__tabbed_2_4">Anthropic</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Ollama (Free)</label><label for="__tabbed_2_2">IBM watsonx.ai</label><label for="__tabbed_2_3">Anthropic</label><label for="__tabbed_2_4">Google Gemini</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p><strong>No API key needed!</strong> Just install and run locally.</p>
@@ -1520,18 +1548,18 @@ ollama<span class="w"> </span>serve
 </div>
 <div class="tabbed-block">
 <ol>
-<li>Visit <a href="https://platform.openai.com/">platform.openai.com</a></li>
-<li>Sign up and navigate to API keys</li>
-<li>Create a new API key</li>
-<li>Add billing information (required for API access)</li>
-</ol>
-</div>
-<div class="tabbed-block">
-<ol>
 <li>Visit <a href="https://console.anthropic.com/">console.anthropic.com</a></li>
 <li>Sign up and navigate to API keys</li>
 <li>Create a new API key</li>
 <li>Add billing information</li>
+</ol>
+</div>
+<div class="tabbed-block">
+<ol>
+<li>Visit <a href="https://aistudio.google.com/">aistudio.google.com</a></li>
+<li>Sign in with your Google account</li>
+<li>Create an API key</li>
+<li>Enable billing if needed for higher rate limits</li>
 </ol>
 </div>
 </div>
