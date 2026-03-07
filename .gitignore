@@ -80,3 +80,9 @@ main.tex/
 docs-internal/
 .claude/
 sync_to_external.sh
+
+# Internal documentation files (not for public release)
+econometrics/FINDINGS_EXPLAINED.md
+econometrics/PUBLIC_RELEASE.md
+econometrics/REAL_DATA_ANALYSIS_RESULTS.md
+econometrics/VALIDATION_RESULTS.md
