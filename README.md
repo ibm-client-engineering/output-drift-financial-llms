@@ -213,20 +213,26 @@ Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
 If you use this framework, please cite:
 
 ```bibtex
-@inproceedings{khatchadourian2026replayable,
+@article{khatchadourian2026replayable,
   title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
-  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  journal={arXiv preprint arXiv:2601.15322},
   year={2026},
-  url={https://arxiv.org/abs/2601.15322}
+  eprint={2601.15322},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  doi={10.48550/arXiv.2601.15322}
 }
 
-@inproceedings{khatchadourian2025output,
+@article{khatchadourian2025output,
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  journal={arXiv preprint arXiv:2511.07585},
   year={2025},
-  url={https://arxiv.org/abs/2511.07585}
+  eprint={2511.07585},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  doi={10.48550/arXiv.2511.07585}
 }
 ```
 
