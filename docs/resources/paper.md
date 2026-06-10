@@ -4,8 +4,34 @@
 
 | Paper | Venue | Year |
 |-------|-------|------|
+| DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making | arXiv preprint (announcement pending) | 2026 |
 | [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | 2026 |
 | [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | 2025 |
+
+---
+
+## DFAH-Bench: Benchmarking Observable Agent Instability (2026)
+
+The newest paper in this research line measures **whether agents that agree on
+decisions also agree on how they got there** — across 8,127 replay episodes,
+10 models, and 3 financial tasks, with cryptographically verifiable audit
+bundles.
+
+**Key result**: among 912 case groups where decisions agree (DAR ≥ 0.9),
+**21.8% hide trajectory divergence** (TAR < 0.9) and 19.4% diverge strongly
+(TAR < 0.7). Outcome-only evaluation misses all of it. For trajectory-diverger
+models the rates are striking: 55.6% (Claude Sonnet 4) and 56.6%
+(Gemini 2.5 Pro) of their decision-stable cases vary in tool path.
+
+**Reproduce it yourself** — the full replay corpus is in this repository:
+
+```bash
+make reproduce-paper
+```
+
+See [Lab 8](../lab-8/README.md) for the guided walkthrough and the
+[README results table](https://github.com/ibm-client-engineering/output-drift-financial-llms#dfah-bench-results-new-paper)
+for the headline numbers per model.
 
 ---
 
