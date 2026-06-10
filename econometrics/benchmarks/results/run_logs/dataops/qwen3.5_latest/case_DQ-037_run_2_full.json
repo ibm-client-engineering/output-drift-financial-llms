@@ -1,0 +1,56 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-037",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T14:08:25.707185",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "7cf86db3e2b4",
+    "0ce8cf299e7f",
+    "3e8655b2b2de",
+    "d9f8c66fd0c4",
+    "52265852072a"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 129.514,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-037",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "open_interest negative",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "open_interest",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "negative value",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-037",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

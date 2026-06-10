@@ -1,8 +1,8 @@
-# V3 Benchmark Tasks for Financial LLM Agents
+# Benchmark Tasks for Financial LLM Agents
 
 **Purpose**: Standardized evaluation tasks for measuring determinism and faithfulness of tool-using LLM agents in financial applications.
 
-**Target**: ICLR 2026 FinAI Workshop (January 30, 2026 deadline)
+**Paper**: [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) — Accepted to ICLR 2026 FinAI Workshop
 
 ---
 
@@ -149,25 +149,17 @@ Three benchmark tasks spanning the compliance, investment, and operations domain
 
 ## Evaluation Protocol
 
-### Run Configuration
+### Quick Run
 
-```python
-# Configuration for benchmark evaluation
-BENCHMARK_CONFIG = {
-    "n_runs": 10,           # Runs per input
-    "temperatures": [0.0],   # Temperature settings
-    "models": [
-        "claude-opus-4-5",
-        "gemini-2.5-pro",
-        "llama-3-3-70b",
-        "gpt-oss-120b"
-    ],
-    "architectures": [
-        "unconstrained",
-        "schema_first",
-        "policy_gated"
-    ]
-}
+```bash
+# Run all 3 benchmarks (deterministic simulation, no LLM needed)
+python econometrics/benchmarks/run_all.py
+
+# Run a single benchmark
+python econometrics/benchmarks/run_all.py --task compliance_triage --n-runs 8
+
+# Run with actual LLM tool-calling via Ollama
+python econometrics/benchmarks/run_agentic_benchmark.py --model qwen2.5:7b-instruct --n-cases 10 --n-runs 8
 ```
 
 ### Metrics Computation
@@ -189,66 +181,43 @@ constraint_satisfaction = count_satisfied_constraints(decision) / total_constrai
 
 ```
 econometrics/benchmarks/
-├── README.md                    # This file
+├── README.md                      # This file
+├── run_all.py                     # Run all 3 benchmarks (deterministic simulation)
+├── run_agentic_benchmark.py       # Agentic benchmark runner (actual LLM tool-calling)
 ├── compliance_triage/
-│   ├── __init__.py
-│   ├── task.py                  # Task definition and tools
-│   ├── data/                    # Test inputs
-│   │   ├── alerts.json          # 50 test alerts
-│   │   └── ground_truth.json    # Expected labels
-│   └── evaluate.py              # Evaluation script
-│
+│   ├── task.py                    # Task definition, tools, ground truth
+│   └── data/alerts.json           # 50 test alerts
 ├── portfolio_constraint/
-│   ├── __init__.py
-│   ├── task.py
-│   ├── data/
-│   │   ├── trades.json          # 50 proposed trades
-│   │   └── ground_truth.json
-│   └── evaluate.py
-│
-├── dataops_exception/
-│   ├── __init__.py
-│   ├── task.py
-│   ├── data/
-│   │   ├── exceptions.json      # 50 data exceptions
-│   │   └── ground_truth.json
-│   └── evaluate.py
-│
-└── run_all.py                   # Full benchmark suite
+│   ├── task.py                    # Task definition, tools, ground truth
+│   └── data/trades.json           # 50 proposed trades
+└── dataops_exception/
+    ├── task.py                    # Task definition, tools, ground truth
+    └── data/exceptions.json       # 50 data exceptions
 ```
 
 ---
 
-## Expected Baseline Results
+## Measured Results (v2, March 2026)
 
-Based on V3 module validation:
+From 4,705 agentic runs across 7 models, 3 benchmarks, 50 cases each:
 
-| Model Tier | Task | Decision Det. | Evidence Grounding |
-|------------|------|---------------|--------------------|
-| Tier 1 (7-20B) | Compliance Triage | 100% | 95%+ |
-| Tier 1 (7-20B) | Portfolio Constraint | 100% | 100% |
-| Tier 1 (7-20B) | DataOps Exception | 100% | 90%+ |
-| Frontier | Compliance Triage | 85-95% | 100% |
-| Frontier | Portfolio Constraint | 95-100% | 100% |
-| Frontier | DataOps Exception | 80-90% | 95%+ |
-| Tier 3 (120B+) | All Tasks | 10-40% | 70-80% |
+| Model | Profile | Avg Decision Det. | Avg Accuracy | Benchmarks |
+|-------|---------|-------------------|--------------|------------|
+| Qwen 2.5 7B | Pattern Matcher | 98.0% | 33.4% | 3/3 |
+| Granite 3.3 | Pattern Matcher | 91.1% | 42.6% | 2/3 |
+| GPT-OSS 20B | Balanced | 77.3% | 37.3% | 3/3 |
+| Gemini 2.0 Flash | Balanced | 86.0% | 49.8% | 3/3 |
+| Claude Sonnet 4 | Balanced | 84.0% | 38.0% | 3/3 |
+| Claude Opus 4.5 | Explorer | 71.3% | 44.2% | 3/3 |
+| Gemini 2.5 Pro | Explorer | 59.1% | 48.7% | 2/3 |
 
----
-
-## Next Steps
-
-1. [ ] Create task.py for each benchmark
-2. [ ] Generate 50 test inputs per task
-3. [ ] Define ground truth labels
-4. [ ] Implement evaluation scripts
-5. [ ] Run baseline experiments across all model tiers
-6. [ ] Document results in paper
+**Key finding**: Decision determinism and task accuracy are *not detectably correlated* (r = -0.11, p = 0.63). Small models achieve high determinism via pattern matching but low accuracy; frontier models show genuine reasoning with lower determinism. See [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) for full analysis.
 
 ---
 
 ## References
 
-- ICLR 2026 FinAI Workshop: Replayable Financial Agents paper
+- [Replayable Financial Agents (arXiv:2601.15322)](https://arxiv.org/abs/2601.15322)
 - `econometrics/agentic/metrics/trajectory_determinism.py`
 - `econometrics/agentic/metrics/faithfulness.py`
 - `econometrics/agentic/harness/stress_test_runner.py`

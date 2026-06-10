@@ -1,0 +1,50 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "dataops",
+  "case_id": "DQ-020",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:28:37.637219",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "4de3841a4931",
+    "6e51193bccbc",
+    "4424999e9cd4",
+    "311daa58b159"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 8.138,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-020",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "mid_price out of range bid ask",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "BAC",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "mid_price",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

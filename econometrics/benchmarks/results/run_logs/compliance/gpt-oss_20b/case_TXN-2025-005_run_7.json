@@ -1,0 +1,27 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-005",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:47:40.182259",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "0160300d0e81",
+    "d62a28d2031e",
+    "e3a3fcd202f5",
+    "64365252f7d1",
+    "d81d5599e821"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 19.564
+}

@@ -1,0 +1,57 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-030",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:19:27.915808",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "a54ad9899b3f",
+    "637fc203321d",
+    "759cc3372ff6",
+    "a9bafb6e386c",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 4.655,
+  "tool_outputs": [
+    {
+      "entity": "Travel Agency",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Hotel Chain",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Travel Agency",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "customer": "Hotel Chain",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    }
+  ]
+}

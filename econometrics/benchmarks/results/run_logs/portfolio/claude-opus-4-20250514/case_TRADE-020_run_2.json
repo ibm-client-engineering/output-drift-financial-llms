@@ -1,0 +1,27 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-020",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T12:40:19.045300",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "cbf2b5e54058",
+    "5eb1020eb8bd",
+    "9b0cbe7cef93",
+    "026c96520b04"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 12.599
+}

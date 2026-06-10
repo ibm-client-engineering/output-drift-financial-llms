@@ -1,0 +1,4 @@
+benchmark,n_cases,k,gt_dcb,gt_entropy,max_entropy,modal_label,majority_acc_pct,chance_acc_pct,distribution
+compliance,50,3,0.0628,1.0297,1.0986,dismiss,50.0,33.33,"{""escalate"": 15, ""dismiss"": 25, ""investigate"": 10}"
+portfolio,50,3,0.0992,0.9896,1.0986,approve,50.0,33.33,"{""approve"": 25, ""reject"": 18, ""modify"": 7}"
+dataops,50,3,0.1827,0.8979,1.0986,auto_fix,60.0,33.33,"{""auto_fix"": 30, ""escalate"": 15, ""quarantine"": 5}"

@@ -1,0 +1,24 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-014",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:16:33.839147",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [],
+  "decision_output": "investigate",
+  "deterministic": false,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 0.0,
+  "extra": {
+    "note": "deterministic_correction"
+  },
+  "tool_outputs": []
+}

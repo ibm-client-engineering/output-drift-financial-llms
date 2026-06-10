@@ -1,0 +1,57 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-040",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T22:52:35.907432",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "85533e51c0ce",
+    "7cd5030a6017",
+    "d8c72c154ef3",
+    "4766383510a5",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 96.222,
+  "tool_outputs": [
+    {
+      "entity": "Wine Importer",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Vineyard",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Wine Importer",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "customer": "Vineyard",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-032",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:16:02.917380",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "ae8a7f6559a4",
+    "8959946ce68f",
+    "aa4acbaf1d76",
+    "2c3783d20c93",
+    "028800701085"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.31,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-032",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "META",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "cost_basis = 0",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "meta",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "ticker not found",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "dataops",
+  "case_id": "DQ-012",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:36:47.335399",
+  "tool_sequence": [
+    "get_exception_details",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "fc7c17dd6ea0",
+    "ebd3a001114c",
+    "8d68923e3393"
+  ],
+  "decision_output": "auto_fix",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 3.426
+}

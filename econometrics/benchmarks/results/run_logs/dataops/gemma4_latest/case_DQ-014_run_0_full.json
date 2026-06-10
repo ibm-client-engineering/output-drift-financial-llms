@@ -1,0 +1,51 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-014",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T11:46:57.277408",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "6714ecc691cb",
+    "50843d982e46",
+    "2df2826a9efa",
+    "8dbeb45ee949"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 136.357,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-014",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "AAPL",
+      "canonical_value": "AAPL",
+      "match_found": true
+    },
+    {
+      "pattern": "format_error isin",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "isin",
+      "query_value": "AAPL",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

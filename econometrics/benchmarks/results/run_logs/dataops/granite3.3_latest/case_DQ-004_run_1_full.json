@@ -1,0 +1,16 @@
+{
+  "model": "granite3.3_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-004",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:58:06.564834",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "auto_fix",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 5.965,
+  "tool_outputs": []
+}

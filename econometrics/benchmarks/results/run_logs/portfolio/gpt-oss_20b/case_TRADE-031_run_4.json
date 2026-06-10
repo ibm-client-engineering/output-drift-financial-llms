@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-031",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T07:01:14.815247",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "get_current_holdings",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "ba50e0d69082",
+    "5c1fd2e3e6e9",
+    "8aa2d168a109"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 70.568
+}

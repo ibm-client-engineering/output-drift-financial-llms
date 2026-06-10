@@ -1,0 +1,25 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-017",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T09:43:08.784056",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "c19dc0bb9048",
+    "c279a79c09ad",
+    "7f1f02a16e42",
+    "85eea9a710ab"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 108.896
+}

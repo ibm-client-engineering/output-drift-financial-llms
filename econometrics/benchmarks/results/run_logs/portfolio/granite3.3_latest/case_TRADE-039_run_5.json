@@ -1,0 +1,15 @@
+{
+  "model": "granite3.3_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-039",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:23:13.419432",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 24.62
+}

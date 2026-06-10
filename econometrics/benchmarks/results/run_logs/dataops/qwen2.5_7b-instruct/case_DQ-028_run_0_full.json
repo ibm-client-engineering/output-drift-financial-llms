@@ -1,0 +1,49 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "dataops",
+  "case_id": "DQ-028",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:37:57.450285",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "b62ea0c1bd93",
+    "bc14478d8cf9",
+    "1a0d32eee031"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.005,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-028",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "missing_field net_amount",
+      "fixes_found": 1,
+      "fixes": [
+        {
+          "resolution": "escalate",
+          "success_rate": 0.0,
+          "count": 50
+        }
+      ]
+    },
+    {
+      "field": "net_amount",
+      "query_value": "NONE",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

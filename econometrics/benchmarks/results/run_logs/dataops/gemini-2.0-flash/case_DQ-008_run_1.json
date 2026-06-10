@@ -1,0 +1,27 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "dataops",
+  "case_id": "DQ-008",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:36:00.557710",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "f7ccdb8b5432",
+    "eb3b8ae02b99",
+    "83fcba52b4d8",
+    "2777237cd7a8",
+    "19ab168d5587"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 3.871
+}

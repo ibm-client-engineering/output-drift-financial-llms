@@ -1,0 +1,27 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-041",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T14:58:33.098608",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "3fdd3ec539e9",
+    "a98f3b5717f6",
+    "a25f45933669",
+    "b77c08a23ba6",
+    "8e00d4986fa1"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 62.479
+}

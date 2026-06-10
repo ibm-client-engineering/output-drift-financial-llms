@@ -1,0 +1,41 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-004",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T18:19:48.521643",
+  "tool_sequence": [
+    "calculate_risk_score",
+    "get_customer_profile",
+    "check_sanctions"
+  ],
+  "tool_output_hashes": [
+    "f1cdc5a738a1",
+    "43abaa22572b",
+    "408c06f0ac93"
+  ],
+  "decision_output": "dismiss",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 4.214,
+  "tool_outputs": [
+    {
+      "risk_score": 0.0,
+      "risk_level": "LOW"
+    },
+    {
+      "customer": "Cash Business LLC",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "entity": "Cash Business LLC",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    }
+  ]
+}

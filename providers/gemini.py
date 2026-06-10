@@ -11,8 +11,6 @@ import logging
 from typing import Dict, List, Optional, Any
 import httpx
 
-from providers import retry_on_transient, async_retry_on_transient
-
 
 class GeminiProvider:
     """Google Gemini provider using the Generative Language API."""
@@ -74,7 +72,6 @@ class GeminiProvider:
         """Return list of available Gemini models."""
         return self.AVAILABLE_MODELS.copy()
 
-    @retry_on_transient()
     def generate(
         self,
         model: str,
@@ -155,7 +152,6 @@ class GeminiProvider:
             self.logger.error(f"Gemini generation failed: {e}")
             raise
 
-    @async_retry_on_transient()
     async def agenerate(
         self,
         model: str,

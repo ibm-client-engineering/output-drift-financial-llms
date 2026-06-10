@@ -1,0 +1,27 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-035",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:31:19.697032",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "165c3633d0d6",
+    "e527fbfa86d4",
+    "8ee9c759a7d9",
+    "c1527836733d",
+    "5c2abed7ed37"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.126
+}

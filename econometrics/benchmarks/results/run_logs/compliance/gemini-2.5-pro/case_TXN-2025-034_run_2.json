@@ -1,0 +1,23 @@
+{
+  "model": "gemini-2.5-pro",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-034",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:50:27.292311",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile"
+  ],
+  "tool_output_hashes": [
+    "e67b85391095",
+    "e6117ed612b3",
+    "6fd2346cdb8b"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 15.073
+}

@@ -1,0 +1,25 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-045",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T08:13:29.952729",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "2f1f5a0d787e",
+    "d5bd9c6d0e2d",
+    "c1cd41e6036c"
+  ],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 109.558
+}

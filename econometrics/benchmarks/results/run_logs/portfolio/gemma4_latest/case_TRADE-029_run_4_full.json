@@ -1,0 +1,45 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-029",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T03:51:12.793399",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "911e46906d2f",
+    "f640d203cd4f"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 71.991,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "JNJ",
+      "position_value": 240000.0,
+      "position_pct": 6.86,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Healthcare",
+      "exposure_pct": 10.29,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

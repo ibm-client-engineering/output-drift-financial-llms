@@ -1,0 +1,31 @@
+benchmark,model,model_display,n_cases,total_runs,benchmark_accuracy_pct
+compliance,claude-opus-4-20250514,Claude Opus 4.5,50,150,68.0
+compliance,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,32.0
+compliance,deepseek-r1_8b,DeepSeek-R1 8B,2,14,50.0
+compliance,gemini-2.0-flash,Gemini 2.0 Flash,50,150,54.0
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,44,132,40.909090909090914
+compliance,gemma4_latest,Gemma 4,50,400,64.0
+compliance,gpt-oss_20b,GPT-OSS 20B,50,400,34.0
+compliance,granite3.3_latest,Granite 3.3,50,400,34.0
+compliance,mistral_7b,Mistral 7B,50,400,48.0
+compliance,qwen2.5_7b-instruct,Qwen 2.5 7B,50,400,38.0
+compliance,qwen3.5_latest,Qwen 3.5,50,400,50.0
+dataops,claude-opus-4-20250514,Claude Opus 4.5,25,75,24.0
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,12.0
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,50,150,34.0
+dataops,gemma4_latest,Gemma 4,50,400,44.0
+dataops,gpt-oss_20b,GPT-OSS 20B,50,400,44.0
+dataops,granite3.3_latest,Granite 3.3,50,400,60.0
+dataops,mistral_7b,Mistral 7B,19,145,36.84210526315789
+dataops,qwen2.5_7b-instruct,Qwen 2.5 7B,50,400,42.0
+dataops,qwen3.5_latest,Qwen 3.5,50,400,46.0
+portfolio,claude-opus-4-20250514,Claude Opus 4.5,50,150,40.0
+portfolio,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,66.0
+portfolio,gemini-2.0-flash,Gemini 2.0 Flash,50,150,64.0
+portfolio,gemini-2.5-pro,Gemini 2.5 Pro,47,139,59.57446808510638
+portfolio,gemma4_latest,Gemma 4,50,400,60.0
+portfolio,gpt-oss_20b,GPT-OSS 20B,50,400,34.0
+portfolio,granite3.3_latest,Granite 3.3,50,400,54.0
+portfolio,mistral_7b,Mistral 7B,50,400,66.0
+portfolio,qwen2.5_7b-instruct,Qwen 2.5 7B,50,400,20.0
+portfolio,qwen3.5_latest,Qwen 3.5,3,24,33.33333333333333

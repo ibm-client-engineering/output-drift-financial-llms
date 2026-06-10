@@ -1,0 +1,23 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-018",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T10:00:46.787202",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "c85294343682",
+    "42eae6753c74",
+    "d02406fcd2b7"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 89.033
+}

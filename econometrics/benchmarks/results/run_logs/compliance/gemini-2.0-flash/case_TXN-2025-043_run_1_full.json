@@ -1,0 +1,41 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-043",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:21:40.921874",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "4cd2dadcc122",
+    "13090fc3b514",
+    "d81d5599e821"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 3.09,
+  "tool_outputs": [
+    {
+      "entity": "Shipping Company",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Port Authority",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "risk_score": 0.5,
+      "risk_level": "MEDIUM"
+    }
+  ]
+}

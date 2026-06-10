@@ -51,6 +51,9 @@ Thumbs.db
 # Jupyter
 .ipynb_checkpoints
 
+# mkdocs build output (the workshop site is built in CI / gh-pages)
+site/
+
 # Experiments
 traces/
 results/

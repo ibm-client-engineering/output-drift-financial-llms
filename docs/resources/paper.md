@@ -59,7 +59,7 @@ For regulated financial applications requiring **reproducible audit trails**, sm
 
 - **Total Runs**: 480 experiments (n=16 concurrent runs per condition)
 - **Tasks**: SQL generation, RAG Q&A, JSON summarization
-- **Providers**: Ollama (local), IBM watsonx.ai (cloud), OpenAI, Anthropic
+- **Providers**: Ollama (local), IBM watsonx.ai (cloud), Anthropic, Google Gemini
 - **Key Parameters**: temperature=0.0, seed=42 (deterministic settings)
 
 ### Reproducibility
@@ -247,7 +247,7 @@ If you use this framework or findings in your research, please cite:
 - **Full Paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 - **Code Repository**: [GitHub](https://github.com/ibm-client-engineering/output-drift-financial-llms)
 - **API Documentation**: [API Reference](api.md)
-- **Workshop Labs**: [Lab 0-6](../lab-1/README.md)
+- **Workshop Labs**: [Lab 0-7](../lab-1/README.md)
 
 ---
 

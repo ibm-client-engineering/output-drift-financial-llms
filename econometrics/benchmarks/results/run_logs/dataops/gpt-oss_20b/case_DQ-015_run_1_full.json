@@ -1,0 +1,60 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-015",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:24:37.811376",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "5200e4c06cd2",
+    "59cbcfb8aff3",
+    "543141a97a47",
+    "8c931d55dd21",
+    "03aaf1215ef6"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.872,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-015",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "currency",
+      "query_value": "DOLLAR",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "currency",
+      "query_value": "USD",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "currency_code",
+      "query_value": "USD",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "currency_name",
+      "query_value": "USD",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

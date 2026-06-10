@@ -1,0 +1,27 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-045",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T00:07:39.827477",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "710c0dd43409",
+    "391607907843",
+    "64a565254760",
+    "e875bce3a56c",
+    "d81d5599e821"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 104.809
+}

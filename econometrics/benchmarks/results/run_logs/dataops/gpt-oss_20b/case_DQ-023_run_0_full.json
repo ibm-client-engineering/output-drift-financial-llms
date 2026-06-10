@@ -1,0 +1,57 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-023",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:37:35.976114",
+  "tool_sequence": [
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "validate_fix",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "e5761aa654e1",
+    "db9aba6da86c",
+    "8340f4988f3e",
+    "f6f429dd1b0d",
+    "a2319f4733e9"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 17.475,
+  "tool_outputs": [
+    {
+      "pattern": "high_price less than low_price",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "high and low swapped",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "high_price",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "field": "low_price",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-023",
+      "status": "fixed",
+      "fix_applied": {
+        "high_price": "195.0",
+        "low_price": "190.0"
+      }
+    }
+  ]
+}

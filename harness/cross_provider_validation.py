@@ -35,80 +35,29 @@ class CrossProviderValidator:
         self.providers = providers
         self.tolerance_pct = tolerance_pct
 
-    def validate(
-        self,
-        outputs: Dict[str, str],
-        task_type: str = "rag",
-        citations: Optional[Dict[str, List[str]]] = None,
-        sql_results: Optional[Dict[str, Any]] = None,
-    ) -> Dict[str, Any]:
+    def validate(self, prompt: str, task_type: str = "rag", **kwargs) -> Dict[str, Any]:
         """
-        Validate output consistency across providers using pre-collected outputs.
+        Validate output consistency across providers.
 
         Args:
-            outputs: provider_name -> output text mapping
+            prompt: Input prompt
             task_type: "rag", "sql", or "summary"
-            citations: provider_name -> citation list (required for rag)
-            sql_results: provider_name -> numeric result (optional for sql)
+            **kwargs: Task-specific parameters (e.g., model, temperature, seed)
 
         Returns:
             {
                 "consistent": bool,
-                "similarity_scores": Dict[str, float],
-                "task_validation": Dict,
+                "outputs": Dict[str, str],  # provider -> output
+                "similarity": float,  # 0.0-1.0
                 "audit_trail": List[Dict]
             }
         """
-        if len(outputs) < 2:
-            return {
-                "consistent": True,
-                "similarity_scores": {},
-                "task_validation": {"reason": "Single provider, no comparison needed"},
-                "audit_trail": []
-            }
-
-        # Pairwise similarity
-        provider_names = list(outputs.keys())
-        ref = provider_names[0]
-        similarity_scores = {}
-        for provider in provider_names[1:]:
-            key = f"{ref}_vs_{provider}"
-            similarity_scores[key] = self.compute_similarity(
-                outputs[ref], outputs[provider]
-            )
-
-        # Task-specific validation
-        if task_type == "rag":
-            task_validation = self.validate_rag_outputs(
-                outputs, citations or {}
-            )
-        elif task_type == "sql":
-            task_validation = self.validate_sql_outputs(
-                outputs, sql_results or {}
-            )
-        elif task_type == "summary":
-            task_validation = self.validate_summary_outputs(outputs)
-        else:
-            task_validation = {"error": f"Unknown task type: {task_type}"}
-
-        consistent = task_validation.get("consistent", False)
-
-        # Audit trail
-        audit_trail = [{
-            "providers": provider_names,
-            "task_type": task_type,
-            "consistent": consistent,
-            "similarity_scores": similarity_scores,
-            "output_hashes": {p: self.hash_output(o) for p, o in outputs.items()},
-            "tolerance_pct": self.tolerance_pct,
-        }]
-
-        return {
-            "consistent": consistent,
-            "similarity_scores": similarity_scores,
-            "task_validation": task_validation,
-            "audit_trail": audit_trail
-        }
+        # This is a placeholder implementation
+        # In production, this would call actual LLM providers
+        raise NotImplementedError(
+            "This is a reference implementation. "
+            "Integrate with your LLM provider clients (Ollama, watsonx, etc.)"
+        )
 
     @staticmethod
     def compute_similarity(text1: str, text2: str) -> float:
@@ -196,61 +145,6 @@ class CrossProviderValidator:
                 }
 
         return results
-
-    def validate_summary_outputs(self, outputs: Dict[str, str]) -> Dict[str, Any]:
-        """
-        Validate summary/JSON outputs across providers.
-
-        Checks:
-        - Text similarity across providers
-        - JSON structure consistency (if outputs are valid JSON)
-
-        Args:
-            outputs: provider -> summary output text
-
-        Returns:
-            Validation results
-        """
-        import json
-
-        if len(outputs) < 2:
-            return {"consistent": True, "reason": "Single provider, no comparison needed"}
-
-        provider_names = list(outputs.keys())
-        ref_provider = provider_names[0]
-        ref_output = outputs[ref_provider]
-
-        validation = {
-            "consistent": True,
-            "text_similarity": {},
-            "schema_consistent": True,
-        }
-
-        # Check if outputs parse as JSON and have matching keys
-        ref_keys = None
-        try:
-            ref_parsed = json.loads(ref_output)
-            ref_keys = set(ref_parsed.keys()) if isinstance(ref_parsed, dict) else None
-        except (json.JSONDecodeError, AttributeError):
-            pass
-
-        for provider in provider_names[1:]:
-            similarity = self.compute_similarity(ref_output, outputs[provider])
-            validation["text_similarity"][f"{ref_provider}_vs_{provider}"] = similarity
-
-            if similarity < 0.90:
-                validation["consistent"] = False
-
-            # Check JSON key consistency
-            if ref_keys is not None:
-                try:
-                    parsed = json.loads(outputs[provider])
-                    if isinstance(parsed, dict) and set(parsed.keys()) != ref_keys:
-                        validation["schema_consistent"] = False
-                except (json.JSONDecodeError, AttributeError):
-                    validation["schema_consistent"] = False
-
-        return validation
 
     def validate_sql_outputs(self, queries: Dict[str, str], results: Dict[str, Any]) -> Dict[str, Any]:
         """

@@ -1,0 +1,16 @@
+{
+  "model": "mistral_7b",
+  "benchmark": "dataops",
+  "case_id": "DQ-014",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-07T15:27:19.286167",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 4.685,
+  "tool_outputs": []
+}

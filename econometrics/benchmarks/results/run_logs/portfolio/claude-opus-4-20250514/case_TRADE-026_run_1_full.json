@@ -1,0 +1,62 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-026",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T12:44:19.693844",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "8a80017dde9d",
+    "95a196d95e24",
+    "dd144502d8d5",
+    "026c96520b04"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 12.61,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "NVDA",
+      "price": 480.0,
+      "volume_3d_avg": 40000000,
+      "sector": "Technology"
+    },
+    {
+      "ticker": "NVDA",
+      "position_value": 192000.0,
+      "position_pct": 5.49,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Technology",
+      "exposure_pct": 29.86,
+      "limit_pct": 25.0,
+      "within_limit": false
+    },
+    {
+      "region": "US",
+      "cash_reserve_min_pct": 2.0,
+      "single_stock_max_pct": 5.0,
+      "sector_max_pct": 25.0,
+      "liquidity_coverage_days": 3
+    }
+  ]
+}

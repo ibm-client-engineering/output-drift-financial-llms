@@ -1,0 +1,49 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-026",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:06:22.056784",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "d64fdfbacc61",
+    "27d551943ebb",
+    "60e5fdf720d9",
+    "f1cdc5a738a1"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 12.688,
+  "tool_outputs": [
+    {
+      "entity": "Software Company",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "SaaS Provider",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Software Company",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.0,
+      "risk_level": "LOW"
+    }
+  ]
+}

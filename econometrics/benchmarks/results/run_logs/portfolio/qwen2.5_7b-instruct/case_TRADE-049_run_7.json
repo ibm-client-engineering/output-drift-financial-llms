@@ -1,0 +1,25 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-049",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T21:50:42.882905",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "916dd2483244",
+    "1ef39adc94e0",
+    "dd144502d8d5"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.418
+}

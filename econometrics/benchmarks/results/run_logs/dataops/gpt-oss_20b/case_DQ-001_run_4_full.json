@@ -1,0 +1,59 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-001",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:03:07.115661",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "3d9b26692269",
+    "540548cf72a4",
+    "546784863429",
+    "3ff1bf4dbd4a",
+    "3f82ab2486e4"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 16.2,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-001",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "negative trade_price",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "MSFT",
+      "canonical_value": "MSFT",
+      "match_found": true
+    },
+    {
+      "field": "trade_price",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-001",
+      "status": "fixed",
+      "fix_applied": {
+        "trade_price": "45.23"
+      }
+    }
+  ]
+}

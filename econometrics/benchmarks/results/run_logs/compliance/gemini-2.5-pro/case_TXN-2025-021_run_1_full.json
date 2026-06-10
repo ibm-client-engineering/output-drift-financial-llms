@@ -1,0 +1,41 @@
+{
+  "model": "gemini-2.5-pro",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-021",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:36:08.306413",
+  "tool_sequence": [
+    "get_customer_profile",
+    "check_sanctions",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "6a22fcf5f350",
+    "83929317717f",
+    "d81d5599e821"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.688,
+  "tool_outputs": [
+    {
+      "customer": "Law Firm Trust",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "entity": "Law Firm Trust",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "risk_score": 0.5,
+      "risk_level": "MEDIUM"
+    }
+  ]
+}

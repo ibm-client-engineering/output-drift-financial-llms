@@ -1,0 +1,49 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-017",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T21:59:44.489353",
+  "tool_sequence": [
+    "check_sanctions",
+    "get_customer_profile",
+    "check_sanctions",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "4076f8311b93",
+    "a8006d31fd7c",
+    "df326a6c73cb",
+    "ba3efc1f21f7"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 12.399,
+  "tool_outputs": [
+    {
+      "entity": "Healthcare Provider",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Healthcare Provider",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "entity": "Offshore Account",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "risk_score": 0.7,
+      "risk_level": "HIGH"
+    }
+  ]
+}

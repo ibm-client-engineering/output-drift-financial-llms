@@ -1,0 +1,44 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-027",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T05:51:27.912967",
+  "tool_sequence": [
+    "get_current_holdings",
+    "calculate_sector_exposure",
+    "get_market_data"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "dd144502d8d5",
+    "9d2172b44587"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 118.71,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "sector": "Technology",
+      "exposure_pct": 29.86,
+      "limit_pct": 25.0,
+      "within_limit": false
+    },
+    {
+      "ticker": "GOOGL",
+      "price": 170.0,
+      "volume_3d_avg": 25000000,
+      "sector": "Technology"
+    }
+  ]
+}

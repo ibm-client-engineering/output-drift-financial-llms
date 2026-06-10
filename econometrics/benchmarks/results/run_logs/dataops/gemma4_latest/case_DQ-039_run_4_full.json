@@ -1,0 +1,27 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-039",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T15:54:25.185420",
+  "tool_sequence": [
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "46d6e750f753"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 42.109,
+  "tool_outputs": [
+    {
+      "field": "LEI",
+      "query_value": "GOLDMAN SACHS",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

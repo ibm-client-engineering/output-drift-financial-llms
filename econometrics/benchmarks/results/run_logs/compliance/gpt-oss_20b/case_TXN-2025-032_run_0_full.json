@@ -1,0 +1,49 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-032",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T00:16:35.225467",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "fea36e89e5fc",
+    "4cd2dadcc122",
+    "a11f6af42c3e",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 54.393,
+  "tool_outputs": [
+    {
+      "entity": "E-commerce Store",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Shipping Company",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "E-commerce Store",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    }
+  ]
+}

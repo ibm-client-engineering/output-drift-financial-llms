@@ -1,0 +1,49 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-038",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:14:40.594421",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "06adb916519c",
+    "b700255fdb48",
+    "e67d8d7fb8b5",
+    "f1cdc5a738a1"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 11.731,
+  "tool_outputs": [
+    {
+      "entity": "Dental Practice",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Equipment Leasing",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Dental Practice",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.0,
+      "risk_level": "LOW"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-007",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T21:52:58.870547",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "e4a4ca7b506e",
+    "fc3610d3d2ca",
+    "f019aff75a90",
+    "8c8befd5d79a",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.463
+}

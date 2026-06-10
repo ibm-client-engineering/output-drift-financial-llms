@@ -1,0 +1,27 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-012",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:25:34.158732",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "d71eeb1236d2",
+    "a169c4538d11",
+    "dd144502d8d5",
+    "026c96520b04"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 3.984
+}

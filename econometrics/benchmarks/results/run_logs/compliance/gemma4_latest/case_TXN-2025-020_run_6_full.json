@@ -1,0 +1,57 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-020",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T16:23:20.498715",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "0437b80fcca7",
+    "b8e317ec7b94",
+    "6800ae99a29a",
+    "5298937819c3",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 79.484,
+  "tool_outputs": [
+    {
+      "entity": "Manufacturing Co",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Parts Supplier",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Manufacturing Co",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "customer": "Parts Supplier",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    }
+  ]
+}

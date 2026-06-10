@@ -1,0 +1,41 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-010",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:15:48.828517",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "ce2762f1e7f7",
+    "1b574368740d",
+    "d81d5599e821"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 3.285,
+  "tool_outputs": [
+    {
+      "entity": "Construction Co",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Materials Supplier",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "risk_score": 0.5,
+      "risk_level": "MEDIUM"
+    }
+  ]
+}

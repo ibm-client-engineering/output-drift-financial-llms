@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-031",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:15:12.463658",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "e5d9c4e00215",
+    "2a6b1bead293",
+    "13fd31a4f0f8",
+    "eb83eb9e0c23",
+    "33dd6a57cabc"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.76,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-031",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "country_code",
+      "query_value": "USA",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "country_code",
+      "query_value": "US",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "country_code usa",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "iso_2_char_country",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

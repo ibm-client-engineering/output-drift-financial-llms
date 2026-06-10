@@ -1,0 +1,45 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-020",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T04:25:42.383755",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_current_holdings",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "5c1fd2e3e6e9",
+    "32c4af7ab91f"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 63.943,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "sector": "Entertainment",
+      "exposure_pct": 0.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

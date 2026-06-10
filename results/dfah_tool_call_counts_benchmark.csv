@@ -1,0 +1,31 @@
+benchmark,model,model_display,n_runs,mean_tool_calls,pct_runs_with_zero_calls
+compliance,claude-opus-4-20250514,Claude Opus 4.5,150,4.16,0.0
+compliance,claude-sonnet-4-20250514,Claude Sonnet 4,150,4.58,0.0
+compliance,deepseek-r1_8b,DeepSeek-R1 8B,14,0.0,100.0
+compliance,gemini-2.0-flash,Gemini 2.0 Flash,150,3.78,0.0
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,132,3.35,4.5
+compliance,gemma4_latest,Gemma 4,400,2.86,2.0
+compliance,gpt-oss_20b,GPT-OSS 20B,400,3.98,0.0
+compliance,granite3.3_latest,Granite 3.3,400,0.0,100.0
+compliance,mistral_7b,Mistral 7B,400,0.0,100.0
+compliance,qwen2.5_7b-instruct,Qwen 2.5 7B,400,2.94,0.0
+compliance,qwen3.5_latest,Qwen 3.5,400,4.1,0.0
+dataops,claude-opus-4-20250514,Claude Opus 4.5,75,4.88,0.0
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,150,5.01,0.0
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,150,3.45,1.3
+dataops,gemma4_latest,Gemma 4,400,2.98,0.0
+dataops,gpt-oss_20b,GPT-OSS 20B,400,3.36,2.2
+dataops,granite3.3_latest,Granite 3.3,400,0.0,100.0
+dataops,mistral_7b,Mistral 7B,145,0.0,100.0
+dataops,qwen2.5_7b-instruct,Qwen 2.5 7B,400,4.12,0.0
+dataops,qwen3.5_latest,Qwen 3.5,400,5.06,0.0
+portfolio,claude-opus-4-20250514,Claude Opus 4.5,150,4.54,0.0
+portfolio,claude-sonnet-4-20250514,Claude Sonnet 4,150,3.99,0.0
+portfolio,gemini-2.0-flash,Gemini 2.0 Flash,150,3.59,0.0
+portfolio,gemini-2.5-pro,Gemini 2.5 Pro,139,2.81,7.9
+portfolio,gemma4_latest,Gemma 4,400,3.1,0.0
+portfolio,gpt-oss_20b,GPT-OSS 20B,400,3.42,0.0
+portfolio,granite3.3_latest,Granite 3.3,400,0.0,100.0
+portfolio,mistral_7b,Mistral 7B,400,0.0,100.0
+portfolio,qwen2.5_7b-instruct,Qwen 2.5 7B,400,4.68,0.0
+portfolio,qwen3.5_latest,Qwen 3.5,24,3.67,0.0

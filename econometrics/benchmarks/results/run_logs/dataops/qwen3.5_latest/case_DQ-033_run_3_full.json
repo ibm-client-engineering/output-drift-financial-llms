@@ -1,0 +1,155 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-033",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T13:19:20.302278",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "bf2509fd5a9a",
+    "02827feb1abe",
+    "257f068c5c1f",
+    "fe07a563aacf",
+    "c85649d96d71",
+    "02827feb1abe",
+    "6667952b14be",
+    "10278a4ac397",
+    "a1ce261b21fe",
+    "583597a0f235",
+    "02827feb1abe",
+    "775cd5b5e2f4",
+    "fe07a563aacf",
+    "c85649d96d71",
+    "6667952b14be",
+    "10278a4ac397",
+    "079f88d0bf44"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 121.815,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-033",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "side",
+      "query_value": "B",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "side format_error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "side",
+      "query_value": "BUY",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "SELL",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "B",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "1",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "2",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "LONG",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "SHORT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "B",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "S",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "BUY",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "SELL",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "1",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "2",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "side",
+      "query_value": "3",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

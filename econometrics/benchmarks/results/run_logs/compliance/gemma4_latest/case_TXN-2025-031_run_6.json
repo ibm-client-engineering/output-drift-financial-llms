@@ -1,0 +1,19 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-031",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T17:54:38.451879",
+  "tool_sequence": [
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "dafe16bb7811"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 56.239
+}

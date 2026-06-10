@@ -1,0 +1,61 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "dataops",
+  "case_id": "DQ-022",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:38:25.448364",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "b225bac12a15",
+    "a971703a7cb4",
+    "c68a2c2873ee",
+    "fbb98919db00",
+    "ca5b126c20fc"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 3.929,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-022",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "NVDA",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "split_ratio format_error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "split_ratio",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-022",
+      "status": "fixed",
+      "fix_applied": {
+        "field": "split_ratio",
+        "old_value": "10:1",
+        "new_value": "10.0"
+      }
+    }
+  ]
+}

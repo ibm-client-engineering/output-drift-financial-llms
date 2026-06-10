@@ -1,0 +1,41 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-043",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T16:28:17.501680",
+  "tool_sequence": [
+    "query_reference_data",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "54e7a24a07de",
+    "676a9b32f08a",
+    "fe37224aa0f1"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 59.798,
+  "tool_outputs": [
+    {
+      "field": "currency_pair",
+      "query_value": "USD-EUR",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "currency_pair_format error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-043",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

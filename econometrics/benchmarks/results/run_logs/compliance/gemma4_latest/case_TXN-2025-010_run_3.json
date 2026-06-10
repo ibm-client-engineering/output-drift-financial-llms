@@ -1,0 +1,27 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-010",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T14:38:22.148872",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "ce2762f1e7f7",
+    "1b574368740d",
+    "7aa8b3b6b4ba",
+    "f4c6e9e69a33",
+    "d81d5599e821"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 51.377
+}

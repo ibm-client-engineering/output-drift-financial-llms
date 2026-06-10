@@ -1,0 +1,56 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-028",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:13:34.986414",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "b62ea0c1bd93",
+    "e17fe03b048b",
+    "2b7f81eb16aa",
+    "fef4abde5955",
+    "d9408caf02df"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.624,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-028",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "missing net_amount settlement_feed",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "missing net_amount",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "net_amount calculation",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "net_amount",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

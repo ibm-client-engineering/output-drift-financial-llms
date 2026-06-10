@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-015",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:06:55.078767",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "5200e4c06cd2",
+    "59cbcfb8aff3",
+    "543141a97a47",
+    "900bb3ad0ef8",
+    "558fe4af2efd"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 8.134,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-015",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "currency",
+      "query_value": "DOLLAR",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "currency",
+      "query_value": "USD",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "currency dollar",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "currency = dollar",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

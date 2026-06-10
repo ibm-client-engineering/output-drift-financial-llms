@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-011",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:04:58.743496",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "3ad61d9725ad",
+    "798ef6ccb39b",
+    "98ad6e2e67b1",
+    "77e7b5a7a0eb",
+    "4acd1e2c2cf2"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.334,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-011",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "VZ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "close_price n/a",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "ticker vz",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "missing price",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

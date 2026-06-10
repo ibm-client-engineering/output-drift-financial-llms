@@ -1,0 +1,23 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-010",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T11:20:49.423503",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "416b0e5a1dab",
+    "6f745dac4413",
+    "c38b16b5f63b"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 62.097
+}

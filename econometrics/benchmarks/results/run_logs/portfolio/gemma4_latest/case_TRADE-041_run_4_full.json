@@ -1,0 +1,45 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-041",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T07:03:40.034888",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "387f5b033cfb",
+    "fa1deea64690"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 110.506,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "VZ",
+      "position_value": 225000.0,
+      "position_pct": 6.43,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Telecommunications",
+      "exposure_pct": 0.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

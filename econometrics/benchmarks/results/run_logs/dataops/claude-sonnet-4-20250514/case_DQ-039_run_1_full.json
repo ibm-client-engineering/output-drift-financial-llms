@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-039",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:19:25.813072",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "4c9aa395a3ad",
+    "a760770102ca",
+    "3fe2f1759360",
+    "d0e4bdecd96e",
+    "f1afae6eca57"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.317,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-039",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "lei",
+      "query_value": "INVALID123",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "lei format error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "counterparty_lei",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "counterparty",
+      "query_value": "GOLDMAN SACHS",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

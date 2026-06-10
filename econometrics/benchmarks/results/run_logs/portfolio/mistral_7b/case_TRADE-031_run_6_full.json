@@ -1,0 +1,16 @@
+{
+  "model": "mistral_7b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-031",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-07T14:59:02.696845",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 6.984,
+  "tool_outputs": []
+}

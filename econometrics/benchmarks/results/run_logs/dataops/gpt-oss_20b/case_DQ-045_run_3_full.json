@@ -1,0 +1,57 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-045",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:50:38.711945",
+  "tool_sequence": [
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "query_reference_data",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "2e20fcbd50af",
+    "557bc4850186",
+    "7fed2e1769cd",
+    "d8becad444e5",
+    "4a30fa421661"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.579,
+  "tool_outputs": [
+    {
+      "field": "order_type",
+      "query_value": "MRKT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "MARKET",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "mrkt",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "order_type",
+      "query_value": "LIMIT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

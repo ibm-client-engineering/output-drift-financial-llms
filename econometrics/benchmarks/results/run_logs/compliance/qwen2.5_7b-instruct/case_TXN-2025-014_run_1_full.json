@@ -1,0 +1,33 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-014",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T18:26:01.907725",
+  "tool_sequence": [
+    "calculate_risk_score",
+    "get_customer_profile"
+  ],
+  "tool_output_hashes": [
+    "a6c5a0931d62",
+    "b1f0be87b97c"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 4.479,
+  "tool_outputs": [
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    },
+    {
+      "customer": "Small Business",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    }
+  ]
+}

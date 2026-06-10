@@ -1,0 +1,28 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-009",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T22:38:38.233266",
+  "tool_sequence": [
+    "get_current_holdings"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9"
+  ],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 58.931,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    }
+  ]
+}

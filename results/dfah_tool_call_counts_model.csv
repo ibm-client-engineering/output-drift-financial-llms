@@ -1,0 +1,11 @@
+model,model_display,n_benchmarks,total_runs,mean_tool_calls_per_run,max_benchmark_mean,min_benchmark_mean,pct_zero_tool_runs
+qwen3.5_latest,Qwen 3.5,3,824,4.28,5.06,3.67,0.0
+gemma4_latest,Gemma 4,3,1200,2.98,3.1,2.86,0.7
+qwen2.5_7b-instruct,Qwen 2.5 7B,3,1200,3.91,4.68,2.94,0.0
+granite3.3_latest,Granite 3.3,3,1200,0.0,0.0,0.0,100.0
+mistral_7b,Mistral 7B,3,945,0.0,0.0,0.0,100.0
+gpt-oss_20b,GPT-OSS 20B,3,1200,3.59,3.98,3.36,0.7
+gemini-2.0-flash,Gemini 2.0 Flash,3,450,3.61,3.78,3.45,0.4
+gemini-2.5-pro,Gemini 2.5 Pro,2,271,3.08,3.35,2.81,6.2
+claude-opus-4-20250514,Claude Opus 4.5,3,375,4.53,4.88,4.16,0.0
+claude-sonnet-4-20250514,Claude Sonnet 4,3,450,4.53,5.01,3.99,0.0

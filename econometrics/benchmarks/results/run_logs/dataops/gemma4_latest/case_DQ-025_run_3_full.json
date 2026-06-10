@@ -1,0 +1,42 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-025",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T13:39:59.293339",
+  "tool_sequence": [
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "fb798916e9fd",
+    "5965c0f985cf",
+    "dfad6fefe148"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 80.08,
+  "tool_outputs": [
+    {
+      "field": "ticker",
+      "query_value": "GOOG",
+      "canonical_value": "GOOGL",
+      "match_found": true
+    },
+    {
+      "field": "exchange_code",
+      "query_value": "NASDQ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "exchange code format error",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "model": "gemini-2.5-pro",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-006",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:27:14.521189",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_market_data"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "00e1e5bec16b",
+    "f6f09edc2987",
+    "78ed65784886"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.126,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "JPM",
+      "position_value": 600000.0,
+      "position_pct": 17.14,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Financials",
+      "exposure_pct": 0.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    },
+    {
+      "ticker": "JPM",
+      "price": 200.0,
+      "volume_3d_avg": 10000000,
+      "sector": "Financial"
+    }
+  ]
+}

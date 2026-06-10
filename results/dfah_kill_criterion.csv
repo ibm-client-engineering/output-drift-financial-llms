@@ -1,0 +1,4 @@
+criterion,n_eligible,n_divergent,pct
+any_variation,912,199,21.820175438596493
+moderate_tar_lt_0.9,912,199,21.820175438596493
+strong_tar_lt_0.7,912,177,19.407894736842106

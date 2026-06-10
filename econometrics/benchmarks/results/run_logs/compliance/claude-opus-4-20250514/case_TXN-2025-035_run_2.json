@@ -1,0 +1,23 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-035",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:37:33.005695",
+  "tool_sequence": [
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "f8f91f232adb",
+    "f6d567e6d31e",
+    "ba3efc1f21f7"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 21.963
+}

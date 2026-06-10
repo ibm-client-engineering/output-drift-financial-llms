@@ -1,0 +1,62 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-018",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T20:41:05.607897",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "2083cad382af",
+    "f58994477921",
+    "9b0cbe7cef93",
+    "026c96520b04"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 11.674,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "DIS",
+      "price": 95.0,
+      "volume_3d_avg": 10000000,
+      "sector": "Media"
+    },
+    {
+      "ticker": "DIS",
+      "position_value": 47500.0,
+      "position_pct": 1.36,
+      "limit_pct": 5.0,
+      "within_limit": true
+    },
+    {
+      "sector": "Media",
+      "exposure_pct": 5.43,
+      "limit_pct": 25.0,
+      "within_limit": true
+    },
+    {
+      "region": "US",
+      "cash_reserve_min_pct": 2.0,
+      "single_stock_max_pct": 5.0,
+      "sector_max_pct": 25.0,
+      "liquidity_coverage_days": 3
+    }
+  ]
+}

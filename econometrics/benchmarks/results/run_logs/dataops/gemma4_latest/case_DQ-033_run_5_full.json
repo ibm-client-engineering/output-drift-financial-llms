@@ -1,0 +1,34 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-033",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T15:02:04.978791",
+  "tool_sequence": [
+    "query_reference_data",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "02827feb1abe",
+    "068cdd314e0b"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 45.416,
+  "tool_outputs": [
+    {
+      "field": "side",
+      "query_value": "B",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "exception_id": "DQ-033",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

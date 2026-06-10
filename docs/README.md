@@ -42,8 +42,9 @@ By the end of this workshop, you will:
 | [Lab 4: Analyzing Drift Metrics](lab-4/README.md) | Interpret results and generate visualizations | 25 min |
 | [Lab 5: Cross-Provider Testing](lab-5/README.md) | Compare reliability across different AI providers | 30 min |
 | [Lab 6: Extending the Framework](lab-6/README.md) | Add custom tasks and integrate with your workflows | 30 min |
+| [Lab 7: Replayable Financial Agents](lab-7/README.md) | Run agent benchmarks from the ICLR 2026 paper | 30 min |
 
-**Total Duration**: Approximately 2.5-3 hours
+**Total Duration**: Approximately 3-3.5 hours
 
 ## Research Foundation
 
@@ -55,13 +56,17 @@ Accepted at the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr202
 **"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
 Presented at the [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 
-**Key Findings:**
+**Key Findings (v1, Output Drift):**
 - Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
 - 7-20B models (Granite-3-8B, Qwen2.5-7B, GPT-OSS-20B) achieve 100% determinism at T=0.0
-- Positive correlation (r=0.45) between determinism and faithfulness - no trade-off
 - RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
 - Structured output tasks (SQL, summarization) maintain better determinism
-- Cross-provider experiments reveal significant reliability gaps
+
+**Key Findings (v2, Replayable Agents, 4,705 runs):**
+- Decision determinism and accuracy are *not detectably correlated* (r = -0.11, p = 0.63)
+- Small models achieve high determinism via pattern matching, not reasoning
+- Frontier models show "same conclusion, different reasoning" (decision det. > signature det.)
+- No model simultaneously achieves high determinism AND high accuracy
 
 **Community Validation** (Paul Merrison, FINOS):
 - Determinism is model-specific, not size-based
@@ -110,20 +115,20 @@ If you encounter issues or have questions:
 
 ```
 output-drift-financial-llms/
-├── run_evaluation.py       # Main experiment orchestrator
+├── run_evaluation.py       # Main experiment orchestrator (v1 Output Drift)
 ├── make_tables.py          # Generate LaTeX tables from results
 ├── plot_results.py         # Generate drift visualizations
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
-├── docs/                   # Workshop documentation (labs 0-6)
+├── docs/                   # Workshop documentation (labs 0-7)
 ├── harness/                # Core framework code
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
-├── providers/              # LLM provider implementations
-│   └── watsonx.py          # IBM watsonx.ai integration
+├── providers/              # LLM providers (watsonx, anthropic, gemini)
+├── econometrics/           # Replayable Agents (v2) - benchmarks & metrics
+│   ├── benchmarks/         # 3 financial agent benchmarks (50 cases each)
+│   └── agentic/            # Trajectory determinism & faithfulness metrics
 ├── scripts/                # Data fetching & utilities
-│   └── fetch_sec_texts.py  # SEC EDGAR downloader
-├── prompts/                # Versioned prompt templates
 ├── data/                   # Test datasets & generators
 ├── examples/               # Sample audit trails
 └── requirements.txt        # Python dependencies

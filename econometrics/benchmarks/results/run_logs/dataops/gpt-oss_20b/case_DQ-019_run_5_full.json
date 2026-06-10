@@ -1,0 +1,42 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-019",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:31:55.736681",
+  "tool_sequence": [
+    "query_reference_data",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "a3aa4effb15c",
+    "19f36ce7dad8",
+    "d2398670762c"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 16.8,
+  "tool_outputs": [
+    {
+      "field": "ticker",
+      "query_value": "XYZ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "missing sector",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "name",
+      "query_value": "XYZ CORP",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

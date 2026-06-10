@@ -54,11 +54,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import from existing codebase
-from harness.deterministic_retriever import DeterministicRetriever, create_retriever_from_files
+from tasks.rag_task import DeterministicRetriever, format_rag_prompt, extract_citations, validate_citations
+from tasks.rag_corpus import load_corpus
 from harness.task_definitions import (
-    format_rag_prompt,
-    extract_citations,
-    validate_citations,
     format_sql_prompt,
     format_summary_prompt,
     validate_sql_query,
@@ -346,14 +344,14 @@ class OpenLoopLoadModel:
 
 class TaskExecutor:
     """Execute tasks under load."""
-    def __init__(self, provider, corpus_docs=None, db_path=None, retriever=None):
+    def __init__(self, provider, corpus_docs=None, db_path=None):
         self.provider = provider
         self.corpus_docs = corpus_docs
         self.db_path = db_path
 
         # Initialize retriever if corpus available
-        self.retriever = retriever
-        if self.retriever is None and corpus_docs:
+        self.retriever = None
+        if corpus_docs:
             self.retriever = DeterministicRetriever(corpus_docs)
 
         # Store reference outputs for drift calculation
@@ -369,7 +367,7 @@ class TaskExecutor:
 
         # Retrieve context
         snippets = self.retriever.retrieve(question, k=5)
-        available_sources = list(set(s[0].split("#")[0] for s in snippets))
+        available_sources = list(set(s[2][0] for s in snippets))
 
         # Format prompt
         messages = format_rag_prompt(question, snippets)
@@ -809,9 +807,9 @@ async def main():
     )
     parser.add_argument(
         "--strict-models",
-        action=argparse.BooleanOptionalAction,
+        action="store_true",
         default=True,
-        help="Fail fast on unsupported models (default: true, use --no-strict-models to disable)"
+        help="Fail fast on unsupported models (default: true)"
     )
     parser.add_argument(
         "--dry-run",
@@ -827,13 +825,11 @@ async def main():
     temps = [float(t.strip()) for t in args.temps.split(",")]
 
     # Load corpus for RAG tasks
-    retriever = None
+    corpus_docs = None
     if "rag" in tasks:
         try:
-            retriever = create_retriever_from_files(
-                corpus_path="data/sec", chunk_size=200, overlap=50
-            )
-            print(f"Loaded retriever with {len(retriever.snippets)} snippets")
+            corpus_docs, _ = load_corpus(corpus_mode="auto", sec_dir="data/sec")
+            print(f"Loaded {len(corpus_docs)} corpus documents")
         except Exception as e:
             print(f"Warning: Could not load corpus: {e}")
             print("RAG tasks will be skipped")
@@ -943,7 +939,7 @@ async def main():
         print(f"{'='*80}\n")
         sys.exit(1)
 
-    executor = TaskExecutor(provider, retriever=retriever)
+    executor = TaskExecutor(provider, corpus_docs)
 
     # Apply financial pattern if specified
     burst_multiplier = args.burst

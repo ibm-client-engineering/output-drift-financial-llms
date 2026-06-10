@@ -1,0 +1,49 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-008",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:12:12.374741",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "ad21f7365f68",
+    "7e48bf83299e",
+    "0061a65221f2",
+    "ba3efc1f21f7"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 19.553,
+  "tool_outputs": [
+    {
+      "entity": "Investment Fund A",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Crypto Exchange",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Investment Fund A",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.7,
+      "risk_level": "HIGH"
+    }
+  ]
+}

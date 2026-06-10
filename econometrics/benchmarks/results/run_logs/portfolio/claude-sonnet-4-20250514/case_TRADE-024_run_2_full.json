@@ -1,0 +1,53 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-024",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:40:11.800431",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "2f1f5a0d787e",
+    "649d6a2e53da",
+    "c1cd41e6036c"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.662,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "KO",
+      "price": 60.0,
+      "volume_3d_avg": 12000000,
+      "sector": "Consumer"
+    },
+    {
+      "ticker": "KO",
+      "position_value": 180000.0,
+      "position_pct": 5.14,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Consumer",
+      "exposure_pct": 8.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

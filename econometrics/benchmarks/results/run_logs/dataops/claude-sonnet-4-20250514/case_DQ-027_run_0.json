@@ -1,0 +1,27 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-027",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:12:51.984263",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "a9870a46ec68",
+    "01b52940a3c6",
+    "73ab5601778f",
+    "8351263c49db",
+    "a9066dbd527d"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 8.881
+}

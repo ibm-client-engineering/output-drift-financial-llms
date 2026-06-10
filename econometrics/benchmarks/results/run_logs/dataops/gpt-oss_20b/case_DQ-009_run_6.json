@@ -1,0 +1,25 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-009",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:16:41.210033",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "1acf91732774",
+    "f9c1b6eff74c",
+    "b502b1262ca6",
+    "7d0b30f86ae9"
+  ],
+  "decision_output": "auto_fix",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 11.38
+}

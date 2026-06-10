@@ -1,0 +1,20 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-006",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:48:45.681575",
+  "tool_sequence": [
+    "check_sanctions"
+  ],
+  "tool_output_hashes": [],
+  "decision_output": "investigate",
+  "deterministic": false,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 0.0,
+  "extra": {
+    "note": "deterministic_correction"
+  }
+}

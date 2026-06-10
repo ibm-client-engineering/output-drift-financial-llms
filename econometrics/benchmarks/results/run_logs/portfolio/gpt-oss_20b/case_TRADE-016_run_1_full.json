@@ -1,0 +1,53 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-016",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T03:39:19.935492",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "f80fe58ff1f2",
+    "f640d203cd4f",
+    "026c96520b04"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 204.019,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "PFE",
+      "price": 30.0,
+      "volume_3d_avg": 25000000,
+      "sector": "Healthcare"
+    },
+    {
+      "sector": "Healthcare",
+      "exposure_pct": 10.29,
+      "limit_pct": 25.0,
+      "within_limit": true
+    },
+    {
+      "region": "US",
+      "cash_reserve_min_pct": 2.0,
+      "single_stock_max_pct": 5.0,
+      "sector_max_pct": 25.0,
+      "liquidity_coverage_days": 3
+    }
+  ]
+}

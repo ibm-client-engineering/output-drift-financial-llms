@@ -1,0 +1,34 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "dataops",
+  "case_id": "DQ-030",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:39:49.434771",
+  "tool_sequence": [
+    "query_reference_data",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "993ff9cd17c1",
+    "fe7ff3b47c16"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 2.717,
+  "tool_outputs": [
+    {
+      "field": "ticker",
+      "query_value": "XOM",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "vwap_must_be_positive",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

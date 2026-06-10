@@ -1,0 +1,59 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-025",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:11:57.452342",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "b78a6152f81d",
+    "b2a5fd1bac3d",
+    "131e06d1ca00",
+    "d7279715cbdd",
+    "ee9d9b300c85"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.676,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-025",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "exchange",
+      "query_value": "NASDQ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "exchange",
+      "query_value": "NASDAQ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "exchange",
+      "query_value": "XNAS",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "nasdq",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

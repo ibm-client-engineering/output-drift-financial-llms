@@ -1,0 +1,139 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-045",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T15:52:17.364594",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "7adc88573705",
+    "2e20fcbd50af",
+    "0e6dc04f7249",
+    "92d8889f0ed2",
+    "d6164996e0d9",
+    "f629b6f36758",
+    "557bc4850186",
+    "d8becad444e5",
+    "3f1970e4eca1",
+    "416d7a29f404",
+    "21d06c2da802",
+    "588cf7a13543",
+    "e3f77e6a47bb",
+    "85b0c94d7981",
+    "42db7be255bf"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 110.038,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-045",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "order_type",
+      "query_value": "MRKT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "order_type format_error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "order_type",
+      "query_value": "MKT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "LMT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "STP",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "MARKET",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "LIMIT",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "STOP",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "MKT_ORD",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "LMT_ORD",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "IOC",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "1",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "2",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "order_type",
+      "query_value": "3",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

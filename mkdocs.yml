@@ -20,6 +20,7 @@ nav:
     - Lab 4. Analyzing Drift Metrics: lab-4/README.md
     - Lab 5. Cross-Provider Testing: lab-5/README.md
     - Lab 6. Extending the Framework: lab-6/README.md
+    - Lab 7. Replayable Financial Agents: lab-7/README.md
   - Resources:
     - Research Paper: resources/paper.md
     - API Reference: resources/api.md

@@ -1,0 +1,35 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-022",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:18:01.670732",
+  "tool_sequence": [
+    "check_sanctions",
+    "get_customer_profile"
+  ],
+  "tool_output_hashes": [
+    "4dbeadba86ff",
+    "24ac07b7392b"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 2.836,
+  "tool_outputs": [
+    {
+      "entity": "Restaurant Group",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Restaurant Group",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-011",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T18:24:23.587992",
+  "tool_sequence": [
+    "calculate_risk_score",
+    "get_customer_profile",
+    "check_sanctions"
+  ],
+  "tool_output_hashes": [
+    "dafe16bb7811",
+    "5a55322a5a30",
+    "ca11a79f6276"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 5.464,
+  "tool_outputs": [
+    {
+      "risk_score": 0.3,
+      "risk_level": "LOW"
+    },
+    {
+      "customer": "PEP Family Member",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "entity": "Real Estate LLC",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    }
+  ]
+}

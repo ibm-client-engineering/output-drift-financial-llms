@@ -1,0 +1,45 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-048",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T09:06:47.907621",
+  "tool_sequence": [
+    "get_current_holdings",
+    "calculate_sector_exposure",
+    "get_current_holdings"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "fa1deea64690",
+    "5c1fd2e3e6e9"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 54.544,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "sector": "Telecommunications",
+      "exposure_pct": 0.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    },
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-013",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:32:49.764023",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "calculate_sector_exposure",
+    "check_position_limit"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "f4e4b47fd5b9",
+    "b3b6ebcbb30c",
+    "88b34d397edb"
+  ],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 13.103
+}

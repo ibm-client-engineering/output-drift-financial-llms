@@ -1,0 +1,61 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "dataops",
+  "case_id": "DQ-029",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:40:49.069613",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "e28d83327d82",
+    "babdd96df490",
+    "c78b89e7e2ec",
+    "717909b8d414",
+    "3a1cc63ab8e0"
+  ],
+  "decision_output": "auto_fix",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 14.623,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-029",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "announcement_date before effective_date",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "date_format",
+      "query_value": "2025-01-20",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "announcement_date",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-029",
+      "status": "fixed",
+      "fix_applied": {
+        "field": "announcement_date",
+        "new_value": "2025-01-15",
+        "old_value": "2025-01-20"
+      }
+    }
+  ]
+}

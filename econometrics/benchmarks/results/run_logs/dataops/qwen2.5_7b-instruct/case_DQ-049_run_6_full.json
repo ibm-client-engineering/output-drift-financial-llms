@@ -1,0 +1,59 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "dataops",
+  "case_id": "DQ-049",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:15:22.795614",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "80f1303728a9",
+    "94af613a7d10",
+    "ae8b7d327a70",
+    "86165cafd835",
+    "98229d08add6"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 6.025,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-049",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "new_shares = 0 shares_must_be_positive",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "SPIN",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "action_type",
+      "query_value": "SPINOFF",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "parent",
+      "query_value": "PARENT",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

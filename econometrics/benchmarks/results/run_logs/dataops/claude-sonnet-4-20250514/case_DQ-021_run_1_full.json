@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-021",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:10:09.708359",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "ff663fd11f47",
+    "931b92e995ac",
+    "7267795bbb8a",
+    "f9377e68c8a7",
+    "6a6b7ee25d9c"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.198,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-021",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "broker_code unknown",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "reference_mismatch broker_code",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "broker_code",
+      "query_value": "UNKNOWN",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "ticker",
+      "query_value": "DIS",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

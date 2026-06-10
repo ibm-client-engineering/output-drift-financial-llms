@@ -67,11 +67,11 @@ WATSONX_API_KEY=your_api_key_here
 WATSONX_PROJECT_ID=your_project_id_here
 WATSONX_URL=https://us-south.ml.cloud.ibm.com
 
-# OpenAI (optional)
-OPENAI_API_KEY=your_openai_api_key_here
-
 # Anthropic (optional)
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Google Gemini (optional)
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 !!! warning "Sensitive Data"

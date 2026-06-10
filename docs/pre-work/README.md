@@ -110,10 +110,10 @@ This will install:
 Test that the framework can import correctly:
 
 ```bash
-python -c "from harness.task_definitions import TaskDefinition; print('✅ Installation successful!')"
+python -c "from harness.task_definitions import format_rag_prompt, validate_sql_query; print('Installation successful')"
 ```
 
-If you see "✅ Installation successful!", you're all set!
+If you see "Installation successful", you're all set!
 
 ## Step 5: Set Up API Keys (Optional)
 
@@ -139,11 +139,11 @@ OLLAMA_BASE_URL=http://localhost:11434
 WATSONX_API_KEY=your_watsonx_api_key_here
 WATSONX_PROJECT_ID=your_project_id_here
 
-# OpenAI (if you have access)
-OPENAI_API_KEY=your_openai_api_key_here
-
 # Anthropic (if you have access)
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
+
+# Google Gemini (if you have access)
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 !!! warning "Keep Your Keys Secret"
@@ -165,17 +165,17 @@ ANTHROPIC_API_KEY=your_anthropic_api_key_here
     3. Create a project and get your API key and project ID
     4. [Setup Guide](https://www.ibm.com/docs/en/watsonx)
 
-=== "OpenAI"
-    1. Visit [platform.openai.com](https://platform.openai.com/)
-    2. Sign up and navigate to API keys
-    3. Create a new API key
-    4. Add billing information (required for API access)
-
 === "Anthropic"
     1. Visit [console.anthropic.com](https://console.anthropic.com/)
     2. Sign up and navigate to API keys
     3. Create a new API key
     4. Add billing information
+
+=== "Google Gemini"
+    1. Visit [aistudio.google.com](https://aistudio.google.com/)
+    2. Sign in with your Google account
+    3. Create an API key
+    4. Enable billing if needed for higher rate limits
 
 ## Step 6: Test Your Setup
 

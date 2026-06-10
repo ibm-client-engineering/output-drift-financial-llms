@@ -1,0 +1,20 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-030",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T06:55:30.611008",
+  "tool_sequence": [
+    "get_current_holdings"
+  ],
+  "tool_output_hashes": [],
+  "decision_output": "modify",
+  "deterministic": false,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 0.0,
+  "extra": {
+    "note": "deterministic_correction"
+  }
+}

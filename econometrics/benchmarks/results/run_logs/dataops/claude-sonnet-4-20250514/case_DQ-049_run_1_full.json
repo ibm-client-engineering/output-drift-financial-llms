@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-049",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:24:26.853877",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "80f1303728a9",
+    "ae8b7d327a70",
+    "db520970dc75",
+    "581db342a953",
+    "21b9d29e22cd"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.658,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-049",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "SPIN",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "spinoff new_shares zero",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "spinoff",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "PARENT",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

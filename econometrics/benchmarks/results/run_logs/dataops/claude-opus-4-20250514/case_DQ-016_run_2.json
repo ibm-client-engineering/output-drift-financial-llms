@@ -1,0 +1,27 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-016",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:16:34.276058",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "1cad8af1a33d",
+    "eaf85e0560ea",
+    "1361c8c5b5a9",
+    "c6374ea20a21",
+    "90729c4a1853"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 15.513
+}

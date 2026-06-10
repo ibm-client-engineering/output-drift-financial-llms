@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-003",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:00:44.049067",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "6ff6f7a5786f",
+    "8b906446d327",
+    "4bc96c3e8620",
+    "35a3a2a0ae6f",
+    "c594fb3ef01f"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.708,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-003",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "NEWCO",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "missing cusip corporate actions",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "cusip missing",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "unknown ticker",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

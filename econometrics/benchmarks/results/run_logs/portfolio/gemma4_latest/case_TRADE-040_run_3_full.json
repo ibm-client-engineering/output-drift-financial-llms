@@ -1,0 +1,45 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-040",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T06:47:28.206142",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "a9755645dd36",
+    "4b7f91fcb496"
+  ],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 104.693,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "PENNY_STOCK",
+      "position_value": 12500.0,
+      "position_pct": 0.36,
+      "limit_pct": 5.0,
+      "within_limit": true
+    },
+    {
+      "sector": "Speculative",
+      "exposure_pct": 0.0,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "model": "mistral_7b",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-006",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T14:40:53.363289",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "escalate",
+  "deterministic": false,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 0.0,
+  "extra": {
+    "note": "deterministic_correction"
+  },
+  "tool_outputs": []
+}

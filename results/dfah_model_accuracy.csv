@@ -1,0 +1,11 @@
+model,model_display,n_benchmarks_included,included_benchmarks,excluded_benchmarks,task_weighted_accuracy_pct
+qwen3.5_latest,Qwen 3.5,2,"compliance,dataops",portfolio,48.0
+gemma4_latest,Gemma 4,3,"compliance,dataops,portfolio",,56.0
+qwen2.5_7b-instruct,Qwen 2.5 7B,3,"compliance,dataops,portfolio",,33.333333333333336
+granite3.3_latest,Granite 3.3,3,"compliance,dataops,portfolio",,49.333333333333336
+mistral_7b,Mistral 7B,3,"compliance,dataops,portfolio",,50.280701754385966
+gpt-oss_20b,GPT-OSS 20B,3,"compliance,dataops,portfolio",,37.333333333333336
+gemini-2.0-flash,Gemini 2.0 Flash,3,"compliance,dataops,portfolio",,50.666666666666664
+gemini-2.5-pro,Gemini 2.5 Pro,2,"compliance,portfolio",,50.24177949709865
+claude-opus-4-20250514,Claude Opus 4.5,3,"compliance,dataops,portfolio",,44.0
+claude-sonnet-4-20250514,Claude Sonnet 4,3,"compliance,dataops,portfolio",,36.666666666666664

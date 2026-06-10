@@ -1,0 +1,56 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-002",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T06:15:30.736609",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "7ef5c7cd053b",
+    "b26e521b1a49",
+    "a12c220eaf71",
+    "b9af2b9f9143",
+    "2bf9afc59e81"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 58.625,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-002",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "date_must_be_iso_format",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "date format",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "iso",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "trade_date",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

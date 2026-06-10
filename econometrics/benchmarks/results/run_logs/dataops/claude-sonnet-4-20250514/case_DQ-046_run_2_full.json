@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-046",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:23:12.239387",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "83bb7e5a626a",
+    "50843d982e46",
+    "6322e7d034ba",
+    "4f75a8ef98e7",
+    "d75d973fd612"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 11.588,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-046",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "AAPL",
+      "canonical_value": "AAPL",
+      "match_found": true
+    },
+    {
+      "pattern": "adjusted_close_consistency",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "split_factor",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "adjusted_close",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

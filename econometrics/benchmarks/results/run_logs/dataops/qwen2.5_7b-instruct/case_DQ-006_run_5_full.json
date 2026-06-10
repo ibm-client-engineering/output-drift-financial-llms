@@ -1,0 +1,61 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "dataops",
+  "case_id": "DQ-006",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T22:13:52.671188",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "1fe742a47198",
+    "2529719936ad",
+    "50843d982e46",
+    "c522fdd4db6b",
+    "b8817e715f06"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 8.824,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-006",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "quantity negative",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "AAPL",
+      "canonical_value": "AAPL",
+      "match_found": true
+    },
+    {
+      "field": "quantity",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-006",
+      "status": "fixed",
+      "fix_applied": {
+        "field": "quantity",
+        "new_value": "0",
+        "old_value": "-500"
+      }
+    }
+  ]
+}

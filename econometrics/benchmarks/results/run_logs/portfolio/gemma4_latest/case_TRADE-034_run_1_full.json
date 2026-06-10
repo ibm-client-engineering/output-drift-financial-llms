@@ -1,0 +1,37 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-034",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T04:56:24.071467",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "6c2e091c9498"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 102.793,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "DIS",
+      "position_value": 190000.0,
+      "position_pct": 5.43,
+      "limit_pct": 5.0,
+      "within_limit": false
+    }
+  ]
+}

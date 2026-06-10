@@ -27,7 +27,7 @@ ACM ICAIF 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Fin
 
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime
 from enum import Enum
 import hashlib
 import json
@@ -286,7 +286,7 @@ class ComplianceJudge:
 
     def _get_timestamp(self) -> str:
         """Get ISO-8601 timestamp."""
-        return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+        return datetime.utcnow().isoformat() + "Z"
 
     def _parse_json_response(self, response: str) -> Dict[str, Any]:
         """
@@ -603,10 +603,11 @@ class ComplianceJudge:
 
         overall_compliant = all(regulatory_compliance.values())
 
-        # Compute attestation hash (deterministic - excludes timestamp for verifiability)
+        # Compute attestation hash
         attestation_data = json.dumps({
             "evaluations": [e.evaluation_id for e in evals],
             "regulatory_compliance": regulatory_compliance,
+            "timestamp": self._get_timestamp()
         }, sort_keys=True)
         attestation_hash = hashlib.sha256(attestation_data.encode()).hexdigest()
 

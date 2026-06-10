@@ -1,0 +1,49 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-043",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:44:59.995267",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "4cd2dadcc122",
+    "13090fc3b514",
+    "8a9cdc624bc2",
+    "ba3efc1f21f7"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.508,
+  "tool_outputs": [
+    {
+      "entity": "Shipping Company",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "Port Authority",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "Shipping Company",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.7,
+      "risk_level": "HIGH"
+    }
+  ]
+}

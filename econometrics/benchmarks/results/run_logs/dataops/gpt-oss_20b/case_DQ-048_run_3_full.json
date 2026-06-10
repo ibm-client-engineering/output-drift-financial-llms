@@ -1,0 +1,58 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-048",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:55:11.024581",
+  "tool_sequence": [
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "validate_fix",
+    "apply_fix"
+  ],
+  "tool_output_hashes": [
+    "8b6dd874e491",
+    "a79cf549123d",
+    "b01a5c09970e",
+    "b34c1ca83e11",
+    "8133af2d7d22"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.096,
+  "tool_outputs": [
+    {
+      "field": "settlement_status",
+      "query_value": "PEND",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "settlement_status",
+      "query_value": "PENDING",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "pend",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "settlement_status",
+      "is_valid": true,
+      "validation_errors": []
+    },
+    {
+      "exception_id": "DQ-048",
+      "status": "fixed",
+      "fix_applied": {
+        "settlement_status": "PENDING"
+      }
+    }
+  ]
+}

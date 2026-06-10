@@ -1,0 +1,23 @@
+{
+  "model": "gemini-2.5-pro",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-004",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:24:43.144442",
+  "tool_sequence": [
+    "get_current_holdings",
+    "calculate_sector_exposure",
+    "get_market_data"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "dd144502d8d5",
+    "88926789b815"
+  ],
+  "decision_output": "approve",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 30.012
+}

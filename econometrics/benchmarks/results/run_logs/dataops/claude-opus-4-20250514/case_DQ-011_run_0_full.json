@@ -1,0 +1,57 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-011",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:11:36.706812",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "3ad61d9725ad",
+    "98ad6e2e67b1",
+    "798ef6ccb39b",
+    "3df737bb434d",
+    "32135f239c83"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.689,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-011",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "close_price n/a",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "VZ",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "close_price format_error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-011",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

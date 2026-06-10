@@ -1,0 +1,59 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-024",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:11:47.775425",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "28c240948a16",
+    "d3e1f03b4d7d",
+    "c134d597080f",
+    "00664e131a87",
+    "27c71f61266f"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.073,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-024",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "BRK.A",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "ticker",
+      "query_value": "BRK-A",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "ticker",
+      "query_value": "BRKA",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "fractional shares",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

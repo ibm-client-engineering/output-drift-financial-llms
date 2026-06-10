@@ -1,0 +1,58 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-005",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:06:25.365244",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "b8835f5a606b",
+    "7de3bd4c7b0e",
+    "fb798916e9fd",
+    "4e6e3595b4fd",
+    "b05d2edddc84"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 16.11,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-005",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "cusip",
+      "query_value": "02079K107",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "ticker",
+      "query_value": "GOOG",
+      "canonical_value": "GOOGL",
+      "match_found": true
+    },
+    {
+      "pattern": "ticker goog primary_ticker",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "use_primary_ticker",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

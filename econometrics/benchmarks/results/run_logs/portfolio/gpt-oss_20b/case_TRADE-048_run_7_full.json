@@ -1,0 +1,62 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-048",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-05T09:09:11.759600",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "e910995c96c2",
+    "5c1fd2e3e6e9",
+    "0bccd76389f0",
+    "656d79101e1d"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 20.527,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "VZ",
+      "price": 45.0,
+      "volume_3d_avg": 15000000,
+      "sector": "Telecom"
+    },
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "VZ",
+      "position_value": 135000.0,
+      "position_pct": 3.86,
+      "limit_pct": 5.0,
+      "within_limit": true
+    },
+    {
+      "sector": "Telecom",
+      "exposure_pct": 6.71,
+      "limit_pct": 25.0,
+      "within_limit": true
+    }
+  ]
+}

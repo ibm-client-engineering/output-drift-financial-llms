@@ -1,0 +1,57 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-001",
+  "run_id": 5,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T13:30:03.484818",
+  "tool_sequence": [
+    "check_sanctions",
+    "check_sanctions",
+    "get_customer_profile",
+    "get_customer_profile",
+    "calculate_risk_score"
+  ],
+  "tool_output_hashes": [
+    "6f9c55c3a4dc",
+    "607fce3831d7",
+    "3b850e762a58",
+    "3726cacb8037",
+    "a6c5a0931d62"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 52.091,
+  "tool_outputs": [
+    {
+      "entity": "ABC Corp",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "entity": "XYZ Holdings",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    },
+    {
+      "customer": "ABC Corp",
+      "risk_level": "low",
+      "kyc_status": "complete",
+      "relationship_years": 5
+    },
+    {
+      "customer": "XYZ Holdings",
+      "risk_level": "unknown",
+      "kyc_status": "incomplete",
+      "relationship_years": 0
+    },
+    {
+      "risk_score": 0.2,
+      "risk_level": "LOW"
+    }
+  ]
+}

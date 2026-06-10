@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-022",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:10:47.294695",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "b225bac12a15",
+    "a971703a7cb4",
+    "c68a2c2873ee",
+    "5724533ab497",
+    "fbb98919db00"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.56,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-022",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "NVDA",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "split_ratio format_error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "numeric_ratio_format",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "split_ratio",
+      "is_valid": true,
+      "validation_errors": []
+    }
+  ]
+}

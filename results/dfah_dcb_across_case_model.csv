@@ -1,0 +1,11 @@
+model,model_display,n_benchmarks_included,included_benchmarks,excluded_benchmarks,mean_dcb_across_case,min_bench_dcb,max_bench_dcb
+qwen3.5_latest,Qwen 3.5,2,"compliance,dataops",portfolio,0.043267122163122396,0.04311691261509287,0.04341733171115192
+gemma4_latest,Gemma 4,3,"compliance,dataops,portfolio",,0.11143739805201058,0.027538331853315445,0.2476530241321786
+qwen2.5_7b-instruct,Qwen 2.5 7B,3,"compliance,dataops,portfolio",,0.3518499966042909,0.10606056573356992,0.5137654388433511
+granite3.3_latest,Granite 3.3,3,"compliance,dataops,portfolio",,0.499512575481951,0.15205278786082566,0.9107609533490758
+mistral_7b,Mistral 7B,3,"compliance,dataops,portfolio",,0.39805355933754516,0.1306021193250927,0.7934052578496404
+gpt-oss_20b,GPT-OSS 20B,3,"compliance,dataops,portfolio",,0.13185583271921972,0.004660012293154492,0.2862199022784614
+gemini-2.0-flash,Gemini 2.0 Flash,3,"compliance,dataops,portfolio",,0.1427464705428136,0.019837409137049344,0.24828276978334396
+gemini-2.5-pro,Gemini 2.5 Pro,2,"compliance,portfolio",,0.09916308258474255,0.011373643547845314,0.18695252162163978
+claude-opus-4-20250514,Claude Opus 4.5,3,"compliance,dataops,portfolio",,0.3539567856661416,0.059120838170537704,0.6660104797138697
+claude-sonnet-4-20250514,Claude Sonnet 4,3,"compliance,dataops,portfolio",,0.40762683239886877,0.07068145842618656,0.9107609533490758

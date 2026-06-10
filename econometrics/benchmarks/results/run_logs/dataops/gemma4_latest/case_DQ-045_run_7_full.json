@@ -1,0 +1,50 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-045",
+  "run_id": 7,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T16:54:12.307074",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "7adc88573705",
+    "73895329c591",
+    "05a9dfac1f63",
+    "ea4ea55d50ee"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 74.709,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-045",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "order_type",
+      "query_value": "VALID_ORDER_TYPES",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "order_type mrkt",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-045",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

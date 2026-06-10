@@ -1,0 +1,57 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-013",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:05:44.683377",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "f307e5f932f1",
+    "d18cde93911a",
+    "61ba0f735ad2",
+    "190915fbbb57",
+    "a2f938f050f6"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.995,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-013",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "ask_greater_than_bid pricing violation",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "bid ask spread violation",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "pg ticker pricing",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "field": "ticker",
+      "query_value": "PG",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

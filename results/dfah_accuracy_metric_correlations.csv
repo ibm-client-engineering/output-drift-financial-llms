@@ -1,0 +1,7 @@
+metric,display,interpretation,n_models,spearman_rho_vs_accuracy,permutation_p_value,pearson_r_vs_accuracy
+DAR,Decision agreement,within-case outcome stability,10,0.11515151515151516,0.7633236676332367,0.007781862839656417
+Kappa,Chance-corrected agreement,agreement beyond model marginals,10,0.15151515151515152,0.6918308169183082,0.19680432329686717
+TAR,Trajectory agreement,tool-path stability,8,-0.047619047619047616,0.9296070392960704,0.021559014693136046
+Gap,DAR-TAR gap,hidden trajectory instability,8,-0.04790505047653036,0.9185081491850815,-0.11147961329693944
+DCB,Decision concentration,across-case modal-decision concentration,10,-0.24848484848484848,0.49355064493550643,-0.3110839480444946
+ECD,Evidence contact divergence,evidence-contact instability,8,-0.09523809523809523,0.8443155684431557,-0.09887770220332824

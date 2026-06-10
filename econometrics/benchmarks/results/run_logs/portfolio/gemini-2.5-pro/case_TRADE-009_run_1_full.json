@@ -1,0 +1,21 @@
+{
+  "model": "gemini-2.5-pro",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-009",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:34:26.744181",
+  "tool_sequence": [
+    "get_current_holdings"
+  ],
+  "tool_output_hashes": [],
+  "decision_output": "modify",
+  "deterministic": false,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 0.0,
+  "extra": {
+    "note": "deterministic_correction"
+  },
+  "tool_outputs": []
+}

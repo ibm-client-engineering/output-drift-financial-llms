@@ -1,0 +1,33 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-023",
+  "run_id": 4,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T19:01:25.641060",
+  "tool_sequence": [
+    "calculate_risk_score",
+    "check_sanctions"
+  ],
+  "tool_output_hashes": [
+    "d81d5599e821",
+    "7d414575aa8a"
+  ],
+  "decision_output": "investigate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 105.724,
+  "tool_outputs": [
+    {
+      "risk_score": 0.5,
+      "risk_level": "MEDIUM"
+    },
+    {
+      "entity": "Foreign Agent",
+      "is_sanctioned": false,
+      "list": null,
+      "match_score": 0.0
+    }
+  ]
+}

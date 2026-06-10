@@ -1,0 +1,62 @@
+{
+  "model": "qwen2.5_7b-instruct",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-037",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T21:25:59.746326",
+  "tool_sequence": [
+    "get_current_holdings",
+    "get_market_data",
+    "check_position_limit",
+    "calculate_sector_exposure",
+    "get_regulatory_constraints"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "fb3a8976b5e0",
+    "7075ac979c91",
+    "f640d203cd4f",
+    "026c96520b04"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 13.612,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "UNH",
+      "price": 550.0,
+      "volume_3d_avg": 3000000,
+      "sector": "Healthcare"
+    },
+    {
+      "ticker": "UNH",
+      "position_value": 550000.0,
+      "position_pct": 15.71,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Healthcare",
+      "exposure_pct": 10.29,
+      "limit_pct": 25.0,
+      "within_limit": true
+    },
+    {
+      "region": "US",
+      "cash_reserve_min_pct": 2.0,
+      "single_stock_max_pct": 5.0,
+      "sector_max_pct": 25.0,
+      "liquidity_coverage_days": 3
+    }
+  ]
+}

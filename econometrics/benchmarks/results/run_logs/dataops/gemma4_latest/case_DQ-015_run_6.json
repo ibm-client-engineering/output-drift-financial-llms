@@ -1,0 +1,21 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-015",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T12:07:32.104031",
+  "tool_sequence": [
+    "query_reference_data",
+    "validate_fix"
+  ],
+  "tool_output_hashes": [
+    "59cbcfb8aff3",
+    "3a7b25f77474"
+  ],
+  "decision_output": "auto_fix",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 43.748
+}

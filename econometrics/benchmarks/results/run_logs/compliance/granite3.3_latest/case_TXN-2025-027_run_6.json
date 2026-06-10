@@ -1,0 +1,15 @@
+{
+  "model": "granite3.3_latest",
+  "benchmark": "compliance",
+  "case_id": "TXN-2025-027",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T11:26:13.457965",
+  "tool_sequence": [],
+  "tool_output_hashes": [],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 1.0,
+  "runtime_seconds": 5.232
+}

@@ -1,0 +1,40 @@
+{
+  "model": "gpt-oss_20b",
+  "benchmark": "dataops",
+  "case_id": "DQ-047",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T10:53:37.763919",
+  "tool_sequence": [
+    "query_reference_data",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "fb93b04ac9e1",
+    "420fcece7c52"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 10.335,
+  "tool_outputs": [
+    {
+      "field": "ticker",
+      "query_value": "PRIVATE",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "missing_field primary_exchange",
+      "fixes_found": 1,
+      "fixes": [
+        {
+          "resolution": "escalate",
+          "success_rate": 0.0,
+          "count": 50
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-014",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-03T23:50:39.216267",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "af8d2fe10988",
+    "dd144502d8d5"
+  ],
+  "decision_output": "reject",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 109.133,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "GOOGL",
+      "position_value": 170000.0,
+      "position_pct": 4.86,
+      "limit_pct": 5.0,
+      "within_limit": true
+    },
+    {
+      "sector": "Technology",
+      "exposure_pct": 29.86,
+      "limit_pct": 25.0,
+      "within_limit": false
+    }
+  ]
+}

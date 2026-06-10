@@ -1,0 +1,63 @@
+{
+  "model": "claude-opus-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-017",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T13:16:55.782716",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "c19dc0bb9048",
+    "7f1f02a16e42",
+    "c279a79c09ad",
+    "bc252cefbaac",
+    "85eea9a710ab"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 21.505,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-017",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "GE",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "trade_price = 0",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "price_must_be_positive",
+      "fixes_found": 1,
+      "fixes": [
+        {
+          "resolution": "absolute_value",
+          "success_rate": 0.95,
+          "count": 150
+        }
+      ]
+    },
+    {
+      "exception_id": "DQ-017",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

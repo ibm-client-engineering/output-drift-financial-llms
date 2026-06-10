@@ -1,0 +1,45 @@
+{
+  "model": "gemma4_latest",
+  "benchmark": "portfolio",
+  "case_id": "TRADE-026",
+  "run_id": 1,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T02:49:38.795410",
+  "tool_sequence": [
+    "get_current_holdings",
+    "check_position_limit",
+    "calculate_sector_exposure"
+  ],
+  "tool_output_hashes": [
+    "5c1fd2e3e6e9",
+    "95a196d95e24",
+    "dd144502d8d5"
+  ],
+  "decision_output": "modify",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 140.876,
+  "tool_outputs": [
+    {
+      "portfolio_id": "FUND-2025-ALPHA",
+      "total_value": 3500000,
+      "cash": 500000,
+      "cash_pct": 14.29,
+      "num_positions": 15
+    },
+    {
+      "ticker": "NVDA",
+      "position_value": 192000.0,
+      "position_pct": 5.49,
+      "limit_pct": 5.0,
+      "within_limit": false
+    },
+    {
+      "sector": "Technology",
+      "exposure_pct": 29.86,
+      "limit_pct": 25.0,
+      "within_limit": false
+    }
+  ]
+}

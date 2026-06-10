@@ -10,8 +10,6 @@ import logging
 from typing import Dict, List, Optional, Any
 import httpx
 
-from providers import retry_on_transient, async_retry_on_transient
-
 
 class AnthropicProvider:
     """Anthropic Claude provider using the Messages API."""
@@ -66,26 +64,6 @@ class AnthropicProvider:
         """Normalize model ID using aliases."""
         return self.MODEL_ALIASES.get(model, model)
 
-    @staticmethod
-    def _extract_system_prompt(prompt: str):
-        """Extract system content from a ROLE: content formatted prompt.
-
-        Returns (system_text, user_text). If no SYSTEM: prefix is found,
-        the entire prompt is treated as user content.
-        """
-        system_parts = []
-        user_parts = []
-        for line in prompt.split("\n"):
-            if line.startswith("SYSTEM: "):
-                system_parts.append(line[len("SYSTEM: "):])
-            elif line.startswith("USER: "):
-                user_parts.append(line[len("USER: "):])
-            else:
-                user_parts.append(line)
-        system_text = "\n".join(system_parts).strip() if system_parts else None
-        user_text = "\n".join(user_parts).strip() or prompt
-        return system_text, user_text
-
     def supports_listing(self) -> bool:
         """Returns True - we maintain a list of available models."""
         return True
@@ -94,7 +72,6 @@ class AnthropicProvider:
         """Return list of available Claude models."""
         return self.AVAILABLE_MODELS.copy()
 
-    @retry_on_transient()
     def generate(
         self,
         model: str,
@@ -113,30 +90,18 @@ class AnthropicProvider:
         """
         model_id = self._normalize_model_id(model)
 
-        if seed is not None:
-            self.logger.warning(
-                "Anthropic API does not support seed parameter. "
-                "Results will be non-deterministic even at temperature=0.0. "
-                "Seed=%d was requested but will be ignored.", seed
-            )
-
         headers = {
             "x-api-key": self.api_key,
             "anthropic-version": "2023-06-01",
             "content-type": "application/json",
         }
 
-        system_text, user_text = self._extract_system_prompt(prompt)
-
         payload = {
             "model": model_id,
             "max_tokens": max_new_tokens,
             "temperature": temperature,
-            "messages": [{"role": "user", "content": user_text}],
+            "messages": [{"role": "user", "content": prompt}],
         }
-
-        if system_text:
-            payload["system"] = system_text
 
         # Add top_p if not default
         if top_p < 1.0:
@@ -177,7 +142,6 @@ class AnthropicProvider:
             self.logger.error(f"Anthropic generation failed: {e}")
             raise
 
-    @async_retry_on_transient()
     async def agenerate(
         self,
         model: str,
@@ -192,30 +156,18 @@ class AnthropicProvider:
         """Async version of generate."""
         model_id = self._normalize_model_id(model)
 
-        if seed is not None:
-            self.logger.warning(
-                "Anthropic API does not support seed parameter. "
-                "Results will be non-deterministic even at temperature=0.0. "
-                "Seed=%d was requested but will be ignored.", seed
-            )
-
         headers = {
             "x-api-key": self.api_key,
             "anthropic-version": "2023-06-01",
             "content-type": "application/json",
         }
 
-        system_text, user_text = self._extract_system_prompt(prompt)
-
         payload = {
             "model": model_id,
             "max_tokens": max_new_tokens,
             "temperature": temperature,
-            "messages": [{"role": "user", "content": user_text}],
+            "messages": [{"role": "user", "content": prompt}],
         }
-
-        if system_text:
-            payload["system"] = system_text
 
         if top_p < 1.0:
             payload["top_p"] = top_p

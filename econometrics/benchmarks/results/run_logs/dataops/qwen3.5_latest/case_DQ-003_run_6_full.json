@@ -1,0 +1,64 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-003",
+  "run_id": 6,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T06:32:09.645682",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "6ff6f7a5786f",
+    "8b906446d327",
+    "d7d1321d9146",
+    "1c6770615581",
+    "b4f10a7a0db7",
+    "9dc1004fd25e"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 88.675,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-003",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "NEWCO",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "missing cusip",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "cusip_required",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "newco",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-003",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}

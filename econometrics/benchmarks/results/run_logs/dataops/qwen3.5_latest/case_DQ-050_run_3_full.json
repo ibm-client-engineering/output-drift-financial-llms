@@ -1,0 +1,49 @@
+{
+  "model": "qwen3.5_latest",
+  "benchmark": "dataops",
+  "case_id": "DQ-050",
+  "run_id": 3,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-04-04T16:50:14.003542",
+  "tool_sequence": [
+    "get_exception_details",
+    "get_historical_fixes",
+    "query_reference_data"
+  ],
+  "tool_output_hashes": [
+    "6b682d985e29",
+    "d5103a3c3ada",
+    "60aeadba9471"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 101.543,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-050",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "pattern": "missing_field trade_id",
+      "fixes_found": 1,
+      "fixes": [
+        {
+          "resolution": "escalate",
+          "success_rate": 0.0,
+          "count": 50
+        }
+      ]
+    },
+    {
+      "field": "trade_id",
+      "query_value": "KO",
+      "canonical_value": null,
+      "match_found": false
+    }
+  ]
+}

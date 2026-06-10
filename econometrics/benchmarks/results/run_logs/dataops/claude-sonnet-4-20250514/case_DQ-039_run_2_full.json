@@ -1,0 +1,58 @@
+{
+  "model": "claude-sonnet-4-20250514",
+  "benchmark": "dataops",
+  "case_id": "DQ-039",
+  "run_id": 2,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-04T23:19:35.442049",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "query_reference_data",
+    "get_historical_fixes",
+    "get_historical_fixes"
+  ],
+  "tool_output_hashes": [
+    "4c9aa395a3ad",
+    "a760770102ca",
+    "f1afae6eca57",
+    "3fe2f1759360",
+    "d3f66aad5864"
+  ],
+  "decision_output": "quarantine",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 9.628,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-039",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "lei",
+      "query_value": "INVALID123",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "field": "counterparty",
+      "query_value": "GOLDMAN SACHS",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "lei format error",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "pattern": "goldman sachs lei",
+      "fixes_found": 0,
+      "fixes": []
+    }
+  ]
+}

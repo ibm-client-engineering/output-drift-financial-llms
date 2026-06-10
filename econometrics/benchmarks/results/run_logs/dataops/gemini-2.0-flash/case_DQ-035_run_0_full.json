@@ -1,0 +1,50 @@
+{
+  "model": "gemini-2.0-flash",
+  "benchmark": "dataops",
+  "case_id": "DQ-035",
+  "run_id": 0,
+  "seed": 42,
+  "temperature": 0.0,
+  "timestamp": "2026-03-06T09:40:41.395423",
+  "tool_sequence": [
+    "get_exception_details",
+    "query_reference_data",
+    "get_historical_fixes",
+    "escalate_to_human"
+  ],
+  "tool_output_hashes": [
+    "165c3633d0d6",
+    "e527fbfa86d4",
+    "c3b8aa82384d",
+    "fb49602892f3"
+  ],
+  "decision_output": "escalate",
+  "deterministic": true,
+  "faithfulness_score": 0.0,
+  "runtime_seconds": 4.182,
+  "tool_outputs": [
+    {
+      "exception_id": "DQ-035",
+      "created_at": "2025-01-15T10:30:00Z",
+      "priority": "high",
+      "sla_deadline": "2025-01-15T11:30:00Z",
+      "similar_exceptions_today": 3
+    },
+    {
+      "field": "ticker",
+      "query_value": "PFE",
+      "canonical_value": null,
+      "match_found": false
+    },
+    {
+      "pattern": "dividend_amount is negative for pfe",
+      "fixes_found": 0,
+      "fixes": []
+    },
+    {
+      "exception_id": "DQ-035",
+      "status": "escalated",
+      "escalation_queue": "data_quality_team"
+    }
+  ]
+}
