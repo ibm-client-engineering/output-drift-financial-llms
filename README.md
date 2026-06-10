@@ -7,7 +7,7 @@
 
 > **Key Finding**: 7-20B models achieve 100% deterministic outputs at T=0.0, while 120B+ models exhibit only 12.5-50% consistency—challenging assumptions about model scale for regulated applications.
 
-This framework enables audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls for financial services.
+This framework enables audit-ready AI deployments through deterministic configuration, cross-provider validation, and regulatory-mapped controls for financial services. It includes **[DFAH](DFAH.md)** (Determinism-Faithfulness Assurance Harness), the public harness behind *Replayable Financial Agents* (ICLR 2026).
 
 **[Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** | Hands-on labs covering setup, experiments, and analysis.
 
@@ -17,6 +17,7 @@ This framework enables audit-ready AI deployments through deterministic configur
 
 | Paper | Venue | Focus | Links |
 |-------|-------|-------|-------|
+| **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | arXiv preprint (announcement pending) | Replay benchmark: 8,127 episodes, 10 models — outcome-only evaluation misses trajectory/evidence instability | Code: this repo (`bench/`) · `make reproduce-paper` |
 | **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | **LLM Output Drift** (2025) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f.org/) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
@@ -30,10 +31,13 @@ This framework enables audit-ready AI deployments through deterministic configur
 
 ```bash
 pip install -r requirements.txt
-python data/generate_toy_finance.py
 
-# Install Ollama: https://ollama.com/download
-ollama pull qwen2.5:7b-instruct
+# Try the DFAH demo (no LLM needed, runs in seconds)
+python run_dfah_demo.py
+
+# Or run the full output drift evaluation (requires Ollama)
+python data/generate_toy_finance.py
+ollama pull qwen2.5:7b-instruct   # https://ollama.com/download
 python run_evaluation.py
 ```
 
@@ -91,15 +95,69 @@ Our experiments across 5,185+ runs (480+ non-agentic + 4,705 agentic) reveal **m
 
 ---
 
+## DFAH-Bench Results (new paper)
+
+From **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (arXiv preprint, announcement pending) — 8,127 replay episodes, 10 models, 3 financial tasks. The headline: **outcome-only evaluation reports stable agents whose trajectories and evidence usage are not stable.** Among 912 case groups where decisions agree (DAR ≥ 0.9), 21.8% show trajectory divergence (TAR < 0.9).
+
+| Profile | Model | DAR | TAR | Gap | DCB | ECD | Acc |
+|---------|-------|-----|-----|-----|-----|-----|-----|
+| Pattern matcher | Qwen 2.5 7B | 0.998 | 0.998 | 0.000 | 0.352 | 0.000 | 33.3% |
+| Pattern matcher | Gemma 4 | 0.999 | 0.995 | 0.004 | 0.111 | 0.005 | 56.0% |
+| Stable executor | GPT-OSS 20B | 0.963 | 0.956 | 0.007 | 0.132 | 0.017 | 37.3% |
+| Stable executor | Gemini 2.0 Flash | 0.953 | 0.891 | 0.062 | 0.143 | 0.081 | 50.7% |
+| Trajectory diverger | Gemini 2.5 Pro | 0.860 | 0.747 | 0.113 | 0.099 | 0.186 | 50.2% |
+| Trajectory diverger | Claude Opus 4.5 | 0.902 | 0.742 | 0.160 | 0.354 | 0.195 | 44.0% |
+| Trajectory diverger | Claude Sonnet 4 | 0.947 | 0.767 | 0.180 | 0.408 | 0.250 | 36.7% |
+
+*DAR = Decision Agreement Rate, TAR = Trajectory Agreement Rate (exact tool-sequence match), Gap = DAR − TAR (the central diagnostic), DCB = Decision Concentration Bias (cross-case, entropy-normalized), ECD = Evidence-Contact Divergence (pairwise Jaccard), Acc = task-weighted accuracy. Full table incl. κ and CIs in the paper.*
+
+Every number regenerates from the raw replay logs in this repo: `make reproduce-paper` (fails loudly on any mismatch; B=10,000 bootstrap, seed=42). Library: `bench/` (metrics, schema, provenance, stats) · Extend to your domain: `examples/domain_extension_medical.py` · Reproducibility details: [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
+
+---
+
 ## Navigation
 
 | I want to... | Go to |
 |--------------|-------|
-| Run drift evaluation | `python run_evaluation.py` |
-| Run agent benchmarks | `python -m econometrics.agentic.run_benchmarks` |
-| See experimental results | `econometrics/VALIDATION_RESULTS.md` |
-| Understand findings | `econometrics/FINDINGS_EXPLAINED.md` |
+| Try DFAH (no LLM needed) | `python run_dfah_demo.py` |
+| Run drift evaluation (v1) | `python run_evaluation.py` |
+| Run agent benchmarks (v2) | `python econometrics/benchmarks/run_all.py` |
+| Learn about agent benchmarks | [`econometrics/benchmarks/README.md`](econometrics/benchmarks/README.md) |
+| Learn about econometric modules | [`econometrics/README.md`](econometrics/README.md) |
 | Interactive workshop | [Workshop Labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
+
+---
+
+## DFAH: Determinism-Faithfulness Assurance Harness
+
+DFAH measures whether your LLM agent produces consistent behavior across repeated runs. It reports **action determinism** (same tools called?), **signature determinism** (same arguments?), **decision determinism** (same final output?), and **accuracy** (correct vs. ground truth).
+
+```bash
+python run_dfah_demo.py            # No LLM needed, runs in seconds
+# Results saved to dfah_results/dfah_results.json
+```
+
+**Use it with your own agent** — see [`examples/dfah_custom_task.py`](examples/dfah_custom_task.py) for a bring-your-own-cases template using the core API:
+
+```python
+from econometrics.agentic.metrics.trajectory_determinism import (
+    ToolCall, AgentTrajectory, analyze_trajectory_determinism
+)
+
+trajectories = [
+    AgentTrajectory(
+        run_id=f"run_{i}",
+        input_context={"alert_id": "TXN-001", "amount": 50000},
+        tool_calls=[ToolCall(tool_name="check_sanctions", arguments={"entity": "Acme Corp"})],
+        final_decision="escalate",
+    )
+    for i in range(8)
+]
+metrics = analyze_trajectory_determinism(trajectories)
+print(f"Decision determinism: {metrics.decision_determinism:.1%}")
+```
+
+**Full documentation**: [`DFAH.md`](DFAH.md) — output schema, customization guide, benchmark tasks, behavioral profiles.
 
 ---
 
@@ -111,10 +169,10 @@ Our experiments across 5,185+ runs (480+ non-agentic + 4,705 agentic) reveal **m
 SEC 10-K structure-aware retrieval with multi-key ordering that treats retrieval order as a **compliance requirement**.
 
 ```python
-from harness.deterministic_retriever import DeterministicRetriever
+from harness.deterministic_retriever import create_retriever_from_files
 
-retriever = DeterministicRetriever(corpus_path="data/sec_filings/", chunk_size=512, overlap=50)
-results = retriever.retrieve(query="net credit losses 2024", top_k=5)
+retriever = create_retriever_from_files(corpus_path="data/sec/", chunk_size=200, overlap=50)
+results = retriever.retrieve(query="net credit losses 2024", k=5)
 ```
 
 </details>
@@ -128,7 +186,8 @@ Validates consistency across local (Ollama) and cloud deployments with finance-c
 from harness.cross_provider_validation import CrossProviderValidator
 
 validator = CrossProviderValidator(providers=["ollama", "watsonx"], tolerance_pct=5.0)
-results = validator.validate(prompt, task_type="sql")
+outputs = {"ollama": ollama_result, "watsonx": watsonx_result}
+results = validator.validate(outputs, task_type="sql")
 ```
 
 </details>
@@ -156,8 +215,11 @@ Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
 
 ## Repository Structure
 
-| Directory | Purpose |
-|-----------|---------|
+| Path | Purpose |
+|------|---------|
+| `run_dfah_demo.py` | DFAH entry point (no LLM needed) |
+| `DFAH.md` | DFAH documentation, output schema, customization |
+| `examples/dfah_custom_task.py` | Bring-your-own-cases template |
 | `harness/` | Core evaluation framework (retriever, tasks, validation) |
 | `providers/` | LLM providers (watsonx, anthropic, gemini) |
 | `econometrics/` | Replayable Agents research (benchmarks, metrics, stress tests) |
@@ -172,20 +234,26 @@ Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
 If you use this framework, please cite:
 
 ```bibtex
-@inproceedings{khatchadourian2026replayable,
+@article{khatchadourian2026replayable,
   title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
-  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  journal={arXiv preprint arXiv:2601.15322},
   year={2026},
-  url={https://arxiv.org/abs/2601.15322}
+  eprint={2601.15322},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  doi={10.48550/arXiv.2601.15322}
 }
 
-@inproceedings{khatchadourian2025output,
+@article{khatchadourian2025output,
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  journal={arXiv preprint arXiv:2511.07585},
   year={2025},
-  url={https://arxiv.org/abs/2511.07585}
+  eprint={2511.07585},
+  archivePrefix={arXiv},
+  primaryClass={cs.LG},
+  doi={10.48550/arXiv.2511.07585}
 }
 ```
 

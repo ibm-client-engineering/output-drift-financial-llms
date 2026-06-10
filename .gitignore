@@ -54,8 +54,19 @@ Thumbs.db
 # Experiments
 traces/
 results/
+dfah_results/
 *.sqlite
 *.db
+
+# --- DFAH-Bench release: reference results and the raw replay corpus ARE
+# --- published (the paper's numbers regenerate from them via
+# --- `make reproduce-paper`). Anchored re-includes past the rules above.
+!/results/
+/results/*
+!/results/dfah_*.csv
+!/econometrics/benchmarks/results/
+/econometrics/benchmarks/results/*
+!/econometrics/benchmarks/results/run_logs/
 
 # Logs
 *.log
