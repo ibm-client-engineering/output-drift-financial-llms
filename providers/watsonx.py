@@ -12,6 +12,8 @@ import asyncio
 from typing import Dict, List, Optional, Any
 import httpx
 
+from providers import retry_on_transient
+
 
 class WatsonxProvider:
     """WatsonX.AI provider with SDK-first, REST fallback strategy."""
@@ -137,6 +139,7 @@ class WatsonxProvider:
         except Exception as e:
             raise RuntimeError(f"Failed to get IAM token: {e}")
 
+    @retry_on_transient()
     def generate(self, *, model: str, prompt: str, temperature: float, top_p: float,
                  seed: Optional[int] = None, max_new_tokens: Optional[int] = None,
                  stream: bool = False, extra: Optional[Dict] = None) -> Dict[str, Any]:
@@ -197,12 +200,14 @@ class WatsonxProvider:
         Returns:
             Generated text string
         """
-        # Convert messages to single prompt string
-        # Typically messages is [{"role": "user", "content": "..."}]
-        prompt = "\n".join(msg.get("content", "") for msg in messages)
+        # Convert messages to single prompt string with role markers
+        prompt = "\n".join(
+            f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}"
+            for msg in messages
+        )
 
         # Call synchronous generate method in thread pool
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(
             None,
             lambda: self.generate(
