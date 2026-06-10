@@ -10,13 +10,13 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-7/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-8/">
       
       
-        <link rel="prev" href="../lab-6/">
+        <link rel="prev" href="../lab-7/">
       
       
-        <link rel="next" href="../lab-8/">
+        <link rel="next" href="../resources/paper/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 7. Replayable Financial Agents - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles - Output Drift in Financial LLMs Workshop</title>
       
     
     
@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-7-replayable-financial-agents-iclr-2026" class="md-skip">
+        <a href="#lab-8-dfah-bench-replay-determinism-audit-bundles" class="md-skip">
           Skip to content
         </a>
       
@@ -109,7 +109,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 7. Replayable Financial Agents
+              Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
             
           </span>
         </div>
@@ -640,6 +640,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 7. Replayable Financial Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -659,7 +687,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 7. Replayable Financial Agents
+    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
   
 
     
@@ -677,7 +705,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 7. Replayable Financial Agents
+    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
   
 
     
@@ -737,10 +765,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#from-output-drift-to-agent-determinism" class="md-nav__link">
+  <a href="#the-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        From Output Drift to Agent Determinism
+        The Metrics
       
     </span>
   </a>
@@ -748,10 +776,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-determinism-accuracy-disconnect" class="md-nav__link">
+  <a href="#why-the-gap-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Determinism-Accuracy Disconnect
+        Why the gap matters
       
     </span>
   </a>
@@ -764,10 +792,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#step-1-run-the-test-suite" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Step 1: Run the test suite
       
     </span>
   </a>
@@ -775,88 +803,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-understand-the-benchmarks" class="md-nav__link">
+  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Understand the Benchmarks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Understand the Benchmarks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-triage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compliance Triage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#portfolio-constraint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Portfolio Constraint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dataops-exception" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DataOps Exception
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-run-the-deterministic-benchmark-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Run the Deterministic Benchmark Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2: Run the Deterministic Benchmark Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-benchmark" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a single benchmark:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-run-agentic-benchmarks-with-an-llm-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Run Agentic Benchmarks with an LLM (Optional)
+        Step 2: Reproduce the paper
       
     </span>
   </a>
@@ -864,60 +814,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-interpret-results" class="md-nav__link">
+  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Interpret Results
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 4: Interpret Results">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-the-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading the Output
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-to-look-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to Look For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-same-conclusion-different-reasoning-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The "Same Conclusion, Different Reasoning" Pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-explore-the-metrics-modules" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Explore the Metrics Modules
+        Step 3: Read the kill criterion
       
     </span>
   </a>
@@ -925,10 +825,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
+  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Takeaways
+        Step 4: Extend to a new domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Verify an audit bundle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-take-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to take away
       
     </span>
   </a>
@@ -950,34 +872,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../lab-8/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -1196,10 +1090,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#from-output-drift-to-agent-determinism" class="md-nav__link">
+  <a href="#the-metrics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        From Output Drift to Agent Determinism
+        The Metrics
       
     </span>
   </a>
@@ -1207,10 +1101,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#the-determinism-accuracy-disconnect" class="md-nav__link">
+  <a href="#why-the-gap-matters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The Determinism-Accuracy Disconnect
+        Why the gap matters
       
     </span>
   </a>
@@ -1223,10 +1117,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#step-1-run-the-test-suite" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Step 1: Run the test suite
       
     </span>
   </a>
@@ -1234,88 +1128,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-understand-the-benchmarks" class="md-nav__link">
+  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Understand the Benchmarks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Understand the Benchmarks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-triage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compliance Triage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#portfolio-constraint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Portfolio Constraint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dataops-exception" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DataOps Exception
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-run-the-deterministic-benchmark-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Run the Deterministic Benchmark Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2: Run the Deterministic Benchmark Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-benchmark" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a single benchmark:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-run-agentic-benchmarks-with-an-llm-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Run Agentic Benchmarks with an LLM (Optional)
+        Step 2: Reproduce the paper
       
     </span>
   </a>
@@ -1323,60 +1139,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-interpret-results" class="md-nav__link">
+  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Interpret Results
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 4: Interpret Results">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-the-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading the Output
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-to-look-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to Look For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-same-conclusion-different-reasoning-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The "Same Conclusion, Different Reasoning" Pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-explore-the-metrics-modules" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Explore the Metrics Modules
+        Step 3: Read the kill criterion
       
     </span>
   </a>
@@ -1384,10 +1150,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
+  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Takeaways
+        Step 4: Extend to a new domain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Verify an audit bundle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-to-take-away" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What to take away
       
     </span>
   </a>
@@ -1425,202 +1213,124 @@
   
 
 
-<h1 id="lab-7-replayable-financial-agents-iclr-2026">Lab 7: Replayable Financial Agents (ICLR 2026)<a class="headerlink" href="#lab-7-replayable-financial-agents-iclr-2026" title="Permanent link">&para;</a></h1>
+<h1 id="lab-8-dfah-bench-replay-determinism-audit-bundles">Lab 8: DFAH-Bench — Replay Determinism &amp; Audit Bundles<a class="headerlink" href="#lab-8-dfah-bench-replay-determinism-audit-bundles" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This lab introduces the <strong>Replayable Financial Agents</strong> research track, extending the Output Drift framework from single-turn tasks (Labs 1-6) to multi-step, tool-using LLM agents. This work is based on the accepted paper at the <a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a>.</p>
-<p><strong>Paper</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
-<p><strong>Duration</strong>: ~30 minutes (benchmark simulation) or ~2+ hours (full agentic runs with LLMs)</p>
+<p>This lab introduces <strong>DFAH-Bench</strong>, the replay benchmark behind our newest
+paper, <em>DFAH-Bench: Benchmarking Observable Agent Instability in Financial
+Decision-Making</em> (arXiv preprint). It is the deepest layer of the framework:
+where Lab 7 measured whether an agent is deterministic, DFAH-Bench measures
+<strong>how</strong> it diverges — by decision, trajectory, or evidence — and packages the
+proof in verifiable audit bundles.</p>
+<p><strong>The headline finding</strong>: outcome-only evaluation reports stable agents whose
+reasoning is not stable. Across 8,127 replay episodes, <strong>21.8% of
+decision-stable case groups hide trajectory divergence</strong> that final-answer
+metrics cannot see.</p>
+<p><strong>Duration</strong>: ~25 minutes. <strong>No LLM, no API keys, no network needed</strong> — the
+full 8,129-episode replay corpus is checked into this repository, and every
+number in the paper regenerates from it on your laptop.</p>
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <p>By the end of this lab, you will:</p>
 <ul>
-<li>Understand how determinism extends from single-turn outputs to multi-step agent trajectories</li>
-<li>Run the 3 financial agent benchmarks (Compliance Triage, Portfolio Constraint, DataOps Exception)</li>
-<li>Measure trajectory determinism, decision determinism, and accuracy</li>
-<li>Understand the distinction between <strong>pattern matching</strong> and <strong>genuine reasoning</strong> in agent behavior</li>
+<li>Distinguish the three observable divergence channels: decision, trajectory, evidence</li>
+<li>Regenerate every number in the DFAH-Bench paper with one command</li>
+<li>Read a channel-availability matrix and know why it must accompany results</li>
+<li>Extend the benchmark to a brand-new domain with zero metric-code changes</li>
 </ul>
 <h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
-<h3 id="from-output-drift-to-agent-determinism">From Output Drift to Agent Determinism<a class="headerlink" href="#from-output-drift-to-agent-determinism" title="Permanent link">&para;</a></h3>
-<p>Labs 1-6 measured whether the same prompt produces the same output. Agent determinism asks a harder question: <strong>does an agent take the same actions and reach the same conclusion when given the same task?</strong></p>
+<h3 id="the-metrics">The Metrics<a class="headerlink" href="#the-metrics" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Metric</th>
 <th>Definition</th>
-<th>What It Captures</th>
+<th>Failure mode it exposes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Signature Determinism</strong></td>
-<td>Identical tool calls with identical arguments</td>
-<td>Exact trajectory reproducibility</td>
+<td><strong>DAR</strong></td>
+<td>Decision Agreement Rate — fraction of N replays agreeing with the modal decision</td>
+<td>Outcome instability</td>
 </tr>
 <tr>
-<td><strong>Decision Determinism</strong></td>
-<td>Same final action (e.g., escalate/dismiss)</td>
-<td>Outcome consistency</td>
+<td><strong>TAR</strong></td>
+<td>Trajectory Agreement Rate — fraction matching the modal tool-call sequence exactly</td>
+<td>Process instability</td>
 </tr>
 <tr>
-<td><strong>Accuracy</strong></td>
-<td>Decision matches ground truth</td>
-<td>Task correctness</td>
+<td><strong>DAR − TAR gap</strong></td>
+<td>The central diagnostic</td>
+<td>"Same conclusion, different path"</td>
+</tr>
+<tr>
+<td><strong>ECD</strong></td>
+<td>Evidence-Contact Divergence — mean pairwise Jaccard distance over evidence sets</td>
+<td>"Same conclusion, different evidence"</td>
+</tr>
+<tr>
+<td><strong>DCB</strong></td>
+<td>Decision Concentration Bias — 1 − H(p)/log K</td>
+<td>Pattern matching (always picking the same label)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="the-determinism-accuracy-disconnect">The Determinism-Accuracy Disconnect<a class="headerlink" href="#the-determinism-accuracy-disconnect" title="Permanent link">&para;</a></h3>
-<p>Our key finding across 4,705 agentic runs:</p>
-<blockquote>
-<p>Decision determinism and task accuracy are <strong>not detectably correlated</strong> (r = -0.11, p = 0.63).</p>
-</blockquote>
-<p>This means high determinism does NOT imply high accuracy. Three behavioral profiles emerge:</p>
-<table>
-<thead>
-<tr>
-<th>Profile</th>
-<th>Example Models</th>
-<th>Determinism</th>
-<th>Accuracy</th>
-<th>Behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Pattern Matchers</strong></td>
-<td>Qwen 2.5 7B, Granite 3.3</td>
-<td>91-98%</td>
-<td>33-42%</td>
-<td>Always choose the same action regardless of evidence</td>
-</tr>
-<tr>
-<td><strong>Balanced Reasoners</strong></td>
-<td>Claude Sonnet 4, Gemini Flash</td>
-<td>77-86%</td>
-<td>33-53%</td>
-<td>Read tool outputs, sometimes vary approach</td>
-</tr>
-<tr>
-<td><strong>Explorers</strong></td>
-<td>Claude Opus 4.5, Gemini 2.5 Pro</td>
-<td>59-71%</td>
-<td>40-69%</td>
-<td>Most variable but highest genuine reasoning</td>
-</tr>
-</tbody>
-</table>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<ul>
-<li>Completed Labs 0-3 (environment setup, basic experiments)</li>
-<li>Python environment with <code>requirements.txt</code> installed</li>
-</ul>
-<h2 id="step-1-understand-the-benchmarks">Step 1: Understand the Benchmarks<a class="headerlink" href="#step-1-understand-the-benchmarks" title="Permanent link">&para;</a></h2>
-<p>The framework includes 3 financial agent benchmarks, each with 50 test cases:</p>
-<h3 id="compliance-triage">Compliance Triage<a class="headerlink" href="#compliance-triage" title="Permanent link">&para;</a></h3>
-<p>A compliance agent receives a suspicious transaction alert and must decide: <strong>escalate</strong>, <strong>dismiss</strong>, or <strong>investigate</strong>.</p>
-<p>Tools available: <code>check_sanctions_list</code>, <code>get_customer_profile</code>, <code>search_precedents</code>, <code>calculate_risk_score</code></p>
-<h3 id="portfolio-constraint">Portfolio Constraint<a class="headerlink" href="#portfolio-constraint" title="Permanent link">&para;</a></h3>
-<p>A portfolio agent evaluates proposed trades against position limits, sector caps, and liquidity requirements. Decision: <strong>approve</strong>, <strong>reject</strong>, or <strong>modify</strong>.</p>
-<p>Tools available: <code>get_current_holdings</code>, <code>get_market_data</code>, <code>check_position_limit</code>, <code>calculate_sector_exposure</code>, <code>get_regulatory_constraints</code></p>
-<h3 id="dataops-exception">DataOps Exception<a class="headerlink" href="#dataops-exception" title="Permanent link">&para;</a></h3>
-<p>A data operations agent resolves data quality exceptions in a financial pipeline. Decision: <strong>auto_fix</strong>, <strong>escalate</strong>, or <strong>quarantine</strong>.</p>
-<p>Tools available: <code>get_exception_details</code>, <code>query_reference_data</code>, <code>get_historical_fixes</code>, <code>validate_fix</code>, <code>apply_fix</code>, <code>escalate_to_human</code></p>
-<h2 id="step-2-run-the-deterministic-benchmark-simulation">Step 2: Run the Deterministic Benchmark Simulation<a class="headerlink" href="#step-2-run-the-deterministic-benchmark-simulation" title="Permanent link">&para;</a></h2>
-<p>The benchmark suite includes a <strong>deterministic simulation mode</strong> that runs without an LLM. This tests the benchmark infrastructure and demonstrates the metrics computation:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Run all 3 benchmarks (no LLM needed, completes in seconds)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_all.py
+<h3 id="why-the-gap-matters">Why the gap matters<a class="headerlink" href="#why-the-gap-matters" title="Permanent link">&para;</a></h3>
+<p>A model can score DAR = 0.947 (outcomes look rock-solid) while TAR = 0.767 —
+meaning nearly a quarter of its replays took a <em>different tool path</em> to that
+same answer. In a demo that's invisible. In an audit, the path is the product.</p>
+<h2 id="step-1-run-the-test-suite">Step 1: Run the test suite<a class="headerlink" href="#step-1-run-the-test-suite" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>test-bench
+<span class="c1"># 143 tests: metric math, schema round-trips, hash-chain tamper vectors,</span>
+<span class="c1"># Ed25519 certificates, pipeline conventions — all offline</span>
 </code></pre></div>
-<p><strong>Expected output:</strong></p>
-<div class="highlight"><pre><span></span><code>============================================================
-V3 FINANCIAL AGENT BENCHMARK SUITE
-============================================================
-Configuration: 5 runs/test, max 50 tests
-
-Running benchmark: compliance_triage
-Loaded 50 test cases
-
-COMPLIANCE_TRIAGE RESULTS:
-  Tests: 50
-  Runs per test: 5
-  Action Determinism: 100.0%
-  Signature Determinism: 100.0%
-  Decision Determinism: 100.0%
-  Accuracy: XX.X%
+<h2 id="step-2-reproduce-the-paper">Step 2: Reproduce the paper<a class="headerlink" href="#step-2-reproduce-the-paper" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper-fast<span class="w">    </span><span class="c1"># ~2 min: skips the B=10,000 bootstrap</span>
+make<span class="w"> </span>reproduce-paper<span class="w">         </span><span class="c1"># full verification incl. bootstrap CIs</span>
 </code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Why 100% Determinism?</p>
-<p>The simulation mode uses deterministic agent logic (no LLM), so it always produces identical results. This validates the benchmark infrastructure. Real LLM-driven runs will show the behavioral differences described in the paper.</p>
-</div>
-<h3 id="run-a-single-benchmark">Run a single benchmark:<a class="headerlink" href="#run-a-single-benchmark" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>econometrics/benchmarks/run_all.py<span class="w"> </span>--task<span class="w"> </span>compliance_triage<span class="w"> </span>--n-runs<span class="w"> </span><span class="m">8</span>
+<p>Watch for the five stages: episode accounting (8,129 raw → 8,127 analyzed),
+pipeline regeneration, reference diff, paper-claim assertions, and the
+C(8,3)=56 subsampling robustness check. Every <code>PASS</code> line is a paper number
+regenerating from raw logs. The command <strong>fails loudly</strong> if anything drifts.</p>
+<h2 id="step-3-read-the-kill-criterion">Step 3: Read the kill criterion<a class="headerlink" href="#step-3-read-the-kill-criterion" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>results/dfah_kill_criterion.csv
+cat<span class="w"> </span>results/dfah_kill_criterion_by_model.csv
 </code></pre></div>
-<h2 id="step-3-run-agentic-benchmarks-with-an-llm-optional">Step 3: Run Agentic Benchmarks with an LLM (Optional)<a class="headerlink" href="#step-3-run-agentic-benchmarks-with-an-llm-optional" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">API Costs</p>
-<p>Running the full benchmark suite (50 cases x 8 runs x 3 benchmarks = 1,200 runs per model) requires significant API calls. Start small with <code>--n-cases 5</code> to test, then scale up. Our full v2 experiments cost ~$66 across all providers.</p>
-</div>
-<p>To run benchmarks with actual LLM tool-calling (requires Ollama):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Small test run (5 cases, fast)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_agentic_benchmark.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-cases<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-runs<span class="w"> </span><span class="m">4</span>
-
-<span class="c1"># Larger run (50 cases, matches paper methodology)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_agentic_benchmark.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-cases<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-runs<span class="w"> </span><span class="m">8</span>
+<p>Among 912 case groups with high decision agreement (DAR ≥ 0.9): 21.8% show
+trajectory divergence (TAR &lt; 0.9), 19.4% show strong divergence (TAR &lt; 0.7).
+Per model: 55.6% of Claude Sonnet's and 56.6% of Gemini 2.5 Pro's eligible
+cases diverge. These are the numbers in §4.4 of the paper — now on your screen.</p>
+<h2 id="step-4-extend-to-a-new-domain">Step 4: Extend to a new domain<a class="headerlink" href="#step-4-extend-to-a-new-domain" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/domain_extension_medical.py
 </code></pre></div>
-<p>Results are saved to <code>econometrics/benchmarks/results/</code>.</p>
-<h2 id="step-4-interpret-results">Step 4: Interpret Results<a class="headerlink" href="#step-4-interpret-results" title="Permanent link">&para;</a></h2>
-<h3 id="reading-the-output">Reading the Output<a class="headerlink" href="#reading-the-output" title="Permanent link">&para;</a></h3>
-<p>Each benchmark run produces:</p>
-<ul>
-<li><strong>Action Determinism</strong>: Do all runs call the same set of tools?</li>
-<li><strong>Signature Determinism</strong>: Do all runs call tools with the same arguments in the same order?</li>
-<li><strong>Decision Determinism</strong>: Do all runs reach the same final decision?</li>
-<li><strong>Accuracy</strong>: How often does the decision match ground truth?</li>
-</ul>
-<h3 id="what-to-look-for">What to Look For<a class="headerlink" href="#what-to-look-for" title="Permanent link">&para;</a></h3>
-<p><strong>High determinism + low accuracy</strong> (Pattern Matcher):
-The model always does the same thing, but it's often wrong. Example: Qwen 2.5 7B picks "reject" for 80%+ of compliance cases regardless of the evidence.</p>
-<p><strong>Moderate determinism + higher accuracy</strong> (Balanced Reasoner):
-The model reads tool outputs and adjusts its behavior. Some variance is expected because it's actually reasoning about the evidence.</p>
-<p><strong>Low determinism + variable accuracy</strong> (Explorer):
-The model tries different approaches across runs. Most likely to find the correct answer but least reproducible.</p>
-<h3 id="the-same-conclusion-different-reasoning-pattern">The "Same Conclusion, Different Reasoning" Pattern<a class="headerlink" href="#the-same-conclusion-different-reasoning-pattern" title="Permanent link">&para;</a></h3>
-<p>Across all frontier models, <strong>decision determinism exceeds signature determinism</strong>. For example, Claude Sonnet 4 shows 84% decision determinism but only 43% signature determinism across benchmarks. This means the model often reaches the same conclusion via different reasoning paths.</p>
-<h2 id="step-5-explore-the-metrics-modules">Step 5: Explore the Metrics Modules<a class="headerlink" href="#step-5-explore-the-metrics-modules" title="Permanent link">&para;</a></h2>
-<p>The determinism metrics are implemented in reusable modules:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Trajectory determinism computation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">econometrics.agentic.metrics.trajectory_determinism</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">compute_trajectory_determinism</span>  <span class="c1"># if available</span>
-<span class="p">)</span>
-
-<span class="c1"># Faithfulness metrics</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">econometrics.agentic.metrics.faithfulness</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">compute_faithfulness</span>  <span class="c1"># if available</span>
-<span class="p">)</span>
+<p>This registers a <strong>medical triage</strong> ontology (escalate / treat / refer) with
+two mock tools and computes every DFAH metric with the unmodified <code>bench/</code>
+library. CASE-B in the output is the paper's central failure mode reproduced
+in a domain the benchmark has never seen: DAR = 1.000, TAR = 0.333.</p>
+<p>To add your own domain: define a <code>DecisionOntology</code> + <code>TaskSpec</code>, call
+<code>register_task(spec)</code>, and feed it replay episodes. No metric code changes.</p>
+<h2 id="step-5-verify-an-audit-bundle">Step 5: Verify an audit bundle<a class="headerlink" href="#step-5-verify-an-audit-bundle" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>bench.provenance.verify<span class="w"> </span>--help
 </code></pre></div>
-<p>See <code>econometrics/agentic/metrics/</code> for the full implementation.</p>
-<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
+<p>Audit bundles are SHA-256 hash-chained and Ed25519-signed (the provenance
+layer depends only on the standard library + <code>cryptography</code>). The test suite
+includes six tamper vectors — payload modification, deletion, reordering,
+backward timestamps, genesis tampering, duplicate sequence numbers — all
+detected.</p>
+<h2 id="what-to-take-away">What to take away<a class="headerlink" href="#what-to-take-away" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Determinism != accuracy</strong>: High consistency can mask pattern matching rather than genuine reasoning</li>
-<li><strong>Both dimensions matter</strong>: The Determinism-Faithfulness Assurance Harness (DFAH) measures determinism and accuracy independently</li>
-<li><strong>Task structure affects determinism</strong>: Compliance (binary decisions) shows higher determinism than portfolio (multi-step optimization)</li>
-<li><strong>Frontier models reason differently</strong>: Decision determinism &gt; signature determinism because models find the same answer via different tool-call paths</li>
-<li><strong>Start small</strong>: Use <code>--n-cases 5</code> to validate your setup before scaling to full 50-case runs</li>
+<li><strong>Decision stability ≠ trajectory stability.</strong> Measure both, per channel.</li>
+<li><strong>Channel availability is part of the result.</strong> Metrics only run on
+   channels actually present — and the matrix saying which is published
+   alongside every table.</li>
+<li><strong>Reproducibility is a command, not a promise.</strong> If <code>make reproduce-paper</code>
+   passes, the paper's numbers are your numbers.</li>
 </ol>
 <h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Full paper</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a> (Replayable Financial Agents)</li>
-<li><strong>Benchmark details</strong>: <a href="../../econometrics/benchmarks/README.md"><code>econometrics/benchmarks/README.md</code></a></li>
-<li><strong>v1 Output Drift paper</strong>: <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a></li>
+<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md"><code>REPRODUCIBILITY.md</code></a> — exact environment, commands, disclosed caveats</li>
+<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/DFAH.md"><code>DFAH.md</code></a> — harness documentation</li>
+<li><a href="../resources/paper/">Research Papers</a> — all three papers in this research line</li>
 </ul>
-<hr />
-<div class="admonition success">
-<p class="admonition-title">Lab 7 Complete!</p>
-<p>You now understand how determinism extends from single-turn outputs to multi-step agent trajectories, and how to run and interpret the financial agent benchmarks from the Replayable Financial Agents paper.</p>
-</div>
 
 
 
@@ -1652,7 +1362,7 @@ The model tries different approaches across runs. Most likely to find the correc
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../lab-6/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 6. Extending the Framework">
+          <a href="../lab-7/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 7. Replayable Financial Agents">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1662,20 +1372,20 @@ The model tries different approaches across runs. Most likely to find the correc
                 Previous
               </span>
               <div class="md-ellipsis">
-                Lab 6. Extending the Framework
+                Lab 7. Replayable Financial Agents
               </div>
             </div>
           </a>
         
         
           
-          <a href="../lab-8/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 8. DFAH-Bench — Replay Determinism &amp; Audit Bundles">
+          <a href="../resources/paper/" class="md-footer__link md-footer__link--next" aria-label="Next: Research Paper">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+                Research Paper
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/resources/paper/">
       
       
-        <link rel="prev" href="../../lab-7/">
+        <link rel="prev" href="../../lab-8/">
       
       
         <link rel="next" href="../api/">
@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.3">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -661,6 +661,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lab-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -796,6 +824,17 @@
     <span class="md-ellipsis">
       
         Publications
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dfah-bench-benchmarking-observable-agent-instability-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DFAH-Bench: Benchmarking Observable Agent Instability (2026)
       
     </span>
   </a>
@@ -1239,6 +1278,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#dfah-bench-benchmarking-observable-agent-instability-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DFAH-Bench: Benchmarking Observable Agent Instability (2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1597,6 +1647,11 @@
 </thead>
 <tbody>
 <tr>
+<td>DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making</td>
+<td>arXiv preprint (announcement pending)</td>
+<td>2026</td>
+</tr>
+<tr>
 <td><a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents</a></td>
 <td><a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> (Accepted)</td>
 <td>2026</td>
@@ -1608,6 +1663,23 @@
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="dfah-bench-benchmarking-observable-agent-instability-2026">DFAH-Bench: Benchmarking Observable Agent Instability (2026)<a class="headerlink" href="#dfah-bench-benchmarking-observable-agent-instability-2026" title="Permanent link">&para;</a></h2>
+<p>The newest paper in this research line measures <strong>whether agents that agree on
+decisions also agree on how they got there</strong> — across 8,127 replay episodes,
+10 models, and 3 financial tasks, with cryptographically verifiable audit
+bundles.</p>
+<p><strong>Key result</strong>: among 912 case groups where decisions agree (DAR ≥ 0.9),
+<strong>21.8% hide trajectory divergence</strong> (TAR &lt; 0.9) and 19.4% diverge strongly
+(TAR &lt; 0.7). Outcome-only evaluation misses all of it. For trajectory-diverger
+models the rates are striking: 55.6% (Claude Sonnet 4) and 56.6%
+(Gemini 2.5 Pro) of their decision-stable cases vary in tool path.</p>
+<p><strong>Reproduce it yourself</strong> — the full replay corpus is in this repository:</p>
+<div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper
+</code></pre></div>
+<p>See <a href="../../lab-8/">Lab 8</a> for the guided walkthrough and the
+<a href="https://github.com/ibm-client-engineering/output-drift-financial-llms#dfah-bench-results-new-paper">README results table</a>
+for the headline numbers per model.</p>
 <hr />
 <h2 id="llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows">LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows<a class="headerlink" href="#llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows" title="Permanent link">&para;</a></h2>
 <p>This page summarizes the key findings from our research papers on output drift and agent determinism in large language models used for financial applications.</p>
@@ -1974,7 +2046,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../lab-7/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 7. Replayable Financial Agents">
+          <a href="../../lab-8/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 8. DFAH-Bench — Replay Determinism &amp; Audit Bundles">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1984,7 +2056,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
                 Previous
               </span>
               <div class="md-ellipsis">
-                Lab 7. Replayable Financial Agents
+                Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
               </div>
             </div>
           </a>
