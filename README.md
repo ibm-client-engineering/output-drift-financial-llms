@@ -18,7 +18,7 @@ This framework enables audit-ready AI deployments through deterministic configur
 | Paper | Venue | Focus | Links |
 |-------|-------|-------|-------|
 | **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | arXiv preprint (announcement pending) | Replay benchmark: 8,127 episodes, 10 models — outcome-only evaluation misses trajectory/evidence instability | Code: this repo (`bench/`) · `make reproduce-paper` |
-| **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
+| **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | **LLM Output Drift** (2025) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f.org/) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
 **Code Organization**:

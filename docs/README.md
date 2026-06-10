@@ -18,6 +18,10 @@ Financial institutions deploying AI systems must ensure:
 
 This workshop is based on peer-reviewed research demonstrating that even at temperature=0.0, LLMs exhibit output drift—up to 35% variance in some tasks—threatening compliance workflows.
 
+!!! tip "New: interactive results explorer"
+    Explore the DFAH-Bench results, play with the replay metrics live in your browser, and drive a real
+    local model through the benchmark — no install needed: **[Open the Live Explorer](explorer/index.html)**
+
 ### What You'll Learn
 
 By the end of this workshop, you will:
@@ -43,15 +47,19 @@ By the end of this workshop, you will:
 | [Lab 5: Cross-Provider Testing](lab-5/README.md) | Compare reliability across different AI providers | 30 min |
 | [Lab 6: Extending the Framework](lab-6/README.md) | Add custom tasks and integrate with your workflows | 30 min |
 | [Lab 7: Replayable Financial Agents](lab-7/README.md) | Run agent benchmarks from the ICLR 2026 paper | 30 min |
+| [Lab 8: DFAH-Bench — Replay Determinism & Audit Bundles](lab-8/README.md) | Reproduce the DFAH-Bench paper from the checked-in replay corpus (no LLM needed) | 25 min |
 
-**Total Duration**: Approximately 3-3.5 hours
+**Total Duration**: Approximately 3.5-4 hours
 
 ## Research Foundation
 
-This workshop is based on two peer-reviewed papers:
+This workshop is based on three papers from the same research line:
+
+**"DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"**
+arXiv preprint (announcement pending) | Every number reproduces from this repository: `make reproduce-paper`
 
 **"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"**
-Accepted at the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (The 2nd ICLR Workshop on Advances in Financial AI) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
+[ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (The 2nd ICLR Workshop on Advances in Financial AI) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
 
 **"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
 Presented at the [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
@@ -67,6 +75,12 @@ Presented at the [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/
 - Small models achieve high determinism via pattern matching, not reasoning
 - Frontier models show "same conclusion, different reasoning" (decision det. > signature det.)
 - No model simultaneously achieves high determinism AND high accuracy
+
+**Key Findings (v3, DFAH-Bench, 8,127 replay episodes):**
+- Among 912 decision-stable case groups (DAR ≥ 0.9), **21.8% hide trajectory divergence** (TAR < 0.9) that outcome-only evaluation cannot see; 19.4% diverge strongly (TAR < 0.7)
+- Trajectory divergers: 55.6% of Claude Sonnet 4's and 56.6% of Gemini 2.5 Pro's stable cases vary in tool path
+- The DAR-TAR gap, evidence-contact divergence (ECD), and decision concentration bias (DCB) expose three distinct failure modes invisible to accuracy metrics
+- Fully reproducible: the raw corpus (8,129 episodes, minus 2 single-replay case groups = 8,127 analyzed) ships in this repo; `make reproduce-paper` regenerates every paper number and fails loudly on any mismatch
 
 **Community Validation** (Paul Merrison, FINOS):
 - Determinism is model-specific, not size-based
@@ -116,52 +130,75 @@ If you encounter issues or have questions:
 ```
 output-drift-financial-llms/
 ├── run_evaluation.py       # Main experiment orchestrator (v1 Output Drift)
-├── make_tables.py          # Generate LaTeX tables from results
-├── plot_results.py         # Generate drift visualizations
+├── run_dfah_demo.py        # DFAH demo (no LLM needed)
+├── Makefile                # make reproduce-paper / make test-bench
+├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
 ├── COMMUNITY_FINDINGS.md   # Independent validation results
-├── docs/                   # Workshop documentation (labs 0-7)
-├── harness/                # Core framework code
+├── docs/                   # Workshop documentation (labs 0-8)
+├── bench/                  # DFAH-Bench library (v3)
+│   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
+│   ├── spec/               # Replay episode schema + task ontologies
+│   ├── provenance/         # Hash-chained, Ed25519-signed audit bundles
+│   └── stats/              # Bootstrap CIs, significance tests
+├── harness/                # v1 framework core
 │   ├── deterministic_retriever.py
 │   ├── task_definitions.py
 │   └── cross_provider_validation.py
 ├── providers/              # LLM providers (watsonx, anthropic, gemini)
 ├── econometrics/           # Replayable Agents (v2) - benchmarks & metrics
 │   ├── benchmarks/         # 3 financial agent benchmarks (50 cases each)
+│   │   └── results/run_logs/  # Raw replay corpus: 8,129 episodes
 │   └── agentic/            # Trajectory determinism & faithfulness metrics
-├── scripts/                # Data fetching & utilities
+├── scripts/                # Replay analysis + reproduce_paper.py
+├── tests/                  # 143-test suite (offline, no API keys)
+├── results/                # Reference CSVs behind every paper number
 ├── data/                   # Test datasets & generators
-├── examples/               # Sample audit trails
+├── examples/               # Audit trails + domain-extension example
 └── requirements.txt        # Python dependencies
 ```
 
 ## Reproducibility & Citations
 
-All experiments use **release v0.1.0 (commit c19dac5)** for reproducibility:
+The v1 drift experiments are pinned at **release v0.1.0 (commit c19dac5)**:
 
 ```bash
 git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
 git checkout v0.1.0
 ```
 
+The DFAH-Bench (v3) paper reproduces from `main` — the raw replay corpus is
+checked in, and one command regenerates every published number:
+
+```bash
+make reproduce-paper   # fails loudly on any mismatch (B=10,000 bootstrap, seed=42)
+```
+
 If you use this framework in your research, please cite:
 
 ```bibtex
-@inproceedings{khatchadourian2026replayable,
+@article{khatchadourian2026replayable,
   title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
-  booktitle={The 2nd ICLR Workshop on Advances in Financial AI (FinAI)},
+  journal={arXiv preprint arXiv:2601.15322},
   year={2026},
-  url={https://arxiv.org/abs/2601.15322}
+  eprint={2601.15322},
+  archivePrefix={arXiv},
+  doi={10.48550/arXiv.2601.15322}
 }
 
-@inproceedings{khatchadourian2025output,
+@article{khatchadourian2025output,
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  journal={arXiv preprint arXiv:2511.07585},
   year={2025},
-  url={https://arxiv.org/abs/2511.07585}
+  eprint={2511.07585},
+  archivePrefix={arXiv},
+  doi={10.48550/arXiv.2511.07585}
 }
 ```
+
+A citation entry for *DFAH-Bench: Benchmarking Observable Agent Instability in
+Financial Decision-Making* will be added when its arXiv announcement completes.
 
 **Replayable Agents**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) | **Output Drift**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 

@@ -5,7 +5,7 @@
 | Paper | Venue | Year |
 |-------|-------|------|
 | DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making | arXiv preprint (announcement pending) | 2026 |
-| [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (Accepted) | 2026 |
+| [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | 2026 |
 | [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | 2025 |
 
 ---

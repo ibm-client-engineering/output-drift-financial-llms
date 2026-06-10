@@ -2,7 +2,7 @@
 
 ## Overview
 
-This lab introduces the **Replayable Financial Agents** research track, extending the Output Drift framework from single-turn tasks (Labs 1-6) to multi-step, tool-using LLM agents. This work is based on the accepted paper at the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home).
+This lab introduces the **Replayable Financial Agents** research track, extending the Output Drift framework from single-turn tasks (Labs 1-6) to multi-step, tool-using LLM agents. This work is based on the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) paper.
 
 **Paper**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
 

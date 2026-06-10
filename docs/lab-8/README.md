@@ -112,6 +112,12 @@ detected.
 3. **Reproducibility is a command, not a promise.** If `make reproduce-paper`
    passes, the paper's numbers are your numbers.
 
+## Bonus: the Live Explorer
+
+Prefer to see it before you clone it? The **[interactive explorer](../explorer/index.html)** renders the
+DAR-TAR scatter and kill criterion from these same results, lets you feel the gap with a seeded replay
+simulator, and can even drive your local Ollama model through the compliance case live in the browser.
+
 ## Further Reading
 
 - [`REPRODUCIBILITY.md`](https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md) — exact environment, commands, disclosed caveats
