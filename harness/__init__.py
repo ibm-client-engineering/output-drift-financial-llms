@@ -17,6 +17,7 @@ Regulatory Framework:
     - GAAP ASC 450-20: 5% materiality threshold
 
 ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+ICLR 2026 FinAI: "Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness"
 """
 
 __version__ = "1.1.0"  # Regulatory compliance refactor
