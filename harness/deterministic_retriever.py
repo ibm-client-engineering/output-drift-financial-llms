@@ -6,7 +6,7 @@ This historical workshop module uses a fixed, documented ordering for SEC 10-K
 sections. The ordering is a benchmark design choice, not an SEC-prescribed
 priority or a compliance determination.
 
-SEC 10-K Disclosure Hierarchy (encoded in sorting):
+Workshop 10-K tie-break order (encoded in sorting):
     1. Risk Factors (Item 1A) - First in the benchmark tie-break order
     2. MD&A (Item 7) - Second in the benchmark tie-break order
     3. Financial Statements (Item 8) - Quantitative disclosures
@@ -72,38 +72,38 @@ _FROZEN_STOP_WORDS = frozenset({
 
 
 # =============================================================================
-# SEC 10-K DISCLOSURE PRECEDENCE (Regulation S-K Encoding)
+# HISTORICAL 10-K SECTION TIE-BREAK ORDER
 # =============================================================================
 
-# SEC Regulation S-K defines the structure of 10-K filings. This mapping encodes
-# the regulatory importance of each section for retrieval precedence.
+# This hand-authored workshop mapping recognizes common 10-K section labels and
+# supplies a stable tie-break order. It is not an SEC ranking of importance.
 # Lower numbers = higher precedence (retrieved first when scores tie)
 SEC_10K_SECTION_PRECEDENCE: Dict[str, int] = {
-    # Item 1A - Risk Factors: Highest priority per SEC guidance on risk disclosure
+    # Item 1A - Risk Factors: first in the workshop tie-break order
     "risk_factors": 1,
     "risk factors": 1,
     "item 1a": 1,
 
-    # Item 7 - MD&A: Critical for understanding financial condition
+    # Item 7 - MD&A
     "md&a": 2,
     "management discussion": 2,
     "management's discussion": 2,
     "item 7": 2,
 
-    # Item 8 - Financial Statements: Core quantitative disclosures
+    # Item 8 - Financial Statements
     "financial statements": 3,
     "consolidated statements": 3,
     "item 8": 3,
 
-    # Item 3 - Legal Proceedings: Material litigation disclosures
+    # Item 3 - Legal Proceedings
     "legal proceedings": 4,
     "item 3": 4,
 
-    # Item 1 - Business Description: Company overview
+    # Item 1 - Business Description
     "business": 5,
     "item 1": 5,
 
-    # Item 5 - Market Information: Stock and dividend data
+    # Item 5 - Market Information
     "market": 6,
     "item 5": 6,
 
@@ -117,10 +117,10 @@ FSB_IDENTITY_REQUIREMENT: float = 1.0
 
 class DeterministicRetriever:
     """
-    Deterministic retrieval with a documented SEC-section tie-break order.
+    Deterministic retrieval with a documented 10-K-section tie-break order.
 
-    This retriever implements finance-specific ordering that encodes SEC 10-K
-    document structure. The sorting ensures:
+    This retriever implements a finance-specific workshop order over common
+    10-K sections. The sorting ensures:
 
     1. Higher relevance scores sort first (standard retrieval)
     2. The benchmark's section order breaks ties
@@ -128,7 +128,7 @@ class DeterministicRetriever:
 
     Key features:
     - Deterministic chunking with semantic boundary preservation
-    - SEC disclosure precedence encoding (not just tiebreaking)
+    - Explicit, inspectable section tie-breaking
     - Immutable snippet IDs using content-based hashing
     - Company-aware filtering for multi-entity queries
     """
@@ -211,17 +211,16 @@ class DeterministicRetriever:
 
     def _get_sec_section_precedence(self, text: str) -> int:
         """
-        Determine SEC 10-K section precedence from snippet content.
+        Determine the workshop's 10-K section tie-break value.
 
-        Per SEC Regulation S-K, different sections of 10-K filings have varying
-        regulatory importance. This method classifies snippets to enable
-        precedence-aware retrieval ordering.
+        This method classifies snippets using a hand-authored benchmark order.
+        It does not encode an SEC hierarchy or a legal importance judgment.
 
         Args:
             text: Snippet text content
 
         Returns:
-            Precedence score (lower = higher priority per SEC hierarchy)
+            Tie-break value (lower sorts first)
         """
         text_lower = text.lower()
         for section_key, precedence in SEC_10K_SECTION_PRECEDENCE.items():
@@ -231,7 +230,7 @@ class DeterministicRetriever:
 
     def retrieve(self, query: str, k: int = 5) -> List[Tuple[str, str, Dict[str, Any]]]:
         """
-        Retrieve top-k snippets with SEC disclosure precedence encoding.
+        Retrieve top-k snippets with a stable 10-K-section tie-break.
 
         The multi-key sort produces a stable order within the pinned benchmark
         environment.
@@ -241,15 +240,15 @@ class DeterministicRetriever:
             2. Benchmark section precedence (ascending)
             3. Snippet ID (ascending) - Deterministic tiebreaking
 
-        The SEC precedence encoding ensures that when multiple snippets have
-        equal relevance scores, the documented section order resolves the tie.
+        When multiple snippets have equal relevance scores, the documented
+        workshop section order resolves the tie.
 
         Args:
             query: Search query
             k: Number of snippets to return
 
         Returns:
-            List of (snippet_id, text, metadata) tuples sorted per SEC precedence
+            List of (snippet_id, text, metadata) tuples in benchmark sort order
         """
         if not self.snippets:
             return []
@@ -260,21 +259,21 @@ class DeterministicRetriever:
         # Compute TF-IDF similarities
         similarities = (self.tfidf_matrix @ query_vec.T).toarray().ravel()
 
-        # Create scored snippets with SEC precedence metadata
+        # Create scored snippets with workshop tie-break metadata
         scored_snippets = []
         for i in range(len(self.snippets)):
             snippet_id, text, meta = self.snippets[i]
             sec_precedence = self._get_sec_section_precedence(text)
             scored_snippets.append((
                 similarities[i],      # TF-IDF score
-                sec_precedence,       # SEC disclosure hierarchy
+                sec_precedence,       # Workshop section tie-break
                 snippet_id,           # Deterministic tiebreaker
                 self.snippets[i]      # Full snippet tuple
             ))
 
         # BENCHMARK SORT ORDER:
         # 1. Similarity (descending) - Most relevant first
-        # 2. SEC precedence (ascending) - Risk Factors > MD&A > Other
+        # 2. Workshop section order (ascending)
         # 3. Snippet ID (ascending) - Deterministic final ordering
         scored_snippets.sort(key=lambda x: (-x[0], x[1], x[2]))
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Production Load Testing for LLM Output Drift Framework
+Load-testing scaffold for the LLM Output Drift Framework
 Implements closed-loop and open-loop load patterns with financial-specific traffic models.
 
 Key Metrics:
@@ -546,12 +546,13 @@ def calculate_metrics(requests: List[LoadRequest]) -> LoadMetrics:
         if edit_distances:
             metrics.mean_edit_distance = np.mean(edit_distances)
 
-    # SLO violations
-    # Latency SLO: p99 ≤ 5 seconds under 4x load
+    # Illustrative workshop alert profiles. These defaults are not production
+    # SLOs; operators must supply requirements for the intended workload.
+    # Latency alert: p99 > 5 seconds under 4x load
     if first.load_level >= 4 and metrics.p99_latency_ms > 5000:
         metrics.latency_slo_violations = 1
 
-    # Determinism SLO: drift ≤1% at T=0.0
+    # Repeatability alert: identity rate <99% at T=0.0
     if first.temperature == 0.0 and metrics.identity_rate < 0.99:
         metrics.determinism_slo_violations = 1
 
@@ -735,7 +736,7 @@ async def run_open_loop_test(
 
 async def main():
     parser = argparse.ArgumentParser(
-        description="Production load testing for LLM drift framework"
+        description="Configurable load-testing scaffold for the LLM drift framework"
     )
     parser.add_argument(
         "--mode",
@@ -1035,21 +1036,21 @@ async def main():
     print(f"Tasks tested: {len(tasks)}")
     print(f"Load levels tested: {len(load_levels)}")
 
-    # SLO compliance summary
+    # Illustrative workshop alert summary
     determinism_violations = sum(m.determinism_slo_violations for m in all_metrics)
     latency_violations = sum(m.latency_slo_violations for m in all_metrics)
 
-    print(f"\nSLO Compliance:")
-    print(f"  Determinism violations: {determinism_violations}/{len(all_metrics)}")
-    print(f"  Latency violations: {latency_violations}/{len(all_metrics)}")
+    print(f"\nWorkshop Alert Profile:")
+    print(f"  Repeatability alerts: {determinism_violations}/{len(all_metrics)}")
+    print(f"  Latency alerts: {latency_violations}/{len(all_metrics)}")
 
     if total_skipped > 0 and args.strict_models:
         print(f"\n⚠️  {total_skipped} model(s) skipped due to lack of provider support")
         print(f"    Use --print-supported to see available models")
     elif determinism_violations == 0 and latency_violations == 0:
-        print("\n✅ All SLO requirements met!")
+        print("\n✅ No workshop-profile alerts triggered")
     else:
-        print("\n⚠️  Some SLO violations detected - review results")
+        print("\n⚠️  Workshop-profile alerts triggered - review results")
 
     # Exit with non-zero if any models were skipped in strict mode
     if total_skipped > 0 and args.strict_models:

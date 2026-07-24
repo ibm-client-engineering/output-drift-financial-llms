@@ -19,7 +19,7 @@ By the end of this lab, you will:
 - Understand what output drift is and how it differs from data drift
 - Learn why temperature=0.0 doesn't guarantee determinism
 - See real examples of drift in financial tasks
-- Understand the regulatory implications for financial services
+- Understand the governance and control implications for financial services
 - Know which tasks are most susceptible to drift
 
 ## What is Output Drift?
@@ -57,8 +57,11 @@ Run 2 (temp=0.0): "DENY - Moderate risk, recommend manual review"
 Run 3 (temp=0.0): "APPROVE with conditions - Reduce credit limit to $10K"
 ```
 
-!!! danger "Regulatory Risk"
-    Inconsistent decisions can violate fair lending laws (ECOA, FCRA) and lead to:
+!!! danger "Control Risk"
+    Inconsistent decisions in a credit workflow call for fairness, accuracy,
+    policy, and legal review. Repeatability evidence alone does not establish a
+    violation of ECOA, FCRA, or another requirement. Potential consequences of
+    a poorly controlled workflow include:
 
     - Discrimination claims
     - Regulatory fines
@@ -87,8 +90,11 @@ Run 2: "Insufficient information to determine. Request additional details."
 Run 3: "No, transaction appears routine"
 ```
 
-!!! warning "Compliance Failure"
-    Missed Suspicious Activity Reports (SARs) can result in:
+!!! warning "Review Required"
+    A missed required Suspicious Activity Report (SAR) can have serious
+    consequences, but these three model responses do not establish whether a
+    filing was required. Reportability must be determined from the full facts
+    and the applicable control process. Potential consequences can include:
 
     - Multi-million dollar fines
     - Criminal liability
@@ -115,20 +121,22 @@ does not establish a general relationship between model size and repeatability.
 !!! note "Understanding Statistical Notation"
     Throughout this workshop, we report **95% Confidence Intervals (CI)** for our findings. For example, "12.5% [CI: 3.5–36.0%]" means we measured 12.5% consistency, but the true value likely falls between 3.5% and 36.0%.
 
-    All Tier 1 vs Tier 3 comparisons showed 𝑝 < 0.0001, meaning these differences are highly statistically significant and not due to chance.
+    In the historical analysis, the reported Tier 1 versus Tier 3 tests had
+    𝑝 < 0.0001 under their stated null model. That result does not identify the
+    cause of the difference or generalize it beyond the compared configurations.
 
 ### Drift by Task Type (Temperature = 0.0)
 
-| Task | Consistency | Why? |
-|------|-------------|------|
-| SQL Generation | 100% | Structured output, deterministic syntax |
-| Summarization | 100% | Well-defined task, narrow output space |
-| RAG (Text-to-SQL) | 93.75% | Retrieval adds complexity |
-| RAG (General) | 75-87.5% | Context-dependent, broader output space |
+| Task | Consistency | Observed context |
+|------|-------------|------------------|
+| SQL Generation | 100% | Structured output in the tested runs |
+| Summarization | 100% | Narrow output format in the tested runs |
+| RAG (Text-to-SQL) | 93.75% | Retrieval was part of the captured stack |
+| RAG (General) | 75-87.5% | Broader natural-language outputs |
 
 ### Impact of Temperature
 
-At **temperature = 0.2** (common in production):
+At **temperature = 0.2** in the workshop:
 
 | Task | Consistency | Mean Drift | Factual Drift Range |
 |------|-------------|------------|---------------------|
@@ -137,7 +145,9 @@ At **temperature = 0.2** (common in production):
 | Summarization | 100% | 0.000 | 0.000 |
 
 !!! insight "Key Takeaway"
-    Even small temperature increases (0.0 → 0.2) can **double drift rates** for retrieval-augmented tasks!
+    In the tested retrieval-augmented condition, moving from temperature 0.0
+    to 0.2 materially reduced exact-output agreement. This bounded comparison
+    does not establish a universal temperature effect.
 
 ## Visualizing Drift
 
@@ -159,6 +169,9 @@ Mistral Medium  ████████████████      80%  △
 Tier 3 (120B+):
 GPT-OSS-120B    ██▌                   12.5% ❌
 ```
+
+The GPT-OSS-20B line is retained from a separate workshop check; it was not one
+of the five configurations in the 480-run matrix summarized above.
 
 ### Example: Drift Heat map (Temperature Sensitivity)
 
@@ -208,22 +221,22 @@ Run 2: "Q4 revenue was $550M according to the filing"
 Run 3: "Revenue not disclosed in available documents"
 ```
 
-**Impact**: Incorrect recommendations and potential downstream control failures
+**Impact**: Conflicting recommendations and potential downstream control failures
 
-## Regulatory Context
+## Governance Context
 
 ### Why Financial Services Care
 
-1. **Model Risk Management (SR 11-7)**: Federal Reserve requires "validation" of models
-2. **Fair Lending (ECOA)**: Consistent treatment of similar applicants
-3. **Explainability (GDPR, FCRA)**: "Right to explanation" for automated decisions
-4. **Audit Trail**: Must reproduce past decisions for regulatory review
+1. **Model risk**: Teams need evidence about limitations, changes, and repeatability
+2. **Fair lending**: Credit workflows require separate fairness, accuracy, and legal controls
+3. **Customer communications**: Explanations and adverse-action processes depend on the use case
+4. **Records and review**: Some regulated activities require records that support later reconstruction
 
 ### The Drift Challenge
 
-> "An AI system that produces different recommendations for identical inputs fails the fundamental requirement of **consistency** needed for regulatory compliance."
->
-> — Financial Services AI Governance Guidelines
+Repeatability does not prove compliance, but unexplained variation can make a
+system harder to validate, monitor, and reconstruct. This lab measures that
+variation so the responsible reviewers can ask better questions.
 
 ## Hands-On: Observe Drift in Action
 
@@ -284,7 +297,7 @@ Run 5: 2 + 2 = 4
 
 1. **Temperature=0.0 ≠ Determinism**: Even "deterministic" settings show drift
 2. **Task Matters**: Structured tasks (SQL) are more stable than open-ended tasks (RAG)
-3. **Regulatory Risk**: Inconsistency threatens compliance in regulated industries
+3. **Governance Relevance**: Inconsistency raises control and compliance questions in regulated workflows
 4. **Provider Variance**: Different models/providers show different drift characteristics
 5. **Measurement is Essential**: You can't manage what you don't measure
 
@@ -301,7 +314,9 @@ Run 5: 2 + 2 = 4
     **Answer**: RAG (Retrieval-Augmented Generation) tasks, especially at temperature > 0.0.
 
 ??? question "Question 4: Does setting temperature=0.0 eliminate drift?"
-    **Answer**: It depends on model size! Tier 1 models (7-20B) achieve 100% consistency at T=0.0, but Tier 3 models (120B+) show only 12.5% consistency even at T=0.0.
+    **Answer**: No guarantee follows from temperature alone. Some tested
+    configurations reached 100% agreement at T=0.0, while another reached
+    12.5%; the configurations also differed in model family and serving stack.
 
 ## Next Steps
 

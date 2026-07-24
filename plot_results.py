@@ -16,6 +16,11 @@ for p in candidates:
 else:
     raise FileNotFoundError("aggregate.csv not found in ./results/ or ./")
 
+# The current runner emits ``identity_rate`` as a percentage. Older workshop
+# artifacts used ``pct_identical``. Keep plotting compatible with both schemas.
+if "pct_identical" not in agg.columns and "identity_rate" in agg.columns:
+    agg["pct_identical"] = agg["identity_rate"]
+
 figs = root/"figs"
 figs.mkdir(exist_ok=True)
 
@@ -187,23 +192,27 @@ for (provider, model), dfpm in agg.groupby(["provider","model"]):
 
     # Extract identical_pct values
     identical_pcts = []
+    sample_sizes = []
     seed_labels = []
 
     for seed in seeds:
         seed_data = df_seed[df_seed["seed"] == seed]
         if not seed_data.empty:
             identical_pcts.append(seed_data["pct_identical"].iloc[0])
+            sample_sizes.append(int(seed_data["runs"].iloc[0]))
             seed_labels.append(str(int(seed)))
 
     if not identical_pcts:
         continue
 
-    # Calculate 95% Wilson confidence intervals (approximation)
-    n = 100  # Assuming percentage out of 100 trials
+    # Calculate descriptive 95% Wilson intervals using each aggregate row's
+    # actual run count. These do not imply population-level sampling.
     ci_lower = []
     ci_upper = []
 
-    for pct in identical_pcts:
+    for pct, n in zip(identical_pcts, sample_sizes):
+        if n <= 0:
+            raise ValueError("Seed-sweep aggregate contains a non-positive run count")
         p = pct / 100.0
         # Wilson interval approximation
         z = 1.96  # 95% CI

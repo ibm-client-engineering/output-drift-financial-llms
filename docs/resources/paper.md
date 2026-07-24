@@ -202,14 +202,17 @@ Validates consistency across deployment environments:
   tolerance (±5% in the example; not a universal GAAP threshold)
 - **Benefit**: Measure behavior before and after a deployment change
 
-### 3. Bi-Temporal Audit Trails
+### 3. Replay Records
 
 JSONL format capturing:
 
 - Input prompt + response hashes (SHA-256)
 - Model parameters (temperature, seed, version)
-- Compliance metrics (schema validity, citation accuracy)
-- Regulatory mappings (SR 11-7, ECOA, FCRA)
+- Descriptive checks (schema validity, source-reference matching)
+- Workshop metadata for later governance review
+
+The example contains a single event timestamp. It does not implement
+bi-temporal data modeling or determine compliance with a named rule.
 
 ---
 

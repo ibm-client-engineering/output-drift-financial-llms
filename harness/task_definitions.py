@@ -7,8 +7,8 @@ compliance determinations. Names retained for backward compatibility are noted
 where they overstate the underlying measurement.
 
 Includes:
-- RAG Q&A over SEC filings with citation validation (SEC Rule 10b-5 compliance)
-- Policy-bounded JSON summarization with schema constraints (FSB consistency)
+- RAG Q&A over SEC filings with source-reference matching
+- Policy-bounded JSON summarization with schema constraints
 - Text-to-SQL with a configurable numeric tolerance
 
 Any mapping from these measurements to a legal or policy obligation must be
@@ -33,14 +33,12 @@ DEFAULT_NUMERIC_TOLERANCE: float = 0.05
 # Deprecated compatibility alias. Do not interpret this name as legal guidance.
 GAAP_MATERIALITY_THRESHOLD: float = DEFAULT_NUMERIC_TOLERANCE
 
-# SEC Citation Accuracy Requirement (Rule 10b-5)
-# AI systems generating content with SEC filing citations must achieve high
-# accuracy to avoid anti-fraud violations. Hallucinated citations are prohibited.
+# Historical workshop source-reference target. This checks whether extracted
+# identifiers occur in the supplied source list; it is not a legal threshold.
 SEC_CITATION_ACCURACY_MINIMUM: float = 0.95  # 95% minimum citation validity
 
-# FSB Consistency Requirement (BCBS-239 Principle 6)
-# Identical inputs must produce identical outputs for regulatory reporting.
-# This is stricter than generic ML reproducibility requirements.
+# Historical workshop exact-output target. BCBS 239 does not prescribe
+# identical LLM outputs.
 FSB_IDENTITY_RATE_TARGET: float = 1.0  # 100% identity at T=0.0
 
 
@@ -187,33 +185,26 @@ def validate_citations(
     sec_accuracy_threshold: float = SEC_CITATION_ACCURACY_MINIMUM
 ) -> Dict[str, Any]:
     """
-    Validate citation accuracy per SEC Rule 10b-5 anti-fraud requirements.
+    Compare extracted citation identifiers with the supplied source list.
 
-    AI systems generating content with SEC filing citations must accurately
-    reference actual provided documents. Fabricated or "hallucinated" citations
-    may constitute a violation of anti-fraud provisions under SEC Rule 10b-5.
-
-    Regulatory Basis:
-        - SEC Rule 10b-5: Prohibition against manipulative and deceptive practices
-        - SEC Rule 17a-4: Record retention requiring accurate source attribution
-        - FSB Principles: Traceability requirements for AI-generated financial content
-
-    The citation accuracy threshold (95%) is stricter than generic RAG evaluation
-    because false citations in financial contexts have regulatory consequences.
+    The 95% default is a historical workshop setting. Identifier matching does
+    not establish factual grounding, legal compliance, or whether a record must
+    be retained.
 
     Args:
         citations: List of cited sources extracted from AI output
         available_sources: List of valid source document identifiers
-        sec_accuracy_threshold: Minimum accuracy for SEC compliance (default: 95%)
+        sec_accuracy_threshold: Configured source-match threshold (default: 95%)
 
     Returns:
         {
             "valid_citations": List[str],
             "invalid_citations": List[str],
             "citation_accuracy": float,  # 0.0-1.0
-            "sec_compliant": bool,  # Meets SEC accuracy threshold
+            "sec_compliant": bool,  # Legacy alias for passed_profile
             "regulatory_threshold": float,
-            "regulatory_basis": str
+            "regulatory_basis": str,
+            "interpretation": str
         }
     """
     # Normalize available sources (handle with/without .txt)
@@ -237,7 +228,7 @@ def validate_citations(
     # Calculate citation accuracy
     citation_accuracy = len(valid_citations) / len(citations) if citations else 1.0
 
-    # SEC compliance check: accuracy must meet or exceed threshold
+    # Historical compatibility field: whether the source-match profile passed.
     sec_compliant = citation_accuracy >= sec_accuracy_threshold
 
     return {
@@ -245,8 +236,13 @@ def validate_citations(
         "invalid_citations": invalid_citations,
         "citation_accuracy": citation_accuracy,
         "sec_compliant": sec_compliant,
+        "passed_profile": sec_compliant,
         "regulatory_threshold": sec_accuracy_threshold,
-        "regulatory_basis": "SEC Rule 10b-5; SEC Rule 17a-4"
+        "regulatory_basis": "Historical workshop source-reference profile",
+        "interpretation": (
+            "Illustrative identifier-match result; not factual, legal, or "
+            "regulatory compliance"
+        ),
     }
 
 

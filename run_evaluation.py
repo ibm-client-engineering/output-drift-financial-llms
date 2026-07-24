@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 LLM Output Drift Evaluation Framework
-AI4F Workshop 2025: Financial AI Compliance
+AI4F Workshop 2025: Financial AI Repeatability
 
 Experiment runner for evaluating deterministic behavior of LLMs across:
   1) RAG Q&A over SEC filings with citation validation
@@ -19,7 +19,7 @@ Metrics:
 Outputs:
   - results/summary.csv      (per-run data)
   - results/aggregate.csv    (grouped statistics)
-  - traces/*.jsonl           (full audit trails)
+  - traces/*.jsonl           (per-run trace records)
 
 Usage:
   # Basic evaluation with Ollama
@@ -385,11 +385,40 @@ def now_ms() -> int:
     return int(time.time() * 1000)
 
 
-def write_trace(filename: str, recs: List[Dict[str, Any]]):
-    """Write audit trail records to JSONL."""
-    with open(TRACES_DIR / filename, "a", encoding="utf-8") as f:
-        for r in recs:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+def trace_filename_for_condition(
+    provider: str,
+    model: str,
+    temperature: float,
+    top_p: float,
+    seed: Optional[int],
+    stream: bool,
+    concurrency: int,
+) -> str:
+    """Return the stable trace filename for one declared condition."""
+    return (
+        f"trace_{provider}_{model.replace('/','_')}_t{temperature}_tp{top_p}"
+        f"_s{seed}_str{stream}_c{concurrency}.jsonl"
+    )
+
+
+def write_trace(
+    filename: str,
+    recs: List[Dict[str, Any]],
+    *,
+    overwrite: bool = False,
+) -> None:
+    """Write one condition trace without silently mixing separate runs."""
+    trace_path = TRACES_DIR / filename
+    mode = "w" if overwrite else "x"
+    try:
+        with open(trace_path, mode, encoding="utf-8") as f:
+            for r in recs:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    except FileExistsError as exc:
+        raise FileExistsError(
+            f"Trace already exists: {trace_path}. Choose a new --output "
+            "directory or pass --overwrite to replace the complete condition."
+        ) from exc
 
 
 # ----------------------------- SQLite DB -------------------------------------
@@ -602,6 +631,7 @@ async def run_condition(
                 "model": cfg.model,
                 "temp": cfg.temperature,
                 "conc": cfg.concurrency,
+                "run_index": run_idx,
                 "prompt_id": pid,
                 "prompt": prompt_text,
                 **rec
@@ -622,7 +652,7 @@ async def run_condition(
         ref_cits = set(runs[0].get("citations", []))
         ref_dec = runs[0].get("decision_ok", None)
 
-        for r in runs:
+        for run_index, r in enumerate(runs):
             drift = norm_lev(ref, r["output"])
 
             # Factual drift (citation changes)
@@ -647,7 +677,10 @@ async def run_condition(
                 "seed": cfg.seed,
                 "stream": cfg.stream,
                 "concurrency": cfg.concurrency,
-                "run_id": f"{pid}_{cfg.provider}_{cfg.model.replace('/', '_')}_t{cfg.temperature}_c{cfg.concurrency}_{runs.index(r)}",
+                "run_id": (
+                    f"{pid}_{cfg.provider}_{cfg.model.replace('/', '_')}"
+                    f"_t{cfg.temperature}_c{cfg.concurrency}_{run_index}"
+                ),
                 "drift_norm_lev": drift,
                 "factual_drift": fact_drift,
                 "schema_violation": schema_v,
@@ -761,6 +794,14 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
         default=None,
         help="Output directory for traces (default: traces/)"
     )
+    parser.add_argument(
+        "--overwrite",
+        action="store_true",
+        help=(
+            "Replace complete condition trace files that already exist. "
+            "Without this flag, existing files fail closed before provider calls."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -783,7 +824,7 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
 
     print("=" * 70)
     print("LLM Output Drift Evaluation Framework")
-    print("AI4F Workshop 2025: Financial AI Compliance")
+    print("AI4F Workshop 2025: Financial AI Repeatability")
     print("=" * 70)
     print(f"Models: {', '.join(models)}")
     print(f"Providers: {', '.join(providers)}")
@@ -885,6 +926,33 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
     # Build prompts
     prompts = build_prompts()
 
+    # Resolve every condition path before making provider calls. A repeated
+    # invocation must not append new rows to an old condition while overwriting
+    # the summary CSV.
+    planned_trace_paths = [
+        TRACES_DIR / trace_filename_for_condition(
+            prov.name, model, temp, top_p, seed, stream, conc
+        )
+        for prov, model, temp, top_p, seed, conc in itertools.product(
+            prov_objs, models, temps, top_ps, seeds, concs
+        )
+    ]
+    if len(planned_trace_paths) != len(set(planned_trace_paths)):
+        raise ValueError(
+            "Duplicate experiment conditions resolve to the same trace file; "
+            "deduplicate the CLI argument lists."
+        )
+    existing_trace_paths = [path for path in planned_trace_paths if path.exists()]
+    if existing_trace_paths and not args.overwrite:
+        preview = "\n".join(f"  - {path}" for path in existing_trace_paths[:5])
+        remainder = len(existing_trace_paths) - min(len(existing_trace_paths), 5)
+        suffix = f"\n  ... and {remainder} more" if remainder else ""
+        raise FileExistsError(
+            "Existing condition traces found; no provider calls were made. "
+            "Choose a new --output directory or pass --overwrite to replace "
+            f"complete condition files:\n{preview}{suffix}"
+        )
+
     # Run experiments
     results_rows: List[Dict[str, Any]] = []
     for prov, model, temp, top_p, seed, conc in itertools.product(
@@ -918,8 +986,10 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
             await run_condition("sql", prompts["sql"], cfg, prov, None, dbi, results_rows, traces)
 
         # Write trace file
-        trace_filename = f"trace_{prov.name}_{model.replace('/','_')}_t{temp}_tp{top_p}_s{seed}_str{stream}_c{conc}.jsonl"
-        write_trace(trace_filename, traces)
+        trace_filename = trace_filename_for_condition(
+            prov.name, model, temp, top_p, seed, stream, conc
+        )
+        write_trace(trace_filename, traces, overwrite=args.overwrite)
         print(f"  ✓ Wrote {len(traces)} trace records")
 
     if not results_rows:

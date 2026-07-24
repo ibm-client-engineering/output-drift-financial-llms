@@ -13,14 +13,14 @@ By the end of this lab, you will:
 - Add custom tasks to `run_evaluation.py`
 - Modify existing prompts for your domain
 - Integrate the framework into CI/CD pipelines
-- Create custom compliance validators
-- Export results for regulatory reporting
+- Create custom control-rule scaffolds
+- Export results for evaluation and review
 
 ## Prerequisites
 
 - Completed [Lab 5: Cross-Provider Testing](../lab-5/README.md)
 - Understanding of JSON structure
-- Familiarity with your organization's compliance requirements
+- Familiarity with your organization's approved control requirements
 
 ## Framework Architecture
 
@@ -57,7 +57,7 @@ grep -A 30 "def build_prompts" run_evaluation.py
 Each task uses:
 - **Task formatting functions** in `harness/task_definitions.py`
 - **System prompts** built into the formatting functions
-- **temperature**: 0.0 for determinism
+- **temperature**: 0.0 to minimize configured sampling (not a determinism guarantee)
 - **seed**: 42 for reproducibility
 
 ## Step 2: Add a Custom Task - Credit Risk Analysis
@@ -81,7 +81,7 @@ To add a custom task, define a new task configuration. Here's an example credit 
         },
         "question": "Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.",
         "expected_risk": "LOW",
-        "compliance_requirements": ["ECOA", "FCRA"]
+        "review_references": ["ECOA", "FCRA"]
       },
       {
         "id": "cr2",
@@ -93,10 +93,10 @@ To add a custom task, define a new task configuration. Here's an example credit 
         },
         "question": "Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.",
         "expected_risk": "MEDIUM",
-        "compliance_requirements": ["ECOA", "FCRA"]
+        "review_references": ["ECOA", "FCRA"]
       }
     ],
-    "system_prompt": "You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence. Be consistent: identical inputs must always produce identical outputs for regulatory compliance.",
+    "system_prompt": "Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence. The repeated-run evaluation will measure whether identical inputs produce identical outputs.",
     "output_schema": {
       "type": "object",
       "properties": {
@@ -120,12 +120,14 @@ Create `custom_credit_risk.py`:
 """
 Custom credit risk classification task with drift testing.
 """
-import json
+from collections import Counter
+
 from openai import OpenAI
 
 # Define custom task configuration inline
 credit_risk_task = {
-    "system_prompt": "You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence.",
+    "system_prompt": "Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence.",
+    "question": "Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.",
     "temperature": 0.0,
     "seed": 42
 }
@@ -140,7 +142,7 @@ def run_credit_risk_assessment(profile: dict, model: str = "qwen2.5:7b-instruct"
 - Debt-to-Income Ratio: {profile['debt_to_income']:.0%}
 - Employment Years: {profile['employment_years']}
 
-{credit_risk_task['prompts'][0]['question']}"""
+{credit_risk_task['question']}"""
 
     results = []
     for i in range(1, n_runs + 1):
@@ -157,9 +159,11 @@ def run_credit_risk_assessment(profile: dict, model: str = "qwen2.5:7b-instruct"
         results.append(output)
         print(f"Run {i}: {output}")
 
-    # Check consistency
-    unique = len(set(results))
-    consistency = (1 / unique) * 100 if unique > 0 else 100.0
+    # Calculate modal exact-output agreement.
+    counts = Counter(results)
+    unique = len(counts)
+    modal_count = counts.most_common(1)[0][1]
+    consistency = modal_count / len(results) * 100
 
     print(f"\n📊 Results:")
     print(f"  Total runs: {n_runs}")
@@ -169,8 +173,13 @@ def run_credit_risk_assessment(profile: dict, model: str = "qwen2.5:7b-instruct"
 
     return results
 
-# Test with the first profile
-profile1 = credit_risk_task['prompts'][0]['profile']
+# Test with a synthetic profile
+profile1 = {
+    "credit_score": 680,
+    "income": 75000,
+    "debt_to_income": 0.20,
+    "employment_years": 5,
+}
 print("🧪 Testing Credit Risk Assessment\n")
 results = run_credit_risk_assessment(profile1, n_runs=5)
 ```
@@ -209,13 +218,25 @@ To use RAG with your own documents:
 mkdir -p data/custom_docs
 ```
 
-2. **Update `deterministic_retriever.py`** to point to your folder:
+2. **Build the retriever from your text files**:
 
 ```python
+from pathlib import Path
+
 from harness.deterministic_retriever import DeterministicRetriever
 
+document_paths = sorted(Path("data/custom_docs").glob("*.txt"))
+documents = [
+    {
+        "text": path.read_text(encoding="utf-8"),
+        "source": path.stem,
+        "meta": {"filepath": str(path)},
+    }
+    for path in document_paths
+]
+
 retriever = DeterministicRetriever(
-    corpus_path="data/custom_docs/",  # Your documents here
+    docs=documents,
     chunk_size=512,
     overlap=50
 )
@@ -225,9 +246,9 @@ retriever = DeterministicRetriever(
 
 ```python
 query = "What is our company's annual revenue?"
-results = retriever.retrieve(query, top_k=5)
-for i, chunk in enumerate(results, 1):
-    print(f"Chunk {i}: {chunk['text'][:100]}...")
+results = retriever.retrieve(query, k=5)
+for i, (snippet_id, text, metadata) in enumerate(results, 1):
+    print(f"Chunk {i} ({snippet_id}): {text[:100]}...")
 ```
 
 ## Step 5: CI/CD Integration
@@ -267,35 +288,54 @@ jobs:
           WATSONX_PROJECT_ID: ${{ secrets.WATSONX_PROJECT_ID }}
         run: |
           python run_evaluation.py \
-            --model ibm/granite-3-8b-instruct \
-            --temperature 0.0 \
+            --providers watsonx \
+            --models ibm/granite-3-8b-instruct \
+            --temperatures 0.0 \
             --concurrency 16 \
-            --task sql \
-            --output traces/ci_test.jsonl
+            --tasks sql \
+            --repeats 16 \
+            --output traces/ci_test
 
       - name: Validate consistency
         run: |
-          python -c "
+          python - <<'PY'
+          from collections import defaultdict
           import json
-          with open('traces/ci_test.jsonl') as f:
-              data = [json.loads(line) for line in f]
-          unique = len(set(d['response_hash'] for d in data))
-          assert unique == 1, f'Drift detected: {unique} unique outputs'
-          print('✅ Consistency check passed')
-          "
+          from pathlib import Path
 
-      - name: Upload audit trail
-        uses: actions/upload-artifact@v3
+          trace_files = list(Path("traces/ci_test").glob("trace_*.jsonl"))
+          assert trace_files, "No trace files were produced"
+
+          groups = defaultdict(list)
+          for trace_file in trace_files:
+              with trace_file.open() as handle:
+                  for line in handle:
+                      record = json.loads(line)
+                      groups[(record["task"], record["prompt_id"])].append(
+                          record["output"]
+                      )
+
+          varied = {
+              group: len(set(outputs))
+              for group, outputs in groups.items()
+              if len(set(outputs)) != 1
+          }
+          assert not varied, f"Exact-output variation detected: {varied}"
+          print("✅ All captured replay groups had exact output agreement")
+          PY
+
+      - name: Upload replay records
+        uses: actions/upload-artifact@v4
         with:
           name: drift-test-results
-          path: traces/ci_test.jsonl
+          path: traces/ci_test/
 ```
 
 This pipeline:
 - Runs on every PR and daily
-- Tests for drift with n=16
-- Fails CI if drift detected
-- Uploads audit trails as artifacts
+- Runs 16 repeats for each built-in SQL prompt
+- Applies an intentionally strict exact-output replay assertion
+- Uploads replay records as artifacts
 
 ## Step 6: Custom Control-Rule Scaffold
 
@@ -432,45 +472,78 @@ Run it:
 python custom_control_validator.py
 ```
 
-## Step 7: Export for Regulatory Reporting
+## Step 7: Export an Evaluation Report
 
-Generate compliance reports from audit trails:
+Generate a review report from replay records:
 
-**Create `generate_compliance_report.py`**:
+**Create `generate_evaluation_report.py`**:
 
 ```python
 #!/usr/bin/env python3
 """
-Generate compliance report from audit trails.
+Generate an evaluation report from replay records.
 """
 import json
-import pandas as pd
+from collections import Counter, defaultdict
 from datetime import datetime
+from pathlib import Path
+
+from rapidfuzz.distance import Levenshtein
 
 def generate_report(trace_file: str, output_format: str = "html"):
-    """Generate compliance report from JSONL audit trail."""
+    """Generate a descriptive replay report from a JSONL trace."""
 
-    # Load audit trail
+    # Load replay records
     with open(trace_file) as f:
         traces = [json.loads(line) for line in f]
 
     # Calculate metrics
-    total_runs = len(traces)
-    unique_outputs = len(set(t['response_hash'] for t in traces))
-    consistency = (unique_outputs == 1)
-    consistency_pct = (1 / unique_outputs * 100) if unique_outputs > 0 else 100.0
+    if not traces:
+        raise ValueError("Trace file contains no records")
 
-    # Compliance metrics
-    schema_violations = sum(not t['compliance_metrics']['schema_valid'] for t in traces)
-    decision_flips = sum(t['compliance_metrics']['decision_flip'] for t in traces)
-    mean_drift = sum(t['compliance_metrics']['factual_drift'] for t in traces) / total_runs
+    total_runs = len(traces)
+    groups = defaultdict(list)
+    for trace in traces:
+        groups[(trace["task"], trace["prompt_id"])].append(trace)
+
+    modal_count = sum(
+        Counter(record["output"] for record in group).most_common(1)[0][1]
+        for group in groups.values()
+    )
+    consistency_pct = modal_count / total_runs * 100
+    consistency = all(
+        len({record["output"] for record in group}) == 1
+        for group in groups.values()
+    )
+
+    # Descriptive review metrics
+    schema_violations = sum(
+        bool(trace.get("schema_violation", False)) for trace in traces
+    )
+    decision_flips = 0
+    distances = []
+    for group in groups.values():
+        reference_output = group[0]["output"]
+        reference_decision = group[0].get("decision_ok")
+        for trace in group:
+            distances.append(
+                Levenshtein.normalized_distance(
+                    reference_output, trace["output"]
+                )
+            )
+            if (
+                reference_decision is not None
+                and trace.get("decision_ok") != reference_decision
+            ):
+                decision_flips += 1
+    mean_drift = sum(distances) / len(distances)
 
     # Generate HTML report
     html = f"""
     <!DOCTYPE html>
     <html>
     <head>
-        <title>LLM Compliance Report</title>
+        <title>LLM Replay Evaluation Report</title>
         <style>
             body {{ font-family: Arial, sans-serif; margin: 40px; }}
             h1 {{ color: #0f62fe; }}
@@ -483,13 +556,14 @@ def generate_report(trace_file: str, output_format: str = "html"):
         </style>
     </head>
     <body>
-        <h1>LLM Output Drift Compliance Report</h1>
+        <h1>LLM Replay Evaluation Report</h1>
         <p><strong>Generated:</strong> {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
-        <p><strong>Audit Trail:</strong> {trace_file}</p>
+        <p><strong>Replay Record:</strong> {trace_file}</p>
 
         <h2>Executive Summary</h2>
         <div class="metric {'pass' if consistency else 'fail'}">
-            <strong>Consistency:</strong> {consistency_pct:.1f}% ({unique_outputs} unique output{'s' if unique_outputs != 1 else ''})
+            <strong>Modal exact-output agreement:</strong> {consistency_pct:.1f}%
+            across {len(groups)} replay group{'s' if len(groups) != 1 else ''}
         </div>
         <div class="metric {'pass' if schema_violations == 0 else 'fail'}">
             <strong>Schema Violations:</strong> {schema_violations}
@@ -501,29 +575,33 @@ def generate_report(trace_file: str, output_format: str = "html"):
             <strong>Mean Drift:</strong> {mean_drift:.3f}
         </div>
 
-        <h2>Regulatory Compliance Status</h2>
+        <h2>Illustrative Review Signals</h2>
         <table>
             <tr>
-                <th>Requirement</th>
+                <th>Signal</th>
                 <th>Status</th>
                 <th>Evidence</th>
             </tr>
             <tr>
-                <td>SR 11-7 (Model Validation)</td>
+                <td>Exact output replay</td>
                 <td>{'✅ PASS' if consistency else '❌ FAIL'}</td>
-                <td>Deterministic behavior: {consistency_pct:.1f}%</td>
+                <td>Observed agreement: {consistency_pct:.1f}%</td>
             </tr>
             <tr>
-                <td>ECOA (Consistent Decisions)</td>
+                <td>No decision flips in this trace</td>
                 <td>{'✅ PASS' if decision_flips == 0 else '❌ FAIL'}</td>
                 <td>Decision flips: {decision_flips}</td>
             </tr>
             <tr>
-                <td>FSB (Output Consistency)</td>
+                <td>Illustrative normalized string-distance review line</td>
                 <td>{'✅ PASS' if mean_drift < 0.05 else '❌ FAIL'}</td>
                 <td>Mean drift: {mean_drift:.3f}</td>
             </tr>
         </table>
+
+        <p><strong>Interpretation:</strong> These signals summarize the captured
+        run. They do not determine correctness, safety, fairness, or regulatory
+        compliance.</p>
 
         <h2>Model Configuration</h2>
         <pre>{json.dumps(traces[0], indent=2)[:500]}...</pre>
@@ -532,40 +610,41 @@ def generate_report(trace_file: str, output_format: str = "html"):
     """
 
     # Save report
-    output_file = trace_file.replace('.jsonl', '_compliance_report.html')
+    output_file = trace_file.replace('.jsonl', '_evaluation_report.html')
     with open(output_file, 'w') as f:
         f.write(html)
 
-    print(f"✅ Compliance report generated: {output_file}")
+    print(f"✅ Evaluation report generated: {output_file}")
     return output_file
 
-# Generate report
-generate_report("traces/lab3_sql.jsonl")
+# Generate a report from the isolated Lab 3 run
+trace_file = next(Path("traces/lab3_multi").glob("trace_*.jsonl"))
+generate_report(str(trace_file))
 ```
 
 Run it:
 
 ```bash
-python generate_compliance_report.py
+python generate_evaluation_report.py
 ```
 
-Open the HTML report in your browser to see a formatted compliance report.
+Open the HTML report in your browser to see the formatted evaluation summary.
 
 ## Key Takeaways
 
 1. **Templates are JSON** - Easy to add custom tasks
 2. **Modular design** - Extend components independently
-3. **CI/CD ready** - Integrate into deployment pipelines
-4. **Custom validators** - Implement your regulatory requirements
-5. **Exportable reports** - Generate audit documentation
+3. **CI integration** - Run an explicitly chosen replay assertion in an existing pipeline
+4. **Custom rule scaffolds** - Encode organization-approved review rules
+5. **Exportable reports** - Generate descriptive replay documentation
 
 ## Best Practices for Extensions
 
-1. **Always test with n≥16** to detect drift
-2. **Use T=0.0 and explicit seeds** for determinism
-3. **Document compliance mappings** in audit trails
+1. **Choose replay count from the decision risk and precision needed**; n=16 is the workshop example, not a universal minimum
+2. **Record T=0.0 and explicit seeds when supported**, but do not treat them as determinism guarantees
+3. **Document control references as review metadata**, not automated compliance findings
 4. **Version your prompts** (metadata section)
-5. **Validate cross-provider** before production deployment
+5. **Requalify the intended provider stack** before relying on replay equivalence
 
 ## Quiz: Test Your Understanding
 
@@ -573,10 +652,14 @@ Open the HTML report in your browser to see a formatted compliance report.
     **Answer**: `run_evaluation.py` - add a new top-level key with task configuration.
 
 ??? question "What's the minimum number of runs recommended for drift testing?"
-    **Answer**: 16 (n=16), as used in the paper's methodology.
+    **Answer**: There is no universal minimum. This workshop uses n=16; a real
+    workflow should select replay count from risk, expected variation, cost,
+    and the precision needed for the decision.
 
 ??? question "How do you ensure determinism in custom tasks?"
-    **Answer**: Set `temperature: 0.0` and `seed: 42` in the template, and test consistency with multiple runs.
+    **Answer**: You cannot ensure it from temperature and seed alone. Pin the
+    full configuration, capture required channels, and measure repeatability
+    across comparable runs.
 
 ## Next Steps
 

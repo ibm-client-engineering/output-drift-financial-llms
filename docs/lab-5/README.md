@@ -2,7 +2,10 @@
 
 ## Overview
 
-In this lab, you'll validate output consistency between local (Ollama) and cloud (IBM watsonx.ai) deployments using the framework's `CrossProviderValidator`. This ensures your models produce reliable results regardless of deployment environment.
+In this lab, you'll compare outputs from local (Ollama) and cloud (IBM
+watsonx.ai) configurations using the framework's `CrossProviderValidator`.
+The comparison measures agreement in the captured examples; it does not
+establish provider-independent reliability.
 
 **Duration**: ~30 minutes
 
@@ -29,7 +32,7 @@ Financial institutions often need to:
 - **Migrate** between providers without changing behavior
 - **Redundancy** with failover to backup providers
 - **Vendor independence** to avoid lock-in
-- **Regulatory compliance** requiring reproducibility across environments
+- **Governance and review** when replay evidence changes across environments
 
 !!! warning "The Risk"
     A model that works locally but behaves differently in production (cloud)
@@ -120,7 +123,7 @@ similarity = 1.0 - distance
 print(f"  Similarity: {similarity:.1%}")
 
 if similarity >= 0.95:
-    print("\n✅ Cross-provider validation PASSED (≥95% similarity)")
+    print("\n✅ Observed similarity met the exercise's 95% review line")
 else:
     print(f"\n⚠️  Cross-provider drift detected: {similarity:.1%}")
 ```
@@ -146,16 +149,19 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 
 ============================================================
 🔍 Comparison:
-  Ollama length: 87 chars
-  watsonx length: 87 chars
+  Ollama length: 82 chars
+  watsonx length: 82 chars
   Exact match: True
   Similarity: 100.0%
 
-✅ Cross-provider validation PASSED (≥95% similarity)
+✅ Observed similarity met the exercise's 95% review line
 ```
 
 !!! success "Tier 1 Cross-Provider Consistency"
-    Both Granite-3-8B (watsonx) and Qwen2.5-7B (Ollama) produce **identical outputs**—enabling seamless migration between local and cloud deployments.
+    Granite-3-8B (watsonx) and Qwen2.5-7B (Ollama) produced **identical
+    outputs in this example**. A migration decision still requires replay of
+    the intended tasks plus correctness, path, cost, latency, and control
+    review.
 
 ## Step 3: Use the Framework's CrossProviderValidator
 
@@ -187,13 +193,18 @@ sql_outputs = {
 }
 
 # Validate SQL outputs
-result_sql = validator.validate(sql_outputs, task_type="sql")
+sql_results = {
+    "ollama": 125000.0,
+    "watsonx": 125000.0
+}
+result_sql = validator.validate(
+    sql_outputs, task_type="sql", sql_results=sql_results
+)
 
 print("\nSQL Generation Task")
 print("=" * 60)
-print(f"Consistent: {result_sql['consistent']}")
 print(f"Similarity: {result_sql['similarity_scores']}")
-print(f"Validation: {'PASS' if result_sql['consistent'] else 'FAIL'}")
+print(f"Numeric result checks: {result_sql['task_validation']['result_match']}")
 
 # Validate RAG outputs
 rag_outputs = {
@@ -211,9 +222,11 @@ result_rag = validator.validate(
 
 print("\nRAG Task")
 print("=" * 60)
-print(f"Consistent: {result_rag['consistent']}")
 print(f"Similarity: {result_rag['similarity_scores']}")
-print(f"Validation: {'PASS' if result_rag['consistent'] else 'MINOR DRIFT'}")
+print(
+    "Citation sets matched:",
+    result_rag["task_validation"]["citation_consistent"],
+)
 
 # Audit trail
 print("\nCross-Provider Audit Report")
@@ -250,7 +263,7 @@ def validate_numeric_tolerance(value1: float, value2: float, tolerance_pct: floa
     return diff_pct <= tolerance_pct
 
 # Test cases
-print(validate_numeric_tolerance(2.4, 2.5, tolerance_pct=5.0))  # True (4.2% diff)
+print(validate_numeric_tolerance(2.4, 2.5, tolerance_pct=5.0))  # True (4.0% diff)
 print(validate_numeric_tolerance(100, 110, tolerance_pct=5.0))  # False (9.1% diff)
 print(validate_numeric_tolerance(1000, 1040, tolerance_pct=5.0))  # True (3.8% diff)
 ```
@@ -260,9 +273,14 @@ print(validate_numeric_tolerance(1000, 1040, tolerance_pct=5.0))  # True (3.8% d
 - It is configurable rather than a compliance rule
 - Production tolerances should follow the task's approved control standard
 
+The standalone helper and `CrossProviderValidator` both use a symmetric
+max-denominator percentage, so reversing provider order does not change the
+numeric comparison.
+
 ## Step 5: Multi-Run Cross-Provider Test
 
-Test consistency across multiple runs (n=5):
+Compare five pairs of outputs collected separately from the two provider
+configurations:
 
 ```python
 #!/usr/bin/env python3
@@ -272,35 +290,54 @@ Multi-run cross-provider consistency test.
 from harness.cross_provider_validation import CrossProviderValidator
 
 validator = CrossProviderValidator(providers=["ollama", "watsonx"], tolerance_pct=5.0)
-prompt = "Generate SQL to find all customers with account balance > $100,000"
+
+# Collect these with the provider clients before comparison. They are expanded
+# here so the example remains runnable without unsupported validator kwargs.
+ollama_outputs = [
+    "SELECT customer_id, name, balance FROM accounts WHERE balance > 100000;"
+] * 5
+watsonx_outputs = [
+    "SELECT customer_id, name, balance FROM accounts WHERE balance > 100000;"
+] * 5
+ollama_results = [125000.0] * 5
+watsonx_results = [125000.0] * 5
 
 results = []
-for i in range(1, 6):
+for i, (ollama_output, watsonx_output) in enumerate(
+    zip(ollama_outputs, watsonx_outputs), start=1
+):
     result = validator.validate(
-        prompt=prompt,
+        outputs={"ollama": ollama_output, "watsonx": watsonx_output},
         task_type="sql",
-        model_ollama="qwen2.5:7b-instruct",
-        model_watsonx="ibm/granite-3-8b-instruct",
-        temperature=0.0,
-        seed=42
+        sql_results={
+            "ollama": ollama_results[i - 1],
+            "watsonx": watsonx_results[i - 1],
+        },
     )
-    results.append(result['consistent'])
-    print(f"Run {i}: {'✅ Consistent' if result['consistent'] else '❌ Inconsistent'}")
+    query_match = all(
+        score >= 0.95 for score in result["similarity_scores"].values()
+    )
+    numeric_match = all(
+        result["task_validation"]["result_match"].values()
+    )
+    pair_match = query_match and numeric_match
+    results.append(pair_match)
+    print(f"Pair {i}: {'✅ Match' if pair_match else '⚠️ Review'}")
 
 consistency_rate = sum(results) / len(results) * 100
-print(f"\nOverall consistency: {consistency_rate:.0f}%")
+print(f"\nObserved pair agreement: {consistency_rate:.0f}%")
 ```
 
 **Expected output:**
 
 ```
-Run 1: ✅ Consistent
-Run 2: ✅ Consistent
-Run 3: ✅ Consistent
-Run 4: ✅ Consistent
-Run 5: ✅ Consistent
+Pair 1: ✅ Match
+Pair 2: ✅ Match
+Pair 3: ✅ Match
+Pair 4: ✅ Match
+Pair 5: ✅ Match
 
-Overall consistency: 100%
+Observed pair agreement: 100%
 ```
 
 ## Step 6: Migration Decision Matrix
@@ -398,7 +435,7 @@ print("watsonx output:", repr(watsonx_output))
 2. **Tier 1 configurations** showed high agreement in the bounded workshop runs
 3. **The ±5% example** illustrates a configurable numeric tolerance
 4. **Framework's `CrossProviderValidator`** automates testing
-5. **Audit trails** document cross-provider equivalence
+5. **Replay records** document the compared outputs and observed agreement
 
 ## Quiz: Test Your Understanding
 
@@ -427,4 +464,6 @@ Now that you understand cross-provider validation:
 ---
 
 !!! success "Lab 5 Complete!"
-    You can now validate cross-provider consistency and make migration decisions with confidence! Ready to customize the framework? Move on to [Lab 6: Extending the Framework](../lab-6/README.md)!
+    You can now compare captured outputs across providers and identify where a
+    migration needs deeper review. Ready to customize the framework? Move on to
+    [Lab 6: Extending the Framework](../lab-6/README.md)!

@@ -2,7 +2,9 @@
 
 ## Overview
 
-In this lab, you'll run a complete drift evaluation experiment, just like the ones from the paper. You'll test different concurrency levels, temperatures, and task types to understand how these factors affect determinism.
+In this lab, you'll run a complete drift evaluation experiment, like the
+historical workshop study. You'll vary concurrency, temperature, and task type
+and observe how repeatability changes in the resulting runs.
 
 **Duration**: ~30 minutes
 
@@ -13,7 +15,7 @@ By the end of this lab, you will:
 - Run experiments with varying concurrency (1, 4, 16 runs)
 - Compare drift at temperature 0.0 vs 0.2
 - Understand how task types affect consistency
-- Analyze JSONL audit trails
+- Analyze JSONL replay records
 - Reproduce key findings from the paper
 
 ## Prerequisites
@@ -46,7 +48,8 @@ python run_evaluation.py \
   --temperatures 0.0 \
   --concurrency 1 \
   --tasks sql \
-  --repeats 1
+  --repeats 1 \
+  --output traces/lab3_step1
 ```
 
 **Expected output:**
@@ -73,7 +76,7 @@ Results:
   Runs completed: 1
   Schema valid: ✅ Yes
 
-Audit trail: traces/lab3_single.jsonl
+Replay record: traces/lab3_step1/trace_*.jsonl
 ✅ Single-run baseline complete!
 ```
 
@@ -90,7 +93,8 @@ python run_evaluation.py \
   --temperatures 0.0 \
   --concurrency 4 \
   --tasks sql \
-  --repeats 4
+  --repeats 4 \
+  --output traces/lab3_step2
 ```
 
 **Expected output:**
@@ -110,7 +114,7 @@ Unique responses: 1
 Response 1 (4 occurrences):
   "SELECT customer_name, account_balance FROM accounts WHERE account_balance > 100000"
 
-✅ Perfect consistency at n=4!
+✅ Exact output agreement at n=4!
 ```
 
 !!! success "Tier 1 Performance"
@@ -129,7 +133,8 @@ python run_evaluation.py \
   --temperatures 0.0 \
   --concurrency 16 \
   --tasks sql \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_step3
 ```
 
 **Expected output:**
@@ -149,10 +154,12 @@ Unique responses: 1
 Response 1 (16 occurrences):
   "SELECT customer_name, account_balance FROM accounts WHERE account_balance > 100000"
 
-✅ Perfect consistency at n=16!
+✅ Exact output agreement at n=16!
 ```
 
-**Key Finding**: Qwen2.5-7B achieves **100% consistency** at n=16, confirming Tier 1 classification.
+**Bounded result**: Qwen2.5-7B reached **100% consistency** across these 16
+runs, which meets the historical workshop's Tier 1 definition. Re-run the
+exact intended configuration before relying on that label elsewhere.
 
 ## Step 4: Temperature Sensitivity Test
 
@@ -165,7 +172,8 @@ python run_evaluation.py \
   --temperatures 0.2 \
   --concurrency 16 \
   --tasks sql \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_step4
 ```
 
 **Expected output (SQL task):**
@@ -179,11 +187,14 @@ Results:
   Mean Drift: 0.000
   Temperature: 0.2
 
-✅ SQL generation remains deterministic at T=0.2!
+✅ SQL outputs matched exactly in this T=0.2 run!
 ```
 
 !!! info "Structured Task Resilience"
-    SQL generation maintains 100% consistency even at T=0.2 because of its **structured output format** and **deterministic syntax**.
+    The SQL outputs reached 100% exact agreement at T=0.2 in the workshop
+    result. The structured format may constrain variation, but this single
+    comparison does not establish a causal explanation or guarantee future
+    replay.
 
 ## Step 5: RAG Task Comparison
 
@@ -196,7 +207,8 @@ python run_evaluation.py \
   --temperatures 0.0 \
   --concurrency 16 \
   --tasks rag \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_step5_t0
 ```
 
 **Expected output:**
@@ -221,7 +233,7 @@ Response 1 (15 occurrences):
 Response 2 (1 occurrence):
   "Citigroup reported net credit losses of $2.4B in 2023 (10-K filing, page 145)."
 
-✅ Minor syntactic drift, but factual consistency maintained!
+✅ The shown outputs differ in form while retaining the same displayed value and citation.
 ```
 
 !!! note "RAG vs SQL"
@@ -240,7 +252,8 @@ python run_evaluation.py \
   --temperatures 0.2 \
   --concurrency 16 \
   --tasks rag \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_step5_t02
 ```
 
 **Expected output (from paper findings):**
@@ -270,7 +283,8 @@ python run_evaluation.py \
   --temperatures 0.0 \
   --concurrency 16 \
   --tasks rag,summary,sql \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_multi
 ```
 
 **Summary script** to compare results:
@@ -278,24 +292,48 @@ python run_evaluation.py \
 Create `analyze_lab3.py`:
 
 ```python
+from collections import Counter, defaultdict
 import json
+from pathlib import Path
+
 import pandas as pd
+from rapidfuzz.distance import Levenshtein
 
 tasks = ["sql", "summary", "rag"]
 results = []
 
-for task in tasks:
-    with open(f"traces/lab3_{task}.jsonl") as f:
-        data = [json.loads(line) for line in f]
+trace_files = list(Path("traces/lab3_multi").glob("trace_*.jsonl"))
+if len(trace_files) != 1:
+    raise RuntimeError(f"Expected one trace file, found {len(trace_files)}")
 
-    consistency = len(set(d["response_hash"] for d in data)) == 1
-    consistency_pct = 100.0 if consistency else (len(data) / len(set(d["response_hash"] for d in data))) * 100
+with trace_files[0].open() as f:
+    all_records = [json.loads(line) for line in f]
+
+for task in tasks:
+    data = [record for record in all_records if record["task"] == task]
+    groups = defaultdict(list)
+    for record in data:
+        groups[record["prompt_id"]].append(record)
+
+    modal_count = sum(
+        Counter(record["output"] for record in group).most_common(1)[0][1]
+        for group in groups.values()
+    )
+    consistency_pct = modal_count / len(data) * 100
+
+    distances = []
+    for group in groups.values():
+        reference = group[0]["output"]
+        distances.extend(
+            Levenshtein.normalized_distance(reference, record["output"])
+            for record in group
+        )
 
     results.append({
         "Task": task.upper(),
         "Runs": len(data),
-        "Consistency": f"{consistency_pct:.1f}%",
-        "Mean Drift": f"{sum(d['compliance_metrics']['factual_drift'] for d in data) / len(data):.3f}"
+        "Modal exact agreement": f"{consistency_pct:.1f}%",
+        "Mean normalized distance": f"{sum(distances) / len(distances):.3f}",
     })
 
 df = pd.DataFrame(results)
@@ -310,15 +348,17 @@ Run it:
 python analyze_lab3.py
 ```
 
-**Expected output:**
+The script prints one row per task. Counts reflect all built-in prompt IDs, so
+they may be larger than the one-prompt historical examples used elsewhere in
+this lab:
 
 ```
 📊 Multi-Task Evaluation Results (T=0.0, n=16)
 ============================================================
-      Task  Runs Consistency Mean Drift
-       SQL    16       100.0%      0.000
-SUMMARIZE    16       100.0%      0.000
-       RAG    16        93.8%      0.012
+      Task  Runs Modal exact agreement Mean normalized distance
+       SQL    ...                  ...%                      ...
+   SUMMARY    ...                  ...%                      ...
+       RAG    ...                  ...%                      ...
 ```
 
 ## Understanding the Results
@@ -329,15 +369,17 @@ SUMMARIZE    16       100.0%      0.000
 
 ### Consistency Metric
 
-**Formula**: `consistency = (identical_responses / total_runs) * 100`
+**Formula**: within each prompt's replay group, count the modal exact output;
+then divide the summed modal counts by the total runs.
 
 - **100%**: All responses identical (byte-for-byte)
 - **93.75%**: 15/16 responses identical, 1 syntactic variant
 - **<90%**: Significant drift; investigate before relying on exact replay
 
-### Mean Drift Metric
+### Mean String-Distance Metric
 
-**Formula**: Jaccard distance between token sets
+**Formula in `run_evaluation.py`**: normalized Levenshtein distance from each
+replay group's first output.
 
 - **0.000**: No measured drift in this run
 - **0.012**: Minor syntactic variation
@@ -352,101 +394,97 @@ SUMMARIZE    16       100.0%      0.000
 | Summarize (T=0.0) | 100% | 100% | ✅ |
 | RAG (T=0.0) | 93.75% | ~94% | ✅ |
 
-## Analyzing Audit Trails
+## Analyzing Replay Records
 
-Audit trails are stored as JSONL (JSON Lines)—one JSON object per line.
+Replay records are stored as JSONL (JSON Lines), one JSON object per line.
 
 **View a specific run:**
 
 ```bash
-# Pretty-print the 5th run
-sed -n '5p' traces/lab3_concurrent_16.jsonl | python -m json.tool
+# Pretty-print the 5th run from the isolated Lab 3 directory
+sed -n '5p' traces/lab3_multi/trace_*.jsonl | python -m json.tool
 ```
 
 **Example entry:**
 
 ```json
 {
-  "timestamp": "2025-11-07T14:23:45.123Z",
-  "run_id": "lab3_concurrent_16_005",
+  "ts": 1762525425123,
+  "ts_end": 1762525426368,
+  "task": "sql",
   "model": "qwen2.5:7b-instruct",
   "provider": "ollama",
-  "temperature": 0.0,
-  "seed": 42,
-  "concurrency_idx": 5,
-  "task_type": "sql",
-  "prompt": "Generate SQL to find all customers with account balance > $100,000",
-  "response": "SELECT customer_name, account_balance FROM accounts WHERE account_balance > 100000",
-  "prompt_hash": "sha256:a3d8f92b1c4e5f6789abcdef",
-  "response_hash": "sha256:b2c1e7d8a9f6543210fedcba",
-  "execution_time_ms": 1245,
-  "compliance_metrics": {
-    "schema_valid": true,
-    "citation_accuracy": 1.0,
-    "decision_flip": false,
-    "factual_drift": 0.0
-  },
-  "regulatory_mappings": {
-    "FSB": "consistent_decisions",
-    "CFTC": "document_ai_outcomes",
-    "SR_11_7": "model_validation"
-  }
+  "temp": 0.0,
+  "conc": 16,
+  "prompt_id": "s1",
+  "prompt": "Compute total \"amount\" across all transactions.",
+  "output": "SELECT SUM(amount) FROM transactions;",
+  "decision_ok": true,
+  "latency": 1.245
 }
 ```
 
-**Key fields for audits:**
+**Key fields for review:**
 
-- `prompt_hash`: SHA-256 of input (for duplicate detection)
-- `response_hash`: SHA-256 of output (for consistency checking)
-- `compliance_metrics`: Drift measures
-- `regulatory_mappings`: Compliance framework mappings
+- `task` and `prompt_id`: identify the replay group
+- `provider`, `model`, `temp`, and `conc`: record the captured configuration
+- `prompt` and `output`: preserve the request text and observed response
+- `decision_ok`, `schema_violation`, or `citations`: task-specific fields when available
+- `ts`, `ts_end`, and `latency`: timing fields for the recorded call
 
-## Comparing Audit Trails
+## Comparing Replay Records
 
 Compare two runs to find differences:
 
 ```python
+import hashlib
 import json
+from pathlib import Path
 
 # Load two runs
-with open("traces/lab3_concurrent_16.jsonl") as f:
+trace_file = next(Path("traces/lab3_multi").glob("trace_*.jsonl"))
+with trace_file.open() as f:
     lines = f.readlines()
 
 run1 = json.loads(lines[0])
 run2 = json.loads(lines[1])
 
-print("Run 1 response hash:", run1["response_hash"])
-print("Run 2 response hash:", run2["response_hash"])
-print("Identical?", run1["response_hash"] == run2["response_hash"])
+hash1 = hashlib.sha256(run1["output"].encode()).hexdigest()
+hash2 = hashlib.sha256(run2["output"].encode()).hexdigest()
+print("Run 1 output hash:", hash1)
+print("Run 2 output hash:", hash2)
+print("Identical?", hash1 == hash2)
 
-if run1["response"] != run2["response"]:
+if run1["output"] != run2["output"]:
     print("\nResponse Diff:")
-    print("Run 1:", run1["response"])
-    print("Run 2:", run2["response"])
+    print("Run 1:", run1["output"])
+    print("Run 2:", run2["output"])
 else:
     print("\n✅ Responses are identical!")
 ```
 
-## Advanced: Full Paper Replication
+## Advanced: Historical Experiment Subset
 
-To fully reproduce the paper's 480 runs:
+To run the three locally named configurations shown below across the listed
+conditions, budget for up to **1,728 calls** (3 models × 2 temperatures × 3
+concurrency settings × 3 tasks × 2 built-in prompts × 16 repeats):
 
 ```bash
-# This will take ~30-45 minutes
 python run_evaluation.py \
   --providers ollama \
   --models qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b \
   --temperatures 0.0,0.2 \
   --concurrency 1,4,16 \
   --tasks rag,summary,sql \
-  --repeats 16
+  --repeats 16 \
+  --output traces/lab3_historical_subset
 ```
 
 !!! warning "Resource Intensive"
-    Full replication requires:
-    - All 5 models available (some may require API keys)
-    - ~45 minutes of runtime
-    - ~500 MB of trace data
+    This subset requires:
+    - The three listed models available
+    - Capacity and time for up to 1,728 calls
+    - Sufficient local storage for the resulting traces
 
 ## Troubleshooting
 
@@ -466,10 +504,16 @@ ollama show qwen2.5:7b-instruct
 
 If using cloud providers (watsonx, OpenAI):
 
-```python
-# Add rate limiting in configuration
---rate-limit 10  # requests per minute
---retry-delay 5  # seconds between retries
+```bash
+# The historical runner has no rate-limit flag. Lower concurrency to reduce
+# simultaneous requests, and use the provider SDK/account retry controls.
+python run_evaluation.py \
+  --providers anthropic \
+  --models YOUR_MODEL_ID \
+  --concurrency 1 \
+  --tasks sql \
+  --repeats 4 \
+  --output traces/rate_limit_check
 ```
 
 ### Out of Memory
@@ -477,29 +521,38 @@ If using cloud providers (watsonx, OpenAI):
 For large concurrency (n=16):
 
 ```bash
-# Reduce batch size
---batch-size 4  # Process 4 at a time instead of 16
+# Reduce simultaneous requests
+python run_evaluation.py \
+  --providers ollama \
+  --models qwen2.5:7b-instruct \
+  --concurrency 4 \
+  --tasks sql \
+  --repeats 16 \
+  --output traces/lower_concurrency
 ```
 
 ## Key Takeaways
 
 1. **The tested 7-20B configurations** reached 100% consistency at T=0.0 in this exercise
 2. **Concurrency did not change measured consistency** for those runs (n=1, 4, or 16)
-3. **Task structure matters**: SQL/summarization > RAG for determinism
-4. **Temperature sensitivity**: RAG tasks degrade significantly at T=0.2
+3. **Task structure mattered in these runs**: SQL/summarization had higher exact-output agreement than RAG
+4. **Temperature sensitivity was visible**: the tested RAG condition had lower agreement at T=0.2
 5. **Replay records** support reproduction and review within their captured scope
 
 ## Quiz: Test Your Understanding
 
 ??? question "Why does SQL maintain 100% consistency even at T=0.2?"
-    **Answer**: SQL has a structured output format with deterministic syntax, limiting the output space and making it more resistant to temperature-induced drift.
+    **Answer**: The tested SQL outputs reached 100% exact agreement at T=0.2.
+    A structured format can constrain the output space, but the exercise does
+    not prove that structure caused the result or that it will recur.
 
 ??? question "What consistency % did RAG tasks achieve at T=0.2 in the paper?"
     **Answer**: 56.25% (9/16 runs identical), showing substantial variation
     that should be investigated before relying on exact replay.
 
-??? question "What is the purpose of the response_hash field in audit trails?"
-    **Answer**: SHA-256 hash enables fast consistency checking across runs without string comparison—critical for large-scale audits.
+??? question "How can you compare outputs when a trace has no stored output hash?"
+    **Answer**: Hash the captured `output` value during analysis, as shown
+    above. Keep the raw output if later review needs more than equality.
 
 ## Next Steps
 
@@ -512,4 +565,6 @@ Now that you've run experiments and understand the methodology:
 ---
 
 !!! success "Lab 3 Complete!"
-    You've successfully run drift evaluations and reproduced key paper findings! Ready to analyze the data? Move on to [Lab 4: Analyzing Drift Metrics](../lab-4/README.md)!
+    You've run drift evaluations and compared your results with the historical
+    workshop examples. Ready to analyze the data? Move on to
+    [Lab 4: Analyzing Drift Metrics](../lab-4/README.md)!

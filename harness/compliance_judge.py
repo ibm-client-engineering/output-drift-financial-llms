@@ -13,14 +13,16 @@ Historical design notes:
     evaluates outputs against:
     1. Illustrative rubric labels drawn from financial-control themes
     2. Configurable benchmark thresholds
-    3. Multi-model consensus attestation for audit trail generation
+    3. Multi-model consensus records for later review
     4. Faithfulness-determinism decomposition for review prioritization
 
-Regulatory Framework References:
-    - FSB BCBS-239: "Consistent and predictable" AI outputs
-    - BIS Article 15: Cross-provider validation requirements
-    - CFTC 17 CFR 1.31: recordkeeping touchpoint; applicability varies
-    - SEC Rule 10b-5: Citation accuracy requirements
+Historical profile labels:
+    - ``fsb_consistency``: semantic-consistency review
+    - ``sec_citations``: source-grounding review
+    - ``cftc_audit_trail``: trace-field review
+
+Those labels are compatibility names, not implementations or interpretations
+of rules issued by the FSB, BCBS, BIS, CFTC, or SEC.
 AI4F Workshop 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Financial Workflows"
 """
 
@@ -238,7 +240,7 @@ class ComplianceAttestation:
     judge_model: str
     evaluations: List[JudgeEvaluation]
     overall_compliant: bool
-    regulatory_compliance: Dict[str, bool]  # Per-regulation pass/fail
+    regulatory_compliance: Dict[str, bool]  # Legacy profile labels and pass/fail values
     confidence_score: float
     attestation_hash: str
     regulatory_metadata: Dict[str, Any]
@@ -257,10 +259,10 @@ class ComplianceJudge:
     Results require independent review and are not compliance attestations.
 
     Historical design notes:
-        - Regulatory-specific judge prompts (not generic quality evaluation)
-        - Finance-calibrated thresholds embedded in evaluation
+        - Finance-themed, compatibility-labeled judge prompts
+        - Configurable workshop thresholds embedded in evaluation
         - Faithfulness-determinism decomposition framework
-        - Multi-model consensus attestation for audit trails
+        - Multi-model consensus records for later review
 
     Example:
         >>> judge = ComplianceJudge(judge_model_fn=my_llm_function)
@@ -281,7 +283,7 @@ class ComplianceJudge:
             judge_model_fn: Callable that takes a prompt string and returns response string.
                            Signature: fn(prompt: str) -> str
             judge_model_name: Name of the judge model for audit records.
-            regulatory_thresholds: Optional override of default regulatory thresholds.
+            regulatory_thresholds: Optional override of legacy-named workshop thresholds.
         """
         self.judge_model_fn = judge_model_fn
         self.judge_model_name = judge_model_name
@@ -357,7 +359,7 @@ class ComplianceJudge:
         prompt_context: Optional[str] = None
     ) -> JudgeEvaluation:
         """
-        Evaluate output consistency per FSB BCBS-239 Principle 6.
+        Apply the historical semantic-consistency judge profile.
 
         Uses LLM-as-Judge to assess whether multiple responses from identical
         prompts are semantically consistent, going beyond string matching.
@@ -367,7 +369,7 @@ class ComplianceJudge:
             prompt_context: Optional context about the original prompt
 
         Returns:
-            JudgeEvaluation with FSB compliance assessment
+            JudgeEvaluation with the compatibility-labeled profile result
         """
         # Format responses for judge
         formatted_responses = "\n\n".join([
@@ -408,7 +410,7 @@ class ComplianceJudge:
         source_document_id: Optional[str] = None
     ) -> JudgeEvaluation:
         """
-        Evaluate citation accuracy per SEC Rule 10b-5.
+        Apply the historical source-grounding judge profile.
 
         Uses LLM-as-Judge to verify that citations in the response accurately
         reference the source document, checking for hallucinated facts.
@@ -419,7 +421,7 @@ class ComplianceJudge:
             source_document_id: Optional identifier (e.g., "AAPL_10K_2024")
 
         Returns:
-            JudgeEvaluation with SEC citation compliance assessment
+            JudgeEvaluation with the compatibility-labeled profile result
         """
         judge_prompt = JUDGE_PROMPT_SEC_CITATIONS.format(
             source_excerpt=source_excerpt[:4000],  # Limit context size
@@ -523,17 +525,17 @@ class ComplianceJudge:
         task_description: str
     ) -> JudgeEvaluation:
         """
-        Evaluate multi-model consensus for audit trail generation.
+        Evaluate multi-model consensus for a review record.
 
-        Assesses whether multiple models agree on the core answer, generating
-        an attestation record suitable for regulatory audit trails.
+        Assesses whether multiple models agree on the core answer. The resulting
+        record is evidence for human review, not a regulatory attestation.
 
         Args:
             model_responses: Dict mapping model names to their responses
             task_description: Description of the task being evaluated
 
         Returns:
-            JudgeEvaluation with consensus assessment and attestation
+            JudgeEvaluation with consensus assessment
         """
         formatted_responses = "\n\n".join([
             f"### {model_name}:\n{response}"
@@ -644,7 +646,11 @@ class ComplianceJudge:
                 "framework": "AI4F_2025_JFDS_Financial_AI",
                 "thresholds": self.thresholds,
                 "regulatory_bodies": ["FSB", "BIS", "CFTC", "SEC"],
-                "evaluation_count": len(evals)
+                "evaluation_count": len(evals),
+                "interpretation": (
+                    "Illustrative workshop rubric; not legal or regulatory "
+                    "compliance or deployment approval"
+                ),
             }
         )
 
@@ -664,6 +670,10 @@ class ComplianceJudge:
         """
         return {
             "record_type": "compliance_attestation",
+            "interpretation": (
+                "Illustrative workshop rubric; not legal or regulatory "
+                "compliance or deployment approval"
+            ),
             "attestation_id": attestation.attestation_id,
             "timestamp": attestation.timestamp,
             "judge_model": attestation.judge_model,

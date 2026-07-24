@@ -18,14 +18,14 @@ By the end of this lab, you will:
 
 - Understand the 3-tier model classification (Tier 1, 2, 3)
 - Calculate and interpret drift metrics (consistency, Jaccard similarity)
-- Generate visualizations from audit trails
+- Generate visualizations from replay records
 - Identify high- and low-repeatability configurations in the exercise
 - Use metrics to prioritize further validation
 
 ## Prerequisites
 
 - Completed [Lab 3: Running Your First Experiment](../lab-3/README.md)
-- Audit trails in `traces/` directory
+- Replay records in the `traces/` directory
 - Python packages: `pandas`, `matplotlib`, `seaborn`
 
 ## The 3-Tier Model Classification
@@ -39,11 +39,11 @@ so the results do not isolate model size as a cause.
 **Models**: 7-20B parameter models
 - Qwen2.5-7B-Instruct (Ollama)
 - IBM Granite-3-8B-Instruct (watsonx.ai)
-- GPT-OSS-20B (Ollama)
+- GPT-OSS-20B (Ollama; separate workshop check outside the five-configuration matrix)
 
 **Characteristics**:
 - ✅ Identical outputs in the tested T=0.0 runs
-- ✅ Perfect schema compliance
+- ✅ All captured outputs passed the exercise's schema-validity check
 - ✅ Zero decision flips
 - △ Correctness and operational controls require separate validation
 
@@ -66,7 +66,7 @@ so the results do not isolate model size as a cause.
 **Characteristics**:
 - ✅ 100% consistent for **SQL/structured tasks**
 - ⚠️ 56-80% consistent for **RAG tasks**
-- △ Task-dependent reliability
+- △ Observed agreement varied by task
 
 **Observed pattern**:
 - Higher agreement on SQL and structured tasks
@@ -80,7 +80,7 @@ so the results do not isolate model size as a cause.
 
 **Characteristics**:
 - ❌ Only **12.5% consistent** (2/16 runs identical)
-- ❌ High drift across all task types
+- ❌ High measured drift across the tested task types
 - △ Requires investigation before any replay-dependent use
 
 **Next step**:
@@ -89,35 +89,32 @@ so the results do not isolate model size as a cause.
 
 ---
 
-## Option A: Use Built-in Analysis Tools (Quick Start)
+## Option A: Inspect the Runner Outputs
 
-The repository includes ready-to-run analysis tools. Use these if you want quick results:
-
-### Generate Visualizations
-
-```bash
-# Generate drift visualizations from your experimental results
-python plot_results.py traces/lab3_sql.jsonl traces/lab3_rag.jsonl
-```
-
-This creates:
-- Consistency comparison charts
-- Temperature sensitivity plots
-- Cross-provider validation graphs
-
-**Output**: PNG files in `results/` directory
-
-### Generate LaTeX Tables
+`run_evaluation.py` writes per-run measures to `results/summary.csv`, aggregate
+measures to `results/aggregate.csv`, and raw replay records to the selected
+trace directory:
 
 ```bash
-# Generate publication-ready tables from results
-python make_tables.py results/*.csv
+head -n 5 results/aggregate.csv
+head -n 5 results/summary.csv
+find traces/lab3_multi -name 'trace_*.jsonl'
 ```
 
-This generates LaTeX table code that you can include in reports or papers.
+Generate the historical workshop figures and tables from
+`results/aggregate.csv`:
+
+```bash
+python plot_results.py
+python make_tables.py
+```
+
+The commands write figures to `figs/` and LaTeX tables to `tables/`.
 
 !!! tip "Reproducible Analysis Tools"
-    These are the same tools used to generate figures and tables in the research paper. They include all statistical analysis and proper formatting.
+    The utilities accept both the archived `pct_identical` column and the
+    current runner's equivalent `identity_rate` column. Inspect the experiment
+    inputs and plotting assumptions before reusing them for a different study.
 
 ---
 
@@ -125,49 +122,71 @@ This generates LaTeX table code that you can include in reports or papers.
 
 For deeper understanding, create custom analysis scripts:
 
-### Step 1: Load and Analyze Audit Trails
+### Step 1: Load and Analyze Replay Records
 
 Create `analyze_metrics.py`:
 
 ```python
-import json
-import pandas as pd
 from collections import Counter
+import json
+from pathlib import Path
+
+from rapidfuzz.distance import Levenshtein
 
 def load_traces(filepath):
-    """Load JSONL audit trail."""
+    """Load JSONL replay records."""
     with open(filepath) as f:
         return [json.loads(line) for line in f]
 
 def calculate_consistency(traces):
-    """Calculate consistency percentage."""
-    response_hashes = [t["response_hash"] for t in traces]
-    unique_hashes = set(response_hashes)
-    most_common = Counter(response_hashes).most_common(1)[0]
+    """Calculate modal exact-output agreement for one replay group."""
+    outputs = [trace["output"] for trace in traces]
+    most_common = Counter(outputs).most_common(1)[0]
 
     return {
         "total_runs": len(traces),
-        "unique_responses": len(unique_hashes),
+        "unique_responses": len(set(outputs)),
         "consistency_pct": (most_common[1] / len(traces)) * 100,
         "most_common_count": most_common[1]
     }
 
 def calculate_drift_metrics(traces):
-    """Calculate mean drift and compliance metrics."""
-    factual_drifts = [t["compliance_metrics"]["factual_drift"] for t in traces]
-    schema_violations = sum(not t["compliance_metrics"]["schema_valid"] for t in traces)
-    decision_flips = sum(t["compliance_metrics"]["decision_flip"] for t in traces)
+    """Calculate descriptive measures for one replay group."""
+    reference = traces[0]["output"]
+    distances = [
+        Levenshtein.normalized_distance(reference, trace["output"])
+        for trace in traces
+    ]
+    schema_violations = sum(
+        bool(trace.get("schema_violation", False)) for trace in traces
+    )
+    decision_values = [
+        trace["decision_ok"] for trace in traces if "decision_ok" in trace
+    ]
+    decision_flips = (
+        sum(value != decision_values[0] for value in decision_values)
+        if decision_values
+        else 0
+    )
 
     return {
-        "mean_drift": sum(factual_drifts) / len(factual_drifts),
-        "max_drift": max(factual_drifts),
+        "mean_drift": sum(distances) / len(distances),
+        "max_drift": max(distances),
         "schema_violations": schema_violations,
         "decision_flips": decision_flips
     }
 
-# Example usage
-traces_sql = load_traces("traces/lab3_sql.jsonl")
-traces_rag = load_traces("traces/lab3_rag.jsonl")
+# Example usage: select one prompt ID so each list is one replay group.
+trace_file = next(Path("traces/lab3_multi").glob("trace_*.jsonl"))
+all_traces = load_traces(trace_file)
+traces_sql = [
+    trace for trace in all_traces
+    if trace["task"] == "sql" and trace["prompt_id"] == "s1"
+]
+traces_rag = [
+    trace for trace in all_traces
+    if trace["task"] == "rag" and trace["prompt_id"] == "q1"
+]
 
 print("📊 SQL Task Analysis (T=0.0, n=16)")
 print("=" * 60)
@@ -193,21 +212,21 @@ Run it:
 python analyze_metrics.py
 ```
 
-**Expected output:**
+The exact values depend on your newly captured runs. The output has this shape:
 
 ```
 📊 SQL Task Analysis (T=0.0, n=16)
 ============================================================
-Consistency: 100.0%
-Unique responses: 1
-Mean drift: 0.000
-Schema violations: 0
+Consistency: ...%
+Unique responses: ...
+Mean drift: ...
+Schema violations: ...
 
 📊 RAG Task Analysis (T=0.0, n=16)
 ============================================================
-Consistency: 93.8%
-Unique responses: 2
-Mean drift: 0.012
+Consistency: ...%
+Unique responses: ...
+Mean drift: ...
 ```
 
 ### Step 2: Visualize Tier Classification
@@ -223,7 +242,7 @@ import pandas as pd
 tier_data = pd.DataFrame({
     "Model": ["Granite-3-8B", "Qwen2.5-7B", "Llama-3.3-70B", "Mistral-Medium", "GPT-OSS-120B"],
     "Params": ["8B", "7B", "70B", "~70B", "120B"],
-    "Consistency": [100.0, 100.0, 80.0, 85.0, 12.5],
+    "Consistency": [100.0, 100.0, 80.0, 80.0, 12.5],
     "Tier": ["Tier 1", "Tier 1", "Tier 2", "Tier 2", "Tier 3"]
 })
 
@@ -273,12 +292,12 @@ Consistency @ T=0.0 (n=16)
 Granite-3-8B    ████████████████████  100% (Tier 1)
 Qwen2.5-7B      ████████████████████  100% (Tier 1)
 Llama-3.3-70B   ████████████████       80% (Tier 2)
-Mistral-Medium  █████████████████      85% (Tier 2)
+Mistral-Medium  ████████████████       80% (Tier 2)
 GPT-OSS-120B    ██▌                  12.5% (Tier 3)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-!!! warning "The 120B Failure"
+!!! warning "The 120B Low-Agreement Result"
     GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched in
     this exercise. That is a strong investigation signal, not a complete
     suitability or compliance determination.
@@ -390,10 +409,10 @@ def repeatability_scorecard(traces):
 
     # Illustrative review rules, not regulatory requirements.
     rules = {
-        "Determinism": consistency["consistency_pct"] >= 95.0,
-        "Low Drift": drift["mean_drift"] < 0.05,
-        "Schema Compliance": drift["schema_violations"] == 0,
-        "Decision Stability": drift["decision_flips"] == 0
+        "Exact Response Repeatability": consistency["consistency_pct"] >= 95.0,
+        "Low Normalized String Distance": drift["mean_drift"] < 0.05,
+        "Observed Schema Validity": drift["schema_violations"] == 0,
+        "No Decision Flip": drift["decision_flips"] == 0
     }
 
     passed = sum(rules.values())
@@ -405,8 +424,8 @@ def repeatability_scorecard(traces):
         "all_checks_passed": passed == total
     }
 
-# Test with SQL task
-traces = load_traces("traces/lab3_sql.jsonl")
+# Test with the SQL replay group selected above
+traces = traces_sql
 scorecard = repeatability_scorecard(traces)
 
 print("\n🎯 Repeatability Scorecard: SQL Task (Qwen2.5-7B, T=0.0)")
@@ -423,10 +442,10 @@ print(f"All checks passed: {'✅ YES' if scorecard['all_checks_passed'] else '�
 ```
 🎯 Repeatability Scorecard: SQL Task (Qwen2.5-7B, T=0.0)
 ============================================================
-Determinism              : ✅ PASS
-Low Drift                : ✅ PASS
-Schema Compliance        : ✅ PASS
-Decision Stability       : ✅ PASS
+Exact Response Repeatability: ✅ PASS
+Low Normalized String Distance: ✅ PASS
+Observed Schema Validity    : ✅ PASS
+No Decision Flip            : ✅ PASS
 
 Overall Score: 4/4
 All checks passed: ✅ YES
@@ -467,8 +486,8 @@ print(validation_priority("rag", observed_tier=2))
 
 1. **Bounded Size Pattern**: The smaller tested configurations repeated more consistently; the experiment does not isolate model size
 2. **Tier 1 = Observed Agreement**: It is a descriptive repeatability label, not a certification
-3. **Task Structure Matters**: SQL > Summarize > RAG for determinism
-4. **Temperature is Critical**: Even T=0.2 can double drift rates
+3. **Task Structure Mattered**: SQL and summarization had higher observed agreement than RAG
+4. **Temperature Merits Testing**: The tested RAG condition had lower agreement at T=0.2
 5. **Metrics Guide Investigation**: Use agreement and drift measures to target deeper validation
 
 ## Quiz: Test Your Understanding
@@ -484,7 +503,9 @@ print(validation_priority("rag", observed_tier=2))
     fairness, safety, and control review.
 
 ??? question "Which task type is most resilient to temperature increases?"
-    **Answer**: SQL generation—maintains 100% consistency even at T=0.2 due to structured output format.
+    **Answer**: SQL generation had the highest observed agreement in this
+    exercise, including 100% at T=0.2. The result is bounded to the tested
+    configuration.
 
 ??? question "What does a mean drift of 0.081 indicate?"
     **Answer**: Token-set variation across runs. The Jaccard score alone cannot

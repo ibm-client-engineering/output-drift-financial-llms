@@ -269,9 +269,11 @@ results = validator.validate(outputs, task_type="sql")
 </details>
 
 <details>
-<summary><strong>Audit Trail System</strong></summary>
+<summary><strong>Replay Record System</strong></summary>
 
-Bi-temporal JSONL logging with regulatory mappings (FSB, CFTC).
+JSONL records with timestamps, model settings, input/output hashes, and
+descriptive validation fields. This sample uses one event timestamp; it is not
+a bi-temporal record or a regulatory compliance attestation.
 
 ```python
 {

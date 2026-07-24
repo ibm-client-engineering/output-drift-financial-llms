@@ -2,7 +2,7 @@
 
 ## Overview
 
-In this lab, you'll configure API keys, test provider connectivity, and run your first deterministic evaluation to understand the framework's core components.
+In this lab, you'll configure API keys, test provider connectivity, and run your first replay evaluation to understand the framework's core components.
 
 **Duration**: ~15 minutes
 
@@ -17,9 +17,9 @@ In this lab, you'll configure API keys, test provider connectivity, and run your
 By the end of this lab, you will:
 
 - Configure API keys for at least one provider (Ollama recommended)
-- Understand the DeterministicRetriever and its role in compliance
+- Understand the DeterministicRetriever and its role in reproducible retrieval
 - Test framework components with a simple evaluation
-- Generate your first audit trail
+- Generate your first replay record
 
 ## Prerequisites
 
@@ -143,7 +143,7 @@ for i, (snippet_id, text, metadata) in enumerate(results, 1):
     print(f"  Snippet ID: {snippet_id}")
     print(f"  Text: {text[:100]}...")
 
-print("\nRetrieval is deterministic with stable ordering!")
+print("\nRetrieval order is stable in the pinned exercise!")
 ```
 
 Run it:
@@ -168,6 +168,7 @@ Create `test_simple_drift.py`:
 #!/usr/bin/env python3
 """Simple drift evaluation using Ollama via OpenAI client."""
 from openai import OpenAI
+from collections import Counter
 
 # Initialize Ollama client
 client = OpenAI(
@@ -193,13 +194,15 @@ for i in range(1, 6):
     responses.append(answer)
     print(f"Run {i}: {answer}")
 
-# Check consistency
-unique_responses = set(responses)
-consistency = (len(unique_responses) == 1)
+# Measure modal exact-output agreement
+counts = Counter(responses)
+unique_responses = set(counts)
+modal_count = counts.most_common(1)[0][1]
+consistency_pct = modal_count / len(responses) * 100
 
 print("\n" + "=" * 50)
 print(f"Unique responses: {len(unique_responses)}")
-print(f"Consistency: {'✅ 100%' if consistency else f'❌ {100/len(responses):.0f}%'}")
+print(f"Modal exact-output agreement: {consistency_pct:.0f}%")
 ```
 
 Run it:
@@ -239,21 +242,23 @@ cat harness/task_definitions.py
 
 **The three core tasks:**
 
-| Task | File Reference | Tier 1 Consistency | Purpose |
+| Task | File Reference | Observed Tier 1 consistency | Purpose |
 |------|---------------|-------------------|---------|
 | **SQL** | harness/task_definitions.py:20-45 | 100% | Text-to-SQL generation |
 | **Summarize** | harness/task_definitions.py:47-72 | 100% | JSON summarization with schema |
 | **RAG** | harness/task_definitions.py:74-99 | 93.75% | Retrieval-augmented Q&A |
 
 Each task includes:
-- System prompts optimized for determinism
+- System prompts intended to constrain output variation
 - Temperature=0.0 and seed=42 defaults
 - Validation schemas (JSON schema for summarization, SQL syntax checker)
 - Citation requirements (for RAG tasks)
 
 ## Step 6: Review Sample Audit Trail
 
-The framework generates JSONL (JSON Lines) audit trails with regulatory mappings. Let's examine the sample provided:
+The framework generates JSONL (JSON Lines) replay records with legacy
+governance-mapping labels. These labels are metadata for review, not evidence
+that a requirement was met. Let's examine the sample provided:
 
 ```bash
 # View sample audit trail entry
@@ -264,32 +269,33 @@ head -n 1 examples/sample_audit_trail.jsonl | python -m json.tool
 
 ```json
 {
-  "timestamp": "2025-11-07T13:45:23Z",
-  "run_id": "lab2_test_001",
-  "model": "qwen2.5:7b-instruct",
-  "provider": "ollama",
+  "timestamp": "2025-11-01T14:23:45Z",
+  "model": "granite-3-8b-instruct",
+  "provider": "watsonx.ai",
   "temperature": 0.0,
   "seed": 42,
-  "prompt_hash": "a3d8f92b1c4e5f6789abcdef...",
-  "response_hash": "b2c1e7d8a9f6543210fedcba...",
-  "task_type": "sql",
-  "response": "SELECT customer_name, account_balance FROM accounts WHERE account_balance > 100000",
+  "top_p": 1.0,
+  "prompt": "What were JPMorgan's net credit losses in 2023?",
+  "prompt_hash": "a3d8f9c2e1b4d7f8",
+  "response_hash": "b2c1e7a9f3d8c5b1",
+  "response": "JPMorgan reported net credit losses of $X billion in 2023 [jpm_2024_10k].",
+  "citations": ["jpm_2024_10k"],
   "compliance_metrics": {
     "citation_accuracy": 1.0,
     "schema_valid": true,
-    "decision_flip": false,
-    "factual_drift": 0.0
+    "decision_flip": false
   },
-  "regulatory_mappings": {
-    "FSB_principle": "consistent_decisions",
-    "CFTC_requirement": "document_ai_outcomes",
-    "SR_11_7": "model_validation"
-  }
+  "latency_ms": 1240,
+  "concurrency": 1,
+  "corpus_version": "sec_2024_q4"
 }
 ```
 
-!!! info "Bi-Temporal Logging"
-    The audit trail uses **bi-temporal logging** to enable regulatory review and attestation months after decisions were made—critical for financial audits.
+!!! info "Captured Timestamp"
+    This historical record contains one event timestamp. It is not
+    bi-temporal: transaction time and system-valid time are not recorded
+    separately. Add those fields if the intended recordkeeping design requires
+    them.
 
 ## Understanding Framework Components
 
@@ -307,7 +313,8 @@ retriever = create_retriever_from_files(
 )
 ```
 
-**Purpose**: Ensures SEC 10-K retrieval is deterministic and auditable.
+**Purpose**: Makes SEC 10-K retrieval order stable and inspectable within the
+pinned exercise.
 
 **Features**:
 - Multi-key ordering (score, section priority, snippet ID, chunk index)
@@ -324,7 +331,7 @@ The framework includes 3 core task types:
 | **Summary** | JSON summarization of financial data | **100%** |
 | **RAG** | Retrieval-augmented Q&A over SEC 10-Ks | **93.75%** |
 
-**Why SQL and Summary achieve perfect scores:**
+**Context for the observed 100% SQL and Summary agreement:**
 - Structured output formats
 - Deterministic syntax
 - Narrow output space
@@ -348,7 +355,8 @@ print(f"Consistent: {results['consistent']}")
 print(f"Similarity: {results['similarity_scores']}")
 ```
 
-**Purpose**: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments using pre-collected outputs.
+**Purpose**: Compare pre-collected outputs from local (Ollama) and cloud
+(watsonx.ai) configurations.
 
 **Numeric tolerance**: This lab uses a configurable +/-5% example. It is not a
 universal GAAP materiality threshold; production settings require task-specific
@@ -397,16 +405,18 @@ pip install -r requirements.txt
 
 ## Key Takeaways
 
-1. **Tier 1 Models**: 7-20B models (Qwen2.5, Granite-3-8B, GPT-OSS-20B) achieve 100% determinism
-2. **DeterministicRetriever**: Ensures reproducible SEC 10-K retrieval
-3. **Audit Trails**: Bi-temporal JSONL logging enables regulatory review
-4. **Task Types**: SQL and summarization are perfectly deterministic; RAG requires careful configuration
-5. **Cross-Provider**: Can validate consistency between local and cloud deployments
+1. **Tier 1 configurations**: Qwen2.5 and Granite-3-8B reached 100% exact-output agreement in the bounded 480-run matrix; GPT-OSS-20B did so in a separate workshop check
+2. **DeterministicRetriever**: Applies stable ordering to the pinned SEC 10-K corpus
+3. **Replay records**: JSONL captures one event timestamp plus configuration and result fields
+4. **Task types**: SQL and summarization reached 100% agreement in the tested runs; RAG varied more
+5. **Cross-provider comparison**: Measures whether outputs differ between captured local and cloud configurations
 
 ## Quiz: Test Your Understanding
 
 ??? question "Why use multi-key ordering in DeterministicRetriever?"
-    **Answer**: To ensure retrieval order is deterministic and reproducible for compliance. Even if chunks have the same relevance score, they must return in a consistent order for audit trails.
+    **Answer**: To make retrieval order stable and reproducible. If chunks have
+    the same relevance score, the additional keys resolve ties consistently
+    for later inspection.
 
 ??? question "What did Tier 1 mean in the original workshop?"
     **Answer**: It denoted 100% observed output consistency in the bounded test
