@@ -319,19 +319,23 @@ SUMMARIZE    16       100.0%      0.000
 
 ## Understanding the Results
 
+!!! note "Interpretation boundary"
+    These thresholds summarize replay variation in the exercise. They are
+    investigation cues, not compliance or safety thresholds.
+
 ### Consistency Metric
 
 **Formula**: `consistency = (identical_responses / total_runs) * 100`
 
 - **100%**: All responses identical (byte-for-byte)
 - **93.75%**: 15/16 responses identical, 1 syntactic variant
-- **<90%**: Significant drift, not compliance-safe
+- **<90%**: Significant drift; investigate before relying on exact replay
 
 ### Mean Drift Metric
 
 **Formula**: Jaccard distance between token sets
 
-- **0.000**: Perfect determinism
+- **0.000**: No measured drift in this run
 - **0.012**: Minor syntactic variation
 - **>0.05**: Semantic drift
 - **>0.1**: Factual inconsistencies

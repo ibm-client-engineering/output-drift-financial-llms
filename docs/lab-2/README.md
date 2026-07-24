@@ -6,6 +6,12 @@ In this lab, you'll configure API keys, test provider connectivity, and run your
 
 **Duration**: ~15 minutes
 
+!!! note "Historical workshop scope"
+    The model labels in this lab describe repeatability observed in the original
+    workshop runs. They do not certify correctness, compliance, or deployment
+    fitness. Requalify the exact model, provider, prompt, tools, and suite before
+    relying on a result.
+
 ## Learning Objectives
 
 By the end of this lab, you will:
@@ -42,7 +48,9 @@ ollama pull qwen2.5:7b-instruct
 ```
 
 !!! tip "Why Qwen2.5:7B?"
-    According to our research, **7-20B models achieve 100% deterministic outputs at T=0.0**, making them ideal for regulated financial applications. Qwen2.5:7B is a Tier 1 model—audit-ready and compliance-safe.
+    Qwen2.5:7B produced identical outputs in the original bounded workshop runs
+    at T=0.0, so it is a convenient local starting point. That result is an
+    integration check, not a safety or compliance determination.
 
 ## Step 2: Configure Environment Variables
 
@@ -212,8 +220,9 @@ Unique responses: 1
 Consistency: ✅ 100%
 ```
 
-!!! success "Tier 1 Determinism"
-    7-20B models achieve **100% consistency at T=0.0**—this is what makes them audit-ready!
+!!! success "Exact agreement in this run"
+    The tested outputs reached **100% consistency at T=0.0**. Exact agreement is
+    useful replay evidence, but it does not establish correctness or compliance.
 
 ## Step 5: Understanding Task Definitions
 
@@ -393,8 +402,9 @@ pip install -r requirements.txt
 ??? question "Why use multi-key ordering in DeterministicRetriever?"
     **Answer**: To ensure retrieval order is deterministic and reproducible for compliance. Even if chunks have the same relevance score, they must return in a consistent order for audit trails.
 
-??? question "What makes 7-20B models Tier 1 (audit-ready)?"
-    **Answer**: They achieve 100% consistency at T=0.0 across all task types, meeting regulatory requirements for reproducibility.
+??? question "What did Tier 1 mean in the original workshop?"
+    **Answer**: It denoted 100% observed output consistency in the bounded test
+    conditions. It was not a regulatory or deployment certification.
 
 ??? question "What is the GAAP materiality threshold used in cross-provider validation?"
     **Answer**: ±5%, based on GAAP auditing standards for financial statement materiality.

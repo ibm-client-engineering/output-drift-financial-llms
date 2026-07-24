@@ -165,7 +165,7 @@ def run_credit_risk_assessment(profile: dict, model: str = "qwen2.5:7b-instruct"
     print(f"  Total runs: {n_runs}")
     print(f"  Unique outputs: {unique}")
     print(f"  Consistency: {consistency:.0f}%")
-    print(f"  Status: {'✅ Audit-ready' if consistency == 100 else '⚠️ Drift detected'}")
+    print(f"  Status: {'✅ Exact replay agreement' if consistency == 100 else '⚠️ Drift detected'}")
 
     return results
 
@@ -196,7 +196,7 @@ Run 5: {"risk_level": "LOW", "explanation": "Strong credit profile with good inc
   Total runs: 5
   Unique outputs: 1
   Consistency: 100%
-  Status: ✅ Audit-ready
+  Status: ✅ Exact replay agreement
 ```
 
 ## Step 4: Add Domain-Specific Documents

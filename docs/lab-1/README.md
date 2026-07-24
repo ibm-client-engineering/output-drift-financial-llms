@@ -6,6 +6,12 @@ In this lab, you'll learn what output drift is, why it matters for financial AI 
 
 **Duration**: ~20 minutes
 
+!!! note "Historical workshop scope"
+    This lab preserves the original workshop experiment. Its tiers summarize
+    repeatability observed in those tested runs; they are not certifications of
+    correctness, safety, compliance, or production readiness. For the current
+    replay-eligibility and path-agreement workflow, see [Lab 8](../lab-8/README.md).
+
 ## Learning Objectives
 
 By the end of this lab, you will:
@@ -94,15 +100,17 @@ Our research quantified drift across multiple dimensions using 480 total runs (n
 
 ### Overall Drift Rates (Temperature = 0.0)
 
-| Model | Size | Consistency | Tier | Compliance Status |
-|-------|------|-------------|------|-------------------|
-| **Qwen2.5-7B** | 7B | **100%** | Tier 1 | ✅ Audit-ready |
-| **IBM Granite-3-8B** | 8B | **100%** | Tier 1 | ✅ Audit-ready |
+| Model | Size | Consistency | Tier | Observed repeatability |
+|-------|------|-------------|------|------------------------|
+| **Qwen2.5-7B** | 7B | **100%** | Tier 1 | High in tested runs |
+| **IBM Granite-3-8B** | 8B | **100%** | Tier 1 | High in tested runs |
 | **Meta Llama-3.3-70B** | 70B | 56-100% | Tier 2 | ⚠️ Task-specific |
 | **Mistral Medium** | 40B | 56-100% | Tier 2 | ⚠️ Task-specific |
-| **GPT-OSS-120B** | 120B | **12.5% [CI: 3.5–36.0%]** | Tier 3 | ❌ Non-compliant |
+| **GPT-OSS-120B** | 120B | **12.5% [CI: 3.5–36.0%]** | Tier 3 | Low in tested runs |
 
-**Counterintuitive finding**: 7-20B models achieve perfect determinism while 120B models show only 12.5% consistency!
+**Bounded finding**: in these tested configurations, the 7-20B models produced
+identical outputs while the 120B configuration showed 12.5% consistency. This
+does not establish a general relationship between model size and repeatability.
 
 !!! note "Understanding Statistical Notation"
     Throughout this workshop, we report **95% Confidence Intervals (CI)** for our findings. For example, "12.5% [CI: 3.5–36.0%]" means we measured 12.5% consistency, but the true value likely falls between 3.5% and 36.0%.
@@ -286,7 +294,8 @@ Run 5: 2 + 2 = 4
     **Answer**: Inconsistent outputs from an LLM given identical inputs and settings.
 
 ??? question "Question 2: Why is drift a problem for financial services?"
-    **Answer**: It creates inconsistent decisions that violate regulatory requirements for fairness, explainability, and auditability.
+    **Answer**: It can make decisions harder to reproduce, explain, and govern,
+    which raises control and compliance questions that require separate review.
 
 ??? question "Question 3: Which task showed the highest drift in research?"
     **Answer**: RAG (Retrieval-Augmented Generation) tasks, especially at temperature > 0.0.

@@ -300,37 +300,41 @@ Overall consistency: 100%
 
 ## Step 6: Migration Decision Matrix
 
-Based on cross-provider validation, decide whether migration is safe:
+Use cross-provider replay to decide whether a migration needs more investigation.
+Agreement in this exercise is evidence about repeatability, not a safety or
+compliance determination:
 
-| Scenario | Ollama → watsonx | Validation | Safe to Migrate? |
-|----------|------------------|------------|------------------|
-| **SQL (Tier 1 → Tier 1)** | Qwen2.5-7B → Granite-3-8B | 100% match | ✅ Yes |
-| **RAG (Tier 1 → Tier 1)** | Qwen2.5-7B → Granite-3-8B | ≥95% match | ✅ Yes |
-| **SQL (Tier 1 → Tier 2)** | Qwen2.5-7B → Llama-3.3-70B | 100% match | ✅ Yes |
-| **RAG (Tier 1 → Tier 2)** | Qwen2.5-7B → Llama-3.3-70B | <95% match | ⚠️ Monitor |
-| **Any (Tier 1 → Tier 3)** | Qwen2.5-7B → GPT-OSS-120B | <50% match | ❌ No |
+| Scenario | Ollama → watsonx | Observed validation | Follow-up |
+|----------|------------------|---------------------|-----------|
+| **SQL (Tier 1 → Tier 1)** | Qwen2.5-7B → Granite-3-8B | 100% match | Path-aware replay |
+| **RAG (Tier 1 → Tier 1)** | Qwen2.5-7B → Granite-3-8B | ≥95% match | Inspect retrieval evidence |
+| **SQL (Tier 1 → Tier 2)** | Qwen2.5-7B → Llama-3.3-70B | 100% match | Path-aware replay |
+| **RAG (Tier 1 → Tier 2)** | Qwen2.5-7B → Llama-3.3-70B | <95% match | Investigate variation |
+| **Any (Tier 1 → Tier 3)** | Qwen2.5-7B → GPT-OSS-120B | <50% match | Full requalification |
 
-**Migration safety check:**
+**Repeatability triage:**
 
 ```python
-def is_migration_safe(source_tier: int, target_tier: int, task_type: str) -> bool:
-    """Check if migration between providers is compliance-safe."""
+def migration_replay_status(
+    source_tier: int, target_tier: int, task_type: str
+) -> str:
+    """Prioritize replay work; do not treat this as a deployment gate."""
     if source_tier == 1 and target_tier == 1:
-        return True  # Always safe: Tier 1 → Tier 1
+        return "run path-aware replay"
 
     if target_tier == 3:
-        return False  # Never safe: Any → Tier 3
+        return "full requalification"
 
     if target_tier == 2 and task_type in ["sql", "summarize"]:
-        return True  # Safe for structured tasks
+        return "run path-aware replay"
 
-    return False  # Requires validation
+    return "investigate before relying on equivalent replay"
 
 # Examples
-print(is_migration_safe(1, 1, "rag"))  # True
-print(is_migration_safe(1, 2, "sql"))  # True
-print(is_migration_safe(1, 2, "rag"))  # False (requires validation)
-print(is_migration_safe(1, 3, "sql"))  # False
+print(migration_replay_status(1, 1, "rag"))
+print(migration_replay_status(1, 2, "sql"))
+print(migration_replay_status(1, 2, "rag"))
+print(migration_replay_status(1, 3, "sql"))
 ```
 
 ## Understanding Provider Differences
@@ -383,8 +387,8 @@ print("watsonx output:", repr(watsonx_output))
 
 ## Key Takeaways
 
-1. **Cross-provider validation** ensures migration safety
-2. **Tier 1 models** (7-20B) achieve perfect cross-provider consistency
+1. **Cross-provider validation** measures whether replay evidence changes across serving stacks
+2. **Tier 1 configurations** showed high agreement in the bounded workshop runs
 3. **GAAP materiality (±5%)** provides finance-calibrated tolerance
 4. **Framework's `CrossProviderValidator`** automates testing
 5. **Audit trails** document cross-provider equivalence
