@@ -1253,10 +1253,12 @@
 <h1 id="dfah-quickstart">DFAH quickstart<a class="headerlink" href="#dfah-quickstart" title="Permanent link">&para;</a></h1>
 <p>DFAH measures whether repeated executions of the same case reach the same
 decision and observable tool path. It does not measure correctness. The
-no-network example uses a deterministic toy agent and a registered local tool.</p>
-<p>From a checkout with the package installed:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-dfah<span class="w"> </span>check-agent<span class="w"> </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span>
+no-network example uses a deterministic toy agent and a registered local
+tool. Install the published package; no repository clone or API key is needed.</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>dfah-bench
+</code></pre></div>
+<p>Then run:</p>
+<div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>check-agent<span class="w"> </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span>
 dfah<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--replays<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>

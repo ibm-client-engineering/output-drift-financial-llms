@@ -1248,11 +1248,11 @@ appropriate deployment protection before the first release. A package-name
 availability check is not a reservation; the pending publisher must be
 registered before the tag is pushed.</p>
 <h2 id="release-boundary">Release boundary<a class="headerlink" href="#release-boundary" title="Permanent link">&para;</a></h2>
-<p>For version <code>0.1.0</code>, the release tag is <code>dfah-v0.1.0</code>. The tag must match the
-static project version in <code>pyproject.toml</code>; the release workflow rejects any
-other pairing. It then builds the wheel and source distribution once, checks
-them, transfers those exact artifacts to the protected publish job, and uses
-PyPI Trusted Publishing after the environment approval.</p>
+<p>For package version <code>X.Y.Z</code>, the release tag is <code>dfah-vX.Y.Z</code>. The tag must
+match the static project version in <code>pyproject.toml</code>; the release workflow
+rejects any other pairing. It then builds the wheel and source distribution
+once, checks them, transfers those exact artifacts to the protected publish
+job, and uses PyPI Trusted Publishing after the environment approval.</p>
 <p>Before tagging, confirm that:</p>
 <ol>
 <li><code>pyproject.toml</code>, <code>CITATION.cff</code>, and <code>CHANGELOG.md</code> name the same version;</li>
