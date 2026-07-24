@@ -198,10 +198,10 @@ If you use this framework in your research, please cite:
   doi={10.48550/arXiv.2601.15322}
 }
 
-@article{khatchadourian2025output,
+@inproceedings{khatchadourian2025output,
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  journal={arXiv preprint arXiv:2511.07585},
+  booktitle={AI4F Workshop},
   year={2025},
   eprint={2511.07585},
   archivePrefix={arXiv},
