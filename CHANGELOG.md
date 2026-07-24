@@ -7,6 +7,15 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [0.1.1] - 2026-07-24
+
+### Fixed
+
+- Point first-time users to the published `dfah-bench` package instead of an
+  editable source checkout.
+- Add live PyPI and supported-Python badges, a direct package link, and a
+  no-clone, no-API-key quickstart.
+
 ## [0.1.0] - 2026-07-23
 
 ### Added

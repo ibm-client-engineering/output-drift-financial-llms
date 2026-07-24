@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dfah-bench"
-version = "0.1.0"
+version = "0.1.1"
 description = "Replay-based stability measurement for tool-using AI agents"
 readme = "README_DFAH.md"
 requires-python = ">=3.10"

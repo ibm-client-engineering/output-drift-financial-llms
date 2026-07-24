@@ -15,20 +15,28 @@ The package is alpha software. Start with synthetic cases and shadow replays.
 
 ## Install
 
-From this repository:
+From PyPI:
+
+```bash
+python -m venv .venv-dfah
+source .venv-dfah/bin/activate
+python -m pip install dfah-bench
+```
+
+Add OpenTelemetry support when you need it:
+
+```bash
+python -m pip install "dfah-bench[otel]"
+```
+
+For package development:
 
 ```bash
 git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
 cd output-drift-financial-llms
 python -m venv .venv-dfah
 source .venv-dfah/bin/activate
-python -m pip install -e ".[otel]"
-```
-
-After the first PyPI release:
-
-```bash
-python -m pip install "dfah-bench[otel]"
+python -m pip install -e ".[dev,otel]"
 ```
 
 Python 3.10 or newer is required.
