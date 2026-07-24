@@ -197,21 +197,27 @@ econometrics/benchmarks/
 
 ---
 
-## Measured Results (v2, March 2026)
+## Archived three-task results (March 2026)
 
-From 4,705 agentic runs across 7 models, 3 benchmarks, 50 cases each:
+The table below belongs to the earlier 4,705-run, three-task study. It is
+retained for that study's lineage, not as evidence for the corrected
+DFAH-Bench analysis. In particular, the portfolio fixture and its dependent
+task-label matches are excluded from corrected v2.
 
-| Model | Profile | Avg Decision Det. | Avg Accuracy | Benchmarks |
-|-------|---------|-------------------|--------------|------------|
-| Qwen 2.5 7B | Pattern Matcher | 98.0% | 33.4% | 3/3 |
-| Granite 3.3 | Pattern Matcher | 91.1% | 42.6% | 2/3 |
-| GPT-OSS 20B | Balanced | 77.3% | 37.3% | 3/3 |
-| Gemini 2.0 Flash | Balanced | 86.0% | 49.8% | 3/3 |
-| Claude Sonnet 4 | Balanced | 84.0% | 38.0% | 3/3 |
-| Claude Opus 4.5 | Explorer | 71.3% | 44.2% | 3/3 |
-| Gemini 2.5 Pro | Explorer | 59.1% | 48.7% | 2/3 |
+| Model | Avg decision determinism | Historical task-label match | Benchmarks |
+|-------|-------------------------:|----------------------------:|-----------:|
+| Qwen 2.5 7B | 98.0% | 33.4% | 3/3 |
+| Granite 3.3 | 91.1% | 42.6% | 2/3 |
+| GPT-OSS 20B | 77.3% | 37.3% | 3/3 |
+| Gemini 2.0 Flash | 86.0% | 49.8% | 3/3 |
+| Claude Sonnet 4 | 84.0% | 38.0% | 3/3 |
+| Claude Opus 4 | 71.3% | 44.2% | 3/3 |
+| Gemini 2.5 Pro | 59.1% | 48.7% | 2/3 |
 
-**Key finding**: Decision determinism and task accuracy are *not detectably correlated* (r = -0.11, p = 0.63). Small models achieve high determinism via pattern matching but low accuracy; frontier models show genuine reasoning with lower determinism. See [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) for full analysis.
+In that bounded study, decision determinism and the historical task-label match
+were not detectably correlated (r = -0.11, p = 0.63). This descriptive result
+does not identify model strategy or hidden reasoning. See
+[arXiv:2601.15322](https://arxiv.org/abs/2601.15322) for its original scope.
 
 ---
 

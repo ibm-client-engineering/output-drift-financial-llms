@@ -4,6 +4,11 @@
 
 This lab introduces the **Replayable Financial Agents** research track, extending the Output Drift framework from single-turn tasks (Labs 1-6) to multi-step, tool-using LLM agents. This work is based on the [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) paper.
 
+!!! warning "Historical study boundary"
+    This lab preserves the earlier three-task study. Its portfolio fixture and
+    dependent task-label-match results are not part of the corrected
+    DFAH-Bench v2 analysis. Use Lab 8 for the corrected evidence.
+
 **Paper**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
 
 **Duration**: ~30 minutes (benchmark simulation) or ~2+ hours (full agentic runs with LLMs)
@@ -14,8 +19,9 @@ By the end of this lab, you will:
 
 - Understand how determinism extends from single-turn outputs to multi-step agent trajectories
 - Run the 3 financial agent benchmarks (Compliance Triage, Portfolio Constraint, DataOps Exception)
-- Measure trajectory determinism, decision determinism, and accuracy
-- Understand the distinction between **pattern matching** and **genuine reasoning** in agent behavior
+- Measure trajectory determinism, decision determinism, and historical
+  task-label match
+- Distinguish final-decision agreement from recorded tool-path agreement
 
 ## Key Concepts
 
@@ -27,21 +33,23 @@ Labs 1-6 measured whether the same prompt produces the same output. Agent determ
 |--------|-----------|------------------|
 | **Signature Determinism** | Identical tool calls with identical arguments | Exact trajectory reproducibility |
 | **Decision Determinism** | Same final action (e.g., escalate/dismiss) | Outcome consistency |
-| **Accuracy** | Decision matches ground truth | Task correctness |
+| **Historical task-label match** | Decision matches the fixture label | Earlier-study diagnostic |
 
-### The Determinism-Accuracy Disconnect
+### Separate repeatability from task-label evidence
 
-Our key finding across 4,705 agentic runs:
+The earlier study reported across 4,705 agentic runs:
 
 > Decision determinism and task accuracy are **not detectably correlated** (r = -0.11, p = 0.63).
 
-This means high determinism does NOT imply high accuracy. Three behavioral profiles emerge:
+The null result does not show that the two quantities are equivalent or that
+either validates deployment. The study used the following descriptive
+groupings; they do not establish hidden reasoning:
 
-| Profile | Example Models | Determinism | Accuracy | Behavior |
+| Observed grouping | Example Models | Determinism | Historical task-label match | Recorded behavior |
 |---------|---------------|-------------|----------|----------|
-| **Pattern Matchers** | Qwen 2.5 7B, Granite 3.3 | 91-98% | 33-42% | Always choose the same action regardless of evidence |
-| **Balanced Reasoners** | Claude Sonnet 4, Gemini Flash | 77-86% | 33-53% | Read tool outputs, sometimes vary approach |
-| **Explorers** | Claude Opus 4.5, Gemini 2.5 Pro | 59-71% | 40-69% | Most variable but highest genuine reasoning |
+| **High repeatability** | Qwen 2.5 7B, Granite 3.3 | 91-98% | 33-42% | Concentrated decisions in these tasks |
+| **Moderate repeatability** | Claude Sonnet 4, Gemini Flash | 77-86% | 33-53% | Some recorded path variation |
+| **Variable paths** | Claude Opus 4, Gemini 2.5 Pro | 59-71% | 40-69% | Highest observed signature variability in these tasks |
 
 ## Prerequisites
 
@@ -140,22 +148,29 @@ Each benchmark run produces:
 - **Action Determinism**: Do all runs call the same set of tools?
 - **Signature Determinism**: Do all runs call tools with the same arguments in the same order?
 - **Decision Determinism**: Do all runs reach the same final decision?
-- **Accuracy**: How often does the decision match ground truth?
+- **Historical task-label match**: How often does the decision match the
+  fixture label? This is retained only for the earlier study.
 
 ### What to Look For
 
-**High determinism + low accuracy** (Pattern Matcher):
-The model always does the same thing, but it's often wrong. Example: Qwen 2.5 7B picks "reject" for 80%+ of compliance cases regardless of the evidence.
+**High repeatability + lower task-label match**:
+The tested configuration often repeats the same decision, but that decision is
+not necessarily correct.
 
-**Moderate determinism + higher accuracy** (Balanced Reasoner):
-The model reads tool outputs and adjusts its behavior. Some variance is expected because it's actually reasoning about the evidence.
+**Moderate repeatability + higher task-label match**:
+The recorded tool path and decision vary more often. The logs show the
+variation, not the model's hidden reason for it.
 
-**Low determinism + variable accuracy** (Explorer):
-The model tries different approaches across runs. Most likely to find the correct answer but least reproducible.
+**Lower repeatability + variable task-label match**:
+The recorded path changes across runs. Inspect which calls or arguments
+changed before deciding whether the variation matters.
 
-### The "Same Conclusion, Different Reasoning" Pattern
+### The "Same Conclusion, Different Recorded Path" Pattern
 
-Across all frontier models, **decision determinism exceeds signature determinism**. For example, Claude Sonnet 4 shows 84% decision determinism but only 43% signature determinism across benchmarks. This means the model often reaches the same conclusion via different reasoning paths.
+Across the API configurations, **decision determinism exceeds signature
+determinism**. For example, Claude Sonnet 4 shows 84% decision determinism but
+43% signature determinism across the earlier benchmarks. The final decision
+can therefore stay fixed while observable tool calls change.
 
 ## Step 5: Explore the Metrics Modules
 
@@ -177,16 +192,17 @@ See `econometrics/agentic/metrics/` for the full implementation.
 
 ## Key Takeaways
 
-1. **Determinism != accuracy**: High consistency can mask pattern matching rather than genuine reasoning
-2. **Both dimensions matter**: The Determinism-Faithfulness Assurance Harness (DFAH) measures determinism and accuracy independently
-3. **Task structure affects determinism**: Compliance (binary decisions) shows higher determinism than portfolio (multi-step optimization)
-4. **Frontier models reason differently**: Decision determinism > signature determinism because models find the same answer via different tool-call paths
+1. **Repeatability is not correctness**: each requires separate evidence
+2. **Study versions matter**: the corrected DFAH-Bench result excludes the
+   portfolio fixture and its dependent task-label matches
+3. **Task and contract matter**: report them alongside every replay measure
+4. **Recorded paths can differ**: Decision determinism can exceed signature determinism
 5. **Start small**: Use `--n-cases 5` to validate your setup before scaling to full 50-case runs
 
 ## Further Reading
 
 - **Full paper**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) (Replayable Financial Agents)
-- **Benchmark details**: [`econometrics/benchmarks/README.md`](../../econometrics/benchmarks/README.md)
+- **Benchmark details**: [`econometrics/benchmarks/README.md`](https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/econometrics/benchmarks/README.md)
 - **v1 Output Drift paper**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
 
 ---

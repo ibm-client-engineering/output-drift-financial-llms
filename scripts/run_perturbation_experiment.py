@@ -28,9 +28,9 @@ Hypothesis:
   low-divergence cases, even though outcome-only evaluation treats both groups
   as equally "stable" (both have DAR = 1.0).
 
-v1 result (DataOps): Both groups flipped 100% — Claude Sonnet was pattern-matching
-  on "quarantine" for DataOps, so perturbation broke the pattern uniformly.
-  Switching to Compliance where the model shows genuine reasoning.
+v1 result (DataOps): Both groups flipped 100% under the shared "quarantine"
+  cue, so the perturbation did not distinguish the groups. The v2 experiment
+  switches to Compliance, where decisions are conditioned on several rules.
 """
 
 import copy
@@ -375,7 +375,7 @@ def main() -> None:
         "timestamp": datetime.now().isoformat(),
         "n_runs_per_case": n_runs,
         "perturbation": "amount_increase_15pct",
-        "note": "v2: switched from DataOps (pattern matching on quarantine) to Compliance (genuine reasoning)",
+        "note": "v2: switched from the shared DataOps quarantine cue to rule-conditioned Compliance decisions",
         "results": all_results,
     }
     json_path = results_dir / "perturbation_experiment_v2.json"

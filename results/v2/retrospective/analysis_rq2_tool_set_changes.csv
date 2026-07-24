@@ -1,0 +1,48 @@
+task,model,model_name,case_id,n_runs,variable_tool_names,variable_control_or_action_tools,variable_evidence_contact_tools,has_control_or_action_variation,has_evidence_contact_variation,directionality
+compliance,gemini-2.0-flash,Gemini 2.0 Flash,TXN-2025-002,3,"[""calculate_risk_score"", ""get_customer_profile""]",[],"[""calculate_risk_score"", ""get_customer_profile""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-002,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-006,3,"[""get_customer_profile""]",[],"[""get_customer_profile""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-014,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-021,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-024,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-028,3,"[""calculate_risk_score"", ""check_sanctions"", ""get_customer_profile""]","[""check_sanctions""]","[""calculate_risk_score"", ""get_customer_profile""]",True,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-033,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-034,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+compliance,gemini-2.5-pro,Gemini 2.5 Pro,TXN-2025-035,3,"[""calculate_risk_score""]",[],"[""calculate_risk_score""]",False,True,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-001,3,"[""apply_fix"", ""validate_fix""]","[""apply_fix"", ""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-005,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-006,3,"[""escalate_to_human"", ""query_reference_data""]","[""escalate_to_human""]","[""query_reference_data""]",True,True,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-011,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-014,3,"[""apply_fix"", ""validate_fix""]","[""apply_fix"", ""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-015,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-016,3,"[""apply_fix"", ""escalate_to_human"", ""validate_fix""]","[""apply_fix"", ""escalate_to_human"", ""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-020,3,"[""apply_fix"", ""escalate_to_human""]","[""apply_fix"", ""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-022,3,"[""apply_fix"", ""escalate_to_human""]","[""apply_fix"", ""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-opus-4-20250514,Claude Opus 4,DQ-023,3,"[""apply_fix""]","[""apply_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-001,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-002,3,"[""apply_fix""]","[""apply_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-007,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-015,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-016,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-018,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-022,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-023,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-027,3,"[""apply_fix"", ""query_reference_data"", ""validate_fix""]","[""apply_fix"", ""validate_fix""]","[""query_reference_data""]",True,True,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-031,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-040,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-041,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-042,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DQ-046,3,"[""validate_fix""]","[""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-007,3,"[""get_exception_details"", ""get_historical_fixes"", ""query_reference_data""]",[],"[""get_exception_details"", ""get_historical_fixes"", ""query_reference_data""]",False,True,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-009,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-010,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-011,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-014,3,"[""apply_fix"", ""validate_fix""]","[""apply_fix"", ""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-017,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-030,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-033,3,"[""apply_fix"", ""validate_fix""]","[""apply_fix"", ""validate_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-035,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gemini-2.0-flash,Gemini 2.0 Flash,DQ-048,3,"[""escalate_to_human""]","[""escalate_to_human""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,gpt-oss_20b,GPT-OSS 20B,DQ-012,8,"[""get_exception_details"", ""get_historical_fixes""]",[],"[""get_exception_details"", ""get_historical_fixes""]",False,True,presence_varies_no_normative_reference_path
+dataops,gpt-oss_20b,GPT-OSS 20B,DQ-045,8,"[""apply_fix""]","[""apply_fix""]",[],True,False,presence_varies_no_normative_reference_path
+dataops,qwen2.5_7b-instruct,Qwen 2.5 7B,DQ-011,8,"[""apply_fix""]","[""apply_fix""]",[],True,False,presence_varies_no_normative_reference_path

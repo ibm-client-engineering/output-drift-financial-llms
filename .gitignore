@@ -66,12 +66,15 @@ dfah_results/
 *.sqlite
 *.db
 
-# --- DFAH-Bench release: reference results and the raw replay corpus ARE
-# --- published (the paper's numbers regenerate from them via
-# --- `make reproduce-paper`). Anchored re-includes past the rules above.
+# --- DFAH-Bench release: archived reference results and the raw replay corpus
+# --- remain published for lineage. Corrected v2 uses the sanitized fixture
+# --- under results/v2/. Anchored re-includes past the rules above.
 !/results/
 /results/*
 !/results/dfah_*.csv
+!/results/README.md
+!/results/v2/
+!/results/v2/**
 !/econometrics/benchmarks/results/
 /econometrics/benchmarks/results/*
 !/econometrics/benchmarks/results/run_logs/

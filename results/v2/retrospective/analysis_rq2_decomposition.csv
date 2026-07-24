@@ -1,0 +1,11 @@
+scope,scope_name,unanimous_groups,sequence_varying,reorder_only,multiplicity_changed_same_set,tool_set_changed,sequence_variation_rate,tool_set_change_rate
+__all__,All configurations,627,122,17,58,47,0.19457735247208932,0.07496012759170653
+__tool_calling__,Tool-calling configurations,627,122,17,58,47,0.19457735247208932,0.07496012759170653
+qwen3.5_latest,Qwen 3.5,100,0,0,0,0,0.0,0.0
+gemma4_latest,Gemma 4,99,1,1,0,0,0.010101010101010102,0.0
+qwen2.5_7b-instruct,Qwen 2.5 7B,97,1,0,0,1,0.010309278350515464,0.010309278350515464
+gpt-oss_20b,GPT-OSS 20B,85,5,0,3,2,0.058823529411764705,0.023529411764705882
+gemini-2.0-flash,Gemini 2.0 Flash,81,20,2,7,11,0.24691358024691357,0.13580246913580246
+gemini-2.5-pro,Gemini 2.5 Pro,30,14,2,3,9,0.4666666666666667,0.3
+claude-opus-4-20250514,Claude Opus 4,52,31,6,15,10,0.5961538461538461,0.19230769230769232
+claude-sonnet-4-20250514,Claude Sonnet 4,83,50,6,30,14,0.6024096385542169,0.1686746987951807

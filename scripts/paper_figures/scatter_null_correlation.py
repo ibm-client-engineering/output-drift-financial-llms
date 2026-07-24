@@ -22,12 +22,12 @@ verified = [
     ('Claude Sonnet 4', 'Compliance',   82, 34),
     ('Claude Sonnet 4', 'Portfolio',    86, 68),
     ('Claude Sonnet 4', 'DataOps',      84, 10),
-    ('Claude Opus 4.5', 'Compliance',   72, 64),
-    ('Claude Opus 4.5', 'Portfolio',    78, 38),
+    ('Claude Opus 4', 'Compliance',   72, 64),
+    ('Claude Opus 4', 'Portfolio',    78, 38),
     ('Gemini 2.0 Flash','Compliance',   68, 52),
     ('Gemini 2.0 Flash','Portfolio',    96, 62),
     ('Gemini 2.0 Flash','DataOps',      94, 34),
-    # Claude Opus 4.5 DataOps: not in verified unified files, omitted
+    # Claude Opus 4 DataOps: not in verified unified files, omitted
 ]
 
 models = [x[0] for x in verified]

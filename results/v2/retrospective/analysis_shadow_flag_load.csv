@@ -1,0 +1,9 @@
+model,model_name,observed_groups,flagged_groups,flags_per_100_observed_groups,illustrative_trigger,materiality_assessed
+qwen3.5_latest,Qwen 3.5,100,0,0.0,dar_equals_1_and_tar_sequence_below_1,False
+gemma4_latest,Gemma 4,100,1,1.0,dar_equals_1_and_tar_sequence_below_1,False
+qwen2.5_7b-instruct,Qwen 2.5 7B,100,1,1.0,dar_equals_1_and_tar_sequence_below_1,False
+gpt-oss_20b,GPT-OSS 20B,100,5,5.0,dar_equals_1_and_tar_sequence_below_1,False
+gemini-2.0-flash,Gemini 2.0 Flash,100,20,20.0,dar_equals_1_and_tar_sequence_below_1,False
+gemini-2.5-pro,Gemini 2.5 Pro,44,14,31.818181818181817,dar_equals_1_and_tar_sequence_below_1,False
+claude-opus-4-20250514,Claude Opus 4,75,31,41.333333333333336,dar_equals_1_and_tar_sequence_below_1,False
+claude-sonnet-4-20250514,Claude Sonnet 4,100,50,50.0,dar_equals_1_and_tar_sequence_below_1,False

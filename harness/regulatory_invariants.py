@@ -1,27 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Regulatory Invariants for Financial AI Compliance.
+Historical control-invariant examples for the financial AI workshop.
 
-This module encodes finance-specific validation logic with explicit mappings to
-regulatory requirements from FSB, BIS, CFTC, and other financial oversight bodies.
+This legacy module records illustrative benchmark checks and possible regulatory
+touchpoints. It is not legal guidance, does not implement the cited rules, and
+does not determine compliance. Numeric defaults must be replaced with values
+approved for the intended workflow.
 
-The invariants defined here are NOT generic ML reproducibility measures—they are
-calibrated to specific regulatory thresholds and compliance requirements for
-financial services AI deployments.
+The source names below are retained as possible governance touchpoints from the
+original workshop. They do not establish that a rule applies to a given system
+or that the numerical profiles implement that rule.
 
-Regulatory Framework References:
-    - FSB (Financial Stability Board): "Principles for Effective Risk Data Aggregation"
-      requires "consistent decisions" across identical inputs for regulatory reporting.
-    - BIS (Bank for International Settlements): Basel III framework requires
-      reproducible risk calculations within defined tolerance bands.
-    - CFTC (Commodity Futures Trading Commission): Rule 17a-4 mandates complete
-      audit trails for automated trading decisions.
-    - SEC Rule 17a-4: Requires broker-dealers to preserve records in non-rewritable format.
-    - GAAP ASC 450: Materiality threshold of 5% for financial statement disclosures.
-    - EU AI Act (2024): High-risk AI systems require documented decision rationale.
-
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
 
 from typing import Dict, Any, List, Optional, Callable
@@ -31,42 +22,34 @@ import math
 
 
 # =============================================================================
-# REGULATORY THRESHOLD CONSTANTS
+# HISTORICAL WORKSHOP DEFAULTS
 # =============================================================================
 
-# GAAP ASC 450-20 Materiality Threshold
-# SEC Staff Accounting Bulletin No. 99 establishes 5% as the de facto materiality
-# threshold for financial statement disclosures. Deviations below this threshold
-# are considered immaterial and do not require disclosure or restatement.
-GAAP_MATERIALITY_THRESHOLD: float = 0.05  # 5% tolerance for numerical outputs
+# The workshop used 5% as an illustrative numeric comparison tolerance. There is
+# no universal 5% GAAP materiality threshold.
+DEFAULT_NUMERIC_TOLERANCE: float = 0.05
+# Deprecated compatibility alias. The name must not be read as legal guidance.
+GAAP_MATERIALITY_THRESHOLD: float = DEFAULT_NUMERIC_TOLERANCE
 
-# Basel III Operational Risk Tolerance
-# BIS BCBS 239 (Principles for effective risk data aggregation) requires
-# consistency in risk calculations. This tolerance applies to aggregated metrics.
-BASEL_III_RISK_TOLERANCE: float = 0.01  # 1% tolerance for risk calculations
+# Illustrative 1% numeric profile retained for backward compatibility.
+BASEL_III_RISK_TOLERANCE: float = 0.01
 
-# FSB Consistency Requirement
-# FSB "Principles for Sound Practices in Operational Resilience" requires
-# that identical inputs produce identical outputs for regulatory reporting.
-FSB_IDENTITY_REQUIREMENT: float = 1.0  # 100% identity rate required
+# Exact-output workshop target retained for backward compatibility.
+FSB_IDENTITY_REQUIREMENT: float = 1.0
 
-# SEC Citation Accuracy Threshold
-# SEC Rule 10b-5 anti-fraud provisions require accurate source attribution.
-# Citations must map to actual provided documents with high accuracy.
-SEC_CITATION_ACCURACY_THRESHOLD: float = 0.95  # 95% citation validity required
+# Illustrative source-reference match target retained for compatibility.
+SEC_CITATION_ACCURACY_THRESHOLD: float = 0.95
 
-# CFTC Audit Trail Completeness
-# CFTC Rule 17a-4 requires complete, immutable audit trails for all
-# automated trading and advisory decisions.
-CFTC_AUDIT_COMPLETENESS_THRESHOLD: float = 1.0  # 100% trace coverage required
+# Historical workshop trace-completeness target.
+CFTC_AUDIT_COMPLETENESS_THRESHOLD: float = 1.0
 
 
 # =============================================================================
-# REGULATORY REQUIREMENT MAPPINGS
+# POSSIBLE GOVERNANCE TOUCHPOINT LABELS
 # =============================================================================
 
 class RegulatoryBody(Enum):
-    """Financial regulatory bodies with jurisdiction over AI systems."""
+    """Legacy source labels used by the workshop profiles."""
     FSB = "Financial Stability Board"
     BIS = "Bank for International Settlements"
     CFTC = "Commodity Futures Trading Commission"
@@ -75,21 +58,22 @@ class RegulatoryBody(Enum):
     EU_AI_ACT = "European Union AI Act"
     FINRA = "Financial Industry Regulatory Authority"
     OCC = "Office of the Comptroller of the Currency"
+    BENCHMARK = "Illustrative benchmark configuration"
 
 
 @dataclass(frozen=True)
 class RegulatoryRequirement:
     """
-    Immutable specification of a regulatory compliance requirement.
+    Immutable historical workshop control profile.
 
     Attributes:
-        body: Regulatory authority issuing the requirement
-        rule_id: Specific rule or principle identifier
+        body: Possible governance touchpoint or benchmark label
+        rule_id: Legacy profile identifier
         requirement_name: Human-readable name
-        description: Detailed description of the requirement
-        threshold: Numeric threshold for compliance (if applicable)
+        description: Detailed description of the workshop profile
+        threshold: Configured benchmark threshold (if applicable)
         threshold_type: How to interpret the threshold ('min', 'max', 'exact')
-        citation: Official document citation
+        citation: Potential source touchpoint or benchmark note
     """
     body: RegulatoryBody
     rule_id: str
@@ -101,175 +85,170 @@ class RegulatoryRequirement:
 
 
 # =============================================================================
-# FINANCIAL AI COMPLIANCE REQUIREMENTS DATABASE
+# HISTORICAL WORKSHOP CONTROL PROFILES
 # =============================================================================
 
 REGULATORY_REQUIREMENTS: Dict[str, RegulatoryRequirement] = {
-    # FSB Requirements
+    # Legacy keys are preserved for wire compatibility. The descriptions define
+    # benchmark profiles, not regulator-issued requirements.
     "fsb_consistent_decisions": RegulatoryRequirement(
-        body=RegulatoryBody.FSB,
-        rule_id="BCBS-239-P6",
-        requirement_name="Consistent Decision Outputs",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-EXACT-OUTPUT",
+        requirement_name="Exact-Output Replay Profile",
         description=(
-            "Identical inputs must produce identical outputs for regulatory reporting. "
-            "This ensures that risk aggregation and regulatory submissions are reproducible "
-            "across time and systems."
+            "The workshop profile checks exact output identity across repeated "
+            "inputs. BCBS 239 does not prescribe identical LLM outputs."
         ),
         threshold=FSB_IDENTITY_REQUIREMENT,
         threshold_type="min",
-        citation="FSB Principles for Effective Risk Data Aggregation (2013), Principle 6: Accuracy"
+        citation="Historical workshop profile; not a BCBS 239 requirement"
     ),
 
     "fsb_adaptability": RegulatoryRequirement(
-        body=RegulatoryBody.FSB,
-        rule_id="BCBS-239-P11",
-        requirement_name="Adaptability and Flexibility",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-ADAPTABILITY",
+        requirement_name="Adaptability Documentation Profile",
         description=(
-            "Data aggregation systems must be adaptable to changes in business needs, "
-            "regulations, and risk management practices while maintaining consistency."
+            "The workshop records whether a configuration can be changed while "
+            "preserving the declared replay contract."
         ),
         threshold=None,
         threshold_type="qualitative",
-        citation="FSB Principles for Effective Risk Data Aggregation (2013), Principle 11"
+        citation="Historical workshop profile; not a BCBS 239 requirement"
     ),
 
-    # BIS/Basel Requirements
     "bis_risk_calculation_tolerance": RegulatoryRequirement(
-        body=RegulatoryBody.BIS,
-        rule_id="BCBS-457",
-        requirement_name="Risk Calculation Reproducibility",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-NUMERIC-REPLAY",
+        requirement_name="Illustrative Numeric-Replay Profile",
         description=(
-            "Risk-weighted asset calculations must be reproducible within defined tolerance "
-            "bands to ensure comparability across institutions and time periods."
+            "The workshop applies a configurable 1% comparison band to selected "
+            "numeric examples. It is not a Basel-prescribed universal tolerance."
         ),
         threshold=BASEL_III_RISK_TOLERANCE,
         threshold_type="max",
-        citation="Basel III: Finalising post-crisis reforms (BCBS 457), December 2017"
+        citation="Historical workshop tolerance; not a Basel requirement"
     ),
 
-    # CFTC Requirements
     "cftc_audit_trail": RegulatoryRequirement(
-        body=RegulatoryBody.CFTC,
-        rule_id="17-CFR-1.31",
-        requirement_name="Audit Trail Completeness",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-TRACE-FIELDS",
+        requirement_name="Trace-Field Completeness Profile",
         description=(
-            "All automated trading decisions must have complete, immutable audit trails "
-            "that document the inputs, processing logic, and outputs for each decision."
+            "The workshop checks whether a configured list of trace fields is "
+            "present. It does not determine CFTC recordkeeping compliance."
         ),
         threshold=CFTC_AUDIT_COMPLETENESS_THRESHOLD,
         threshold_type="min",
-        citation="CFTC Regulation 1.31 - Books and Records"
+        citation="Historical workshop trace-field profile; not a recordkeeping determination"
     ),
 
     "cftc_ai_documentation": RegulatoryRequirement(
-        body=RegulatoryBody.CFTC,
-        rule_id="TAC-2020-AI",
-        requirement_name="AI System Documentation",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-MODEL-DOCUMENTATION",
+        requirement_name="Model Documentation Profile",
         description=(
-            "AI systems used in trading must document model architecture, training data, "
-            "validation procedures, and ongoing monitoring protocols."
+            "The workshop records selected model, validation, and monitoring "
+            "metadata for later review."
         ),
         threshold=None,
         threshold_type="qualitative",
-        citation="CFTC Technology Advisory Committee AI Recommendations (2020)"
+        citation="Historical workshop model-documentation profile"
     ),
 
-    # SEC Requirements
     "sec_citation_accuracy": RegulatoryRequirement(
-        body=RegulatoryBody.SEC,
-        rule_id="17-CFR-240.10b-5",
-        requirement_name="Source Attribution Accuracy",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-SOURCE-MATCH",
+        requirement_name="Source-Reference Match Profile",
         description=(
-            "AI-generated content citing regulatory filings must accurately reference "
-            "the source documents. Fabricated or hallucinated citations violate anti-fraud "
-            "provisions."
+            "The workshop checks whether extracted citation identifiers occur in "
+            "the supplied source list. It does not determine a Rule 10b-5 violation."
         ),
         threshold=SEC_CITATION_ACCURACY_THRESHOLD,
         threshold_type="min",
-        citation="SEC Rule 10b-5: Employment of Manipulative and Deceptive Practices"
+        citation="Historical workshop source-reference profile; not a legal determination"
     ),
 
     "sec_record_retention": RegulatoryRequirement(
-        body=RegulatoryBody.SEC,
-        rule_id="17-CFR-240.17a-4",
-        requirement_name="Record Retention Requirements",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-RECORD-CAPTURE",
+        requirement_name="Record-Capture Profile",
         description=(
-            "Broker-dealers must retain records of AI-assisted communications and decisions "
-            "in non-rewritable, non-erasable format for specified retention periods."
+            "The workshop records selected replay metadata. It does not determine "
+            "record scope, format, retention period, or Rule 17a-4 compliance."
         ),
         threshold=None,
         threshold_type="qualitative",
-        citation="SEC Rule 17a-4: Records to be Preserved by Certain Exchange Members"
+        citation="Historical workshop record-capture profile; not a retention determination"
     ),
 
-    # GAAP Requirements
+    # Legacy key retained for compatibility. This is an exercise setting, not a
+    # GAAP requirement or materiality determination.
     "gaap_materiality": RegulatoryRequirement(
-        body=RegulatoryBody.GAAP,
-        rule_id="ASC-450-20",
-        requirement_name="Materiality Threshold",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="EXERCISE-NUMERIC-TOLERANCE",
+        requirement_name="Illustrative Numeric Tolerance",
         description=(
-            "Numerical outputs from AI systems affecting financial statements must be "
-            "within 5% of expected values. Deviations exceeding this threshold may require "
-            "disclosure or restatement."
+            "The workshop compares selected numeric outputs using a configurable "
+            "5% default. This value is not a universal accounting threshold."
         ),
         threshold=GAAP_MATERIALITY_THRESHOLD,
         threshold_type="max",
-        citation="FASB ASC 450-20; SEC SAB No. 99 (1999)"
+        citation="Illustrative benchmark setting; configure per approved task contract"
     ),
 
-    # EU AI Act Requirements
     "eu_ai_act_high_risk": RegulatoryRequirement(
-        body=RegulatoryBody.EU_AI_ACT,
-        rule_id="Art-6-Annex-III",
-        requirement_name="High-Risk AI System Requirements",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-CLASSIFICATION-REVIEW",
+        requirement_name="High-Risk Classification Review Profile",
         description=(
-            "AI systems used in creditworthiness assessment or financial risk evaluation "
-            "are classified as high-risk and must meet transparency, documentation, and "
-            "human oversight requirements."
+            "The workshop flags a task for independent scope and classification "
+            "review; the task label alone does not determine legal status."
         ),
         threshold=None,
         threshold_type="qualitative",
-        citation="EU AI Act (2024), Article 6, Annex III Category 5(b)"
+        citation="Historical workshop classification-review profile; obtain independent legal scope review"
     ),
 
     "eu_ai_act_transparency": RegulatoryRequirement(
-        body=RegulatoryBody.EU_AI_ACT,
-        rule_id="Art-13",
-        requirement_name="Transparency and Information",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="WORKSHOP-TRANSPARENCY-METADATA",
+        requirement_name="Transparency Metadata Profile",
         description=(
-            "High-risk AI systems must be designed to enable users to interpret outputs "
-            "and use them appropriately. This includes logging capabilities for traceability."
+            "The workshop checks whether selected traceability metadata is "
+            "captured for later review."
         ),
         threshold=None,
         threshold_type="qualitative",
-        citation="EU AI Act (2024), Article 13: Transparency"
+        citation="Historical workshop transparency-metadata profile"
     ),
 }
 
 
 # =============================================================================
-# TASK-SPECIFIC REGULATORY MAPPINGS
+# TASK-SPECIFIC WORKSHOP PROFILE MAPPINGS
 # =============================================================================
 
-# Maps each task type to the regulatory requirements it must satisfy
+# Legacy mapping of each task type to profiles the workshop evaluates. This does
+# not assert that every named source applies to the task.
 TASK_REGULATORY_MAPPINGS: Dict[str, List[str]] = {
     "rag": [
-        "fsb_consistent_decisions",      # Identical queries → identical answers
-        "sec_citation_accuracy",         # Citations must be valid
-        "sec_record_retention",          # Full audit trail required
-        "eu_ai_act_transparency",        # Interpretable outputs
+        "fsb_consistent_decisions",      # Exact-output workshop profile
+        "sec_citation_accuracy",         # Source-reference match profile
+        "sec_record_retention",          # Record-capture profile
+        "eu_ai_act_transparency",        # Transparency-metadata profile
     ],
     "sql": [
-        "gaap_materiality",              # Numeric results within 5%
-        "bis_risk_calculation_tolerance", # Reproducible calculations
-        "cftc_audit_trail",              # Complete decision documentation
-        "fsb_consistent_decisions",      # Deterministic outputs
+        "gaap_materiality",              # Legacy key: configurable numeric tolerance
+        "bis_risk_calculation_tolerance", # Numeric-replay profile
+        "cftc_audit_trail",              # Trace-field profile
+        "fsb_consistent_decisions",      # Exact-output profile
     ],
     "summary": [
-        "fsb_consistent_decisions",      # Consistent summarization
-        "sec_record_retention",          # Audit trail for client communications
-        "eu_ai_act_high_risk",           # High-risk system requirements
-        "cftc_ai_documentation",         # Model behavior documentation
+        "fsb_consistent_decisions",      # Exact-output profile
+        "sec_record_retention",          # Record-capture profile
+        "eu_ai_act_high_risk",           # Classification-review profile
+        "cftc_ai_documentation",         # Model-documentation profile
     ],
 }
 
@@ -284,19 +263,18 @@ def validate_gaap_materiality(
     threshold: float = GAAP_MATERIALITY_THRESHOLD
 ) -> Dict[str, Any]:
     """
-    Validate numeric output against GAAP materiality threshold.
+    Compare a numeric output with the configured exercise tolerance.
 
-    Per SEC Staff Accounting Bulletin No. 99 and FASB ASC 450-20, a deviation
-    is material if it exceeds 5% of the expected value and would influence
-    the judgment of a reasonable investor.
+    The function name is retained for backward compatibility. Its result does
+    not determine GAAP materiality or regulatory compliance.
 
     Args:
         actual_value: The value produced by the AI system
         expected_value: The expected/correct value
-        threshold: Materiality threshold (default: 5% per GAAP)
+        threshold: Task-specific tolerance (default: 5% for the exercise)
 
     Returns:
-        Dict with compliance status and regulatory metadata
+        Dict with the tolerance result and compatibility metadata
     """
     if expected_value == 0:
         deviation_pct = float('inf') if actual_value != 0 else 0.0
@@ -313,8 +291,10 @@ def validate_gaap_materiality(
         "threshold_pct": threshold,
         "regulatory_basis": REGULATORY_REQUIREMENTS["gaap_materiality"],
         "requirement_id": "gaap_materiality",
-        "regulatory_body": RegulatoryBody.GAAP.value,
-        "rule_citation": "FASB ASC 450-20; SEC SAB No. 99"
+        "within_tolerance": is_compliant,
+        "regulatory_body": RegulatoryBody.BENCHMARK.value,
+        "rule_citation": "Illustrative task tolerance; configure per approved workflow",
+        "interpretation": "Illustrative workshop profile; not legal or regulatory compliance",
     }
 
 
@@ -323,23 +303,23 @@ def validate_fsb_consistency(
     require_identity: bool = True
 ) -> Dict[str, Any]:
     """
-    Validate output consistency per FSB BCBS-239 Principle 6.
+    Apply the workshop's exact-output replay profile.
 
-    FSB requires that identical inputs produce identical outputs for
-    regulatory reporting purposes. This ensures reproducibility of
-    risk aggregation across systems and time periods.
+    The function and field names are retained for compatibility. Passing this
+    check does not establish compliance with BCBS 239 or any other rule.
 
     Args:
         outputs: List of outputs from identical inputs
         require_identity: If True, requires 100% identity; otherwise reports rate
 
     Returns:
-        Dict with compliance status and consistency metrics
+        Dict with profile status and consistency metrics
     """
     if not outputs:
         return {
             "compliant": False,
-            "error": "No outputs provided for consistency validation"
+            "error": "No outputs provided for consistency validation",
+            "interpretation": "Illustrative workshop profile; not legal or regulatory compliance",
         }
 
     reference = outputs[0]
@@ -356,8 +336,10 @@ def validate_fsb_consistency(
         "threshold": FSB_IDENTITY_REQUIREMENT,
         "regulatory_basis": REGULATORY_REQUIREMENTS["fsb_consistent_decisions"],
         "requirement_id": "fsb_consistent_decisions",
-        "regulatory_body": RegulatoryBody.FSB.value,
-        "rule_citation": "FSB BCBS-239 Principle 6: Accuracy"
+        "passed_profile": is_compliant,
+        "regulatory_body": RegulatoryBody.BENCHMARK.value,
+        "rule_citation": "Historical workshop exact-output profile",
+        "interpretation": "Illustrative workshop profile; not legal or regulatory compliance",
     }
 
 
@@ -367,22 +349,22 @@ def validate_sec_citations(
     threshold: float = SEC_CITATION_ACCURACY_THRESHOLD
 ) -> Dict[str, Any]:
     """
-    Validate citation accuracy per SEC Rule 10b-5.
+    Apply the workshop's source-reference match profile.
 
-    AI-generated content that cites SEC filings must accurately reference
-    actual documents. Fabricated citations may constitute a violation of
-    anti-fraud provisions.
+    This check compares identifiers against supplied sources. It does not
+    establish factual accuracy or determine a Rule 10b-5 violation.
 
     Args:
         citations: List of citations extracted from AI output
         available_sources: List of valid source document identifiers
-        threshold: Minimum accuracy threshold (default: 95%)
+        threshold: Configured source-match threshold (default: 95% in the workshop)
 
     Returns:
-        Dict with compliance status and citation analysis
+        Dict with profile status and citation analysis
     """
     if not citations:
-        # No citations is compliant (no false citations)
+        # With no citations, there are no identifiers to compare. This says
+        # nothing about factual accuracy or legal compliance.
         return {
             "compliant": True,
             "citation_accuracy": 1.0,
@@ -391,8 +373,10 @@ def validate_sec_citations(
             "invalid_citations": [],
             "regulatory_basis": REGULATORY_REQUIREMENTS["sec_citation_accuracy"],
             "requirement_id": "sec_citation_accuracy",
-            "regulatory_body": RegulatoryBody.SEC.value,
-            "rule_citation": "SEC Rule 10b-5"
+            "passed_profile": True,
+            "regulatory_body": RegulatoryBody.BENCHMARK.value,
+            "rule_citation": "Historical workshop source-reference profile",
+            "interpretation": "Illustrative workshop profile; not factual, legal, or regulatory compliance",
         }
 
     # Normalize source names (handle with/without .txt extension)
@@ -419,8 +403,10 @@ def validate_sec_citations(
         "threshold": threshold,
         "regulatory_basis": REGULATORY_REQUIREMENTS["sec_citation_accuracy"],
         "requirement_id": "sec_citation_accuracy",
-        "regulatory_body": RegulatoryBody.SEC.value,
-        "rule_citation": "SEC Rule 10b-5"
+        "passed_profile": is_compliant,
+        "regulatory_body": RegulatoryBody.BENCHMARK.value,
+        "rule_citation": "Historical workshop source-reference profile",
+        "interpretation": "Illustrative workshop profile; not factual, legal, or regulatory compliance",
     }
 
 
@@ -429,18 +415,17 @@ def validate_cftc_audit_trail(
     required_fields: Optional[List[str]] = None
 ) -> Dict[str, Any]:
     """
-    Validate audit trail completeness per CFTC Regulation 1.31.
+    Apply the workshop's configured trace-field completeness profile.
 
-    CFTC requires complete, immutable audit trails for automated trading
-    decisions. This validates that all required fields are present in
-    the trace record.
+    This presence check does not test immutability, retention, record scope, or
+    compliance with CFTC 17 CFR 1.31.
 
     Args:
         trace_record: The audit trail record to validate
         required_fields: List of required field names (defaults to standard set)
 
     Returns:
-        Dict with compliance status and field analysis
+        Dict with profile status and field analysis
     """
     if required_fields is None:
         required_fields = [
@@ -466,8 +451,10 @@ def validate_cftc_audit_trail(
         "threshold": CFTC_AUDIT_COMPLETENESS_THRESHOLD,
         "regulatory_basis": REGULATORY_REQUIREMENTS["cftc_audit_trail"],
         "requirement_id": "cftc_audit_trail",
-        "regulatory_body": RegulatoryBody.CFTC.value,
-        "rule_citation": "CFTC Regulation 1.31"
+        "passed_profile": is_compliant,
+        "regulatory_body": RegulatoryBody.BENCHMARK.value,
+        "rule_citation": "Historical workshop trace-field profile",
+        "interpretation": "Illustrative workshop profile; not legal or regulatory compliance",
     }
 
 
@@ -480,14 +467,17 @@ def validate_task_compliance(
     validation_results: Dict[str, Any]
 ) -> Dict[str, Any]:
     """
-    Aggregate validation results for a task against all applicable regulations.
+    Aggregate legacy-named workshop profile results for a task.
+
+    The function name and ``compliant`` fields are compatibility aliases. The
+    aggregate is not a legal or regulatory compliance determination.
 
     Args:
         task_type: One of 'rag', 'sql', 'summary'
         validation_results: Dict mapping requirement_id to validation result
 
     Returns:
-        Composite compliance report with per-regulation breakdown
+        Composite profile report with legacy compatibility fields
     """
     applicable_requirements = TASK_REGULATORY_MAPPINGS.get(task_type, [])
 
@@ -510,8 +500,10 @@ def validate_task_compliance(
     return {
         "task_type": task_type,
         "overall_compliant": all_compliant,
+        "all_profiles_passed": all_compliant,
         "applicable_requirements": applicable_requirements,
         "validation_results": compliance_results,
+        "interpretation": "Illustrative workshop profiles; not legal or regulatory compliance",
         "regulatory_bodies_involved": list(set(
             REGULATORY_REQUIREMENTS[req_id].body.value
             for req_id in applicable_requirements
@@ -522,10 +514,10 @@ def validate_task_compliance(
 
 def get_regulatory_metadata_for_task(task_type: str) -> Dict[str, Any]:
     """
-    Get regulatory metadata for inclusion in audit trail entries.
+    Get legacy workshop-profile metadata for trace entries.
 
-    This provides the regulatory context for each task type, suitable
-    for embedding in JSONL trace records.
+    The metadata names possible governance touchpoints. It does not establish
+    applicability or compliance.
 
     Args:
         task_type: One of 'rag', 'sql', 'summary'
@@ -553,6 +545,10 @@ def get_regulatory_metadata_for_task(task_type: str) -> Dict[str, Any]:
             "task_type": task_type,
             "applicable_requirements": applicable_req_ids,
             "requirements_detail": requirements_detail,
-            "compliance_standard": "ACM_ICAIF_2025_Financial_AI"
+            "compliance_standard": "AI4F_2025_Financial_AI",
+            "interpretation": (
+                "Historical workshop profile metadata; not legal or "
+                "regulatory compliance"
+            ),
         }
     }

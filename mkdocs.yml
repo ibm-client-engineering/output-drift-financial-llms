@@ -1,5 +1,5 @@
 # Project information
-site_name: Output Drift in Financial LLMs Workshop
+site_name: Output Drift + DFAH
 site_url: https://ibm-client-engineering.github.io/output-drift-financial-llms
 site_author: IBM Client Engineering
 
@@ -21,7 +21,13 @@ nav:
     - Lab 5. Cross-Provider Testing: lab-5/README.md
     - Lab 6. Extending the Framework: lab-6/README.md
     - Lab 7. Replayable Financial Agents: lab-7/README.md
-    - Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles: lab-8/README.md
+    - Lab 8. DFAH-Bench — Replay Measurement: lab-8/README.md
+  - DFAH Package:
+    - Quickstart: dfah/quickstart.md
+    - Bring Your Own Agent: dfah/bring-your-own-agent.md
+    - Production Rollout: dfah/production.md
+    - Design Decisions: dfah/design.md
+    - Release Process: dfah/releasing.md
   - Resources:
     - Research Paper: resources/paper.md
     - API Reference: resources/api.md
@@ -55,6 +61,9 @@ plugins:
   - search
 
 # Customization
+extra_css:
+  - stylesheets/extra.css
+
 extra:
   social:
     - icon: fontawesome/brands/github

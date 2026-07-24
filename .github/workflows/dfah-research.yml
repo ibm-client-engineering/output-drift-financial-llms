@@ -1,0 +1,50 @@
+name: DFAH research artifacts
+
+on:
+  pull_request:
+    paths:
+      - "bench/**"
+      - "harness/**"
+      - "results/**"
+      - "scripts/**"
+      - "tests/**"
+      - "!tests/dfah/**"
+      - "Makefile"
+      - "requirements.txt"
+      - ".github/workflows/dfah-research.yml"
+  push:
+    branches: [main]
+    paths:
+      - "bench/**"
+      - "harness/**"
+      - "results/**"
+      - "scripts/**"
+      - "tests/**"
+      - "!tests/dfah/**"
+      - "Makefile"
+      - "requirements.txt"
+      - ".github/workflows/dfah-research.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    name: Reproduce corrected and archived analyses
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+      PYTHONDONTWRITEBYTECODE: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest -q tests --ignore=tests/dfah
+      - run: make PYTHON=python reproduce-paper
+      - run: make PYTHON=python verify-v2-manifest
+      - run: make PYTHON=python reproduce-paper-v1-fast

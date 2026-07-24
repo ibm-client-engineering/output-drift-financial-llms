@@ -1,0 +1,3 @@
+model,tasks,case_groups,episodes,observed_tool_calls,exclusion_reason,capability_inference
+granite3.3_latest,2,100,800,0,historical configuration observed zero tool calls,none; exact configuration/harness observation only
+mistral_7b,2,68,544,0,historical configuration observed zero tool calls,none; exact configuration/harness observation only

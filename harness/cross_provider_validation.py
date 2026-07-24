@@ -2,11 +2,12 @@
 """
 Cross-provider validation for LLM output consistency.
 
-Validates that LLM outputs remain stable across deployment environments:
+Compares whether LLM outputs remain stable across serving environments:
 - Local (Ollama)
 - Cloud (IBM watsonx.ai)
 
-Implements finance-calibrated tolerance thresholds for MiFID II compliance.
+Thresholds are configurable workshop settings. They are not calibrated to, and
+do not establish compliance with, MiFID II or another regulatory standard.
 """
 import hashlib
 from typing import List, Dict, Any, Optional
@@ -15,11 +16,11 @@ from rapidfuzz.distance import Levenshtein
 
 class CrossProviderValidator:
     """
-    Cross-provider validation with finance-calibrated invariants.
+    Cross-provider comparison using workshop-configured invariants.
 
     Key features:
     - Normalized edit distance for text comparison
-    - Finance-calibrated tolerance thresholds (±5% for GAAP materiality)
+    - Configurable numeric tolerance (±5% in the workshop exercise)
     - Task-specific validation rules
     - Audit trail generation
     """
@@ -30,7 +31,7 @@ class CrossProviderValidator:
 
         Args:
             providers: List of provider names (e.g., ["ollama", "watsonx"])
-            tolerance_pct: Tolerance percentage for numeric comparisons (default: 5% for GAAP)
+            tolerance_pct: Task-specific numeric comparison tolerance (default: 5% for this exercise)
         """
         self.providers = providers
         self.tolerance_pct = tolerance_pct
@@ -154,7 +155,7 @@ class CrossProviderValidator:
         Checks:
         - Citation consistency
         - Text similarity
-        - Factual alignment
+        - Output-string similarity
 
         Args:
             outputs: provider -> output text
@@ -170,10 +171,14 @@ class CrossProviderValidator:
         ref_provider = provider_names[0]
         ref_output = outputs[ref_provider]
         ref_citations = set(citations.get(ref_provider, []))
+        citation_coverage_complete = all(
+            provider in citations for provider in provider_names
+        )
 
         results = {
-            "consistent": True,
-            "citation_consistent": True,
+            "consistent": citation_coverage_complete,
+            "citation_consistent": citation_coverage_complete,
+            "citation_coverage_complete": citation_coverage_complete,
             "text_similarity": {},
             "citation_drift": {}
         }
@@ -189,6 +194,7 @@ class CrossProviderValidator:
             # Citation consistency
             current_citations = set(citations.get(provider, []))
             if ref_citations != current_citations:
+                results["consistent"] = False
                 results["citation_consistent"] = False
                 results["citation_drift"][provider] = {
                     "missing": list(ref_citations - current_citations),
@@ -224,15 +230,23 @@ class CrossProviderValidator:
             "consistent": True,
             "text_similarity": {},
             "schema_consistent": True,
+            "schema_coverage_complete": True,
         }
 
         # Check if outputs parse as JSON and have matching keys
         ref_keys = None
         try:
             ref_parsed = json.loads(ref_output)
-            ref_keys = set(ref_parsed.keys()) if isinstance(ref_parsed, dict) else None
+            if isinstance(ref_parsed, dict):
+                ref_keys = set(ref_parsed.keys())
+            else:
+                validation["consistent"] = False
+                validation["schema_consistent"] = False
+                validation["schema_coverage_complete"] = False
         except (json.JSONDecodeError, AttributeError):
-            pass
+            validation["consistent"] = False
+            validation["schema_consistent"] = False
+            validation["schema_coverage_complete"] = False
 
         for provider in provider_names[1:]:
             similarity = self.compute_similarity(ref_output, outputs[provider])
@@ -245,10 +259,17 @@ class CrossProviderValidator:
             if ref_keys is not None:
                 try:
                     parsed = json.loads(outputs[provider])
-                    if isinstance(parsed, dict) and set(parsed.keys()) != ref_keys:
+                    if not isinstance(parsed, dict):
+                        validation["consistent"] = False
+                        validation["schema_consistent"] = False
+                        validation["schema_coverage_complete"] = False
+                    elif set(parsed.keys()) != ref_keys:
+                        validation["consistent"] = False
                         validation["schema_consistent"] = False
                 except (json.JSONDecodeError, AttributeError):
+                    validation["consistent"] = False
                     validation["schema_consistent"] = False
+                    validation["schema_coverage_complete"] = False
 
         return validation
 
@@ -278,7 +299,8 @@ class CrossProviderValidator:
         validation = {
             "consistent": True,
             "query_similarity": {},
-            "result_match": {}
+            "result_match": {},
+            "result_coverage_complete": True,
         }
 
         for provider in provider_names[1:]:
@@ -289,11 +311,21 @@ class CrossProviderValidator:
             # Result equivalence (for numeric results)
             current_result = results.get(provider)
             if isinstance(ref_result, (int, float)) and isinstance(current_result, (int, float)):
-                tolerance = (self.tolerance_pct / 100.0) * abs(ref_result)
+                # Symmetric relative tolerance: provider ordering must not
+                # change the comparison result.
+                scale = max(abs(ref_result), abs(current_result))
+                tolerance = (self.tolerance_pct / 100.0) * scale
                 match = abs(ref_result - current_result) <= tolerance
                 validation["result_match"][provider] = match
                 if not match:
                     validation["consistent"] = False
+            else:
+                # Textual SQL similarity is descriptive only. Without executed
+                # results for both providers, this method cannot establish
+                # equivalent query behavior.
+                validation["consistent"] = False
+                validation["result_coverage_complete"] = False
+                validation["result_match"][provider] = None
 
         return validation
 

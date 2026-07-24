@@ -6,47 +6,56 @@ In this lab, you'll learn how to analyze experimental results, generate visualiz
 
 **Duration**: ~25 minutes
 
+!!! note "Historical workshop scope"
+    The three tiers below are descriptive labels for the original experiment,
+    not compliance, safety, or deployment certifications. Model behavior is
+    configuration- and task-dependent. Requalify the exact system and inspect
+    decision and tool-path evidence before operational use.
+
 ## Learning Objectives
 
 By the end of this lab, you will:
 
 - Understand the 3-tier model classification (Tier 1, 2, 3)
 - Calculate and interpret drift metrics (consistency, Jaccard similarity)
-- Generate visualizations from audit trails
-- Identify compliance-safe vs non-compliant configurations
-- Make deployment recommendations based on metrics
+- Generate visualizations from replay records
+- Identify high- and low-repeatability configurations in the exercise
+- Use metrics to prioritize further validation
 
 ## Prerequisites
 
 - Completed [Lab 3: Running Your First Experiment](../lab-3/README.md)
-- Audit trails in `traces/` directory
+- Replay records in the `traces/` directory
 - Python packages: `pandas`, `matplotlib`, `seaborn`
 
 ## The 3-Tier Model Classification
 
-Our research revealed that **model size inversely correlates with deterministic behavior**—smaller models are more reliable for compliance!
+The original experiment produced three descriptive repeatability bands. The
+small and large configurations also differed in model family and serving stack,
+so the results do not isolate model size as a cause.
 
-### Tier 1: Audit-Ready (100% Consistency @ T=0.0)
+### Tier 1: High Observed Repeatability (100% Consistency @ T=0.0)
 
 **Models**: 7-20B parameter models
 - Qwen2.5-7B-Instruct (Ollama)
 - IBM Granite-3-8B-Instruct (watsonx.ai)
-- GPT-OSS-20B (Ollama)
+- GPT-OSS-20B (Ollama; separate workshop check outside the five-configuration matrix)
 
 **Characteristics**:
-- ✅ **100% deterministic** at T=0.0
-- ✅ Perfect schema compliance
+- ✅ Identical outputs in the tested T=0.0 runs
+- ✅ All captured outputs passed the exercise's schema-validity check
 - ✅ Zero decision flips
-- ✅ Audit-ready for all regulated tasks
+- △ Correctness and operational controls require separate validation
 
-**Recommended Use**:
-- Credit decisions
-- Regulatory reporting
-- Client communications
-- Any compliance-critical workflow
+**Candidate follow-up tests**:
+- Decision and tool-path replay on the intended task
+- Argument- and result-aware capture
+- Accuracy, policy, fairness, and control validation
 
 !!! success "The Counterintuitive Finding"
-    **Smaller ≠ Worse**: 7-20B models achieve perfect determinism while 120B models fail—a fundamental challenge to "bigger is better" assumptions!
+    In this bounded experiment, the tested 7-20B configurations repeated more
+    consistently than the tested 120B configuration. Treat that as a prompt to
+    test the actual deployment configuration, not as a model-size law.
 
 ### Tier 2: Task-Specific (56-100% Consistency @ T=0.0)
 
@@ -57,58 +66,55 @@ Our research revealed that **model size inversely correlates with deterministic 
 **Characteristics**:
 - ✅ 100% consistent for **SQL/structured tasks**
 - ⚠️ 56-80% consistent for **RAG tasks**
-- △ Task-dependent reliability
+- △ Observed agreement varied by task
 
-**Recommended Use**:
-- SQL generation only
-- Structured data extraction
-- **Avoid**: RAG, open-ended Q&A, retrieval tasks
+**Observed pattern**:
+- Higher agreement on SQL and structured tasks
+- Lower agreement on RAG tasks
+- Task-specific qualification remains necessary
 
-### Tier 3: Non-Compliant (12.5% Consistency @ T=0.0)
+### Tier 3: Low Observed Repeatability (12.5% Consistency @ T=0.0)
 
 **Models**: 120B+ parameter models
 - GPT-OSS-120B (via watsonx.ai)
 
 **Characteristics**:
 - ❌ Only **12.5% consistent** (2/16 runs identical)
-- ❌ High drift across all task types
-- ❌ Unsuitable for regulated applications
+- ❌ High measured drift across the tested task types
+- △ Requires investigation before any replay-dependent use
 
-**Recommendation**:
-- **Do not use** for financial compliance workflows
-- High-scale models trade determinism for capability
+**Next step**:
+- Reproduce the result under a frozen, tool-aware configuration
+- Evaluate capability and controls separately from repeatability
 
 ---
 
-## Option A: Use Built-in Analysis Tools (Quick Start)
+## Option A: Inspect the Runner Outputs
 
-The repository includes production-ready analysis tools. Use these if you want quick results:
-
-### Generate Visualizations
-
-```bash
-# Generate drift visualizations from your experimental results
-python plot_results.py traces/lab3_sql.jsonl traces/lab3_rag.jsonl
-```
-
-This creates:
-- Consistency comparison charts
-- Temperature sensitivity plots
-- Cross-provider validation graphs
-
-**Output**: PNG files in `results/` directory
-
-### Generate LaTeX Tables
+`run_evaluation.py` writes per-run measures to `results/summary.csv`, aggregate
+measures to `results/aggregate.csv`, and raw replay records to the selected
+trace directory:
 
 ```bash
-# Generate publication-ready tables from results
-python make_tables.py results/*.csv
+head -n 5 results/aggregate.csv
+head -n 5 results/summary.csv
+find traces/lab3_multi -name 'trace_*.jsonl'
 ```
 
-This generates LaTeX table code that you can include in reports or papers.
+Generate the historical workshop figures and tables from
+`results/aggregate.csv`:
 
-!!! tip "Production-Ready Tools"
-    These are the same tools used to generate figures and tables in the research paper. They include all statistical analysis and proper formatting.
+```bash
+python plot_results.py
+python make_tables.py
+```
+
+The commands write figures to `figs/` and LaTeX tables to `tables/`.
+
+!!! tip "Reproducible Analysis Tools"
+    The utilities accept both the archived `pct_identical` column and the
+    current runner's equivalent `identity_rate` column. Inspect the experiment
+    inputs and plotting assumptions before reusing them for a different study.
 
 ---
 
@@ -116,49 +122,71 @@ This generates LaTeX table code that you can include in reports or papers.
 
 For deeper understanding, create custom analysis scripts:
 
-### Step 1: Load and Analyze Audit Trails
+### Step 1: Load and Analyze Replay Records
 
 Create `analyze_metrics.py`:
 
 ```python
-import json
-import pandas as pd
 from collections import Counter
+import json
+from pathlib import Path
+
+from rapidfuzz.distance import Levenshtein
 
 def load_traces(filepath):
-    """Load JSONL audit trail."""
+    """Load JSONL replay records."""
     with open(filepath) as f:
         return [json.loads(line) for line in f]
 
 def calculate_consistency(traces):
-    """Calculate consistency percentage."""
-    response_hashes = [t["response_hash"] for t in traces]
-    unique_hashes = set(response_hashes)
-    most_common = Counter(response_hashes).most_common(1)[0]
+    """Calculate modal exact-output agreement for one replay group."""
+    outputs = [trace["output"] for trace in traces]
+    most_common = Counter(outputs).most_common(1)[0]
 
     return {
         "total_runs": len(traces),
-        "unique_responses": len(unique_hashes),
+        "unique_responses": len(set(outputs)),
         "consistency_pct": (most_common[1] / len(traces)) * 100,
         "most_common_count": most_common[1]
     }
 
 def calculate_drift_metrics(traces):
-    """Calculate mean drift and compliance metrics."""
-    factual_drifts = [t["compliance_metrics"]["factual_drift"] for t in traces]
-    schema_violations = sum(not t["compliance_metrics"]["schema_valid"] for t in traces)
-    decision_flips = sum(t["compliance_metrics"]["decision_flip"] for t in traces)
+    """Calculate descriptive measures for one replay group."""
+    reference = traces[0]["output"]
+    distances = [
+        Levenshtein.normalized_distance(reference, trace["output"])
+        for trace in traces
+    ]
+    schema_violations = sum(
+        bool(trace.get("schema_violation", False)) for trace in traces
+    )
+    decision_values = [
+        trace["decision_ok"] for trace in traces if "decision_ok" in trace
+    ]
+    decision_flips = (
+        sum(value != decision_values[0] for value in decision_values)
+        if decision_values
+        else 0
+    )
 
     return {
-        "mean_drift": sum(factual_drifts) / len(factual_drifts),
-        "max_drift": max(factual_drifts),
+        "mean_drift": sum(distances) / len(distances),
+        "max_drift": max(distances),
         "schema_violations": schema_violations,
         "decision_flips": decision_flips
     }
 
-# Example usage
-traces_sql = load_traces("traces/lab3_sql.jsonl")
-traces_rag = load_traces("traces/lab3_rag.jsonl")
+# Example usage: select one prompt ID so each list is one replay group.
+trace_file = next(Path("traces/lab3_multi").glob("trace_*.jsonl"))
+all_traces = load_traces(trace_file)
+traces_sql = [
+    trace for trace in all_traces
+    if trace["task"] == "sql" and trace["prompt_id"] == "s1"
+]
+traces_rag = [
+    trace for trace in all_traces
+    if trace["task"] == "rag" and trace["prompt_id"] == "q1"
+]
 
 print("📊 SQL Task Analysis (T=0.0, n=16)")
 print("=" * 60)
@@ -184,21 +212,21 @@ Run it:
 python analyze_metrics.py
 ```
 
-**Expected output:**
+The exact values depend on your newly captured runs. The output has this shape:
 
 ```
 📊 SQL Task Analysis (T=0.0, n=16)
 ============================================================
-Consistency: 100.0%
-Unique responses: 1
-Mean drift: 0.000
-Schema violations: 0
+Consistency: ...%
+Unique responses: ...
+Mean drift: ...
+Schema violations: ...
 
 📊 RAG Task Analysis (T=0.0, n=16)
 ============================================================
-Consistency: 93.8%
-Unique responses: 2
-Mean drift: 0.012
+Consistency: ...%
+Unique responses: ...
+Mean drift: ...
 ```
 
 ### Step 2: Visualize Tier Classification
@@ -214,7 +242,7 @@ import pandas as pd
 tier_data = pd.DataFrame({
     "Model": ["Granite-3-8B", "Qwen2.5-7B", "Llama-3.3-70B", "Mistral-Medium", "GPT-OSS-120B"],
     "Params": ["8B", "7B", "70B", "~70B", "120B"],
-    "Consistency": [100.0, 100.0, 80.0, 85.0, 12.5],
+    "Consistency": [100.0, 100.0, 80.0, 80.0, 12.5],
     "Tier": ["Tier 1", "Tier 1", "Tier 2", "Tier 2", "Tier 3"]
 })
 
@@ -227,8 +255,8 @@ colors = {"Tier 1": "#2E7D32", "Tier 2": "#F57C00", "Tier 3": "#C62828"}
 ax = sns.barplot(data=tier_data, x="Model", y="Consistency", hue="Tier", palette=colors, dodge=False)
 
 # Add threshold lines
-plt.axhline(y=100, color='green', linestyle='--', alpha=0.5, label='Audit-Ready (100%)')
-plt.axhline(y=90, color='orange', linestyle='--', alpha=0.5, label='Compliance Threshold (90%)')
+plt.axhline(y=100, color='green', linestyle='--', alpha=0.5, label='Exact agreement (100%)')
+plt.axhline(y=90, color='orange', linestyle='--', alpha=0.5, label='Illustrative review line (90%)')
 
 # Formatting
 plt.title("Model Consistency @ T=0.0 (n=16): The 3-Tier Classification", fontsize=14, fontweight='bold')
@@ -264,13 +292,15 @@ Consistency @ T=0.0 (n=16)
 Granite-3-8B    ████████████████████  100% (Tier 1)
 Qwen2.5-7B      ████████████████████  100% (Tier 1)
 Llama-3.3-70B   ████████████████       80% (Tier 2)
-Mistral-Medium  █████████████████      85% (Tier 2)
+Mistral-Medium  ████████████████       80% (Tier 2)
 GPT-OSS-120B    ██▌                  12.5% (Tier 3)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-!!! warning "The 120B Failure"
-    GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched—completely unsuitable for audit trails or regulated decisions.
+!!! warning "The 120B Low-Agreement Result"
+    GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched in
+    this exercise. That is a strong investigation signal, not a complete
+    suitability or compliance determination.
 
 ### Step 3: Temperature Sensitivity Analysis
 
@@ -298,7 +328,7 @@ sns.barplot(data=temp_data, x="Task", y="Consistency", hue="Temperature", ax=ax1
 ax1.set_title("Task Consistency: T=0.0 vs T=0.2", fontsize=14, fontweight='bold')
 ax1.set_ylabel("Consistency (%)", fontsize=12)
 ax1.set_xlabel("Task Type", fontsize=12)
-ax1.axhline(y=90, color='red', linestyle='--', alpha=0.5, label='Compliance Threshold')
+ax1.axhline(y=90, color='red', linestyle='--', alpha=0.5, label='Illustrative review line')
 ax1.legend(title="Temperature")
 ax1.set_ylim(0, 110)
 
@@ -361,28 +391,28 @@ plt.show()
 ```
 
 **Interpretation**:
-- 🟢 **Green (0.000-0.020)**: Compliance-safe
-- 🟡 **Yellow (0.020-0.050)**: Monitor closely
-- 🔴 **Red (>0.050)**: Non-compliant
+- 🟢 **Green (0.000-0.020)**: Low measured drift
+- 🟡 **Yellow (0.020-0.050)**: Moderate measured drift
+- 🔴 **Red (>0.050)**: High measured drift
 
-## Step 5: Compliance Scorecard
+## Step 5: Repeatability Scorecard
 
-Generate a compliance scorecard based on metrics:
+Generate a descriptive repeatability scorecard from the exercise metrics:
 
 ```python
 import pandas as pd
 
-def compliance_scorecard(traces):
-    """Generate compliance scorecard from audit trail."""
+def repeatability_scorecard(traces):
+    """Summarize replay evidence from an evaluation trace."""
     consistency = calculate_consistency(traces)
     drift = calculate_drift_metrics(traces)
 
-    # Scoring rules (from regulatory requirements)
+    # Illustrative review rules, not regulatory requirements.
     rules = {
-        "Determinism": consistency["consistency_pct"] >= 95.0,
-        "Low Drift": drift["mean_drift"] < 0.05,
-        "Schema Compliance": drift["schema_violations"] == 0,
-        "Decision Stability": drift["decision_flips"] == 0
+        "Exact Response Repeatability": consistency["consistency_pct"] >= 95.0,
+        "Low Normalized String Distance": drift["mean_drift"] < 0.05,
+        "Observed Schema Validity": drift["schema_violations"] == 0,
+        "No Decision Flip": drift["decision_flips"] == 0
     }
 
     passed = sum(rules.values())
@@ -391,96 +421,95 @@ def compliance_scorecard(traces):
     return {
         "rules": rules,
         "score": f"{passed}/{total}",
-        "compliant": passed == total
+        "all_checks_passed": passed == total
     }
 
-# Test with SQL task
-traces = load_traces("traces/lab3_sql.jsonl")
-scorecard = compliance_scorecard(traces)
+# Test with the SQL replay group selected above
+traces = traces_sql
+scorecard = repeatability_scorecard(traces)
 
-print("\n🎯 Compliance Scorecard: SQL Task (Qwen2.5-7B, T=0.0)")
+print("\n🎯 Repeatability Scorecard: SQL Task (Qwen2.5-7B, T=0.0)")
 print("=" * 60)
 for rule, passed in scorecard["rules"].items():
     status = "✅ PASS" if passed else "❌ FAIL"
     print(f"{rule:25s}: {status}")
 print(f"\nOverall Score: {scorecard['score']}")
-print(f"Compliant: {'✅ YES' if scorecard['compliant'] else '❌ NO'}")
+print(f"All checks passed: {'✅ YES' if scorecard['all_checks_passed'] else '❌ NO'}")
 ```
 
 **Expected output:**
 
 ```
-🎯 Compliance Scorecard: SQL Task (Qwen2.5-7B, T=0.0)
+🎯 Repeatability Scorecard: SQL Task (Qwen2.5-7B, T=0.0)
 ============================================================
-Determinism              : ✅ PASS
-Low Drift                : ✅ PASS
-Schema Compliance        : ✅ PASS
-Decision Stability       : ✅ PASS
+Exact Response Repeatability: ✅ PASS
+Low Normalized String Distance: ✅ PASS
+Observed Schema Validity    : ✅ PASS
+No Decision Flip            : ✅ PASS
 
 Overall Score: 4/4
-Compliant: ✅ YES
+All checks passed: ✅ YES
 ```
 
-## Deployment Decision Matrix
+## Validation-Priority Matrix
 
-Based on metrics, here's a decision matrix for production:
+Use the historical metrics to decide where further validation is most urgent:
 
-| Model | Tier | SQL | Summarize | RAG | Compliance Use | Notes |
-|-------|------|-----|-----------|-----|----------------|-------|
-| **Granite-3-8B** | 1 | ✅ | ✅ | ✅ | **All tasks** | 100% deterministic |
-| **Qwen2.5-7B** | 1 | ✅ | ✅ | ✅ | **All tasks** | 100% deterministic |
-| **Llama-3.3-70B** | 2 | ✅ | ✅ | ⚠️ | SQL only | RAG drift too high |
-| **Mistral-Medium** | 2 | ✅ | ✅ | ⚠️ | SQL only | RAG inconsistent |
-| **GPT-OSS-120B** | 3 | ❌ | ❌ | ❌ | **None** | Non-compliant |
+| Model | Tier | SQL | Summarize | RAG | Follow-up priority | Notes |
+|-------|------|-----|-----------|-----|--------------------|-------|
+| **Granite-3-8B** | 1 | ✅ | ✅ | ✅ | Path-aware replay | Exact output agreement in tested runs |
+| **Qwen2.5-7B** | 1 | ✅ | ✅ | ✅ | Path-aware replay | Exact output agreement in tested runs |
+| **Llama-3.3-70B** | 2 | ✅ | ✅ | ⚠️ | RAG investigation | RAG agreement was lower |
+| **Mistral-Medium** | 2 | ✅ | ✅ | ⚠️ | RAG investigation | RAG agreement was lower |
+| **GPT-OSS-120B** | 3 | ❌ | ❌ | ❌ | Full requalification | Low agreement in tested runs |
 
-**Recommendation Algorithm**:
+**Illustrative triage helper**:
 
 ```python
-def recommend_model(task_type, compliance_required):
-    """Recommend model based on task and compliance needs."""
-    if compliance_required:
-        if task_type in ["sql", "summarize", "rag"]:
-            return "Tier 1 (Granite-3-8B or Qwen2.5-7B)"
-        else:
-            return "Tier 1 only - evaluate before deployment"
-    else:
-        # Non-compliance use cases
-        if task_type in ["sql", "summarize"]:
-            return "Tier 1 or Tier 2"
-        elif task_type == "rag":
-            return "Tier 1 (Tier 2 shows drift)"
-        else:
-            return "Evaluate experimentally"
+def validation_priority(task_type, observed_tier):
+    """Return a follow-up test priority, not a deployment decision."""
+    if observed_tier == 3:
+        return "full requalification"
+    if task_type == "rag" and observed_tier == 2:
+        return "high: inspect retrieval and path variation"
+    return "standard: run the frozen, path-aware suite"
 
 # Examples
-print(recommend_model("sql", compliance_required=True))
-# Output: "Tier 1 (Granite-3-8B or Qwen2.5-7B)"
+print(validation_priority("sql", observed_tier=1))
+# Output: "standard: run the frozen, path-aware suite"
 
-print(recommend_model("rag", compliance_required=False))
-# Output: "Tier 1 (Tier 2 shows drift)"
+print(validation_priority("rag", observed_tier=2))
+# Output: "high: inspect retrieval and path variation"
 ```
 
 ## Key Takeaways
 
-1. **Size Paradox**: 7-20B models outperform 120B models for deterministic tasks
-2. **Tier 1 = Audit-Ready**: Only 100% consistent models are compliance-safe
-3. **Task Structure Matters**: SQL > Summarize > RAG for determinism
-4. **Temperature is Critical**: Even T=0.2 can double drift rates
-5. **Metrics Drive Decisions**: Use consistency, drift, and compliance scores to guide deployment
+1. **Bounded Size Pattern**: The smaller tested configurations repeated more consistently; the experiment does not isolate model size
+2. **Tier 1 = Observed Agreement**: It is a descriptive repeatability label, not a certification
+3. **Task Structure Mattered**: SQL and summarization had higher observed agreement than RAG
+4. **Temperature Merits Testing**: The tested RAG condition had lower agreement at T=0.2
+5. **Metrics Guide Investigation**: Use agreement and drift measures to target deeper validation
 
 ## Quiz: Test Your Understanding
 
 ??? question "Why are 7-20B models Tier 1 while 120B models are Tier 3?"
-    **Answer**: Smaller models achieve 100% determinism through simpler architectures and less non-deterministic parallelization, while larger models trade consistency for capability.
+    **Answer**: Those labels summarize the observed workshop runs. The experiment
+    does not establish why the configurations differed or support a general
+    causal claim about parameter count.
 
-??? question "What consistency threshold defines 'compliant' for regulated financial applications?"
-    **Answer**: ≥95% consistency (our research uses 100% as the gold standard for Tier 1).
+??? question "Does a consistency score define regulatory compliance?"
+    **Answer**: No. The exercise uses descriptive repeatability bands. A
+    compliance determination requires task-specific legal, policy, accuracy,
+    fairness, safety, and control review.
 
 ??? question "Which task type is most resilient to temperature increases?"
-    **Answer**: SQL generation—maintains 100% consistency even at T=0.2 due to structured output format.
+    **Answer**: SQL generation had the highest observed agreement in this
+    exercise, including 100% at T=0.2. The result is bounded to the tested
+    configuration.
 
 ??? question "What does a mean drift of 0.081 indicate?"
-    **Answer**: Moderate semantic variation across runs—approaching the threshold where factual inconsistencies emerge (>0.1).
+    **Answer**: Token-set variation across runs. The Jaccard score alone cannot
+    determine whether the difference is semantic, factual, or material.
 
 ## Next Steps
 
@@ -493,4 +522,6 @@ Now that you understand drift metrics and classification:
 ---
 
 !!! success "Lab 4 Complete!"
-    You can now analyze drift metrics, classify models, and make compliance-informed deployment decisions! Ready for cross-provider validation? Move on to [Lab 5: Cross-Provider Testing](../lab-5/README.md)!
+    You can now analyze drift metrics and use them to prioritize follow-up
+    validation. Ready for cross-provider replay? Move on to
+    [Lab 5: Cross-Provider Testing](../lab-5/README.md)!

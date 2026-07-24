@@ -1,6 +1,6 @@
 benchmark,model,model_display,benchmark_display,n_cases,mean_dar,mean_tar,gap,gap_ci_lo,gap_ci_hi,excludes_zero
 compliance,claude-sonnet-4-20250514,Claude Sonnet 4,Compliance,50,0.94,0.7933,0.1467,0.0867,0.2067,True
-compliance,claude-opus-4-20250514,Claude Opus 4.5,Compliance,50,0.9,0.78,0.12,0.0467,0.1933,True
+compliance,claude-opus-4-20250514,Claude Opus 4,Compliance,50,0.9,0.78,0.12,0.0467,0.1933,True
 compliance,gemini-2.5-pro,Gemini 2.5 Pro,Compliance,44,0.8864,0.7841,0.1023,0.0265,0.1742,True
 compliance,gemini-2.0-flash,Gemini 2.0 Flash,Compliance,50,0.8933,0.8867,0.0067,-0.0467,0.06,False
 compliance,gemma4_latest,Gemma 4,Compliance,49,0.9974,0.9949,0.0026,0.0,0.0077,False
@@ -8,7 +8,7 @@ compliance,qwen2.5_7b-instruct,Qwen 2.5 7B,Compliance,50,1.0,1.0,0.0,0.0,0.0,Fal
 compliance,qwen3.5_latest,Qwen 3.5,Compliance,50,1.0,1.0,0.0,0.0,0.0,False
 compliance,gpt-oss_20b,GPT-OSS 20B,Compliance,50,0.98,0.99,-0.01,-0.0225,0.0,False
 dataops,claude-sonnet-4-20250514,Claude Sonnet 4,DataOps,50,0.9467,0.6733,0.2733,0.2067,0.34,True
-dataops,claude-opus-4-20250514,Claude Opus 4.5,DataOps,25,0.88,0.6267,0.2533,0.16,0.3467,True
+dataops,claude-opus-4-20250514,Claude Opus 4,DataOps,25,0.88,0.6267,0.2533,0.16,0.3467,True
 dataops,gemini-2.0-flash,Gemini 2.0 Flash,DataOps,50,0.98,0.8933,0.0867,0.04,0.14,True
 dataops,gpt-oss_20b,GPT-OSS 20B,DataOps,49,0.9796,0.9694,0.0102,0.0026,0.0204,True
 dataops,gemma4_latest,Gemma 4,DataOps,50,1.0,1.0,0.0,0.0,0.0,False
@@ -16,7 +16,7 @@ dataops,qwen2.5_7b-instruct,Qwen 2.5 7B,DataOps,50,0.9925,0.9925,0.0,-0.0075,0.0
 dataops,qwen3.5_latest,Qwen 3.5,DataOps,50,1.0,1.0,0.0,0.0,0.0,False
 portfolio,gemini-2.5-pro,Gemini 2.5 Pro,Portfolio,46,0.8333,0.7101,0.1232,0.0399,0.2029,True
 portfolio,claude-sonnet-4-20250514,Claude Sonnet 4,Portfolio,50,0.9533,0.8333,0.12,0.0467,0.1933,True
-portfolio,claude-opus-4-20250514,Claude Opus 4.5,Portfolio,50,0.9267,0.82,0.1067,0.0667,0.1533,True
+portfolio,claude-opus-4-20250514,Claude Opus 4,Portfolio,50,0.9267,0.82,0.1067,0.0667,0.1533,True
 portfolio,gemini-2.0-flash,Gemini 2.0 Flash,Portfolio,50,0.9867,0.8933,0.0933,0.0467,0.1467,True
 portfolio,gpt-oss_20b,GPT-OSS 20B,Portfolio,50,0.93,0.91,0.02,0.0025,0.04,True
 portfolio,gemma4_latest,Gemma 4,Portfolio,50,1.0,0.99,0.01,0.0025,0.02,True

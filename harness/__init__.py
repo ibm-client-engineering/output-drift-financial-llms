@@ -1,28 +1,24 @@
 #!/usr/bin/env python3
 """
-LLM Output Drift Evaluation Harness for Financial AI Compliance.
+Historical LLM output-drift workshop harness.
 
-This harness implements finance-calibrated validation with explicit regulatory
-requirement mappings. Each component satisfies specific compliance requirements:
+This namespace preserves the original workshop API. Its rule mappings and
+thresholds are illustrative benchmark controls, not legal guidance, deployment
+authorization, or compliance determinations. The installable ``dfah`` package
+is the current replay-measurement API.
 
 - DeterministicRetriever: SEC Regulation S-K disclosure precedence encoding
-- Task Definitions: GAAP ASC 450-20 materiality thresholds
-- Regulatory Invariants: FSB/BIS/CFTC/SEC requirement database
+- Task Definitions: configurable benchmark tolerances
+- Regulatory Invariants: illustrative control mappings
 - Cross-Provider Validation: Multi-provider consistency gates
 
-Regulatory Framework:
-    - FSB BCBS-239: Consistent decision outputs
-    - CFTC Rule 17a-4: Audit trail requirements
-    - SEC Rule 10b-5: Citation accuracy requirements
-    - GAAP ASC 450-20: 5% materiality threshold
-
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 ICLR 2026 FinAI: "Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness"
 """
 
-__version__ = "1.1.0"  # Regulatory compliance refactor
+__version__ = "1.1.0"  # Historical workshop API
 __author__ = "Raffi Khatchadourian, Rolando Franco"
-__license__ = "Apache 2.0"
+__license__ = "MIT"
 
 from .deterministic_retriever import (
     DeterministicRetriever,
@@ -36,6 +32,7 @@ from .task_definitions import (
     extract_citations,
     validate_citations,
     validate_sql_query,
+    DEFAULT_NUMERIC_TOLERANCE,
     GAAP_MATERIALITY_THRESHOLD,
     SEC_CITATION_ACCURACY_MINIMUM,
     FSB_IDENTITY_RATE_TARGET
@@ -75,7 +72,8 @@ __all__ = [
     "validate_citations",
     "validate_sql_query",
 
-    # Regulatory constants
+    # Benchmark constants
+    "DEFAULT_NUMERIC_TOLERANCE",
     "GAAP_MATERIALITY_THRESHOLD",
     "SEC_CITATION_ACCURACY_MINIMUM",
     "FSB_IDENTITY_RATE_TARGET",

@@ -56,7 +56,7 @@ MODEL_NAMES = {
     "gpt-oss_20b": "GPT-OSS 20B",
     "gemini-2.0-flash": "Gemini 2.0 Flash",
     "gemini-2.5-pro": "Gemini 2.5 Pro",
-    "claude-opus-4-20250514": "Claude Opus 4.5",
+    "claude-opus-4-20250514": "Claude Opus 4",
     "claude-sonnet-4-20250514": "Claude Sonnet 4",
     "deepseek-r1_8b": "DeepSeek-R1 8B",
 }

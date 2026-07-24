@@ -11,6 +11,11 @@ outdir = Path("tables"); outdir.mkdir(exist_ok=True)
 
 df = pd.read_csv(src)
 
+# The current runner emits ``identity_rate`` as a percentage. Older workshop
+# artifacts used ``pct_identical``. Keep table generation compatible with both.
+if "pct_identical" not in df.columns and "identity_rate" in df.columns:
+    df["pct_identical"] = df["identity_rate"]
+
 # Keep columns and give short, print-friendly headers
 COLS_BASE = [
     "task","provider","model","concurrency","runs",

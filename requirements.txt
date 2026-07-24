@@ -1,5 +1,5 @@
 # LLM Output Drift Evaluation Framework
-# ACM ICAIF 2025: Financial AI Compliance
+# AI4F Workshop 2025: Financial AI Compliance
 # Paper: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 
 # Core LLM providers
@@ -42,6 +42,7 @@ python-dotenv>=1.0.0       # Load .env files
 
 # Testing
 pytest>=7.4.0
+cryptography>=42.0.0       # Signed DFAH artifact-bundle verification
 # pytest-cov>=6.0.0        # Optional: Coverage reporting
 
 # Documentation (for GitHub Pages)
