@@ -17,7 +17,7 @@ keywords:
   - financial AI
 preferred-citation:
   type: article
-  title: "Same Decision, Different Path: DFAH-Bench for AI Agents in Finance"
+  title: "DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"
   authors:
     - family-names: Khatchadourian
       given-names: Raffi
