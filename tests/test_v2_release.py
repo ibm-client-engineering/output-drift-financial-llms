@@ -54,11 +54,7 @@ def test_public_fixture_has_only_approved_observable_channels() -> None:
     assert len(primary) == 719
     assert sum(map(len, primary.values())) == 4157
     assert (
-        sum(
-            not episode["tool_names"]
-            for episodes in primary.values()
-            for episode in episodes
-        )
+        sum(not episode["tool_names"] for episodes in primary.values() for episode in episodes)
         == 25
     )
 

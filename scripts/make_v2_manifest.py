@@ -148,9 +148,7 @@ def extension_claims() -> dict[str, object]:
             raise AssertionError(f"extension sidecar mismatch: {csv_path.name}")
     diagnostic = read_csv(V2_DIR / "extensions" / "analysis_v6_diagnostic.csv")
     components = read_csv(V2_DIR / "extensions" / "analysis_prospective_components.csv")
-    local = read_csv(
-        V2_DIR / "extensions" / "analysis_local_reconciliation_extension.csv"
-    )
+    local = read_csv(V2_DIR / "extensions" / "analysis_local_reconciliation_extension.csv")
     if {row["publication_schema_version"] for row in diagnostic} != {
         "dfah-prospective-api-diagnostic-aggregate-v1"
     }:
@@ -183,8 +181,7 @@ def extension_claims() -> dict[str, object]:
         "publication_mode": "aggregate_only",
         "raw_provider_captures_in_release": False,
         "regeneration": (
-            "integrity and schema validation only; raw provider captures "
-            "remain approval-gated"
+            "integrity and schema validation only; raw provider captures remain approval-gated"
         ),
         "v6_diagnostic": {
             "eligible_episodes": 570,
@@ -207,9 +204,7 @@ def build_manifest() -> dict[str, object]:
     artifacts.extend(
         artifact_record(V2_DIR / "retrospective" / name) for name in RETROSPECTIVE_FILES
     )
-    artifacts.extend(
-        artifact_record(V2_DIR / "extensions" / name) for name in EXTENSION_FILES
-    )
+    artifacts.extend(artifact_record(V2_DIR / "extensions" / name) for name in EXTENSION_FILES)
     artifacts.extend(artifact_record(REPO_ROOT / name) for name in CODE_FILES)
     return {
         "schema_version": "dfah-arxiv-v2-public-manifest-v1",
@@ -219,8 +214,7 @@ def build_manifest() -> dict[str, object]:
         "archived_v1": {
             "location": "results/*.csv",
             "status": (
-                "historical machine outputs retained for lineage; not the "
-                "corrected-v2 default"
+                "historical machine outputs retained for lineage; not the corrected-v2 default"
             ),
             "episodes": 8127,
             "case_groups": 1338,

@@ -17,9 +17,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SOURCE = REPO_ROOT / "econometrics" / "benchmarks" / "results" / "run_logs"
-DEFAULT_OUTPUT = (
-    REPO_ROOT / "results" / "v2" / "fixtures" / "retrospective_episodes.jsonl"
-)
+DEFAULT_OUTPUT = REPO_ROOT / "results" / "v2" / "fixtures" / "retrospective_episodes.jsonl"
 ALLOWED_TASKS = {"compliance", "dataops", "portfolio"}
 
 

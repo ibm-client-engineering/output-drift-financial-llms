@@ -33,13 +33,8 @@ import numpy as np
 import pandas as pd
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_FIXTURE = (
-    REPO_ROOT / "results" / "v2" / "fixtures" / "retrospective_episodes.jsonl"
-)
+DEFAULT_FIXTURE = REPO_ROOT / "results" / "v2" / "fixtures" / "retrospective_episodes.jsonl"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "results" / "v2" / "retrospective"
-# Retained only for the audited plotting helpers below; the public CLI writes
-# machine artifacts and does not emit figures.
-PAPER_DIR = DEFAULT_OUTPUT_DIR
 EVAL_TASKS = ("compliance", "dataops")
 EXCLUDED_MODELS = {"deepseek-r1_8b"}
 ZERO_TOOL_CONFIGURATION_EXCLUSIONS = {
@@ -145,18 +140,14 @@ def load_fixture(fixture_path: Path) -> list[FixtureRow]:
         for line_number, line in enumerate(handle, start=1):
             row = json.loads(line)
             if set(row) != required:
-                raise ValueError(
-                    f"{fixture_path}:{line_number}: fixture fields changed"
-                )
+                raise ValueError(f"{fixture_path}:{line_number}: fixture fields changed")
             if not all(
                 isinstance(row[field], str) and row[field]
                 for field in ("task", "model", "case_id")
             ):
                 raise ValueError(f"{fixture_path}:{line_number}: invalid grouping key")
             if not isinstance(row["replay"], int) or isinstance(row["replay"], bool):
-                raise ValueError(  # noqa: TRY004 - serialized fixture validation
-                    f"{fixture_path}:{line_number}: invalid replay index"
-                )
+                raise ValueError(f"{fixture_path}:{line_number}: invalid replay index")
             rows.append(row)
     return rows
 
@@ -208,8 +199,7 @@ def load_groups(fixture_rows: list[FixtureRow]) -> dict[CaseKey, list[Episode]]:
 def corpus_lineage(fixture_rows: list[FixtureRow]) -> pd.DataFrame:
     """Reconstruct each published v2 corpus transition from the fixture."""
     raw_groups = {
-        (str(row["task"]), str(row["model"]), str(row["case_id"]))
-        for row in fixture_rows
+        (str(row["task"]), str(row["model"]), str(row["case_id"])) for row in fixture_rows
     }
     repeated = _repeated_groups(fixture_rows)
     without_portfolio = {
@@ -459,9 +449,7 @@ def rq2_decomposition(
                 "unanimous_groups": unanimous,
                 "sequence_varying": varying,
                 "reorder_only": counts["reorder_only"],
-                "multiplicity_changed_same_set": counts[
-                    "multiplicity_changed_same_set"
-                ],
+                "multiplicity_changed_same_set": counts["multiplicity_changed_same_set"],
                 "tool_set_changed": counts["tool_set_changed"],
                 "sequence_variation_rate": varying / unanimous,
                 "tool_set_change_rate": counts["tool_set_changed"] / unanimous,
@@ -677,18 +665,14 @@ def n3_subsample_sensitivity(groups: dict[CaseKey, list[Episode]]) -> pd.DataFra
     rng = np.random.default_rng(SEED)
     rows = []
     for model in LOCAL_TOOL_MODELS:
-        model_groups = {
-            key: episodes for key, episodes in groups.items() if key[1] == model
-        }
+        model_groups = {key: episodes for key, episodes in groups.items() if key[1] == model}
         for episodes in model_groups.values():
             assert len(episodes) == 8, "local groups must have exactly 8 replays"
         draws = np.zeros((N_SUBSAMPLES, 3), dtype=float)  # dar, tar, gap
         for draw_index in range(N_SUBSAMPLES):
             per_task: dict[str, list[list[float]]] = defaultdict(list)
             for (task, _model, _case_id), episodes in model_groups.items():
-                chosen = rng.choice(
-                    len(episodes), size=SUBSAMPLE_REPLAYS, replace=False
-                )
+                chosen = rng.choice(len(episodes), size=SUBSAMPLE_REPLAYS, replace=False)
                 sample = [episodes[i] for i in chosen]
                 decisions = [episode.decision for episode in sample]
                 paths = [episode.path for episode in sample]
@@ -751,9 +735,7 @@ def parser_fallback_bound(groups: dict[CaseKey, list[Episode]]) -> pd.DataFrame:
     """
     rows = []
     for model in CONTROLLED_API_MODELS:
-        model_groups = {
-            key: episodes for key, episodes in groups.items() if key[1] == model
-        }
+        model_groups = {key: episodes for key, episodes in groups.items() if key[1] == model}
         n_episodes = sum(len(episodes) for episodes in model_groups.values())
         tasks = sorted({key[0] for key in model_groups})
         cases_per_task = {
@@ -768,9 +750,7 @@ def parser_fallback_bound(groups: dict[CaseKey, list[Episode]]) -> pd.DataFrame:
             modal_count = Counter(decisions).most_common(1)[0][1]
             case_states.append({"task": task, "n": len(episodes), "modal": modal_count})
             per_task_tar[task].append(agreement(paths))
-        tar_aggregate = float(
-            np.mean([np.mean(values) for values in per_task_tar.values()])
-        )
+        tar_aggregate = float(np.mean([np.mean(values) for values in per_task_tar.values()]))
 
         baseline_gap = _aggregate_case_state_dar(case_states) - tar_aggregate
         flips_applied = 0
@@ -786,10 +766,7 @@ def parser_fallback_bound(groups: dict[CaseKey, list[Episode]]) -> pd.DataFrame:
             gap_now = current_dar - tar_aggregate
             if crossing_flips is None and gap_now <= 0:
                 crossing_flips = flips_applied
-            while (
-                target_index < len(targets)
-                and flips_applied == targets[target_index][1]
-            ):
+            while target_index < len(targets) and flips_applied == targets[target_index][1]:
                 rate = targets[target_index][0]
                 results_at[rate] = (current_dar, gap_now)
                 target_index += 1
@@ -834,9 +811,7 @@ def parser_fallback_bound(groups: dict[CaseKey, list[Episode]]) -> pd.DataFrame:
                 "model": model,
                 "model_name": MODEL_NAMES[model],
                 "fallback_rate": (
-                    crossing_flips / n_episodes
-                    if crossing_flips is not None
-                    else float("nan")
+                    crossing_flips / n_episodes if crossing_flips is not None else float("nan")
                 ),
                 "n_fallback_episodes": crossing_flips,
                 "n_episodes": n_episodes,
@@ -872,9 +847,7 @@ def first_replay_determinism(groups: dict[CaseKey, list[Episode]]) -> pd.DataFra
             first = ordered[0]
             decisions = [episode.decision for episode in ordered]
             paths = [episode.path for episode in ordered]
-            first_dar = sum(decision == first.decision for decision in decisions) / len(
-                ordered
-            )
+            first_dar = sum(decision == first.decision for decision in decisions) / len(ordered)
             first_tar = sum(path == first.path for path in paths) / len(ordered)
             per_task[task].append(
                 [
@@ -942,196 +915,6 @@ def paired_permutation_tests(case_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def plot_gap(summary: pd.DataFrame) -> None:
-    import matplotlib.pyplot as plt
-
-    plotted = summary[summary["tool_run_rate"] > 0.5].copy()
-    order = {model: index for index, model in enumerate(MODEL_ORDER)}
-    plotted["plot_order"] = plotted["model"].map(order)
-    complete = plotted[plotted["n_case_groups"] == 100].sort_values(
-        "plot_order", ascending=False
-    )
-    limited = plotted[plotted["n_case_groups"] < 100].sort_values(
-        "plot_order", ascending=False
-    )
-
-    fig, axes = plt.subplots(
-        1,
-        2,
-        figsize=(7.15, 3.25),
-        gridspec_kw={"width_ratios": [2.25, 1.0], "wspace": 0.22},
-    )
-    for ax, frame, title in (
-        (axes[0], complete, "Complete coverage\n100 groups/configuration"),
-        (axes[1], limited, "Limited contiguous prefixes\n44 and 75 groups"),
-    ):
-        y = np.arange(len(frame))
-        for index, (_, row) in enumerate(frame.iterrows()):
-            sensitivity = row["model"].startswith("claude-")
-            color = "#777777" if sensitivity else "#1f4e79"
-            linestyle = "--" if sensitivity else "-"
-            ax.plot(
-                [row["tar"], row["dar"]],
-                [index, index],
-                color=color,
-                linewidth=2.2,
-                linestyle=linestyle,
-                zorder=1,
-            )
-            ax.scatter(
-                row["dar"],
-                index,
-                marker="o",
-                s=42,
-                facecolors="white",
-                edgecolors=color,
-                linewidths=1.5,
-                zorder=2,
-            )
-            ax.scatter(row["tar"], index, marker="s", s=38, color=color, zorder=2)
-        ax.set_yticks(y, frame["model_name"])
-        ax.set_xlim(0.67, 1.01)
-        ax.set_title(title, fontsize=9, fontweight="bold", pad=8)
-        ax.grid(axis="x", color="#dddddd", linewidth=0.7)
-        ax.set_axisbelow(True)
-        ax.spines[["top", "right", "left"]].set_visible(False)
-        ax.tick_params(axis="y", length=0, labelsize=8)
-        ax.tick_params(axis="x", labelsize=8)
-    # Keep limited-prefix labels out of the inter-panel gutter, where they can
-    # otherwise read as labels for complete-coverage points.
-    axes[1].yaxis.tick_right()
-    axes[1].tick_params(axis="y", labelright=True, labelleft=False, pad=5)
-    fig.supxlabel("Agreement across identical replays", y=0.15, fontsize=9)
-    axes[0].scatter(
-        [],
-        [],
-        marker="o",
-        facecolors="white",
-        edgecolors="#1f4e79",
-        label="decision agreement (DAR)",
-    )
-    axes[0].scatter(
-        [], [], marker="s", color="#1f4e79", label="tool-path agreement (TAR)"
-    )
-    axes[0].plot(
-        [],
-        [],
-        "--",
-        color="#777777",
-        label="provider-default sampling",
-    )
-    handles, labels = axes[0].get_legend_handles_labels()
-    fig.legend(
-        handles,
-        labels,
-        loc="lower center",
-        bbox_to_anchor=(0.5, 0.0),
-        ncol=3,
-        frameon=False,
-        fontsize=8,
-        columnspacing=1.5,
-    )
-    fig.subplots_adjust(bottom=0.28, top=0.87)
-    figure_path = PAPER_DIR / "figures" / "decision_trajectory_gap.pdf"
-    fig.savefig(
-        figure_path,
-        bbox_inches="tight",
-        metadata={"CreationDate": None, "ModDate": None},
-    )
-    plt.close(fig)
-
-
-def plot_prospective_extensions() -> None:
-    """Plot the matched argument-aware current-model extension."""
-    import matplotlib.pyplot as plt
-
-    current = pd.read_csv(PAPER_DIR / "analysis_v6_diagnostic.csv")
-
-    def metric_row(model_key: str, label: str) -> dict[str, object]:
-        row = current.loc[current["model_key"] == model_key].iloc[0]
-        return {
-            "label": label,
-            "dar": float(row["dar"]),
-            "tar": float(row["tar_executed"]),
-            "strong": float(row["tar_strong"]),
-        }
-
-    frame = pd.DataFrame(
-        [
-            metric_row("gpt-5.6-terra", "GPT-5.6 Terra · 96×3"),
-            metric_row("claude-sonnet-5", "Claude Sonnet 5 · 94×3"),
-        ]
-    )
-    y = np.arange(len(frame))[::-1]
-    fig, ax = plt.subplots(figsize=(3.45, 1.65))
-    offsets = {"dar": 0.10, "tar": 0.0, "strong": -0.10}
-    styles = {
-        "dar": {
-            "marker": "o",
-            "s": 36,
-            "facecolors": "white",
-            "edgecolors": "#174a7e",
-            "linewidths": 1.4,
-            "label": "DAR",
-        },
-        "tar": {
-            "marker": "s",
-            "s": 32,
-            "color": "#2a9d8f",
-            "label": "TARseq",
-        },
-        "strong": {
-            "marker": "D",
-            "s": 30,
-            "color": "#d97706",
-            "label": "TARstrong",
-        },
-    }
-    for position, (_, row) in zip(y, frame.iterrows()):
-        ax.plot(
-            [row["strong"], row["dar"]],
-            [position, position],
-            color="#c8d1da",
-            linewidth=2.0,
-            zorder=1,
-        )
-    for metric in ("dar", "tar", "strong"):
-        ax.scatter(
-            frame[metric],
-            y + offsets[metric],
-            zorder=3,
-            **styles[metric],
-        )
-    ax.set_yticks(y, frame["label"])
-    ax.set_xlim(0.40, 1.01)
-    ax.set_ylim(-0.35, 1.35)
-    ax.set_xticks(np.arange(0.4, 1.01, 0.1))
-    ax.set_xticklabels([f"{value:.0%}" for value in np.arange(0.4, 1.01, 0.1)])
-    ax.set_xlabel("Agreement across replays")
-    ax.grid(axis="x", color="#e1e1e1", linewidth=0.7)
-    ax.set_axisbelow(True)
-    ax.spines[["top", "right", "left"]].set_visible(False)
-    ax.tick_params(axis="y", length=0, labelsize=7.2)
-    ax.tick_params(axis="x", labelsize=7)
-    ax.legend(
-        loc="lower center",
-        bbox_to_anchor=(0.5, 1.01),
-        ncol=3,
-        frameon=False,
-        fontsize=7.0,
-        handletextpad=0.35,
-        columnspacing=0.8,
-    )
-    fig.tight_layout()
-    figure_path = PAPER_DIR / "figures" / "prospective_argument_aware_gap.pdf"
-    fig.savefig(
-        figure_path,
-        bbox_inches="tight",
-        metadata={"CreationDate": None, "ModDate": None},
-    )
-    plt.close(fig)
-
-
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--fixture", type=Path, default=DEFAULT_FIXTURE)
@@ -1153,9 +936,7 @@ def main() -> None:
         }
         episode_count = sum(len(episodes) for episodes in model_groups.values())
         observed_tool_calls = sum(
-            len(episode.path)
-            for episodes in model_groups.values()
-            for episode in episodes
+            len(episode.path) for episodes in model_groups.values() for episode in episodes
         )
         if not model_groups or observed_tool_calls != 0:
             raise AssertionError(
@@ -1203,16 +984,12 @@ def main() -> None:
     summary.to_csv(args.output_dir / "analysis_summary.csv", index=False)
     tasks.to_csv(args.output_dir / "analysis_task_level.csv", index=False)
     rq2.to_csv(args.output_dir / "analysis_rq2_decomposition.csv", index=False)
-    rq2_tool_sets.to_csv(
-        args.output_dir / "analysis_rq2_tool_set_changes.csv", index=False
-    )
+    rq2_tool_sets.to_csv(args.output_dir / "analysis_rq2_tool_set_changes.csv", index=False)
     zero_tool_sensitivity.to_csv(
         args.output_dir / "analysis_zero_tool_inclusion_sensitivity.csv",
         index=False,
     )
-    flash_loo.to_csv(
-        args.output_dir / "analysis_flash_leave_one_case_out.csv", index=False
-    )
+    flash_loo.to_csv(args.output_dir / "analysis_flash_leave_one_case_out.csv", index=False)
     flag_load.to_csv(args.output_dir / "analysis_shadow_flag_load.csv", index=False)
     cluster_cis.to_csv(args.output_dir / "analysis_cluster_cis.csv", index=False)
     n3_subsample.to_csv(args.output_dir / "analysis_n3_subsample.csv", index=False)

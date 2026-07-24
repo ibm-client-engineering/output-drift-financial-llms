@@ -22,6 +22,12 @@ nav:
     - Lab 6. Extending the Framework: lab-6/README.md
     - Lab 7. Replayable Financial Agents: lab-7/README.md
     - Lab 8. DFAH-Bench — Replay Measurement: lab-8/README.md
+  - DFAH Package:
+    - Quickstart: dfah/quickstart.md
+    - Bring Your Own Agent: dfah/bring-your-own-agent.md
+    - Production Rollout: dfah/production.md
+    - Design Decisions: dfah/design.md
+    - Release Process: dfah/releasing.md
   - Resources:
     - Research Paper: resources/paper.md
     - API Reference: resources/api.md

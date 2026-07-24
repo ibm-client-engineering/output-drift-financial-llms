@@ -25,7 +25,7 @@ complicates replay, change review, and monitoring.
       local model through the benchmark — no install needed: **[Open the Live Explorer](explorer/index.html)**
 
 !!! tip "New: corrected DFAH-Bench walkthrough"
-    Inspect the audited replay denominator, regenerate corrected v2, and
+    Inspect the corrected replay denominator, regenerate v2, and
     compare decision and path agreement: **[Start Lab 8](lab-8/README.md)**.
 
 ### What You'll Learn

@@ -77,7 +77,8 @@ def compare_csv(expected_path: Path, generated_path: Path) -> None:
     if len(expected_rows) != len(generated_rows):
         raise AssertionError(f"row-count mismatch: {expected_path.name}")
     for row_number, (expected, generated) in enumerate(
-        zip(expected_rows, generated_rows), start=2
+        zip(expected_rows, generated_rows),  # noqa: B905 - lengths checked above
+        start=2,
     ):
         for column in expected_header:
             if expected[column] == generated[column]:
@@ -121,10 +122,7 @@ def validate_retrospective_claims() -> None:
         raise AssertionError("corrected episode count changed")
     if {row["task"] for row in case_rows} != {"compliance", "dataops"}:
         raise AssertionError("corrected task scope changed")
-    if any(
-        "accuracy" in column.lower() or "ecd" in column.lower()
-        for column in case_rows[0]
-    ):
+    if any("accuracy" in column.lower() or "ecd" in column.lower() for column in case_rows[0]):
         raise AssertionError("withdrawn metric leaked into corrected artifacts")
 
     _, summary = read_csv(RETROSPECTIVE_DIR / "analysis_summary.csv")
@@ -204,11 +202,11 @@ def validate_extensions() -> None:
         )
         if row["model"] not in expected or not all(
             math.isclose(left, right, rel_tol=1e-12, abs_tol=1e-12)
-            for left, right in zip(observed, expected[row["model"]])
-        ):
-            raise AssertionError(
-                f"prospective component metric changed: {row['model']}"
+            for left, right in zip(  # noqa: B905 - both tuples have three metrics
+                observed, expected[row["model"]]
             )
+        ):
+            raise AssertionError(f"prospective component metric changed: {row['model']}")
 
 
 def main() -> None:
