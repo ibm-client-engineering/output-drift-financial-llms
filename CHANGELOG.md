@@ -7,6 +7,22 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [Unreleased]
+
+### Added
+
+- Add an optional, local-only exporter for the Every Eval Ever v0.2.2
+  interchange schema. It preserves DFAH suite, replay, eligibility, and
+  artifact commitments without uploading results.
+
+### Security
+
+- Reject aggregate interchange exports when DFAH metrics are unavailable.
+- Hash arbitrary request-parameter maps instead of copying their values into
+  exported metadata, while retaining explicit standard decoding controls.
+- Document the deployment-identification risk of model, provider, adapter,
+  decision-label, tool-name, and equality-hash metadata.
+
 ## [0.1.1] - 2026-07-24
 
 ### Fixed

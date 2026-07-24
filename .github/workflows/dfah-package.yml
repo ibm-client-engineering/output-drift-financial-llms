@@ -107,6 +107,9 @@ jobs:
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev,otel]"
+      - name: Install the optional interchange validator
+        if: matrix.python-version == '3.12'
+        run: python -m pip install -e ".[eee]"
       - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
       - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
       - run: mypy src/dfah

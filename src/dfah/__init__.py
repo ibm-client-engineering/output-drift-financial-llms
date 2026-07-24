@@ -19,6 +19,11 @@ from .exceptions import (
     SuiteVersionMismatchError,
     ToolExecutionError,
 )
+from .exporters import (
+    EveryEvalEverExportResult,
+    export_every_eval_ever,
+    validate_every_eval_ever,
+)
 from .gate import Gate, GatePolicy, GateResult, TaskGatePolicy
 from .models import (
     Case,
@@ -71,6 +76,7 @@ __all__ = [
     "EligibilityReasonCount",
     "Episode",
     "EpisodeStatus",
+    "EveryEvalEverExportResult",
     "Gate",
     "GatePolicy",
     "GateResult",
@@ -99,4 +105,6 @@ __all__ = [
     "__version__",
     "agent",
     "build_manifest",
+    "export_every_eval_ever",
+    "validate_every_eval_ever",
 ]

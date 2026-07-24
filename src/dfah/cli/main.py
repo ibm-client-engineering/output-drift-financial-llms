@@ -6,7 +6,7 @@ import importlib
 import os
 import sys
 from pathlib import Path
-from typing import Annotated, Any
+from typing import Annotated, Any, cast
 
 import typer
 from pydantic import ValidationError
@@ -17,6 +17,8 @@ from rich.table import Table
 from .. import __version__
 from .._canonical import redact_text
 from ..exceptions import ConfigurationError, DFAHError
+from ..exporters import export_every_eval_ever
+from ..exporters.every_eval_ever import EvaluatorRelationship
 from ..gate import Gate, GatePolicy
 from ..models import ReplayMode, Report
 from ..replay import Replay
@@ -216,6 +218,80 @@ def inspect_case(
     console.print(table)
 
 
+@app.command("export")
+def export_run(
+    run_path: Annotated[Path, typer.Argument(help="Artifact-verified DFAH run.")],
+    format_name: Annotated[
+        str,
+        typer.Option(
+            "--format",
+            help="Interchange format; currently every-eval-ever (or eee).",
+        ),
+    ] = "every-eval-ever",
+    out: Annotated[
+        Path | None,
+        typer.Option(
+            "--out",
+            help="Private output directory; defaults to RUN/exports/every-eval-ever.",
+        ),
+    ] = None,
+    aggregate_only: Annotated[
+        bool,
+        typer.Option(
+            "--aggregate-only",
+            help="Omit privacy-safe episode-level JSONL.",
+        ),
+    ] = False,
+    validate: Annotated[
+        bool,
+        typer.Option(
+            "--validate",
+            help="Validate with the optional every-eval-ever package.",
+        ),
+    ] = False,
+    source_organization_name: Annotated[
+        str,
+        typer.Option(
+            "--source-organization-name",
+            help="Organization label for the EEE record; defaults to unspecified.",
+        ),
+    ] = "unspecified",
+    evaluator_relationship: Annotated[
+        str,
+        typer.Option(
+            "--evaluator-relationship",
+            help="EEE relationship: first_party, third_party, collaborative, or other.",
+        ),
+    ] = "other",
+) -> None:
+    """Export verified metrics and hash-only traces without uploading them."""
+
+    normalized = format_name.strip().lower()
+    if normalized not in {"every-eval-ever", "eee"}:
+        raise ConfigurationError(
+            f"unsupported export format {format_name!r}; expected every-eval-ever"
+        )
+    destination = out or run_path / "exports" / "every-eval-ever"
+    result = export_every_eval_ever(
+        run_path,
+        destination,
+        source_organization_name=source_organization_name,
+        evaluator_relationship=cast(EvaluatorRelationship, evaluator_relationship),
+        include_instances=not aggregate_only,
+        validate=validate,
+    )
+    console.print(f"aggregate={result.aggregate_path}")
+    if result.instances_path is not None:
+        console.print(
+            f"instances={result.instances_path} rows={result.instance_count} "
+            f"sha256={result.instances_sha256}"
+        )
+    console.print(
+        f"evaluation_id={result.evaluation_id} "
+        f"validated={'upstream' if result.officially_validated else 'not-requested'}"
+    )
+
+
 @app.command()
 def gate(run_path: Path, policy: Path) -> None:
     result = Gate(GatePolicy.load(policy)).evaluate(Report.from_json(_report_path(run_path)))
@@ -289,7 +365,7 @@ def doctor() -> None:
         "FileStore",
         "supported (POSIX)" if os.name == "posix" else "unsupported on this platform",
     )
-    for package in ("pydantic", "jsonschema", "opentelemetry"):
+    for package in ("pydantic", "jsonschema", "opentelemetry", "every_eval_ever"):
         try:
             importlib.import_module(package)
             status = "installed"

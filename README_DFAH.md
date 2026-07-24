@@ -125,7 +125,8 @@ manifest.
 - Cost admission is conservative after dispatch, and shadow sampling reports
   both estimated cost and expected flags per 100 cases.
 - The optional OpenTelemetry integration emits GenAI spans without prompts,
-  arguments, or tool results.
+  arguments, or tool results. Normalized decision labels and tool identities
+  remain observable metadata and should be reviewed before export.
 - The pytest plugin lets an existing test suite load a verified report and
   enforce project-specific replay gates.
 
@@ -141,6 +142,25 @@ The repository contains two complementary layers:
 The package does not rewrite historical logs or silently mix old and new
 studies. Its built-in suites validate integration plumbing; they are not
 financial-accuracy benchmarks.
+
+## Unreleased interoperability work
+
+This development checkout contains an optional Every Eval Ever v0.2.2
+exporter planned for a future release. It is not part of the published PyPI
+`0.1.1` package. To test it locally:
+
+```bash
+python -m pip install -e ".[dev,eee]"
+dfah export .dfah/runs/MY-RUN \
+  --format every-eval-ever \
+  --out .dfah/exports/MY-RUN
+```
+
+The exporter writes local files only. It requires an artifact-verified run
+with at least one eligible replay group, hashes arbitrary request settings,
+and excludes prompts, raw tool arguments, raw results, and reasoning traces.
+Model/provider/adapter identifiers, normalized decision labels, tool names,
+and equality hashes remain metadata; review them before sharing an export.
 
 ## Guides
 
