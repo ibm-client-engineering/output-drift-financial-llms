@@ -11,4 +11,4 @@ def package_version() -> str:
     try:
         return version("dfah-bench")
     except PackageNotFoundError:
-        return "0.1.0.dev0"
+        return "0.1.1.dev0"

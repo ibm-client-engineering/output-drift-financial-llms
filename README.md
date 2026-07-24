@@ -3,6 +3,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2607.20491-b31b1b.svg)](https://arxiv.org/abs/2607.20491)
 [![arXiv](https://img.shields.io/badge/arXiv-2601.15322-b31b1b.svg)](https://arxiv.org/abs/2601.15322)
 [![arXiv](https://img.shields.io/badge/arXiv-2511.07585-b31b1b.svg)](https://arxiv.org/abs/2511.07585)
+[![PyPI](https://img.shields.io/pypi/v/dfah-bench.svg)](https://pypi.org/project/dfah-bench/)
+[![Python](https://img.shields.io/pypi/pyversions/dfah-bench.svg)](https://pypi.org/project/dfah-bench/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Workshop](https://img.shields.io/badge/Workshop-Live-success.svg)](https://ibm-client-engineering.github.io/output-drift-financial-llms/)
 
@@ -18,6 +20,7 @@ correctness, safety, or regulatory compliance.
 
 **[Interactive Workshop →](https://ibm-client-engineering.github.io/output-drift-financial-llms/)** ·
 **[Live Explorer →](https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/)** ·
+**[Install from PyPI →](https://pypi.org/project/dfah-bench/)** ·
 **[DFAH package guide →](README_DFAH.md)**
 
 ---
@@ -26,7 +29,7 @@ correctness, safety, or regulatory compliance.
 
 | Paper | Venue | Focus | Links |
 |-------|-------|-------|-------|
-| **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | Repeated decisions can conceal different observable execution paths | [DOI](https://doi.org/10.48550/arXiv.2607.20491) · research API: `bench/` · package: `src/dfah/` |
+| **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | Repeated decisions can conceal different observable execution paths | [DOI](https://doi.org/10.48550/arXiv.2607.20491) · [PyPI](https://pypi.org/project/dfah-bench/) · research API: `bench/` |
 | **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | **LLM Output Drift** (2025) | [AI4F Workshop 2025](https://ai4f.org/) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
@@ -45,7 +48,7 @@ correctness, safety, or regulatory compliance.
 ```bash
 python -m venv .venv-dfah
 source .venv-dfah/bin/activate
-python -m pip install -e ".[otel]"
+python -m pip install dfah-bench
 
 dfah check-agent --agent dfah.demo:toy_agent --episode-timeout-s 5
 dfah run \
@@ -57,8 +60,9 @@ dfah analyze .dfah/runs/toy-local-01 \
   --report .dfah/runs/toy-local-01/report.html
 ```
 
-This smoke test is deterministic, local, and free. It verifies the adapter and
-artifact path before a paid replay; it is not a model-performance result.
+No repository clone or API key is needed. The bundled smoke test is
+deterministic, local, and free. It verifies the adapter and artifact path
+before a paid replay; it is not a model-performance result.
 
 ### Run the original output-drift workflow
 

@@ -24,11 +24,11 @@ registered before the tag is pushed.
 
 ## Release boundary
 
-For version `0.1.0`, the release tag is `dfah-v0.1.0`. The tag must match the
-static project version in `pyproject.toml`; the release workflow rejects any
-other pairing. It then builds the wheel and source distribution once, checks
-them, transfers those exact artifacts to the protected publish job, and uses
-PyPI Trusted Publishing after the environment approval.
+For package version `X.Y.Z`, the release tag is `dfah-vX.Y.Z`. The tag must
+match the static project version in `pyproject.toml`; the release workflow
+rejects any other pairing. It then builds the wheel and source distribution
+once, checks them, transfers those exact artifacts to the protected publish
+job, and uses PyPI Trusted Publishing after the environment approval.
 
 Before tagging, confirm that:
 

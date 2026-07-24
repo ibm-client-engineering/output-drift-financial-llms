@@ -2,12 +2,16 @@
 
 DFAH measures whether repeated executions of the same case reach the same
 decision and observable tool path. It does not measure correctness. The
-no-network example uses a deterministic toy agent and a registered local tool.
-
-From a checkout with the package installed:
+no-network example uses a deterministic toy agent and a registered local
+tool. Install the published package; no repository clone or API key is needed.
 
 ```bash
-python -m pip install -e .
+python -m pip install dfah-bench
+```
+
+Then run:
+
+```bash
 dfah check-agent --agent dfah.demo:toy_agent --episode-timeout-s 5
 dfah run \
   --agent dfah.demo:toy_agent \
