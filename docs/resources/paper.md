@@ -4,13 +4,13 @@
 
 | Paper | Venue | Year |
 |-------|-------|------|
-| [Same Decision, Different Path: DFAH-Bench for AI Agents in Finance](https://arxiv.org/abs/2607.20491) | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | 2026 |
+| [DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making](https://arxiv.org/abs/2607.20491) | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | 2026 |
 | [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | 2026 |
 | [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | 2025 |
 
 ---
 
-## Same Decision, Different Path: DFAH-Bench for AI Agents in Finance (2026)
+## DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making (2026)
 
 **Paper**: [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
 **DOI**: [10.48550/arXiv.2607.20491](https://doi.org/10.48550/arXiv.2607.20491)
@@ -263,7 +263,7 @@ If you use this framework or findings in your research, please cite:
 
 ```bibtex
 @article{khatchadourian2026dfahbench,
-  title={Same Decision, Different Path: DFAH-Bench for AI Agents in Finance},
+  title={DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making},
   author={Khatchadourian, Raffi},
   journal={arXiv preprint arXiv:2607.20491},
   year={2026},
