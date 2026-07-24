@@ -363,4 +363,4 @@ This software may be covered by patent applications filed by IBM Corporation. Se
 
 **Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com · rfranco@us.ibm.com
 
-**Acknowledgments**: IBM watsonx.ai, IBM Research, Ollama, Qwen
+**Acknowledgments**: IBM watsonx.ai, IBM Research, Ollama, Qwen, OpenAI OSS, ACM ICAIF
