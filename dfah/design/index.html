@@ -10,31 +10,27 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-8/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/design/">
       
       
-        <link rel="prev" href="../lab-7/">
-      
-      
-        <link rel="next" href="../resources/paper/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles - Output Drift in Financial LLMs Workshop</title>
+        <title>DFAH design: a small replay control, not another agent framework - Output Drift in Financial LLMs Workshop</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,7 +49,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -76,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-8-dfah-bench-replay-determinism-audit-bundles" class="md-skip">
+        <a href="#dfah-design-a-small-replay-control-not-another-agent-framework" class="md-skip">
           Skip to content
         </a>
       
@@ -90,9 +86,9 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href="../.." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
       
-  <img src="../images/ibm-blue-background.png" alt="logo">
+  <img src="../../images/ibm-blue-background.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -109,7 +105,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+              DFAH design: a small replay control, not another agent framework
             
           </span>
         </div>
@@ -196,7 +192,7 @@
     
     
       <li class="md-tabs__item">
-        <a href=".." class="md-tabs__link">
+        <a href="../.." class="md-tabs__link">
           
   
   
@@ -212,13 +208,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../pre-work/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../pre-work/" class="md-tabs__link">
           
   
   
@@ -238,7 +232,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../resources/paper/" class="md-tabs__link">
+        <a href="../../resources/paper/" class="md-tabs__link">
           
   
   
@@ -272,9 +266,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href="../.." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
       
-  <img src="../images/ibm-blue-background.png" alt="logo">
+  <img src="../../images/ibm-blue-background.png" alt="logo">
 
     </a>
     Output Drift in Financial LLMs Workshop
@@ -355,7 +349,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -387,31 +381,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -429,7 +420,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -447,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pre-work/" class="md-nav__link">
+      <a href="../../pre-work/" class="md-nav__link">
         
   
   
@@ -475,7 +466,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-1/" class="md-nav__link">
+      <a href="../../lab-1/" class="md-nav__link">
         
   
   
@@ -503,7 +494,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-2/" class="md-nav__link">
+      <a href="../../lab-2/" class="md-nav__link">
         
   
   
@@ -531,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-3/" class="md-nav__link">
+      <a href="../../lab-3/" class="md-nav__link">
         
   
   
@@ -559,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-4/" class="md-nav__link">
+      <a href="../../lab-4/" class="md-nav__link">
         
   
   
@@ -587,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-5/" class="md-nav__link">
+      <a href="../../lab-5/" class="md-nav__link">
         
   
   
@@ -615,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-6/" class="md-nav__link">
+      <a href="../../lab-6/" class="md-nav__link">
         
   
   
@@ -643,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lab-7/" class="md-nav__link">
+      <a href="../../lab-7/" class="md-nav__link">
         
   
   
@@ -668,37 +659,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../lab-8/" class="md-nav__link">
         
   
   
@@ -714,175 +678,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#learning-objectives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Objectives
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Metrics
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-the-gap-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why the gap matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Run the test suite
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Reproduce the paper
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Read the kill criterion
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Extend to a new domain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Verify an audit bundle
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-to-take-away" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to take away
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-the-live-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bonus: the Live Explorer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Reading
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -956,7 +751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resources/paper/" class="md-nav__link">
+      <a href="../../resources/paper/" class="md-nav__link">
         
   
   
@@ -984,7 +779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resources/api/" class="md-nav__link">
+      <a href="../../resources/api/" class="md-nav__link">
         
   
   
@@ -1012,7 +807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../resources/troubleshooting/" class="md-nav__link">
+      <a href="../../resources/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1067,10 +862,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#patterns-adopted-selectively" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        Patterns adopted selectively
       
     </span>
   </a>
@@ -1078,10 +873,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-objectives" class="md-nav__link">
+  <a href="#contract-identity-and-comparability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Learning Objectives
+        Contract identity and comparability
       
     </span>
   </a>
@@ -1089,49 +884,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
+  <a href="#artifact-first-resumability" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Metrics
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-the-gap-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why the gap matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Run the test suite
+        Artifact-first resumability
       
     </span>
   </a>
@@ -1139,10 +895,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
+  <a href="#integration-and-test-ergonomics" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Reproduce the paper
+        Integration and test ergonomics
       
     </span>
   </a>
@@ -1150,10 +906,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
+  <a href="#privacy-boundary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Read the kill criterion
+        Privacy boundary
       
     </span>
   </a>
@@ -1161,54 +917,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
+  <a href="#deliberate-non-goals" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Extend to a new domain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Verify an audit bundle
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-to-take-away" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to take away
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#bonus-the-live-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bonus: the Live Explorer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Reading
+        Deliberate non-goals
       
     </span>
   </a>
@@ -1235,128 +947,206 @@
   
 
 
-<h1 id="lab-8-dfah-bench-replay-determinism-audit-bundles">Lab 8: DFAH-Bench — Replay Determinism &amp; Audit Bundles<a class="headerlink" href="#lab-8-dfah-bench-replay-determinism-audit-bundles" title="Permanent link">&para;</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This lab introduces <strong>DFAH-Bench</strong>, the replay benchmark behind our newest
-paper, <em>DFAH-Bench: Benchmarking Observable Agent Instability in Financial
-Decision-Making</em> (arXiv preprint). It is the deepest layer of the framework:
-where Lab 7 measured whether an agent is deterministic, DFAH-Bench measures
-<strong>how</strong> it diverges — by decision, trajectory, or evidence — and packages the
-proof in verifiable audit bundles.</p>
-<p><strong>The headline finding</strong>: outcome-only evaluation reports stable agents whose
-reasoning is not stable. Across 8,127 replay episodes, <strong>21.8% of
-decision-stable case groups hide trajectory divergence</strong> that final-answer
-metrics cannot see.</p>
-<p><strong>Duration</strong>: ~25 minutes. <strong>No LLM, no API keys, no network needed</strong> — the
-full 8,129-episode replay corpus is checked into this repository, and every
-number in the paper regenerates from it on your laptop.</p>
-<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
-<p>By the end of this lab, you will:</p>
-<ul>
-<li>Distinguish the three observable divergence channels: decision, trajectory, evidence</li>
-<li>Regenerate every number in the DFAH-Bench paper with one command</li>
-<li>Read a channel-availability matrix and know why it must accompany results</li>
-<li>Extend the benchmark to a brand-new domain with zero metric-code changes</li>
-</ul>
-<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
-<h3 id="the-metrics">The Metrics<a class="headerlink" href="#the-metrics" title="Permanent link">&para;</a></h3>
+<h1 id="dfah-design-a-small-replay-control-not-another-agent-framework">DFAH design: a small replay control, not another agent framework<a class="headerlink" href="#dfah-design-a-small-replay-control-not-another-agent-framework" title="Permanent link">&para;</a></h1>
+<p>DFAH has one job: determine whether repeated executions are comparable,
+sufficiently observed, and stable in both decision and observable tool path.
+It is designed to sit around an agent that already exists. The package does
+not need to own prompting, orchestration, provider selection, or production
+tool implementations to make that measurement useful.</p>
+<p>The public surface stays deliberately small:</p>
+<ol>
+<li>define a semantically versioned <code>Suite</code>;</li>
+<li>expose an <code>Agent</code> with a pinned <code>Manifest</code>;</li>
+<li>run a bounded <code>check_agent()</code> preflight, then a <code>Replay</code>;</li>
+<li>inspect the typed <code>Report</code>; and</li>
+<li>enforce a <code>GatePolicy</code> directly or through pytest.</li>
+</ol>
+<h2 id="patterns-adopted-selectively">Patterns adopted selectively<a class="headerlink" href="#patterns-adopted-selectively" title="Permanent link">&para;</a></h2>
+<p>These projects informed the shape of DFAH. The mapping is conceptual; DFAH
+does not claim API compatibility with them.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Definition</th>
-<th>Failure mode it exposes</th>
+<th>Reference</th>
+<th>Pattern adopted in DFAH</th>
+<th>Boundary</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>DAR</strong></td>
-<td>Decision Agreement Rate — fraction of N replays agreeing with the modal decision</td>
-<td>Outcome instability</td>
+<td><a href="https://inspect.aisi.org.uk/">Inspect AI</a></td>
+<td>Treat structured execution records as first-class evaluation artifacts, with a clear separation between the case contract, the agent execution, and analysis.</td>
+<td>DFAH ships typed episode records, a verified report, static rendering, and case inspection—not a general evaluation catalog, model layer, scorer framework, or transcript viewer.</td>
 </tr>
 <tr>
-<td><strong>TAR</strong></td>
-<td>Trajectory Agreement Rate — fraction matching the modal tool-call sequence exactly</td>
-<td>Process instability</td>
+<td><a href="https://github.com/EleutherAI/lm-evaluation-harness">lm-evaluation-harness</a></td>
+<td>Make the evaluation contract visibly versioned instead of relying on a content hash alone.</td>
+<td><code>suite_version</code> is the human-readable compatibility contract; fixture and tool-schema hashes remain the exact integrity checks.</td>
 </tr>
 <tr>
-<td><strong>DAR − TAR gap</strong></td>
-<td>The central diagnostic</td>
-<td>"Same conclusion, different path"</td>
+<td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.utils.estimator_checks.check_estimator.html">scikit-learn <code>check_estimator</code></a></td>
+<td>Give integrators a one-call conformance check before a larger run.</td>
+<td><code>dfah.testing.check_agent()</code> is a bounded smoke test. It reports pass/fail/skip outcomes; it is not a proof that an adapter is free from every ambient dependency.</td>
 </tr>
 <tr>
-<td><strong>ECD</strong></td>
-<td>Evidence-Contact Divergence — mean pairwise Jaccard distance over evidence sets</td>
-<td>"Same conclusion, different evidence"</td>
+<td><a href="https://pandera.readthedocs.io/">Pandera</a></td>
+<td>Prefer declarative constraints and typed validation results that fit an existing Python workflow.</td>
+<td><code>GatePolicy</code>, <code>GateResult</code>, and the pytest fixtures provide this pattern without adding Pandera or taking over the user's data pipeline.</td>
 </tr>
 <tr>
-<td><strong>DCB</strong></td>
-<td>Decision Concentration Bias — 1 − H(p)/log K</td>
-<td>Pattern matching (always picking the same label)</td>
+<td><a href="https://docs.langchain.com/oss/python/langgraph/persistence">LangGraph persistence</a></td>
+<td>Give resumable work an explicit, stable checkpoint identity and distinguish safe reuse from a possibly dispatched operation.</td>
+<td>DFAH keys an episode by manifest, artifact case ID, and replay index, and records planned and dispatching boundaries. It is not a graph runtime or general state store.</td>
+</tr>
+<tr>
+<td><a href="https://opentelemetry.io/docs/specs/semconv/gen-ai/">OpenTelemetry GenAI semantic conventions</a></td>
+<td>Emit agent and tool operations into an observability system teams may already run.</td>
+<td>The optional <code>[otel]</code> integration uses <code>gen_ai.*</code> attributes where the conventions define them and adds a small set of <code>dfah.*</code> status/provenance fields. It emits no prompts, tool arguments, tool results, or their fingerprints.</td>
 </tr>
 </tbody>
 </table>
-<h3 id="why-the-gap-matters">Why the gap matters<a class="headerlink" href="#why-the-gap-matters" title="Permanent link">&para;</a></h3>
-<p>A model can score DAR = 0.947 (outcomes look rock-solid) while TAR = 0.767 —
-meaning nearly a quarter of its replays took a <em>different tool path</em> to that
-same answer. In a demo that's invisible. In an audit, the path is the product.</p>
-<h2 id="step-1-run-the-test-suite">Step 1: Run the test suite<a class="headerlink" href="#step-1-run-the-test-suite" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>test-bench
-<span class="c1"># 143 tests: metric math, schema round-trips, hash-chain tamper vectors,</span>
-<span class="c1"># Ed25519 certificates, pipeline conventions — all offline</span>
-</code></pre></div>
-<h2 id="step-2-reproduce-the-paper">Step 2: Reproduce the paper<a class="headerlink" href="#step-2-reproduce-the-paper" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper-fast<span class="w">    </span><span class="c1"># ~2 min: skips the B=10,000 bootstrap</span>
-make<span class="w"> </span>reproduce-paper<span class="w">         </span><span class="c1"># full verification incl. bootstrap CIs</span>
-</code></pre></div>
-<p>Watch for the five stages: episode accounting (8,129 raw → 8,127 analyzed),
-pipeline regeneration, reference diff, paper-claim assertions, and the
-C(8,3)=56 subsampling robustness check. Every <code>PASS</code> line is a paper number
-regenerating from raw logs. The command <strong>fails loudly</strong> if anything drifts.</p>
-<h2 id="step-3-read-the-kill-criterion">Step 3: Read the kill criterion<a class="headerlink" href="#step-3-read-the-kill-criterion" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>results/dfah_kill_criterion.csv
-cat<span class="w"> </span>results/dfah_kill_criterion_by_model.csv
-</code></pre></div>
-<p>Among 912 case groups with high decision agreement (DAR ≥ 0.9): 21.8% show
-trajectory divergence (TAR &lt; 0.9), 19.4% show strong divergence (TAR &lt; 0.7).
-Per model: 55.6% of Claude Sonnet's and 56.6% of Gemini 2.5 Pro's eligible
-cases diverge. These are the numbers in §4.4 of the paper — now on your screen.</p>
-<h2 id="step-4-extend-to-a-new-domain">Step 4: Extend to a new domain<a class="headerlink" href="#step-4-extend-to-a-new-domain" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/domain_extension_medical.py
-</code></pre></div>
-<p>This registers a <strong>medical triage</strong> ontology (escalate / treat / refer) with
-two mock tools and computes every DFAH metric with the unmodified <code>bench/</code>
-library. CASE-B in the output is the paper's central failure mode reproduced
-in a domain the benchmark has never seen: DAR = 1.000, TAR = 0.333.</p>
-<p>To add your own domain: define a <code>DecisionOntology</code> + <code>TaskSpec</code>, call
-<code>register_task(spec)</code>, and feed it replay episodes. No metric code changes.</p>
-<h2 id="step-5-verify-an-audit-bundle">Step 5: Verify an audit bundle<a class="headerlink" href="#step-5-verify-an-audit-bundle" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>bench.provenance.verify<span class="w"> </span>--help
-</code></pre></div>
-<p>Audit bundles are SHA-256 hash-chained and Ed25519-signed (the provenance
-layer depends only on the standard library + <code>cryptography</code>). The test suite
-includes six tamper vectors — payload modification, deletion, reordering,
-backward timestamps, genesis tampering, duplicate sequence numbers — all
-detected.</p>
-<h2 id="what-to-take-away">What to take away<a class="headerlink" href="#what-to-take-away" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Decision stability ≠ trajectory stability.</strong> Measure both, per channel.</li>
-<li><strong>Channel availability is part of the result.</strong> Metrics only run on
-   channels actually present — and the matrix saying which is published
-   alongside every table.</li>
-<li><strong>Reproducibility is a command, not a promise.</strong> If <code>make reproduce-paper</code>
-   passes, the paper's numbers are your numbers.</li>
-</ol>
-<h2 id="bonus-the-live-explorer">Bonus: the Live Explorer<a class="headerlink" href="#bonus-the-live-explorer" title="Permanent link">&para;</a></h2>
-<p>Prefer to see it before you clone it? The <strong><a href="../explorer/">interactive explorer</a></strong> renders the
-DAR-TAR scatter and kill criterion from these same results, lets you feel the gap with a seeded replay
-simulator, and can even drive your local Ollama model through the compliance case live in the browser.</p>
-<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<p>The common idea is workflow fit: the replay control should produce durable
+evidence, but it should not require a team to replace its agent framework,
+provider client, CI system, or telemetry backend.</p>
+<h2 id="contract-identity-and-comparability">Contract identity and comparability<a class="headerlink" href="#contract-identity-and-comparability" title="Permanent link">&para;</a></h2>
+<p>No single identifier answers every comparability question. DFAH keeps the
+human contract, exact content, execution configuration, and run design
+separate:</p>
+<table>
+<thead>
+<tr>
+<th>Identity</th>
+<th>What it commits to</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>suite_id</code> + <code>suite_version</code></td>
+<td>The named behavioral contract and its SemVer revision.</td>
+</tr>
+<tr>
+<td><code>fixture_hash</code></td>
+<td>Exact suite cases, ontology, channel requirements, and suite semantics.</td>
+</tr>
+<tr>
+<td><code>tool_schema_hash</code></td>
+<td>Exact declared tool interface.</td>
+</tr>
+<tr>
+<td><code>manifest_hash</code></td>
+<td>Provider/model settings, adapter/source identity, suite hashes, and capture contract.</td>
+</tr>
+<tr>
+<td><code>run-plan.json</code> hash</td>
+<td>Selected artifact case IDs/tasks, replay count, seed, sample rate, and schedule.</td>
+</tr>
+<tr>
+<td>episode key</td>
+<td><code>(manifest_hash, artifact_case_id, replay_index)</code>, the unit of idempotent reuse.</td>
+</tr>
+<tr>
+<td>episode-root commitment</td>
+<td>The exact committed episode set from which the report was regenerated.</td>
+</tr>
+</tbody>
+</table>
+<p>Changing a suite's meaning requires a new <code>suite_version</code>; silently editing
+fixtures while retaining a version is still detected by the fixture hash.
+<code>Report.compare()</code> rejects incompatible contracts by default. Its explicit
+overrides are for an intentional analysis, not a way to turn changed cases,
+partial runs, or unverified artifacts into release evidence.</p>
+<p>The immutable run plan closes a different gap. A manifest alone does not say
+which cases were selected or in what replay design. The plan is written before
+dispatch and binds those choices to the artifact directory. Reopening the same
+directory with a different population, seed, sample rate, or replay count
+fails instead of silently mixing experiments.</p>
+<h2 id="artifact-first-resumability">Artifact-first resumability<a class="headerlink" href="#artifact-first-resumability" title="Permanent link">&para;</a></h2>
+<p>DFAH persists four operational boundaries: planned episode, dispatch intent,
+terminal episode, and commit marker. A planned-only episode is safe to resume
+because it did not cross the durable dispatch boundary. A dispatching episode
+without a terminal commit is classified as unknown after dispatch and is not
+automatically called again.</p>
+<p>Each run directory also has a single-writer lease. A kernel lock protects live
+local writers; a metadata lease remains after an abnormal process exit.
+Recovery is explicit, limited to a confirmed-dead local process, and archives
+the stale lease for review. This favors duplicate-call prevention over
+unattended retry.</p>
+<p>This persistence model is intentionally smaller than a workflow checkpointer.
+It does not save arbitrary agent state, resume inside a model turn, or
+coordinate distributed workers.</p>
+<h2 id="integration-and-test-ergonomics">Integration and test ergonomics<a class="headerlink" href="#integration-and-test-ergonomics" title="Permanent link">&para;</a></h2>
+<p><code>check_agent()</code> exercises the integration using two replays per selected case,
+then reruns against the same store to verify idempotent reuse. By default it
+selects at most two cases, so the maximum first-pass adapter-call count is
+four. Paid adapters should always set both <code>budget_usd</code> and
+<code>estimated_max_episode_cost_usd</code>.</p>
+<p>The checks cover:</p>
 <ul>
-<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md"><code>REPRODUCIBILITY.md</code></a> — exact environment, commands, disclosed caveats</li>
-<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/DFAH.md"><code>DFAH.md</code></a> — harness documentation</li>
-<li><a href="../resources/paper/">Research Papers</a> — all three papers in this research line</li>
+<li>suite/manifest compatibility;</li>
+<li>parse provenance on every terminal episode;</li>
+<li>the post-normalization wire echo;</li>
+<li>deterministic observed tool results for identical inputs, when tools run;</li>
+<li>replay-visible decision and strong-path stability; and</li>
+<li>resumability without a second adapter call.</li>
 </ul>
+<p>A check that cannot be observed is <code>SKIP</code>, not a reassuring <code>PASS</code>. For
+example, an agent that makes no tool calls cannot demonstrate deterministic
+tool output in that conformance run.</p>
+<p>The pytest plugin makes the same design usable in release workflows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_no_hidden_path_variation</span><span class="p">(</span><span class="n">dfah_report</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">dfah_report</span><span class="o">.</span><span class="n">metrics_available</span>
+    <span class="k">assert</span> <span class="n">dfah_report</span><span class="o">.</span><span class="n">unanimous_with_path_change_rate</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">dfah_report</span><span class="o">.</span><span class="n">unanimous_with_path_change_rate</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+</code></pre></div>
+<p>The <code>dfah_gate</code> fixture evaluates a typed policy, including optional
+task-specific thresholds. Both fixtures consume an existing verified run; CI
+does not need provider credentials or a remembered live-evaluation command.</p>
+<p>For a flagged case, <code>dfah inspect RUN --case ARTIFACT_CASE_ID</code> prints replay
+decisions, tool-name sequences, and local equality identities. It does not
+print prompts, raw arguments, or raw results.</p>
+<h2 id="privacy-boundary">Privacy boundary<a class="headerlink" href="#privacy-boundary" title="Permanent link">&para;</a></h2>
+<p>Content minimization happens before persistence. Production suites should set
+<code>Case.artifact_case_id</code> to a stable pseudonym. DFAH then uses that value in
+the run plan, episode keys, reports, and inspection commands while the adapter
+can still receive the original <code>Case</code>. The adapter and provider may have their
+own logging behavior; DFAH cannot make those external systems private.</p>
+<p>SHA-256 values in local artifacts support equality and integrity checks. They
+are <strong>not anonymization</strong>: a low-entropy account number, status value, or
+small-domain argument may be recovered by enumeration. Tokenize or
+pseudonymize sensitive values before they reach the artifact boundary, and
+apply access controls and retention policy to the run directory.</p>
+<p>The OpenTelemetry integration does not export local argument/result
+fingerprints. It emits operation, model, usage, terminal status, decision
+parse provenance, and non-content tool state only.</p>
+<h2 id="deliberate-non-goals">Deliberate non-goals<a class="headerlink" href="#deliberate-non-goals" title="Permanent link">&para;</a></h2>
+<p>The following are outside the core package:</p>
+<ul>
+<li><strong>No provider SDK or model router.</strong> The user-owned adapter sends the
+  request and returns a sanitized post-normalization wire echo.</li>
+<li><strong>No LiteLLM normalization in core.</strong> A team may wrap LiteLLM in its
+  adapter, but that adapter must attest to the final request it sent. DFAH
+  does not treat a pre-normalization configuration as wire truth.</li>
+<li><strong>No agent-framework lock-in.</strong> LangGraph, Pydantic AI, custom loops, and
+  other runtimes can implement the same small <code>Agent</code> protocol.</li>
+<li><strong>No automatic provider retry.</strong> An ambiguous post-dispatch failure cannot
+  be made scientifically equivalent by retrying it under the same episode
+  identity.</li>
+<li><strong>No LLM judge in core.</strong> DFAH measures agreement over a declared closed
+  decision ontology; it does not outsource label validity or materiality to
+  another model.</li>
+<li><strong>No raw prompts, tool arguments, or tool results by default.</strong> Strong path
+  identity uses local canonical hashes. Raw tool-argument capture is an
+  explicit, policy-controlled exception.</li>
+<li><strong>No production truth claims from built-in fixtures.</strong> The bundled
+  synthetic suites test integration plumbing, not financial accuracy,
+  fairness, policy compliance, or business materiality.</li>
+<li><strong>No full trace viewer or general eval platform.</strong> Static reports and
+  content-safe case inspection cover the first operational workflow. Richer
+  visualization can remain a separate layer over the typed artifacts.</li>
+</ul>
+<p>These boundaries keep the package useful as a control: small enough to add to
+an existing system, strict enough that a passing report has a clear meaning,
+and explicit about what still requires domain review.</p>
 
 
 
@@ -1383,44 +1173,6 @@ simulator, and can even drive your local Ollama model through the compliance cas
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../lab-7/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 7. Replayable Financial Agents">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Lab 7. Replayable Financial Agents
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../resources/paper/" class="md-footer__link md-footer__link--next" aria-label="Next: Research Paper">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Research Paper
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -1475,10 +1227,10 @@ simulator, and can even drive your local Ollama model through the compliance cas
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
