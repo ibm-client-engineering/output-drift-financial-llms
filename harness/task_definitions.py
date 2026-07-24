@@ -1,21 +1,18 @@
 #!/usr/bin/env python3
 """
-Task definitions for financial LLM evaluation with regulatory compliance invariants.
+Historical task definitions for the financial LLM workshop.
 
-This module implements finance-calibrated validation logic for LLM outputs in
-regulated financial workflows. Each validation function is designed to satisfy
-specific regulatory requirements, not generic ML evaluation.
+The checks below are reproducible benchmark rules, not legal interpretations or
+compliance determinations. Names retained for backward compatibility are noted
+where they overstate the underlying measurement.
 
 Includes:
 - RAG Q&A over SEC filings with citation validation (SEC Rule 10b-5 compliance)
 - Policy-bounded JSON summarization with schema constraints (FSB consistency)
-- Text-to-SQL with GAAP materiality invariant checking (ASC 450-20)
+- Text-to-SQL with a configurable numeric tolerance
 
-Regulatory Framework:
-    - GAAP ASC 450-20: 5% materiality threshold for financial disclosures
-    - SEC Rule 10b-5: Anti-fraud provisions requiring accurate source attribution
-    - FSB BCBS-239: Consistent decision outputs for regulatory reporting
-    - CFTC Rule 17a-4: Audit trail requirements for automated decisions
+Any mapping from these measurements to a legal or policy obligation must be
+defined and approved for the intended workflow.
 
 AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
@@ -26,14 +23,15 @@ from jsonschema import validate, ValidationError
 
 
 # =============================================================================
-# REGULATORY COMPLIANCE CONSTANTS
+# HISTORICAL WORKSHOP DEFAULTS
 # =============================================================================
 
-# GAAP Materiality Threshold (ASC 450-20 / SEC SAB No. 99)
-# Per SEC Staff Accounting Bulletin No. 99, a 5% deviation from expected values
-# is the de facto threshold for determining materiality in financial statements.
-# This threshold is applied to SQL query results affecting financial calculations.
-GAAP_MATERIALITY_THRESHOLD: float = 0.05  # 5% tolerance
+# The workshop used 5% as an illustrative numeric comparison tolerance. There is
+# no universal 5% GAAP materiality threshold; production values must come from
+# an approved task contract.
+DEFAULT_NUMERIC_TOLERANCE: float = 0.05
+# Deprecated compatibility alias. Do not interpret this name as legal guidance.
+GAAP_MATERIALITY_THRESHOLD: float = DEFAULT_NUMERIC_TOLERANCE
 
 # SEC Citation Accuracy Requirement (Rule 10b-5)
 # AI systems generating content with SEC filing citations must achieve high
@@ -283,36 +281,28 @@ def validate_sql_query(
     gaap_materiality_threshold: float = GAAP_MATERIALITY_THRESHOLD
 ) -> Dict[str, Any]:
     """
-    Validate SQL query execution against GAAP materiality invariants.
+    Execute a SQL query and apply the workshop's configurable numeric tolerance.
 
-    This validation implements the GAAP ASC 450-20 materiality threshold for
-    financial calculations. Per SEC Staff Accounting Bulletin No. 99, deviations
-    exceeding 5% of expected values are considered material and may require
-    disclosure or indicate a compliance failure.
-
-    Regulatory Basis:
-        - GAAP ASC 450-20: Loss contingencies and materiality assessment
-        - SEC SAB No. 99: Quantitative threshold of 5% for materiality
-        - BIS BCBS-457: Reproducibility requirements for risk calculations
-
-    The tolerance is NOT a generic ML hyperparameter—it is a finance-calibrated
-    threshold derived from regulatory auditing standards.
+    The ``gaap_materiality_threshold`` parameter and ``gaap_compliant`` result
+    key are legacy API names. They indicate whether a numeric result falls
+    within the configured tolerance; they do not establish GAAP materiality or
+    regulatory compliance.
 
     Args:
         sql: SQL query to validate
         connection: SQLite database connection
-        expected_total: Expected total for SUM queries (regulatory baseline)
-        gaap_materiality_threshold: GAAP materiality threshold (default: 5% per ASC 450-20)
+        expected_total: Expected total for SUM queries
+        gaap_materiality_threshold: Legacy-named numeric tolerance (default: 5% for the exercise)
 
     Returns:
         {
             "executable": bool,
-            "gaap_compliant": bool,  # Renamed from decision_ok for regulatory clarity
+            "gaap_compliant": bool,  # Legacy alias for within_tolerance
             "result": Any,
             "error": str|None,
-            "materiality_deviation": float|None,  # Actual deviation from expected
-            "regulatory_threshold": float,  # Applied GAAP threshold
-            "regulatory_basis": str  # Citation to regulatory requirement
+            "materiality_deviation": float|None,  # Legacy name for numeric deviation
+            "regulatory_threshold": float,  # Legacy name for configured tolerance
+            "regulatory_basis": str  # Legacy metadata; not a legal determination
         }
     """
     import pandas as pd
@@ -332,7 +322,7 @@ def validate_sql_query(
             "error": f"Only SELECT/WITH queries are permitted, got: {_sql_upper[:20]}",
             "materiality_deviation": None,
             "regulatory_threshold": gaap_materiality_threshold,
-            "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+            "regulatory_basis": "Illustrative task tolerance; configure per approved workflow"
         }
     for keyword in _FORBIDDEN:
         if keyword in _sql_upper:
@@ -344,7 +334,7 @@ def validate_sql_query(
                 "error": f"Forbidden SQL keyword detected: {keyword}",
                 "materiality_deviation": None,
                 "regulatory_threshold": gaap_materiality_threshold,
-                "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+                "regulatory_basis": "Illustrative task tolerance; configure per approved workflow"
             }
 
     try:
@@ -360,23 +350,23 @@ def validate_sql_query(
                 "error": "Query returned no results",
                 "materiality_deviation": None,
                 "regulatory_threshold": gaap_materiality_threshold,
-                "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+                "regulatory_basis": "Illustrative task tolerance; configure per approved workflow"
             }
 
-        # Validate SUM queries against expected total using GAAP materiality threshold
+        # Validate SUM queries against the configured numeric tolerance.
         gaap_compliant = True
         materiality_deviation = None
 
         if expected_total is not None and "sum(" in sql_clean.lower() and "amount" in sql_clean.lower():
             actual_value = float(df.iloc[0, 0]) if len(df) and len(df.columns) else float("nan")
 
-            # Calculate materiality deviation as percentage of expected value
+            # Calculate numeric deviation as a percentage of the expected value.
             if expected_total != 0:
                 materiality_deviation = abs(actual_value - expected_total) / abs(expected_total)
             else:
                 materiality_deviation = float('inf') if actual_value != 0 else 0.0
 
-            # GAAP compliance: deviation must be within materiality threshold
+            # Legacy variable name: this is a tolerance check, not GAAP compliance.
             gaap_compliant = materiality_deviation <= gaap_materiality_threshold
 
         return {
@@ -387,7 +377,7 @@ def validate_sql_query(
             "error": None,
             "materiality_deviation": materiality_deviation,
             "regulatory_threshold": gaap_materiality_threshold,
-            "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+            "regulatory_basis": "Illustrative task tolerance; configure per approved workflow"
         }
 
     except Exception as e:
@@ -399,5 +389,5 @@ def validate_sql_query(
             "error": str(e),
             "materiality_deviation": None,
             "regulatory_threshold": gaap_materiality_threshold,
-            "regulatory_basis": "GAAP ASC 450-20; SEC SAB No. 99"
+            "regulatory_basis": "Illustrative task tolerance; configure per approved workflow"
         }

@@ -213,5 +213,5 @@ if __name__ == "__main__":
     print("="*60)
     print("1. Run LLM evaluation with this database")
     print("2. Use queries from prompts/templates.json")
-    print("3. Validate results within ±5% tolerance (GAAP materiality)")
+    print("3. Validate results with the exercise's configurable ±5% tolerance")
     print()

@@ -12,9 +12,9 @@ By the end of this lab, you will:
 
 - Use the `CrossProviderValidator` from your framework
 - Compare outputs between Ollama and watsonx.ai
-- Understand GAAP materiality thresholds (±5%)
-- Validate cross-provider consistency for compliance
-- Make deployment decisions based on provider reliability
+- Use an illustrative numeric tolerance (±5%)
+- Measure cross-provider consistency for follow-up review
+- Prioritize validation work when providers differ
 
 ## Prerequisites
 
@@ -32,7 +32,9 @@ Financial institutions often need to:
 - **Regulatory compliance** requiring reproducibility across environments
 
 !!! warning "The Risk"
-    A model that works locally but behaves differently in production (cloud) creates **audit trail inconsistencies** and **compliance violations**.
+    A model that works locally but behaves differently in production (cloud)
+    creates inconsistent replay evidence and may undermine downstream controls.
+    The consistency test does not itself determine compliance.
 
 ## Step 1: Review CrossProviderValidator Code
 
@@ -44,7 +46,7 @@ cat harness/cross_provider_validation.py | head -50
 
 **Key features** (from the code):
 - Normalized edit distance for text comparison
-- **±5% tolerance** (GAAP materiality threshold)
+- Configurable numeric tolerance (±5% in this exercise)
 - Task-specific validation rules
 - Audit trail generation
 
@@ -171,10 +173,10 @@ experiments on each provider, then validate the outputs for consistency.
 """
 from harness.cross_provider_validation import CrossProviderValidator
 
-# Initialize validator with GAAP materiality threshold
+# Initialize the validator with an exercise-specific tolerance
 validator = CrossProviderValidator(
     providers=["ollama", "watsonx"],
-    tolerance_pct=5.0  # +/-5% from GAAP auditing standards
+    tolerance_pct=5.0  # illustrative; set from the approved task contract
 )
 
 # Assume you've already collected outputs from each provider
@@ -227,15 +229,18 @@ Run it:
 python run_cross_provider_validation.py
 ```
 
-## Step 4: GAAP Materiality Threshold (±5%)
+## Step 4: Illustrative Numeric Tolerance (±5%)
 
-The framework uses **±5% tolerance** based on GAAP auditing standards for financial statement materiality.
+This exercise uses a configurable **±5% tolerance** to demonstrate numeric
+comparison. It is not a universal GAAP materiality threshold. Materiality is
+context-dependent and must be set by the responsible accounting, risk, and
+control functions.
 
 **Example: Numeric comparison**
 
 ```python
 def validate_numeric_tolerance(value1: float, value2: float, tolerance_pct: float = 5.0) -> bool:
-    """Check if two values are within GAAP materiality threshold."""
+    """Check whether two values meet an exercise-specific tolerance."""
     if value1 == 0 and value2 == 0:
         return True
     if value1 == 0 or value2 == 0:
@@ -251,9 +256,9 @@ print(validate_numeric_tolerance(1000, 1040, tolerance_pct=5.0))  # True (3.8% d
 ```
 
 **Why 5%?**
-- GAAP materiality standard for financial reporting
-- Industry-accepted threshold for immaterial differences
-- Balances strictness with practical variance
+- It makes the comparison easy to inspect in this exercise
+- It is configurable rather than a compliance rule
+- Production tolerances should follow the task's approved control standard
 
 ## Step 5: Multi-Run Cross-Provider Test
 
@@ -346,8 +351,10 @@ Even with identical model versions, providers may differ in:
 3. **Batching**: Request handling and parallelization
 4. **Load balancing**: Multiple model replicas
 
-!!! info "Tier 1 Advantage"
-    Tier 1 models (7-20B) are **small enough** to fit on a single GPU consistently, reducing infrastructure-induced variance.
+!!! info "Replay the Exact Stack"
+    Provider differences can reflect hardware, quantization, batching, routing,
+    or model revisions. The workshop tiers do not isolate those causes; compare
+    the exact source and target configurations.
 
 ## Troubleshooting
 
@@ -389,20 +396,25 @@ print("watsonx output:", repr(watsonx_output))
 
 1. **Cross-provider validation** measures whether replay evidence changes across serving stacks
 2. **Tier 1 configurations** showed high agreement in the bounded workshop runs
-3. **GAAP materiality (±5%)** provides finance-calibrated tolerance
+3. **The ±5% example** illustrates a configurable numeric tolerance
 4. **Framework's `CrossProviderValidator`** automates testing
 5. **Audit trails** document cross-provider equivalence
 
 ## Quiz: Test Your Understanding
 
-??? question "What is the GAAP materiality threshold used in cross-provider validation?"
-    **Answer**: ±5%, based on GAAP auditing standards for financial statement materiality.
+??? question "What does the ±5% value represent in this lab?"
+    **Answer**: An illustrative, configurable comparison tolerance. It is not a
+    universal GAAP materiality threshold.
 
 ??? question "Why do Tier 1 models show better cross-provider consistency?"
-    **Answer**: They're small enough (7-20B params) to fit on a single GPU, reducing infrastructure-induced variance from distributed processing.
+    **Answer**: This exercise does not isolate the cause. Model family, serving
+    stack, task, decoding, and hardware all differ and should be tested rather
+    than inferred from parameter count.
 
-??? question "When is migration from Tier 1 to Tier 2 safe?"
-    **Answer**: Only for structured tasks (SQL, summarization). RAG tasks require explicit validation due to Tier 2's lower RAG consistency.
+??? question "What should happen before treating two provider configurations as equivalent?"
+    **Answer**: Run the intended task under a frozen replay configuration,
+    inspect decision and path evidence, and apply the workflow's approved
+    correctness and control checks.
 
 ## Next Steps
 

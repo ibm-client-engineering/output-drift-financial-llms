@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Regulatory Invariants for Financial AI Compliance.
+Historical control-invariant examples for the financial AI workshop.
 
-This module encodes finance-specific validation logic with explicit mappings to
-regulatory requirements from FSB, BIS, CFTC, and other financial oversight bodies.
-
-The invariants defined here are NOT generic ML reproducibility measures—they are
-calibrated to specific regulatory thresholds and compliance requirements for
-financial services AI deployments.
+This legacy module records illustrative benchmark checks and possible regulatory
+touchpoints. It is not legal guidance, does not implement the cited rules, and
+does not determine compliance. Numeric defaults must be replaced with values
+approved for the intended workflow.
 
 Regulatory Framework References:
     - FSB (Financial Stability Board): "Principles for Effective Risk Data Aggregation"
@@ -18,7 +16,6 @@ Regulatory Framework References:
     - CFTC (Commodity Futures Trading Commission): Rule 17a-4 mandates complete
       audit trails for automated trading decisions.
     - SEC Rule 17a-4: Requires broker-dealers to preserve records in non-rewritable format.
-    - GAAP ASC 450: Materiality threshold of 5% for financial statement disclosures.
     - EU AI Act (2024): High-risk AI systems require documented decision rationale.
 
 AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
@@ -31,14 +28,14 @@ import math
 
 
 # =============================================================================
-# REGULATORY THRESHOLD CONSTANTS
+# HISTORICAL WORKSHOP DEFAULTS
 # =============================================================================
 
-# GAAP ASC 450-20 Materiality Threshold
-# SEC Staff Accounting Bulletin No. 99 establishes 5% as the de facto materiality
-# threshold for financial statement disclosures. Deviations below this threshold
-# are considered immaterial and do not require disclosure or restatement.
-GAAP_MATERIALITY_THRESHOLD: float = 0.05  # 5% tolerance for numerical outputs
+# The workshop used 5% as an illustrative numeric comparison tolerance. There is
+# no universal 5% GAAP materiality threshold.
+DEFAULT_NUMERIC_TOLERANCE: float = 0.05
+# Deprecated compatibility alias. The name must not be read as legal guidance.
+GAAP_MATERIALITY_THRESHOLD: float = DEFAULT_NUMERIC_TOLERANCE
 
 # Basel III Operational Risk Tolerance
 # BIS BCBS 239 (Principles for effective risk data aggregation) requires
@@ -75,6 +72,7 @@ class RegulatoryBody(Enum):
     EU_AI_ACT = "European Union AI Act"
     FINRA = "Financial Industry Regulatory Authority"
     OCC = "Office of the Comptroller of the Currency"
+    BENCHMARK = "Illustrative benchmark configuration"
 
 
 @dataclass(frozen=True)
@@ -202,19 +200,19 @@ REGULATORY_REQUIREMENTS: Dict[str, RegulatoryRequirement] = {
         citation="SEC Rule 17a-4: Records to be Preserved by Certain Exchange Members"
     ),
 
-    # GAAP Requirements
+    # Legacy key retained for compatibility. This is an exercise setting, not a
+    # GAAP requirement or materiality determination.
     "gaap_materiality": RegulatoryRequirement(
-        body=RegulatoryBody.GAAP,
-        rule_id="ASC-450-20",
-        requirement_name="Materiality Threshold",
+        body=RegulatoryBody.BENCHMARK,
+        rule_id="EXERCISE-NUMERIC-TOLERANCE",
+        requirement_name="Illustrative Numeric Tolerance",
         description=(
-            "Numerical outputs from AI systems affecting financial statements must be "
-            "within 5% of expected values. Deviations exceeding this threshold may require "
-            "disclosure or restatement."
+            "The workshop compares selected numeric outputs using a configurable "
+            "5% default. This value is not a universal accounting threshold."
         ),
         threshold=GAAP_MATERIALITY_THRESHOLD,
         threshold_type="max",
-        citation="FASB ASC 450-20; SEC SAB No. 99 (1999)"
+        citation="Illustrative benchmark setting; configure per approved task contract"
     ),
 
     # EU AI Act Requirements
@@ -260,7 +258,7 @@ TASK_REGULATORY_MAPPINGS: Dict[str, List[str]] = {
         "eu_ai_act_transparency",        # Interpretable outputs
     ],
     "sql": [
-        "gaap_materiality",              # Numeric results within 5%
+        "gaap_materiality",              # Legacy key: configurable numeric tolerance
         "bis_risk_calculation_tolerance", # Reproducible calculations
         "cftc_audit_trail",              # Complete decision documentation
         "fsb_consistent_decisions",      # Deterministic outputs
@@ -284,19 +282,18 @@ def validate_gaap_materiality(
     threshold: float = GAAP_MATERIALITY_THRESHOLD
 ) -> Dict[str, Any]:
     """
-    Validate numeric output against GAAP materiality threshold.
+    Compare a numeric output with the configured exercise tolerance.
 
-    Per SEC Staff Accounting Bulletin No. 99 and FASB ASC 450-20, a deviation
-    is material if it exceeds 5% of the expected value and would influence
-    the judgment of a reasonable investor.
+    The function name is retained for backward compatibility. Its result does
+    not determine GAAP materiality or regulatory compliance.
 
     Args:
         actual_value: The value produced by the AI system
         expected_value: The expected/correct value
-        threshold: Materiality threshold (default: 5% per GAAP)
+        threshold: Task-specific tolerance (default: 5% for the exercise)
 
     Returns:
-        Dict with compliance status and regulatory metadata
+        Dict with the tolerance result and compatibility metadata
     """
     if expected_value == 0:
         deviation_pct = float('inf') if actual_value != 0 else 0.0
@@ -313,8 +310,9 @@ def validate_gaap_materiality(
         "threshold_pct": threshold,
         "regulatory_basis": REGULATORY_REQUIREMENTS["gaap_materiality"],
         "requirement_id": "gaap_materiality",
-        "regulatory_body": RegulatoryBody.GAAP.value,
-        "rule_citation": "FASB ASC 450-20; SEC SAB No. 99"
+        "within_tolerance": is_compliant,
+        "regulatory_body": RegulatoryBody.BENCHMARK.value,
+        "rule_citation": "Illustrative task tolerance; configure per approved workflow"
     }
 
 

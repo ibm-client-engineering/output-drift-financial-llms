@@ -297,23 +297,23 @@ This pipeline:
 - Fails CI if drift detected
 - Uploads audit trails as artifacts
 
-## Step 6: Custom Compliance Validator
+## Step 6: Custom Control-Rule Scaffold
 
-Create a validator for your specific regulations:
+Create a small rule scaffold for your workflow. The keyword checks below are
+teaching examples only. They are not legal interpretations, fairness tests, or
+evidence of regulatory compliance.
 
-**Create `custom_compliance_validator.py`**:
+**Create `custom_control_validator.py`**:
 
 ```python
 #!/usr/bin/env python3
-"""
-Custom compliance validator for specific regulatory frameworks.
-"""
+"""Illustrative workflow-rule checks; not a compliance determination."""
 import json
 from typing import Dict, List
 
-class CustomComplianceValidator:
+class CustomControlValidator:
     """
-    Validate LLM outputs against custom compliance requirements.
+    Evaluate illustrative workflow rules against captured outputs.
     """
 
     def __init__(self, frameworks: List[str]):
@@ -321,7 +321,7 @@ class CustomComplianceValidator:
         Initialize validator.
 
         Args:
-            frameworks: List of compliance frameworks (e.g., ["ECOA", "FCRA", "GDPR"])
+            frameworks: Labels used to select example rules for this lab.
         """
         self.frameworks = frameworks
         self.rules = self._load_rules()
@@ -330,7 +330,8 @@ class CustomComplianceValidator:
         """Load validation rules for each framework."""
         rules = {}
 
-        # ECOA (Equal Credit Opportunity Act)
+        # Illustrative checks grouped under familiar labels. These simple
+        # heuristics do not implement or interpret the cited laws.
         if "ECOA" in self.frameworks:
             rules["ecoa_consistency"] = self._check_consistency
             rules["ecoa_no_discrimination"] = self._check_no_discrimination
@@ -347,21 +348,21 @@ class CustomComplianceValidator:
         return rules
 
     def _check_consistency(self, outputs: List[str]) -> bool:
-        """ECOA: Similar applicants must receive similar treatment."""
+        """Check exact agreement across the supplied examples."""
         unique_outputs = len(set(outputs))
         return unique_outputs == 1  # 100% consistency required
 
     def _check_no_discrimination(self, output: str) -> bool:
-        """ECOA: No references to protected classes."""
+        """Flag a small demonstration vocabulary for manual review."""
         protected_terms = ["race", "gender", "age", "religion", "nationality"]
         return not any(term in output.lower() for term in protected_terms)
 
     def _check_explainability(self, output: str) -> bool:
-        """FCRA/GDPR: Must include explanation."""
+        """Check for an explanation marker in this teaching example."""
         return "explanation" in output.lower() or "because" in output.lower()
 
     def _check_data_minimization(self, output: str) -> bool:
-        """GDPR: Don't expose unnecessary personal data."""
+        """Flag a small demonstration vocabulary for manual review."""
         pii_indicators = ["ssn", "social security", "passport", "driver license"]
         return not any(indicator in output.lower() for indicator in pii_indicators)
 
@@ -374,7 +375,7 @@ class CustomComplianceValidator:
 
         Returns:
             {
-                "compliant": bool,
+                "all_example_rules_passed": bool,
                 "passed_rules": List[str],
                 "failed_rules": List[str],
                 "details": Dict[str, bool]
@@ -392,14 +393,14 @@ class CustomComplianceValidator:
         failed = [k for k, v in results.items() if not v]
 
         return {
-            "compliant": len(failed) == 0,
+            "all_example_rules_passed": len(failed) == 0,
             "passed_rules": passed,
             "failed_rules": failed,
             "details": results
         }
 
 # Example usage
-validator = CustomComplianceValidator(frameworks=["ECOA", "FCRA"])
+validator = CustomControlValidator(frameworks=["ECOA", "FCRA"])
 
 # Test outputs from credit risk assessment
 test_outputs = [
@@ -410,9 +411,12 @@ test_outputs = [
 
 result = validator.validate(test_outputs)
 
-print("\n📋 Compliance Validation Report")
+print("\n📋 Example Control-Rule Report")
 print("=" * 60)
-print(f"Compliant: {'✅ YES' if result['compliant'] else '❌ NO'}")
+print(
+    "All example rules passed: "
+    f"{'✅ YES' if result['all_example_rules_passed'] else '❌ NO'}"
+)
 print(f"\nPassed rules ({len(result['passed_rules'])}):")
 for rule in result['passed_rules']:
     print(f"  ✅ {rule}")
@@ -425,7 +429,7 @@ if result['failed_rules']:
 Run it:
 
 ```bash
-python custom_compliance_validator.py
+python custom_control_validator.py
 ```
 
 ## Step 7: Export for Regulatory Reporting

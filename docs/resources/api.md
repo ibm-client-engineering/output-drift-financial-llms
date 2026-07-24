@@ -53,7 +53,7 @@ from harness.cross_provider_validation import CrossProviderValidator
 
 validator = CrossProviderValidator(
     providers=["ollama", "watsonx"],
-    tolerance_pct=5.0  # GAAP materiality threshold
+    tolerance_pct=5.0  # illustrative; configure for the task
 )
 ```
 
@@ -113,7 +113,7 @@ print(f"Similarity: {result['similarity_scores']}")
 ```json
 {
   "sql": {
-    "description": "Text-to-SQL with invariant checking (±5% GAAP materiality)",
+    "description": "Text-to-SQL with a configurable numeric tolerance",
     "prompts": [...],
     "system_prompt": "You write SQLite SQL ONLY...",
     "schema_description": "transactions(id INT, date TEXT, region TEXT, amount REAL, category TEXT)",

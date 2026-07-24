@@ -1,26 +1,20 @@
 #!/usr/bin/env python3
 """
-DeterministicRetriever: SEC 10-K structure-aware retrieval with regulatory precedence encoding.
+DeterministicRetriever: SEC 10-K structure-aware retrieval with stable precedence.
 
-This module implements deterministic document retrieval calibrated for SEC regulatory
-filings. The multi-key sorting is NOT generic tiebreaking—it encodes the SEC 10-K
-disclosure hierarchy to ensure regulatory-compliant document ordering.
+This historical workshop module uses a fixed, documented ordering for SEC 10-K
+sections. The ordering is a benchmark design choice, not an SEC-prescribed
+priority or a compliance determination.
 
 SEC 10-K Disclosure Hierarchy (encoded in sorting):
-    1. Risk Factors (Item 1A) - Highest regulatory priority
-    2. MD&A (Item 7) - Management discussion, critical for analysis
+    1. Risk Factors (Item 1A) - First in the benchmark tie-break order
+    2. MD&A (Item 7) - Second in the benchmark tie-break order
     3. Financial Statements (Item 8) - Quantitative disclosures
     4. Legal Proceedings (Item 3) - Contingency disclosures
     5. Other Items - Lower priority supplementary information
 
-Regulatory Framework:
-    - SEC Regulation S-K: Defines 10-K structure and disclosure requirements
-    - SEC Rule 10b-5: Anti-fraud provisions requiring accurate source attribution
-    - FSB BCBS-239: Consistent retrieval order for reproducible regulatory reporting
-    - CFTC Rule 17a-4: Audit trail requirements for document references
-
 The stable ordering ensures that identical queries at T=0.0 produce identical
-context windows, satisfying FSB consistency requirements for regulatory reporting.
+context windows within the pinned benchmark environment.
 
 AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
@@ -117,25 +111,20 @@ SEC_10K_SECTION_PRECEDENCE: Dict[str, int] = {
     "default": 99,
 }
 
-# Regulatory requirement: 100% identity rate at T=0.0 (FSB BCBS-239)
+# Historical workshop target retained for compatibility; not a regulatory rule.
 FSB_IDENTITY_REQUIREMENT: float = 1.0
 
 
 class DeterministicRetriever:
     """
-    Deterministic retrieval with SEC disclosure precedence encoding.
+    Deterministic retrieval with a documented SEC-section tie-break order.
 
     This retriever implements finance-specific ordering that encodes SEC 10-K
-    document hierarchy. The sorting is NOT generic tiebreaking—it ensures:
+    document structure. The sorting ensures:
 
     1. Higher relevance scores sort first (standard retrieval)
-    2. SEC disclosure precedence breaks ties (regulatory hierarchy)
+    2. The benchmark's section order breaks ties
     3. Snippet ID breaks remaining ties (deterministic ordering)
-
-    Regulatory Compliance:
-        - FSB BCBS-239: Identical queries → identical results at T=0.0
-        - SEC Regulation S-K: Document structure awareness
-        - CFTC Rule 17a-4: Immutable snippet IDs for audit trails
 
     Key features:
     - Deterministic chunking with semantic boundary preservation
@@ -244,18 +233,16 @@ class DeterministicRetriever:
         """
         Retrieve top-k snippets with SEC disclosure precedence encoding.
 
-        REGULATORY REQUIREMENT (FSB BCBS-239): Multi-key sort ensures identical
-        outputs across runs at T=0.0, satisfying consistency requirements for
-        regulatory reporting.
+        The multi-key sort produces a stable order within the pinned benchmark
+        environment.
 
         Sort Keys (in order of priority):
             1. TF-IDF similarity score (descending) - Relevance
-            2. SEC section precedence (ascending) - Regulatory hierarchy
+            2. Benchmark section precedence (ascending)
             3. Snippet ID (ascending) - Deterministic tiebreaking
 
         The SEC precedence encoding ensures that when multiple snippets have
-        equal relevance scores, sections with higher regulatory importance
-        (e.g., Risk Factors, MD&A) are prioritized over supplementary sections.
+        equal relevance scores, the documented section order resolves the tie.
 
         Args:
             query: Search query
@@ -285,7 +272,7 @@ class DeterministicRetriever:
                 self.snippets[i]      # Full snippet tuple
             ))
 
-        # REGULATORY SORT ORDER (FSB BCBS-239 Compliance):
+        # BENCHMARK SORT ORDER:
         # 1. Similarity (descending) - Most relevant first
         # 2. SEC precedence (ascending) - Risk Factors > MD&A > Other
         # 3. Snippet ID (ascending) - Deterministic final ordering

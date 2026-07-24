@@ -114,7 +114,9 @@ Response 1 (4 occurrences):
 ```
 
 !!! success "Tier 1 Performance"
-    7-20B models maintain 100% consistency even with concurrent requests—critical for production workloads.
+    The tested 7-20B configurations retained 100% observed agreement under the
+    exercise's concurrent requests. Re-run the test for the intended serving
+    stack before drawing an operational conclusion.
 
 ## Step 3: Paper-Standard Test (n=16)
 
@@ -247,12 +249,14 @@ python run_evaluation.py \
 Results:
   Consistency: 56.25% (9/16 identical)
   Mean Drift: 0.081
-  Factual Drift Range: 0.000 - 0.375
+  Token-Set Drift Range: 0.000 - 0.375
 
 ⚠️ Substantial drift at T=0.2 for RAG tasks!
 ```
 
-**Paper Finding Confirmed**: RAG tasks at T=0.2 show **56.25% consistency**, making them unsuitable for compliance workflows without strict T=0.0.
+**Historical result reproduced**: the tested RAG configuration at T=0.2
+shows **56.25% consistency**. This result calls for investigation; it does not
+by itself decide whether a workflow is compliant or suitable for use.
 
 ## Step 6: Multi-Task Evaluation
 
@@ -337,8 +341,8 @@ SUMMARIZE    16       100.0%      0.000
 
 - **0.000**: No measured drift in this run
 - **0.012**: Minor syntactic variation
-- **>0.05**: Semantic drift
-- **>0.1**: Factual inconsistencies
+- **>0.05**: Larger token-set variation
+- **>0.1**: Substantial token-set variation; inspect the outputs directly
 
 ### Paper Findings Reproduced
 
@@ -479,11 +483,11 @@ For large concurrency (n=16):
 
 ## Key Takeaways
 
-1. **7-20B models** (Tier 1) achieve 100% consistency at T=0.0 for all tasks
-2. **Concurrency doesn't affect consistency** for Tier 1 models (n=1, 4, or 16)
+1. **The tested 7-20B configurations** reached 100% consistency at T=0.0 in this exercise
+2. **Concurrency did not change measured consistency** for those runs (n=1, 4, or 16)
 3. **Task structure matters**: SQL/summarization > RAG for determinism
 4. **Temperature sensitivity**: RAG tasks degrade significantly at T=0.2
-5. **Audit trails** provide complete reproducibility for regulatory review
+5. **Replay records** support reproduction and review within their captured scope
 
 ## Quiz: Test Your Understanding
 
@@ -491,7 +495,8 @@ For large concurrency (n=16):
     **Answer**: SQL has a structured output format with deterministic syntax, limiting the output space and making it more resistant to temperature-induced drift.
 
 ??? question "What consistency % did RAG tasks achieve at T=0.2 in the paper?"
-    **Answer**: 56.25% (9/16 runs identical), showing substantial drift that makes them unsuitable for compliance workflows at elevated temperatures.
+    **Answer**: 56.25% (9/16 runs identical), showing substantial variation
+    that should be investigated before relying on exact replay.
 
 ??? question "What is the purpose of the response_hash field in audit trails?"
     **Answer**: SHA-256 hash enables fast consistency checking across runs without string comparison—critical for large-scale audits.

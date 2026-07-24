@@ -65,7 +65,7 @@
     "seed": 42
   },
   "sql": {
-    "description": "Text-to-SQL with invariant checking (±5% GAAP materiality)",
+    "description": "Text-to-SQL with a configurable numeric tolerance (±5% in this exercise)",
     "prompts": [
       {
         "id": "s1",

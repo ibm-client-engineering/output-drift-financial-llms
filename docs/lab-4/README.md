@@ -279,7 +279,9 @@ GPT-OSS-120B    ██▌                  12.5% (Tier 3)
 ```
 
 !!! warning "The 120B Failure"
-    GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched—completely unsuitable for audit trails or regulated decisions.
+    GPT-OSS-120B's **12.5% consistency** means only 2 out of 16 runs matched in
+    this exercise. That is a strong investigation signal, not a complete
+    suitability or compliance determination.
 
 ### Step 3: Temperature Sensitivity Analysis
 
@@ -307,7 +309,7 @@ sns.barplot(data=temp_data, x="Task", y="Consistency", hue="Temperature", ax=ax1
 ax1.set_title("Task Consistency: T=0.0 vs T=0.2", fontsize=14, fontweight='bold')
 ax1.set_ylabel("Consistency (%)", fontsize=12)
 ax1.set_xlabel("Task Type", fontsize=12)
-ax1.axhline(y=90, color='red', linestyle='--', alpha=0.5, label='Compliance Threshold')
+ax1.axhline(y=90, color='red', linestyle='--', alpha=0.5, label='Illustrative review line')
 ax1.legend(title="Temperature")
 ax1.set_ylim(0, 110)
 
@@ -476,14 +478,17 @@ print(validation_priority("rag", observed_tier=2))
     does not establish why the configurations differed or support a general
     causal claim about parameter count.
 
-??? question "What consistency threshold defines 'compliant' for regulated financial applications?"
-    **Answer**: ≥95% consistency (our research uses 100% as the gold standard for Tier 1).
+??? question "Does a consistency score define regulatory compliance?"
+    **Answer**: No. The exercise uses descriptive repeatability bands. A
+    compliance determination requires task-specific legal, policy, accuracy,
+    fairness, safety, and control review.
 
 ??? question "Which task type is most resilient to temperature increases?"
     **Answer**: SQL generation—maintains 100% consistency even at T=0.2 due to structured output format.
 
 ??? question "What does a mean drift of 0.081 indicate?"
-    **Answer**: Moderate semantic variation across runs—approaching the threshold where factual inconsistencies emerge (>0.1).
+    **Answer**: Token-set variation across runs. The Jaccard score alone cannot
+    determine whether the difference is semantic, factual, or material.
 
 ## Next Steps
 
@@ -496,4 +501,6 @@ Now that you understand drift metrics and classification:
 ---
 
 !!! success "Lab 4 Complete!"
-    You can now analyze drift metrics, classify models, and make compliance-informed deployment decisions! Ready for cross-provider validation? Move on to [Lab 5: Cross-Provider Testing](../lab-5/README.md)!
+    You can now analyze drift metrics and use them to prioritize follow-up
+    validation. Ready for cross-provider replay? Move on to
+    [Lab 5: Cross-Provider Testing](../lab-5/README.md)!

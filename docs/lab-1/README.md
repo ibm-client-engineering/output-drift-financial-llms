@@ -208,7 +208,7 @@ Run 2: "Q4 revenue was $550M according to the filing"
 Run 3: "Revenue not disclosed in available documents"
 ```
 
-**Impact**: Compliance violations, incorrect recommendations
+**Impact**: Incorrect recommendations and potential downstream control failures
 
 ## Regulatory Context
 

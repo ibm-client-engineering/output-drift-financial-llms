@@ -239,7 +239,8 @@ print(f"Decision determinism: {metrics.decision_determinism:.1%}")
 <details>
 <summary><strong>DeterministicRetriever</strong></summary>
 
-SEC 10-K structure-aware retrieval with multi-key ordering that treats retrieval order as a **compliance requirement**.
+SEC 10-K structure-aware retrieval with multi-key ordering that makes retrieval
+order explicit and reproducible for downstream review.
 
 ```python
 from harness.deterministic_retriever import create_retriever_from_files
@@ -253,7 +254,9 @@ results = retriever.retrieve(query="net credit losses 2024", k=5)
 <details>
 <summary><strong>Cross-Provider Validation</strong></summary>
 
-Validates consistency across local (Ollama) and cloud deployments with finance-calibrated invariants (±5% GAAP materiality threshold).
+Compares consistency across local (Ollama) and cloud deployments. The example
+uses a configurable ±5% numeric tolerance for demonstration; it is not a
+universal accounting or compliance threshold.
 
 ```python
 from harness.cross_provider_validation import CrossProviderValidator

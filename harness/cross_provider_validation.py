@@ -19,7 +19,7 @@ class CrossProviderValidator:
 
     Key features:
     - Normalized edit distance for text comparison
-    - Finance-calibrated tolerance thresholds (±5% for GAAP materiality)
+    - Configurable numeric tolerance (±5% in the workshop exercise)
     - Task-specific validation rules
     - Audit trail generation
     """
@@ -30,7 +30,7 @@ class CrossProviderValidator:
 
         Args:
             providers: List of provider names (e.g., ["ollama", "watsonx"])
-            tolerance_pct: Tolerance percentage for numeric comparisons (default: 5% for GAAP)
+            tolerance_pct: Task-specific numeric comparison tolerance (default: 5% for this exercise)
         """
         self.providers = providers
         self.tolerance_pct = tolerance_pct

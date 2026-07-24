@@ -91,9 +91,9 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
 - Missing or malformed required channels make a replay group ineligible; they are not treated as agreement
 
-**Community Validation** (Paul Merrison, FINOS):
+**Earlier workshop contribution**:
 - Determinism is model-specific, not size-based
-- **Gemma2-9B**: 100% deterministic (new Tier 1 candidate)
+- **Gemma2-9B**: 100% observed output agreement in the contributed bounded run
 - **Mistral-7B**: Task-dependent (33% RAG, 100% SQL)
 - Architecture and training matter more than parameter count
 

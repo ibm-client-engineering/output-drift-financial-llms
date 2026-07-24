@@ -1,27 +1,26 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-LLM-as-Judge for Financial AI Compliance.
+Historical LLM-as-judge control rubric for the financial AI workshop.
 
-This module implements compliance-specific LLM-as-Judge methodology that evaluates
-model outputs against regulatory requirements (FSB, BIS, CFTC, SEC) using a
-"judge" LLM to assess faithfulness, determinism, and regulatory compliance.
+This legacy module applies illustrative judge prompts to faithfulness and
+repeatability evidence. It is not a legal interpretation, compliance
+attestation, or deployment decision. Output labels retained for compatibility
+must be reviewed by qualified domain, risk, legal, and control owners.
 
-Patent Novelty (per IBM IDT Feedback):
+Historical design notes:
     Unlike generic LLM-as-Judge approaches (quality, helpfulness), this module
     evaluates outputs against:
-    1. Specific regulatory requirements with embedded FSB/BIS/CFTC/SEC criteria
-    2. Finance-calibrated thresholds (GAAP materiality, SEC citation rules)
+    1. Illustrative rubric labels drawn from financial-control themes
+    2. Configurable benchmark thresholds
     3. Multi-model consensus attestation for audit trail generation
-    4. Faithfulness-determinism decomposition for compliance classification
+    4. Faithfulness-determinism decomposition for review prioritization
 
 Regulatory Framework References:
     - FSB BCBS-239: "Consistent and predictable" AI outputs
     - BIS Article 15: Cross-provider validation requirements
     - CFTC Rule 17a-4: Audit trail completeness
     - SEC Rule 10b-5: Citation accuracy requirements
-    - GAAP ASC 450-20: 5% materiality threshold
-
 AI4F Workshop 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Financial Workflows"
 """
 
@@ -40,7 +39,7 @@ from .regulatory_invariants import (
     RegulatoryRequirement,
     REGULATORY_REQUIREMENTS,
     TASK_REGULATORY_MAPPINGS,
-    GAAP_MATERIALITY_THRESHOLD,
+    DEFAULT_NUMERIC_TOLERANCE,
     FSB_IDENTITY_REQUIREMENT,
     SEC_CITATION_ACCURACY_THRESHOLD,
 )
@@ -50,11 +49,13 @@ from .regulatory_invariants import (
 # JUDGE PROMPT TEMPLATES (Compliance-Specific)
 # =============================================================================
 
-JUDGE_PROMPT_FSB_CONSISTENCY = """You are a compliance auditor evaluating LLM outputs for FSB regulatory requirements.
+JUDGE_PROMPT_FSB_CONSISTENCY = """You are applying an illustrative consistency rubric to LLM outputs.
 
-## FSB Requirement (BCBS-239 Principle 6: Accuracy)
-AI systems used in regulatory reporting must produce "consistent and predictable" outputs.
-Identical inputs MUST produce identical outputs for audit compliance.
+This benchmark check does not determine regulatory compliance. Apply the stated
+rubric only to the supplied responses.
+
+## Consistency Criterion
+Compare responses generated from identical prompts.
 
 ## Candidate Responses
 The following responses were generated from identical prompts across multiple runs:
@@ -68,9 +69,11 @@ The following responses were generated from identical prompts across multiple ru
    - SEMANTIC: Same meaning, different wording (acceptable for some tasks)
    - FACTUAL: Different facts or claims (compliance risk)
    - STRUCTURAL: Different format or organization (may affect audit)
-3. Does the inconsistency affect regulatory compliance?
+3. Could the inconsistency require downstream control review?
 
 ## Output Format (JSON only, no markdown)
+The ``fsb_compliant`` and ``regulatory_risk`` names are retained for wire
+compatibility; interpret them only as review-rubric labels.
 {{
   "fsb_compliant": true/false,
   "consistency_score": 0.0-1.0,
@@ -79,11 +82,10 @@ The following responses were generated from identical prompts across multiple ru
   "explanation": "Brief explanation of findings"
 }}"""
 
-JUDGE_PROMPT_SEC_CITATIONS = """You are validating LLM outputs against SEC 10-K filings per Rule 10b-5.
+JUDGE_PROMPT_SEC_CITATIONS = """You are checking whether an LLM response is grounded in a supplied SEC 10-K excerpt.
 
-## SEC Requirement (Rule 10b-5: Anti-Fraud Provisions)
-AI-generated content citing SEC filings must accurately reference source documents.
-Fabricated or hallucinated citations may constitute a violation of anti-fraud provisions.
+This is an illustrative source-grounding check, not a legal or compliance
+determination.
 
 ## Source Document Excerpt
 {source_excerpt}
@@ -94,32 +96,36 @@ Fabricated or hallucinated citations may constitute a violation of anti-fraud pr
 ## Validation Criteria
 1. Are all cited facts present in the source document?
 2. Are citation references formatted correctly (e.g., "10-K 2024, Item 7")?
-3. Are numerical values within GAAP materiality threshold (±5%)?
+3. Are numerical values within the configured exercise tolerance (±5%)?
 4. Are there any hallucinated facts not in the source?
 
 ## Output Format (JSON only, no markdown)
+The ``sec_compliant`` and ``materiality_violations`` names are retained for wire
+compatibility; interpret them only as source-grounding rubric fields.
 {{
   "sec_compliant": true/false,
   "citations_valid": true/false,
   "facts_verified": ["list of facts found in source"],
   "facts_unverified": ["list of facts NOT in source"],
   "numerical_accuracy": 0.0-1.0,
-  "materiality_violations": ["list of values exceeding 5% threshold"],
+  "materiality_violations": ["legacy field: list of values exceeding the configured tolerance"],
   "explanation": "Brief explanation"
 }}"""
 
-JUDGE_PROMPT_FAITHFULNESS_DETERMINISM = """You are evaluating an LLM response for the faithfulness-determinism compliance framework.
+JUDGE_PROMPT_FAITHFULNESS_DETERMINISM = """You are applying a faithfulness-determinism review rubric.
 
-## Two-Dimensional Compliance Framework
-Financial AI compliance requires BOTH:
+## Two-Dimensional Review
+Assess both:
 1. FAITHFULNESS: Factual accuracy against source documents
 2. DETERMINISM: Output consistency across identical runs
 
 ## Classification Quadrants
-- Q1 (Faithful + Deterministic): COMPLIANT - Deploy for regulated tasks
-- Q2 (Faithful + Variable): CAUTION - Verify outputs, consider for non-critical tasks
-- Q3 (Unfaithful + Deterministic): DANGEROUS - Consistently wrong, high compliance risk
-- Q4 (Unfaithful + Variable): NON-COMPLIANT - Do not deploy for any regulated task
+- Q1 (Faithful + Deterministic): lower review priority
+- Q2 (Faithful + Variable): inspect replay variation
+- Q3 (Unfaithful + Deterministic): inspect repeatable unsupported content
+- Q4 (Unfaithful + Variable): highest review priority
+
+These labels do not authorize deployment or determine compliance.
 
 ## Source Document
 {source_document}
@@ -136,6 +142,8 @@ Classify this response into one of the four quadrants based on:
 2. Determinism: Is it consistent with previous runs?
 
 ## Output Format (JSON only, no markdown)
+The ``compliance_status`` and ``regulatory_risk`` names are retained for wire
+compatibility; interpret them only as review-rubric labels.
 {{
   "quadrant": "Q1|Q2|Q3|Q4",
   "faithful": true/false,
@@ -147,11 +155,11 @@ Classify this response into one of the four quadrants based on:
   "explanation": "Brief explanation"
 }}"""
 
-JUDGE_PROMPT_CONSENSUS_ATTESTATION = """You are generating a regulatory-compliant attestation for multi-model consensus evaluation.
+JUDGE_PROMPT_CONSENSUS_ATTESTATION = """You are generating an illustrative multi-model consensus record.
 
-## Multi-Model Consensus Requirement
-Per FSB/BIS guidelines, critical financial AI decisions should be validated across multiple models
-to ensure consistency and reduce single-model bias risk.
+This record summarizes agreement under the supplied rubric. It does not
+determine correctness, reduce model risk by itself, or constitute a regulatory
+attestation.
 
 ## Task Description
 {task_description}
@@ -162,13 +170,15 @@ to ensure consistency and reduce single-model bias risk.
 ## Model Responses
 {model_responses}
 
-## Attestation Criteria
+## Record Criteria
 1. Do all models agree on the core answer/recommendation?
 2. What is the semantic similarity across responses?
-3. Which response best meets regulatory requirements?
-4. Generate audit trail entry for compliance records.
+3. Which response is best supported by the supplied task evidence?
+4. Generate a trace entry for review.
 
 ## Output Format (JSON only, no markdown)
+The ``regulatory_confidence`` and ``regulatory_mapping`` names are retained for
+wire compatibility; they do not represent regulator findings.
 {{
   "consensus_achieved": true/false,
   "consensus_score": 0.0-1.0,
@@ -180,7 +190,7 @@ to ensure consistency and reduce single-model bias risk.
     "attestation_type": "multi_model_consensus",
     "models_evaluated": ["list"],
     "consensus_hash": "to be computed",
-    "regulatory_mapping": {{"FSB": "pass|fail", "BIS": "pass|fail", "CFTC": "pass|fail"}}
+    "regulatory_mapping": {{"consistency": "pass|fail", "trace_capture": "pass|fail"}}
   }},
   "explanation": "Brief explanation"
 }}"""
@@ -191,16 +201,20 @@ to ensure consistency and reduce single-model bias risk.
 # =============================================================================
 
 class ComplianceQuadrant(Enum):
-    """Faithfulness-Determinism quadrant classification."""
-    Q1_FAITHFUL_DETERMINISTIC = "Q1"      # COMPLIANT
-    Q2_FAITHFUL_VARIABLE = "Q2"           # CAUTION
-    Q3_UNFAITHFUL_DETERMINISTIC = "Q3"    # DANGEROUS
-    Q4_UNFAITHFUL_VARIABLE = "Q4"         # NON-COMPLIANT
+    """Legacy-named faithfulness-determinism review classification."""
+    Q1_FAITHFUL_DETERMINISTIC = "Q1"      # lower review priority
+    Q2_FAITHFUL_VARIABLE = "Q2"           # inspect variation
+    Q3_UNFAITHFUL_DETERMINISTIC = "Q3"    # inspect unsupported content
+    Q4_UNFAITHFUL_VARIABLE = "Q4"         # highest review priority
 
 
 @dataclass
 class JudgeEvaluation:
-    """Result of a single judge evaluation."""
+    """Result of a single illustrative judge evaluation.
+
+    ``compliant`` and ``regulatory_requirements`` are legacy field names. They
+    mean "passed the configured rubric" and "rubric labels," respectively.
+    """
     evaluation_id: str
     timestamp: str
     judge_model: str
@@ -215,7 +229,10 @@ class JudgeEvaluation:
 
 @dataclass
 class ComplianceAttestation:
-    """Regulatory-compliant attestation record for audit trails."""
+    """Legacy-named summary of configured rubric results.
+
+    This record is not a legal or regulatory compliance attestation.
+    """
     attestation_id: str
     timestamp: str
     judge_model: str
@@ -233,14 +250,13 @@ class ComplianceAttestation:
 
 class ComplianceJudge:
     """
-    LLM-as-Judge for regulatory compliance evaluation.
+    Legacy-named LLM-as-judge for an illustrative control rubric.
 
     This class uses a "judge" LLM to evaluate candidate model outputs against
-    specific regulatory requirements, going beyond generic quality metrics to
-    assess FSB consistency, SEC citation accuracy, GAAP materiality, and
-    multi-model consensus.
+    configured consistency, source-grounding, and numeric-tolerance checks.
+    Results require independent review and are not compliance attestations.
 
-    Patent Novelty:
+    Historical design notes:
         - Regulatory-specific judge prompts (not generic quality evaluation)
         - Finance-calibrated thresholds embedded in evaluation
         - Faithfulness-determinism decomposition framework
@@ -270,10 +286,11 @@ class ComplianceJudge:
         self.judge_model_fn = judge_model_fn
         self.judge_model_name = judge_model_name
 
-        # Regulatory thresholds (can be overridden)
+        # Legacy keys are retained for compatibility; all values are configurable
+        # benchmark settings rather than universal regulatory thresholds.
         self.thresholds = regulatory_thresholds or {
             "fsb_consistency": FSB_IDENTITY_REQUIREMENT,  # 100% required
-            "gaap_materiality": GAAP_MATERIALITY_THRESHOLD,  # 5% tolerance
+            "gaap_materiality": DEFAULT_NUMERIC_TOLERANCE,  # legacy key
             "sec_citation_accuracy": SEC_CITATION_ACCURACY_THRESHOLD,  # 95% required
             "cftc_audit_completeness": 1.0,  # 100% trace coverage
         }
@@ -443,11 +460,11 @@ class ComplianceJudge:
         """
         Evaluate response using faithfulness-determinism decomposition.
 
-        Classifies the response into one of four quadrants:
-        - Q1: Faithful + Deterministic (COMPLIANT)
-        - Q2: Faithful + Variable (CAUTION)
-        - Q3: Unfaithful + Deterministic (DANGEROUS)
-        - Q4: Unfaithful + Variable (NON-COMPLIANT)
+        Classifies the response into one of four review-priority quadrants:
+        - Q1: Faithful + Deterministic (lower review priority)
+        - Q2: Faithful + Variable (inspect variation)
+        - Q3: Unfaithful + Deterministic (inspect unsupported content)
+        - Q4: Unfaithful + Variable (highest review priority)
 
         Args:
             response: The LLM response to evaluate
@@ -565,23 +582,23 @@ class ComplianceJudge:
         evaluations: Optional[List[JudgeEvaluation]] = None
     ) -> ComplianceAttestation:
         """
-        Generate regulatory-compliant attestation record.
+        Generate a legacy-named summary record for configured rubric checks.
 
-        Aggregates multiple evaluations into a single attestation suitable
-        for audit trail submission.
+        Aggregates multiple evaluations into a traceable review artifact. It is
+        not suitable as a compliance determination without independent approval.
 
         Args:
             evaluations: List of evaluations to include (defaults to all stored)
 
         Returns:
-            ComplianceAttestation with regulatory compliance summary
+            ComplianceAttestation with legacy compatibility fields
         """
         evals = evaluations or self._evaluations
 
         if not evals:
             raise ValueError("No evaluations to attest. Run evaluate_* methods first.")
 
-        # Aggregate regulatory compliance
+        # Aggregate legacy-named rubric results. These are not legal findings.
         regulatory_compliance = {
             "fsb": all(
                 e.parsed_judgment.get("fsb_compliant", True)

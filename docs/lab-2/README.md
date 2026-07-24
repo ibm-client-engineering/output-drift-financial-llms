@@ -117,7 +117,8 @@ Let's test the core framework components to ensure everything is working.
 
 ### Test 1: DeterministicRetriever
 
-The **DeterministicRetriever** (harness/deterministic_retriever.py) is crucial for compliance—it ensures SEC 10-K retrieval order is deterministic and reproducible.
+The **DeterministicRetriever** (`harness/deterministic_retriever.py`) makes SEC
+10-K retrieval order explicit and reproducible for downstream review.
 
 Create `test_retriever.py`:
 
@@ -152,7 +153,10 @@ python test_retriever.py
 ```
 
 !!! info "Why Multi-Key Ordering?"
-    The retriever uses **multi-key ordering** (score↓, section_priority↑, snippet_id↑, chunk_idx↑) to ensure retrieval order is a **compliance requirement**, not a performance optimization. This guarantees the same chunks are retrieved in the same order every time.
+    The retriever uses **multi-key ordering** (score↓, section_priority↑,
+    snippet_id↑, chunk_idx↑) so ties resolve predictably. This is a
+    reproducibility control; whether it satisfies a workflow requirement is a
+    separate governance decision.
 
 ### Test 2: Simple Drift Evaluation
 
@@ -334,7 +338,7 @@ from harness.cross_provider_validation import CrossProviderValidator
 
 validator = CrossProviderValidator(
     providers=["ollama", "watsonx"],
-    tolerance_pct=5.0  # GAAP materiality threshold
+    tolerance_pct=5.0  # illustrative, task-specific tolerance
 )
 
 # Validate pre-collected outputs from different providers
@@ -346,7 +350,9 @@ print(f"Similarity: {results['similarity_scores']}")
 
 **Purpose**: Validate consistency between local (Ollama) and cloud (watsonx.ai) deployments using pre-collected outputs.
 
-**GAAP Materiality**: Uses +/-5% threshold from GAAP auditing standards for financial statement materiality.
+**Numeric tolerance**: This lab uses a configurable +/-5% example. It is not a
+universal GAAP materiality threshold; production settings require task-specific
+approval.
 
 ## Troubleshooting
 
@@ -406,8 +412,9 @@ pip install -r requirements.txt
     **Answer**: It denoted 100% observed output consistency in the bounded test
     conditions. It was not a regulatory or deployment certification.
 
-??? question "What is the GAAP materiality threshold used in cross-provider validation?"
-    **Answer**: ±5%, based on GAAP auditing standards for financial statement materiality.
+??? question "What does the ±5% tolerance mean in this exercise?"
+    **Answer**: It is an illustrative, configurable numeric comparison value,
+    not a universal GAAP materiality threshold.
 
 ## Next Steps
 

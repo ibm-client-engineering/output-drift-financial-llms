@@ -198,7 +198,8 @@ Ensures reproducible SEC 10-K retrieval with multi-key ordering:
 Validates consistency across deployment environments:
 
 - **Problem**: Models behave differently on different infrastructure
-- **Solution**: Automated comparison with finance-calibrated tolerance (±5% GAAP)
+- **Workshop implementation**: Automated comparison with a configurable numeric
+  tolerance (±5% in the example; not a universal GAAP threshold)
 - **Benefit**: Measure behavior before and after a deployment change
 
 ### 3. Bi-Temporal Audit Trails

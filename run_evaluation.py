@@ -65,7 +65,7 @@ from harness.task_definitions import (
     validate_summary_json,
     validate_sql_query,
     SUMMARY_SCHEMA,
-    GAAP_MATERIALITY_THRESHOLD
+    DEFAULT_NUMERIC_TOLERANCE
 )
 
 # Load environment variables from .env file
@@ -550,13 +550,13 @@ async def run_sql(
 
     sql_clean = sql.strip().strip("`").strip()
 
-    # Validate SQL with ±5% tolerance (GAAP materiality threshold)
+    # Validate SQL with the exercise's configurable numeric tolerance.
     try:
         validation = validate_sql_query(
             sql_clean,
             dbi["conn"],
             expected_total=dbi["total_amount"],
-            gaap_materiality_threshold=GAAP_MATERIALITY_THRESHOLD
+            gaap_materiality_threshold=DEFAULT_NUMERIC_TOLERANCE
         )
         decision_ok = validation["decision_ok"]
     except Exception as e:
