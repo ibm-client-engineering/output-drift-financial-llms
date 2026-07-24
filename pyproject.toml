@@ -93,7 +93,9 @@ include = [
 path = "hatch_build.py"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+# A bare ``pytest`` exercises the installable package. The frozen research
+# suite remains available through ``make test-bench`` and its explicit CI job.
+testpaths = ["tests/dfah"]
 addopts = "-ra"
 
 [tool.ruff]
