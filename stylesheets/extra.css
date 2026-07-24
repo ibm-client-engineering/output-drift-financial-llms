@@ -1,0 +1,124 @@
+:root {
+  --md-primary-fg-color: #161616;
+  --md-primary-fg-color--light: #393939;
+  --md-primary-fg-color--dark: #000000;
+  --md-accent-fg-color: #0f62fe;
+  --dfah-blue: #0f62fe;
+  --dfah-blue-soft: #edf5ff;
+  --dfah-ink: #161616;
+  --dfah-layer: #f4f4f4;
+  --dfah-border: #e0e0e0;
+}
+
+body {
+  background:
+    linear-gradient(90deg, rgb(22 22 22 / 2.5%) 1px, transparent 1px),
+    linear-gradient(rgb(22 22 22 / 2.5%) 1px, transparent 1px),
+    #ffffff;
+  background-size: 64px 64px;
+  font-family: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+code,
+kbd,
+pre,
+.md-typeset code {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+}
+
+.md-header,
+.md-tabs {
+  background: var(--dfah-ink);
+  box-shadow: none;
+}
+
+.md-tabs {
+  border-top: 1px solid #393939;
+}
+
+.md-main__inner {
+  margin-top: 1.5rem;
+}
+
+.md-content {
+  background: rgb(255 255 255 / 96%);
+  border-left: 1px solid var(--dfah-border);
+  border-right: 1px solid var(--dfah-border);
+}
+
+.md-content__inner {
+  padding: 2rem clamp(1.2rem, 4vw, 3.4rem) 3rem;
+}
+
+.md-typeset h1 {
+  max-width: 18ch;
+  color: var(--dfah-ink);
+  font-size: clamp(2.25rem, 5vw, 4.4rem);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+}
+
+.md-typeset h2 {
+  border-top: 1px solid var(--dfah-ink);
+  padding-top: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.md-typeset h3 {
+  font-weight: 600;
+}
+
+.md-typeset a {
+  color: var(--dfah-blue);
+}
+
+.md-typeset .admonition,
+.md-typeset details,
+.md-typeset table:not([class]) {
+  border: 1px solid var(--dfah-border);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.md-typeset .admonition {
+  border-left: 4px solid var(--dfah-blue);
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--dfah-ink);
+  color: #ffffff;
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--dfah-border);
+}
+
+.md-typeset pre > code {
+  border-left: 3px solid var(--dfah-blue);
+}
+
+.md-typeset .md-button {
+  border-radius: 0;
+}
+
+.md-typeset .md-button--primary {
+  background: var(--dfah-blue);
+  border-color: var(--dfah-blue);
+}
+
+.md-footer {
+  background: var(--dfah-ink);
+}
+
+@media (max-width: 76.1875em) {
+  .md-content {
+    border: 0;
+  }
+}

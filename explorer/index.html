@@ -3,97 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DFAH-Bench Explorer — Replay Determinism, Live</title>
-<meta name="description" content="Interactive explorer for DFAH-Bench: same decision, different path. Reproduce the paper's metrics live in your browser.">
+<title>DFAH-Bench Explorer — Same Decision, Different Path</title>
+<meta name="description" content="Explore DFAH-Bench replay measurements, try a local model, and qualify an agent integration.">
 <style>
   :root{
-    --bg:#0b0f17; --panel:#121826; --panel2:#0e1420; --line:#1f2a3d;
-    --text:#e6edf7; --muted:#8b9bb4; --blue:#3b82f6; --blue2:#60a5fa;
-    --green:#34d399; --amber:#fbbf24; --red:#f87171; --violet:#a78bfa;
+    --bg:#ffffff; --panel:#ffffff; --panel2:#f4f4f4; --line:#e0e0e0;
+    --text:#161616; --muted:#525252; --blue:#0f62fe; --blue2:#0043ce;
+    --green:#198038; --amber:#b28600; --red:#da1e28; --violet:#6929c4;
     --mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
     --sans:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.55}
-  a{color:var(--blue2);text-decoration:none} a:hover{text-decoration:underline}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-  header{padding:48px 0 28px;border-bottom:1px solid var(--line);
-    background:radial-gradient(1200px 400px at 20% -10%, rgba(59,130,246,.18), transparent 60%)}
-  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--blue2);text-transform:uppercase}
-  h1{font-size:34px;margin:10px 0 8px;font-weight:650}
-  .sub{color:var(--muted);max-width:760px;font-size:16px}
-  .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:26px 0 6px}
-  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
-  .stat .v{font-size:26px;font-weight:700;font-family:var(--mono)}
-  .stat .l{font-size:12px;color:var(--muted);margin-top:2px}
-  nav.toc{display:flex;gap:18px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px}
-  section{padding:36px 0;border-bottom:1px solid var(--line)}
-  h2{font-size:22px;margin:0 0 6px} .lead{color:var(--muted);margin:0 0 20px;max-width:780px}
-  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:
+    linear-gradient(90deg,rgba(22,22,22,.025) 1px,transparent 1px),
+    linear-gradient(rgba(22,22,22,.025) 1px,transparent 1px),var(--bg);
+    background-size:64px 64px;color:var(--text);font-family:var(--sans);line-height:1.55}
+  a{color:var(--blue);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .brandbar{border-top:8px solid var(--blue);border-bottom:1px solid var(--line);background:#fff}
+  .brandbar .wrap{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px;color:var(--text);font-weight:600}
+  .brandmark{position:relative;width:30px;height:30px;background:var(--text)}
+  .brandmark:before{position:absolute;inset:5px 5px 17px;background:var(--blue);content:""}
+  .brandmark:after{position:absolute;inset:14px 5px 5px;border:2px solid #fff;content:""}
+  .brand small{display:block;color:var(--muted);font:10px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+  .brandlinks{display:flex;gap:22px;font:12px var(--mono)}
+  header{padding:64px 0 0;border-bottom:1px solid var(--line);background:rgba(255,255,255,.86)}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.75fr);gap:56px;align-items:stretch}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--blue);text-transform:uppercase}
+  h1{max-width:780px;font-size:clamp(48px,7vw,88px);line-height:.95;letter-spacing:-.045em;margin:18px 0 24px;font-weight:400}
+  h1 span{color:var(--blue)}
+  .sub{color:var(--muted);max-width:760px;font-size:18px;line-height:1.55}
+  .hero-system{align-self:end;border:1px solid #393939;background:#161616;color:#f4f4f4;box-shadow:18px 18px 0 #edf5ff}
+  .hero-system .top{display:flex;justify-content:space-between;padding:13px 15px;border-bottom:1px solid #393939;font:11px var(--mono);text-transform:uppercase}
+  .hero-system .top strong{color:#42be65}
+  .hero-steps{display:grid}
+  .hero-step{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:18px;border-bottom:1px solid #393939}
+  .hero-step:last-child{border-bottom:0}
+  .hero-step span{color:#78a9ff;font:12px var(--mono)}
+  .hero-step strong{display:block;font-size:16px;font-weight:500}
+  .hero-step small{display:block;margin-top:4px;color:#a8a8a8;line-height:1.4}
+  .statgrid{display:grid;grid-template-columns:repeat(4,1fr);margin:58px 0 0;border-top:1px solid var(--line)}
+  .stat{min-height:130px;background:var(--panel2);border-right:1px solid var(--line);padding:24px}
+  .stat:last-child{border-right:0}
+  .stat .v{font-size:34px;font-weight:400;font-family:var(--mono);letter-spacing:-.04em}
+  .stat .l{font-size:11px;color:var(--muted);margin-top:6px;font-family:var(--mono);text-transform:uppercase}
+  nav.toc{position:sticky;top:0;z-index:5;display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,.96);backdrop-filter:blur(12px);font:12px var(--mono)}
+  nav.toc a{padding:16px 20px;border-right:1px solid var(--line);color:var(--text)}
+  nav.toc a:hover{background:var(--blue);color:#fff;text-decoration:none}
+  section{padding:72px 0;border-bottom:1px solid var(--line);scroll-margin-top:56px}
+  h2{max-width:800px;font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px;font-weight:400}
+  .lead{color:var(--muted);margin:0 0 28px;max-width:820px;font-size:16px}
+  .card{background:rgba(255,255,255,.96);border:1px solid var(--line);padding:20px}
   .row{display:grid;gap:18px} @media(min-width:900px){.row.two{grid-template-columns:1fr 1fr}.row.scatter{grid-template-columns:1.3fr 1fr}}
   table{width:100%;border-collapse:collapse;font-size:13.5px}
-  th{color:var(--muted);text-align:left;font-weight:600;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-  td{padding:7px 10px;border-bottom:1px solid rgba(31,42,61,.6);font-family:var(--mono);font-size:13px;white-space:nowrap}
+  th{color:#fff;background:#161616;text-align:left;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:13px;white-space:nowrap}
   td.name{font-family:var(--sans);font-weight:600}
-  tr.sel{background:rgba(59,130,246,.12)} tr:hover{background:rgba(59,130,246,.07);cursor:pointer}
-  .pill{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:600;font-family:var(--sans)}
-  .pill.pattern{background:rgba(96,165,250,.15);color:var(--blue2)}
-  .pill.stable{background:rgba(52,211,153,.15);color:var(--green)}
-  .pill.diverger{background:rgba(248,113,113,.15);color:var(--red)}
-  .gapbar{height:8px;border-radius:4px;background:linear-gradient(90deg,var(--amber),var(--red));min-width:2px}
+  tr.sel{background:#edf5ff} tr:hover{background:#f4f4f4;cursor:pointer}
+  .pill{display:inline-block;padding:3px 8px;border:1px solid currentColor;font-size:10px;font-weight:600;font-family:var(--mono);text-transform:uppercase}
+  .pill.pattern{color:var(--blue)}
+  .pill.stable{color:var(--green)}
+  .pill.diverger{color:var(--red)}
+  .pill.complete{color:var(--blue)}
+  .pill.limited{color:var(--violet)}
+  .gapbar{height:7px;background:var(--red);min-width:2px}
   svg text{font-family:var(--mono);fill:var(--muted);font-size:11px}
   .legend{display:flex;gap:16px;font-size:12.5px;color:var(--muted);margin-top:8px;flex-wrap:wrap}
-  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .dot{display:inline-block;width:9px;height:9px;margin-right:5px;vertical-align:-1px}
   .controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:14px}
   .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:5px}
   .ctl label b{color:var(--text);font-family:var(--mono)}
   input[type=range]{width:100%;accent-color:var(--blue)}
   input[type=text],input[type=number],select{background:var(--panel2);border:1px solid var(--line);color:var(--text);
-    border-radius:8px;padding:8px 10px;font-family:var(--mono);font-size:13px;width:100%}
-  button{background:var(--blue);border:0;color:#fff;font-weight:600;border-radius:9px;padding:10px 18px;cursor:pointer;font-size:14px}
-  button:hover{background:var(--blue2)} button.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+    border-radius:0;padding:9px 10px;font-family:var(--mono);font-size:13px;width:100%}
+  button{background:var(--blue);border:1px solid var(--blue);color:#fff;font-weight:600;border-radius:0;padding:10px 18px;cursor:pointer;font-size:14px}
+  button:hover{background:var(--blue2)} button.ghost{background:transparent;border:1px solid var(--text);color:var(--text)}
   button:disabled{opacity:.45;cursor:default}
   .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin:14px 0}
-  .m{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;text-align:center}
+  .m{background:var(--panel2);border:1px solid var(--line);padding:12px;text-align:left}
   .m .v{font-family:var(--mono);font-size:21px;font-weight:700} .m .l{font-size:11px;color:var(--muted)}
   .runs{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto;padding-right:4px}
   .run{display:flex;align-items:center;gap:10px;background:var(--panel2);border:1px solid var(--line);
-    border-radius:9px;padding:7px 10px;font-family:var(--mono);font-size:12px}
-  .dec{padding:2px 8px;border-radius:6px;font-weight:700;min-width:88px;text-align:center}
-  .dec.escalate{background:rgba(248,113,113,.18);color:var(--red)}
-  .dec.investigate{background:rgba(251,191,36,.18);color:var(--amber)}
-  .dec.dismiss{background:rgba(52,211,153,.18);color:var(--green)}
+    padding:8px 10px;font-family:var(--mono);font-size:12px}
+  .dec{padding:2px 8px;border:1px solid currentColor;font-weight:700;min-width:88px;text-align:center}
+  .dec.escalate{color:var(--red)}
+  .dec.investigate{color:var(--amber)}
+  .dec.dismiss{color:var(--green)}
   .path{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .path b{color:var(--text);font-weight:500}
-  .verdict{border-left:3px solid var(--blue);background:rgba(59,130,246,.08);border-radius:0 10px 10px 0;
+  .verdict{border-left:4px solid var(--blue);background:#edf5ff;
     padding:12px 16px;margin-top:14px;font-size:14px}
-  .verdict.bad{border-color:var(--red);background:rgba(248,113,113,.08)}
-  .verdict.good{border-color:var(--green);background:rgba(52,211,153,.08)}
+  .verdict.bad{border-color:var(--red);background:#fff1f1}
+  .verdict.good{border-color:var(--green);background:#defbe6}
   code,pre{font-family:var(--mono)}
-  pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:12.5px;overflow:auto}
+  pre{background:#161616;color:#f4f4f4;border-left:4px solid var(--blue);padding:16px;font-size:12.5px;overflow:auto}
   .small{font-size:12.5px;color:var(--muted)}
   .status{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:12px}
-  footer{padding:30px 0 50px;color:var(--muted);font-size:13px}
-  .killbar{display:flex;height:34px;border-radius:9px;overflow:hidden;border:1px solid var(--line);margin:10px 0 4px}
+  footer{margin-top:0;padding:36px 0 54px;color:#c6c6c6;background:#161616;font-size:13px}
+  footer a{color:#78a9ff}
+  .killbar{display:flex;height:34px;overflow:hidden;border:1px solid var(--line);margin:10px 0 4px}
   .killbar div{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11.5px;font-weight:700}
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr}.hero-system{margin-bottom:18px}
+    .statgrid{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}
+    .brandlinks{display:none}
+  }
+  @media(max-width:560px){
+    .wrap{padding:0 18px}.statgrid{grid-template-columns:1fr}.stat{border-right:0;border-bottom:1px solid var(--line)}
+    nav.toc{position:relative}nav.toc a{width:50%;border-bottom:1px solid var(--line)}
+  }
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
+<div class="brandbar">
+  <div class="wrap">
+    <a class="brand" href="../">
+      <span class="brandmark" aria-hidden="true"></span>
+      <span>DFAH-Bench<small>Replay measurement for tool-using agents</small></span>
+    </a>
+    <div class="brandlinks">
+      <a href="https://arxiv.org/abs/2607.20491">Paper</a>
+      <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a>
+      <a href="../dfah/quickstart/">Package guide</a>
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="wrap">
-    <div class="kicker">DFAH-Bench &middot; Interactive Explorer</div>
-    <h1>Same decision. Different path.</h1>
-    <p class="sub">DFAH-Bench measures whether tool-using LLM agents that <em>agree on decisions</em> also agree on
-      <em>how they got there</em> — trajectories, evidence, tool paths. Outcome-only evaluation misses all of it.
-      Everything on this page runs in your browser with the paper's actual metric formulas, and every number below
-      regenerates from the <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">public repo</a>
-      with one command: <code>make reproduce-paper</code>.</p>
+    <div class="hero-grid">
+      <div>
+        <div class="kicker">Interactive explorer &middot; versioned replay corpus</div>
+        <h1>Same decision.<br><span>Different path.</span></h1>
+        <p class="sub">A final answer is only one part of an agent run. DFAH-Bench
+          checks whether repeated decisions preserve the recorded tool path and,
+          when available, the argument and result identities behind it. Explore
+          the reproduced measurements here, then qualify your own integration
+          before spending on a larger replay.</p>
+      </div>
+      <div class="hero-system" aria-label="DFAH operating loop">
+        <div class="top"><span>Replay contract / v2</span><strong>observable</strong></div>
+        <div class="hero-steps">
+          <div class="hero-step"><span>01</span><div><strong>Pin</strong><small>Suite, model, tools, request, and required channels.</small></div></div>
+          <div class="hero-step"><span>02</span><div><strong>Replay</strong><small>Run the same case under one declared contract.</small></div></div>
+          <div class="hero-step"><span>03</span><div><strong>Qualify</strong><small>Keep missing or malformed channels out of agreement.</small></div></div>
+          <div class="hero-step"><span>04</span><div><strong>Compare</strong><small>Decision, path, argument, result, cost, and review load.</small></div></div>
+        </div>
+      </div>
+    </div>
     <div class="statgrid">
-      <div class="stat"><div class="v">8,127</div><div class="l">replay episodes (8,129 raw − 2 single-replay groups)</div></div>
-      <div class="stat"><div class="v">21.8%</div><div class="l">of decision-stable case groups hide trajectory divergence</div></div>
-      <div class="stat"><div class="v">10</div><div class="l">models &middot; 3 financial tasks &middot; 1,338 case groups</div></div>
-      <div class="stat"><div class="v">53/53</div><div class="l">reproduction checks pass from a fresh clone</div></div>
+      <div class="stat"><div class="v">4,157</div><div class="l">episodes from configurations with observed tool use</div></div>
+      <div class="stat"><div class="v">719</div><div class="l">comparable replay groups across two synthetic tasks</div></div>
+      <div class="stat"><div class="v">19.5%</div><div class="l">of unanimous-decision groups changed tool sequence</div></div>
+      <div class="stat"><div class="v">8</div><div class="l">retained configurations, reported with coverage visible</div></div>
     </div>
   </div>
 </header>
@@ -103,6 +170,7 @@
   <a href="#results">&#9632; Results explorer</a>
   <a href="#playground">&#9654; Replay playground</a>
   <a href="#live">&#9889; Live with your own model</a>
+  <a href="#package">&#123; &#125; Bring your agent</a>
   <a href="#reproduce">&#8635; Reproduce the paper</a>
 </nav>
 
@@ -110,48 +178,73 @@
 <section id="results">
   <h2>Results explorer — the DAR&ndash;TAR gap</h2>
   <p class="lead"><b>DAR</b> (Decision Agreement Rate) asks: do N replays reach the same decision?
-     <b>TAR</b> (Trajectory Agreement Rate) asks: do they take the same tool path?
-     Points below the diagonal are agents whose stable answers conceal unstable process. Click a model to highlight it.</p>
+     <b>TAR<sub>seq</sub></b> asks: do they take the same ordered tool-name path?
+     Points below the diagonal are configurations whose stable answers conceal a less stable recorded path.
+     Coverage is shown explicitly; this is a replay measurement, not a model leaderboard.</p>
   <div class="row scatter">
     <div class="card">
       <svg id="scatter" viewBox="0 0 560 420" width="100%" aria-label="DAR versus TAR scatter plot"></svg>
       <div class="legend">
-        <span><span class="dot" style="background:var(--blue2)"></span>Pattern matcher</span>
-        <span><span class="dot" style="background:var(--green)"></span>Stable executor</span>
-        <span><span class="dot" style="background:var(--red)"></span>Trajectory diverger</span>
+        <span><span class="dot" style="background:var(--blue)"></span>Complete 100-group coverage</span>
+        <span><span class="dot" style="background:var(--violet)"></span>Limited contiguous prefix</span>
         <span style="margin-left:auto">diagonal = perfect process stability (DAR = TAR)</span>
       </div>
     </div>
     <div class="card">
-      <h3 style="margin:0 0 4px;font-size:15px">Kill criterion (&sect;4.4)</h3>
-      <p class="small" style="margin:0 0 8px">912 case groups where decisions agree (DAR &ge; 0.9) and trajectories are observable:</p>
+      <h3 style="margin:0 0 4px;font-size:15px">When the decision is unanimous</h3>
+      <p class="small" style="margin:0 0 8px">The corrected core contains 627 groups whose replays all reached the same decision:</p>
       <div class="killbar">
-        <div style="width:19.4%;background:rgba(248,113,113,.8);color:#1b0a0a">19.4%</div>
-        <div style="width:2.4%;background:rgba(251,191,36,.8)"></div>
-        <div style="flex:1;background:rgba(52,211,153,.25);color:var(--green)">78.2% stable</div>
+        <div style="width:2.7%;background:#a56eff" title="17 order-only groups"></div>
+        <div style="width:9.3%;background:#4589ff" title="58 multiplicity-change groups"></div>
+        <div style="width:7.5%;background:#da1e28;color:#fff" title="47 tool-set-change groups">7.5%</div>
+        <div style="flex:1;background:#defbe6;color:var(--green)">80.5% same sequence</div>
       </div>
       <p class="small" style="margin:6px 0 14px">
-        <span style="color:var(--red)">&#9632;</span> 177 strong divergence (TAR &lt; 0.7) &nbsp;
-        <span style="color:var(--amber)">&#9632;</span> 22 moderate (0.7&ndash;0.9) &nbsp;= 199 / 912 = <b>21.8%</b></p>
-      <h3 style="margin:14px 0 4px;font-size:15px">Diverger rates among stable cases</h3>
-      <table style="font-size:12.5px">
-        <tr><td class="name" style="font-size:13px">Claude Sonnet 4</td><td>55.6%</td></tr>
-        <tr><td class="name" style="font-size:13px">Gemini 2.5 Pro</td><td>56.6%</td></tr>
-      </table>
-      <p class="small" style="margin-top:10px">Source: <code>results/dfah_kill_criterion*.csv</code> — regenerated by
-      <code>scripts/compute_dfah_metrics.py</code> from raw replay logs.</p>
+        122/627 (19.5%) changed sequence: 17 changed only order, 58 changed call multiplicity
+        while retaining the same tool-name set, and 47 changed the set itself. The logs do not
+        establish that order-only changes are harmless.</p>
+      <p class="small" style="margin-top:10px">This conditional view asks what the final decision alone misses.
+        It does not determine whether either path was correct or safe.</p>
     </div>
   </div>
   <div class="card" style="margin-top:18px;overflow-x:auto">
     <table id="modeltable">
       <thead><tr>
-        <th>Profile</th><th>Model</th><th>DAR</th><th>TAR</th><th>Gap</th><th></th><th>DCB</th><th>ECD</th><th>Acc</th>
+        <th>Coverage</th><th>Configuration</th><th>Replays</th><th>Groups</th><th>Episodes</th>
+        <th>DAR</th><th>TAR<sub>seq</sub></th><th>Gap</th><th></th>
       </tr></thead>
       <tbody></tbody>
     </table>
-    <p class="small" style="margin-top:10px">Task-averaged over compliance / portfolio / dataops. &ldquo;&mdash;&rdquo; = model made no tool calls
-      (trajectory channel absent — reported as missing, never as agreement). DCB = decision concentration bias (1 &minus; H/log K, cross-case);
-      ECD = evidence-contact divergence (mean pairwise Jaccard distance). Full table with &kappa; and bootstrap CIs in the paper.</p>
+    <p class="small" style="margin-top:10px">Task-weighted over synthetic compliance and financial-DataOps cases.
+      Complete rows cover 100 groups; limited rows are retained contiguous prefixes and are not directly comparable
+      as a ranking. Gaps are paired by case and computed before displayed values are rounded.</p>
+  </div>
+  <div class="row two" style="margin-top:18px">
+    <div class="card">
+      <div class="kicker">Prospective API diagnostic &middot; July 23, 2026</div>
+      <h3 style="margin:8px 0 10px">Argument-aware capture widens the view</h3>
+      <table>
+        <thead><tr><th>Configuration</th><th>Groups</th><th>Episodes</th><th>DAR</th><th>Names</th><th>Name + args</th><th>Result only</th></tr></thead>
+        <tbody>
+          <tr><td class="name">gpt-5.6-terra</td><td>96/100</td><td>288/300</td><td>95.1%</td><td>69.4%</td><td>51.5%</td><td>54.3%</td></tr>
+          <tr><td class="name">claude-sonnet-5</td><td>94/100</td><td>282/300</td><td>94.2%</td><td>66.9%</td><td>45.0%</td><td>56.9%</td></tr>
+        </tbody>
+      </table>
+      <p class="small">All 600 scheduled episodes reached a terminal state; ten lacked a required channel,
+        making ten groups ineligible and leaving 570 eligible episodes across 190 groups. One Sonnet/DataOps
+        stratum retained 44 groups against a predeclared minimum of 45, so this remains a diagnostic extension,
+        not a provider ranking.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Local systems check &middot; July 22, 2026</div>
+      <h3 style="margin:8px 0 10px">A bounded stable path is possible</h3>
+      <p>Gemma 4 E4B retained 400/400 episodes. Qwen 3.5 retained 392/400 after eight
+        identical parse failures made one group ineligible. Across the 99 eligible groups,
+        the required four-tool path repeated exactly.</p>
+      <p class="small">That is 100% observed agreement inside one fixed synthetic harness.
+        It validates capture and replay mechanics; it is not evidence of general model determinism,
+        financial accuracy, or production fitness.</p>
+    </div>
   </div>
 </section>
 
@@ -159,7 +252,7 @@
 <section id="playground">
   <h2>Replay playground — feel the gap</h2>
   <p class="lead">A simulated compliance-triage agent replays one alert N times. Turn the instability knobs and watch the
-    paper's metrics respond — computed live with the same formulas as <code>bench/metrics/</code>.
+    replay measures respond.
     The interesting zone: decision instability at 0, trajectory instability up. The agent looks perfect to an
     outcome-only evaluator while its process drifts.</p>
   <div class="row two">
@@ -168,7 +261,7 @@
         <div class="ctl"><label>Replays N <b id="v_n">8</b></label><input type="range" id="c_n" min="3" max="16" value="8"></div>
         <div class="ctl"><label>Decision instability <b id="v_dec">0%</b></label><input type="range" id="c_dec" min="0" max="50" value="0"></div>
         <div class="ctl"><label>Trajectory instability <b id="v_traj">35%</b></label><input type="range" id="c_traj" min="0" max="100" value="35"></div>
-        <div class="ctl"><label>Evidence instability <b id="v_ev">25%</b></label><input type="range" id="c_ev" min="0" max="100" value="25"></div>
+        <div class="ctl"><label>Argument/result identity instability <b id="v_ev">25%</b></label><input type="range" id="c_ev" min="0" max="100" value="25"></div>
         <div class="ctl"><label>Seed (deterministic replay of the demo itself)</label><input type="number" id="c_seed" value="42"></div>
       </div>
       <div class="metrics" id="simMetrics"></div>
@@ -186,7 +279,8 @@
   <h2>Live — replay a real case against your own model</h2>
   <p class="lead">This page can drive a <b>real tool-using agent loop</b> against a model running on <em>your</em> machine via
     <a href="https://ollama.com">Ollama</a> — the same compliance case, deterministic mock tools, temperature 0, seed 42 —
-    and compute DAR/TAR/ECD on the live replays. Nothing leaves your machine; the browser talks to <code>localhost</code>.</p>
+    and compute decision, name-path, and strong-path agreement on the live replays.
+    Nothing leaves your machine; the browser talks to <code>localhost</code>.</p>
   <div class="card">
     <p class="small" style="margin-top:0">1&nbsp;&middot;&nbsp;Start Ollama with this page allowed as an origin, and pull a model:</p>
     <pre>OLLAMA_ORIGINS="https://ibm-client-engineering.github.io" ollama serve
@@ -210,48 +304,87 @@ ollama pull qwen2.5:7b-instruct</pre>
   </div>
 </section>
 
+<!-- ============================ PACKAGE ============================ -->
+<section id="package">
+  <h2>Bring your agent — qualify before replay</h2>
+  <p class="lead">The package starts with a bounded conformance check, then
+    writes versioned replay artifacts that can be resumed and inspected. The
+    built-in agent below is deterministic and makes no network calls.</p>
+  <div class="row two">
+    <div class="card">
+      <div class="kicker">01 &middot; Install from the repository</div>
+      <pre>git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
+cd output-drift-financial-llms
+python -m venv .venv-dfah
+source .venv-dfah/bin/activate
+python -m pip install -e .</pre>
+    </div>
+    <div class="card">
+      <div class="kicker">02 &middot; Check, run, inspect</div>
+      <pre>dfah check-agent --agent dfah.demo:toy_agent
+dfah run --agent dfah.demo:toy_agent \
+  --replays 3 --out .dfah/runs/quickstart
+dfah analyze .dfah/runs/quickstart \
+  --report .dfah/runs/quickstart/report.html
+dfah inspect .dfah/runs/quickstart --case CASE-001</pre>
+    </div>
+  </div>
+  <p class="small">A perfect toy score confirms the integration contract, not
+    real-world model quality. Continue with a synthetic suite that reflects
+    your own tool schema, then use sampled shadow replays before considering a
+    blocking gate. See the <a href="../dfah/quickstart/">package quickstart</a>.</p>
+</section>
+
 <!-- ============================ REPRODUCE ============================ -->
 <section id="reproduce">
-  <h2>Reproduce the paper — one command</h2>
-  <p class="lead">The full replay corpus (8,129 episodes) ships in the repo. No API keys, no model downloads:</p>
+  <h2>Reproduce the corrected public v2 analysis</h2>
+  <p class="lead">The repository preserves the 8,129-record lineage and ships a sanitized
+    replay fixture. The corrected analysis retains 4,157 episodes from configurations with
+    observed tool use across 719 comparable groups. No API keys or model downloads are needed
+    for retrospective regeneration:</p>
   <pre>git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
 cd output-drift-financial-llms
 pip install -r requirements.txt
-make test-bench        # 143 offline tests
-make reproduce-paper   # regenerates every paper number; fails loudly on mismatch</pre>
-  <p class="small">Bootstrap CIs use B=10,000 with seed 42. See
+make test-bench        # offline test suite
+make reproduce-paper   # regenerates corrected v2 and validates its manifest</pre>
+  <p class="small">The ledger lineage is 8,129 raw records, 8,127 in the legacy analysis,
+    5,501 after task/configuration exclusions, and 4,157 in configurations with observed
+    tool use. Use <code>make reproduce-paper-v1</code> only for the archived v1 pipeline.
+    Prospective provider extensions are public as aggregate-only, checksum-pinned artifacts;
+    their approval-gated raw captures are not part of the public reproduction target. See
     <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md">REPRODUCIBILITY.md</a>
-    for the exact environment and the disclosed caveats, and
+    for the exact environment and
     <a href="../lab-8/">Lab 8</a> for the guided walkthrough. Extend to your own domain with zero metric-code changes:
     <code>python examples/domain_extension_medical.py</code>.</p>
 </section>
 
-<footer>
-  DFAH-Bench &middot; <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a> &middot;
-  <a href="../">Workshop</a> &middot; MIT License. Papers:
-  <a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents (ICLR 2026 FinAI)</a> &middot;
-  <a href="https://arxiv.org/abs/2511.07585">LLM Output Drift (ICAIF 2025)</a> &middot;
-  DFAH-Bench (arXiv announcement pending).
-</footer>
 </div>
+
+<footer>
+  <div class="wrap">
+    DFAH-Bench &middot; <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> &middot;
+    <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a> &middot;
+    <a href="../">Workshop</a> &middot; MIT License. Related:
+    <a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents</a> &middot;
+    <a href="https://arxiv.org/abs/2511.07585">LLM Output Drift</a>.
+  </div>
+</footer>
 
 <script>
 "use strict";
-/* ============ Data: validated against results/dfah_*.csv (make reproduce-paper) ============ */
+/* ============ Audited core: corrected, task-weighted two-task analysis ============ */
 const MODELS = [
-  {name:"Qwen 3.5",        profile:"pattern",  dar:1.000, tar:1.000, gap:0.000, dcb:0.043, ecd:0.000, acc:48.0},
-  {name:"Gemma 4",         profile:"pattern",  dar:0.999, tar:0.995, gap:0.004, dcb:0.111, ecd:0.005, acc:56.0},
-  {name:"Qwen 2.5 7B",     profile:"pattern",  dar:0.998, tar:0.998, gap:0.000, dcb:0.352, ecd:0.000, acc:33.3},
-  {name:"Granite 3.3",     profile:"pattern",  dar:0.993, tar:null,  gap:null,  dcb:0.500, ecd:null,  acc:49.3},
-  {name:"Mistral 7B",      profile:"pattern",  dar:0.997, tar:null,  gap:null,  dcb:0.398, ecd:null,  acc:50.3},
-  {name:"GPT-OSS 20B",     profile:"stable",   dar:0.963, tar:0.956, gap:0.007, dcb:0.132, ecd:0.017, acc:37.3},
-  {name:"Gemini 2.0 Flash",profile:"stable",   dar:0.953, tar:0.891, gap:0.062, dcb:0.143, ecd:0.081, acc:50.7},
-  {name:"Gemini 2.5 Pro",  profile:"diverger", dar:0.860, tar:0.747, gap:0.113, dcb:0.099, ecd:0.186, acc:50.2},
-  {name:"Claude Opus 4.5", profile:"diverger", dar:0.902, tar:0.742, gap:0.160, dcb:0.354, ecd:0.195, acc:44.0},
-  {name:"Claude Sonnet 4", profile:"diverger", dar:0.947, tar:0.767, gap:0.180, dcb:0.408, ecd:0.250, acc:36.7},
+  {name:"Qwen 3.5",         coverage:"complete", replays:8, groups:100, episodes:800, dar:1.00000, tar:1.00000, gap:0.00000},
+  {name:"Gemma 4",          coverage:"complete", replays:8, groups:100, episodes:800, dar:0.99875, tar:0.99750, gap:0.00125},
+  {name:"Qwen 2.5 7B",      coverage:"complete", replays:8, groups:100, episodes:800, dar:0.99625, tar:0.99625, gap:0.00000},
+  {name:"GPT-OSS 20B",      coverage:"complete", replays:8, groups:100, episodes:800, dar:0.98000, tar:0.97875, gap:0.00125},
+  {name:"Gemini 2.0 Flash", coverage:"complete", replays:3, groups:100, episodes:300, dar:0.93667, tar:0.88667, gap:0.05000},
+  {name:"Claude Sonnet 4",  coverage:"complete", replays:3, groups:100, episodes:300, dar:0.94333, tar:0.73333, gap:0.21000},
+  {name:"Gemini 2.5 Pro",   coverage:"limited",  replays:3, groups:44,  episodes:132, dar:0.88636, tar:0.75000, gap:0.13636},
+  {name:"Claude Opus 4",    coverage:"limited",  replays:3, groups:75,  episodes:225, dar:0.89000, tar:0.70333, gap:0.18667},
 ];
-const COLORS = {pattern:"#60a5fa", stable:"#34d399", diverger:"#f87171"};
-const PROFILE_LABEL = {pattern:"Pattern matcher", stable:"Stable executor", diverger:"Trajectory diverger"};
+const COLORS = {complete:"#0f62fe", limited:"#6929c4"};
+const COVERAGE_LABEL = {complete:"Complete", limited:"Limited prefix"};
 
 /* ============ Scatter (hand-rolled SVG) ============ */
 const S = {x0:60, y0:20, w:470, h:340, min:0.70, max:1.005};
@@ -262,24 +395,24 @@ function drawScatter(sel) {
   let g = "";
   for (let t = 0.70; t <= 1.001; t += 0.05) {
     const tv = t.toFixed(2);
-    g += `<line x1="${sx(t)}" y1="${S.y0}" x2="${sx(t)}" y2="${S.y0+S.h}" stroke="#1f2a3d" stroke-width="1"/>
+    g += `<line x1="${sx(t)}" y1="${S.y0}" x2="${sx(t)}" y2="${S.y0+S.h}" stroke="#e0e0e0" stroke-width="1"/>
           <text x="${sx(t)}" y="${S.y0+S.h+18}" text-anchor="middle">${tv}</text>
-          <line x1="${S.x0}" y1="${sy(t)}" x2="${S.x0+S.w}" y2="${sy(t)}" stroke="#1f2a3d" stroke-width="1"/>
+          <line x1="${S.x0}" y1="${sy(t)}" x2="${S.x0+S.w}" y2="${sy(t)}" stroke="#e0e0e0" stroke-width="1"/>
           <text x="${S.x0-8}" y="${sy(t)+4}" text-anchor="end">${tv}</text>`;
   }
-  g += `<line x1="${sx(S.min)}" y1="${sy(S.min)}" x2="${sx(1)}" y2="${sy(1)}" stroke="#8b9bb4" stroke-dasharray="5 5" stroke-width="1.4"/>`;
-  g += `<text x="${S.x0+S.w/2}" y="${S.y0+S.h+38}" text-anchor="middle" style="font-size:12.5px;fill:#e6edf7">DAR — decision agreement</text>`;
-  g += `<text x="16" y="${S.y0+S.h/2}" transform="rotate(-90 16 ${S.y0+S.h/2})" text-anchor="middle" style="font-size:12.5px;fill:#e6edf7">TAR — trajectory agreement</text>`;
+  g += `<line x1="${sx(S.min)}" y1="${sy(S.min)}" x2="${sx(1)}" y2="${sy(1)}" stroke="#6f6f6f" stroke-dasharray="5 5" stroke-width="1.4"/>`;
+  g += `<text x="${S.x0+S.w/2}" y="${S.y0+S.h+38}" text-anchor="middle" style="font-size:12.5px;fill:#161616">DAR — decision agreement</text>`;
+  g += `<text x="16" y="${S.y0+S.h/2}" transform="rotate(-90 16 ${S.y0+S.h/2})" text-anchor="middle" style="font-size:12.5px;fill:#161616">TARseq — ordered tool-name agreement</text>`;
   MODELS.forEach((m,i) => {
     if (m.tar === null) return;
     const x = sx(Math.min(m.dar, 1)), y = sy(Math.min(m.tar, 1));
     const isSel = sel === i, r = isSel ? 9 : 6.5;
-    if (m.gap > 0.05) g += `<line x1="${x}" y1="${y}" x2="${x}" y2="${sy(m.dar)}" stroke="${COLORS[m.profile]}" stroke-width="1.4" stroke-dasharray="2 3" opacity=".7"/>`;
-    g += `<circle cx="${x}" cy="${y}" r="${r}" fill="${COLORS[m.profile]}" opacity="${isSel?1:.85}" stroke="${isSel?'#fff':'none'}" stroke-width="1.6"><title>${m.name}: DAR ${m.dar.toFixed(3)}, TAR ${m.tar.toFixed(3)}, gap ${m.gap.toFixed(3)}</title></circle>`;
+    if (m.gap > 0.05) g += `<line x1="${x}" y1="${y}" x2="${x}" y2="${sy(m.dar)}" stroke="${COLORS[m.coverage]}" stroke-width="1.4" stroke-dasharray="2 3" opacity=".7"/>`;
+    g += `<circle cx="${x}" cy="${y}" r="${r}" fill="${COLORS[m.coverage]}" opacity="${isSel?1:.85}" stroke="${isSel?'#161616':'none'}" stroke-width="1.6"><title>${m.name}: DAR ${m.dar.toFixed(3)}, TARseq ${m.tar.toFixed(3)}, gap ${m.gap.toFixed(3)}</title></circle>`;
     if (isSel || m.gap >= 0.1) {
       const dx = (m.name === "Claude Sonnet 4") ? 12 : (m.name === "Gemini 2.5 Pro" ? -12 : 12);
       const anchor = dx < 0 ? "end" : "start";
-      g += `<text x="${x+dx}" y="${y+4}" text-anchor="${anchor}" style="fill:#e6edf7;font-size:11.5px">${m.name}</text>`;
+      g += `<text x="${x+dx}" y="${y+4}" text-anchor="${anchor}" style="fill:#161616;font-size:11.5px">${m.name}</text>`;
     }
   });
   el.innerHTML = g;
@@ -287,16 +420,16 @@ function drawScatter(sel) {
 
 /* ============ Model table ============ */
 let selected = -1;
-function fmt(v, d=3){ return v === null ? "—" : v.toFixed(d); }
+function fmtPct(v){ return `${(v*100).toFixed(1)}%`; }
 function drawTable() {
   const tb = document.querySelector("#modeltable tbody");
   tb.innerHTML = MODELS.map((m,i) => `
     <tr data-i="${i}" class="${selected===i?'sel':''}">
-      <td><span class="pill ${m.profile}">${PROFILE_LABEL[m.profile]}</span></td>
+      <td><span class="pill ${m.coverage}">${COVERAGE_LABEL[m.coverage]}</span></td>
       <td class="name">${m.name}</td>
-      <td>${fmt(m.dar)}</td><td>${fmt(m.tar)}</td><td>${fmt(m.gap)}</td>
+      <td>${m.replays}</td><td>${m.groups}</td><td>${m.episodes}</td>
+      <td>${fmtPct(m.dar)}</td><td>${fmtPct(m.tar)}</td><td>${(m.gap*100).toFixed(1)} pp</td>
       <td style="width:90px">${m.gap ? `<div class="gapbar" style="width:${Math.max(2,m.gap*440)}px"></div>` : ""}</td>
-      <td>${fmt(m.dcb)}</td><td>${fmt(m.ecd)}</td><td>${m.acc.toFixed(1)}%</td>
     </tr>`).join("");
   tb.querySelectorAll("tr").forEach(tr => tr.onclick = () => {
     selected = (selected === +tr.dataset.i) ? -1 : +tr.dataset.i;
@@ -305,43 +438,42 @@ function drawTable() {
 }
 drawScatter(-1); drawTable();
 
-/* ============ Metric formulas — mirrors bench/metrics ============ */
-function modalShare(items) {           // DAR / TAR core
+/* ============ Replay measures used by the interactive demos ============ */
+function modalShare(items) {
+  if (!items.length) return null;
   const c = new Map();
   items.forEach(x => c.set(x, (c.get(x)||0)+1));
   return Math.max(...c.values()) / items.length;
 }
-function jaccardDistance(a, b) {       // bench/metrics/ecd.py
-  if (a.size === 0 && b.size === 0) return 0;
-  let inter = 0; a.forEach(x => { if (b.has(x)) inter++; });
-  const union = a.size + b.size - inter;
-  return union === 0 ? 0 : 1 - inter/union;
-}
-function computeECD(sets) {
-  if (sets.length < 2) return 0;
-  let s = 0, n = 0;
-  for (let i = 0; i < sets.length; i++) for (let j = i+1; j < sets.length; j++) { s += jaccardDistance(sets[i], sets[j]); n++; }
-  return s / n;
-}
-function computeDCB(decisions, K) {    // bench/metrics/dcb.py: 1 - H(p)/log(K)
-  const c = new Map();
-  decisions.forEach(d => c.set(d, (c.get(d)||0)+1));
-  let H = 0;
-  c.forEach(v => { const p = v/decisions.length; H -= p*Math.log(p); });
-  return Math.min(1, Math.max(0, 1 - H/Math.log(K)));
-}
 function computeAll(runs) {
+  const eligible = runs.length > 0 && runs.every(r =>
+    typeof r.decision === "string" && Array.isArray(r.tools));
+  if (!eligible) {
+    return {dar:null, tar:null, gap:null, tarStrong:null, gapStrong:null, eligible:false};
+  }
   const decisions = runs.map(r => r.decision);
-  const withTools = runs.filter(r => r.tools.length > 0);
   const dar = modalShare(decisions);
-  const tar = withTools.length ? modalShare(withTools.map(r => r.tools.join("→"))) : null;
-  return { dar, tar, gap: tar === null ? null : dar - tar,
-           ecd: computeECD(runs.map(r => r.evidence)), dcb: computeDCB(decisions, 3) };
+  const tar = modalShare(runs.map(r => r.tools.join("→")));
+  const strongAvailable = runs.every(r => Array.isArray(r.strong));
+  const tarStrong = strongAvailable
+    ? modalShare(runs.map(r => r.strong.join("→")))
+    : null;
+  return {
+    dar,
+    tar,
+    gap: dar - tar,
+    tarStrong,
+    gapStrong: tarStrong === null ? null : dar - tarStrong,
+    eligible:true,
+  };
 }
 function renderMetrics(el, m) {
   document.getElementById(el).innerHTML = [
-    ["DAR", m.dar, "decision agreement"], ["TAR", m.tar, "trajectory agreement"],
-    ["Gap", m.gap, "DAR − TAR"], ["ECD", m.ecd, "evidence divergence"], ["DCB", m.dcb, "concentration (K=3)"],
+    ["DAR", m.dar, "decision agreement"],
+    ["TARseq", m.tar, "ordered tool names"],
+    ["Δseq", m.gap, "DAR − TARseq"],
+    ["TARstrong", m.tarStrong, "names + arguments + results"],
+    ["Δstrong", m.gapStrong, "DAR − TARstrong"],
   ].map(([l,v,d]) => `<div class="m"><div class="v">${v===null?"—":v.toFixed(3)}</div><div class="l">${l}<br>${d}</div></div>`).join("");
 }
 function renderRuns(el, runs) {
@@ -354,22 +486,26 @@ function renderRuns(el, runs) {
 function verdictFor(m, el, live) {
   const target = document.getElementById(el);
   let cls = "good", txt;
-  if (m.tar !== null && m.dar >= 0.9 && m.gap > 0.07) {
+  if (!m.eligible) {
     cls = "bad";
-    txt = `<b>Trajectory diverger.</b> An outcome-only evaluator scores this agent ${(m.dar*100).toFixed(0)}% consistent —
-           but ${(100-(m.tar*100)).toFixed(0)}% of replays took a different tool path to that answer. In the paper's corpus,
-           21.8% of decision-stable case groups look exactly like this. In an audit, the path is the product.`;
-  } else if (m.dar >= 0.98 && m.dcb > 0.5) {
-    cls = ""; txt = `<b>Possible pattern matcher.</b> Very high agreement with high decision concentration —
-           the agent may be giving the same answer regardless of evidence. Check accuracy before celebrating determinism.`;
+    txt = `<b>Unavailable.</b> At least one required replay channel is missing or malformed.
+      This group is ineligible; missingness is not scored as agreement.`;
+  } else if (m.dar >= 0.9 && m.gap > 0.07) {
+    cls = "bad";
+    txt = `<b>Review the path.</b> Decisions agree ${(m.dar*100).toFixed(0)}% of the time,
+      while exact tool-name paths agree ${(m.tar*100).toFixed(0)}% of the time.
+      Inspect what changed and whether a required check disappeared.`;
   } else if (m.dar < 0.9) {
-    cls = ""; txt = `<b>Decision-unstable.</b> Even outcome-only evaluation can see this one (DAR ${m.dar.toFixed(2)}).
-           DFAH adds <i>which channel</i> is drifting: trajectory (gap), evidence (ECD), or concentration (DCB).`;
+    cls = "";
+    txt = `<b>Decision variation is already visible.</b> DAR is ${m.dar.toFixed(2)}.
+      The path measures show whether execution varies as well.`;
   } else {
-    cls = "good"; txt = `<b>Stable executor.</b> Decisions and trajectories agree — DAR ${m.dar.toFixed(2)},
-           ${m.tar===null?"no trajectory data":"TAR "+m.tar.toFixed(2)}. This is what replay-deterministic looks like.`;
+    cls = "good";
+    txt = `<b>Observed paths align in this replay group.</b> DAR is ${m.dar.toFixed(2)}
+      and TARseq is ${m.tar.toFixed(2)}. This describes the captured runs; it does not establish correctness
+      or general determinism.`;
   }
-  target.innerHTML = `<div class="verdict ${cls}">${txt}${live?'<div class="small" style="margin-top:6px">Computed live from your model&rsquo;s replays with the bench formulas.</div>':""}</div>`;
+  target.innerHTML = `<div class="verdict ${cls}">${txt}${live?'<div class="small" style="margin-top:6px">Computed in this browser from the captured replay channels.</div>':""}</div>`;
 }
 
 /* ============ Playground simulator (seeded — mulberry32) ============ */
@@ -387,12 +523,12 @@ function simulate() {
   const N = +document.getElementById("c_n").value;
   const pDec = +document.getElementById("c_dec").value / 100;
   const pTraj = +document.getElementById("c_traj").value / 100;
-  const pEv = +document.getElementById("c_ev").value / 100;
+  const pStrong = +document.getElementById("c_ev").value / 100;
   const seed = +document.getElementById("c_seed").value || 42;
   document.getElementById("v_n").textContent = N;
   document.getElementById("v_dec").textContent = Math.round(pDec*100)+"%";
   document.getElementById("v_traj").textContent = Math.round(pTraj*100)+"%";
-  document.getElementById("v_ev").textContent = Math.round(pEv*100)+"%";
+  document.getElementById("v_ev").textContent = Math.round(pStrong*100)+"%";
   const rnd = mulberry32(seed);
   const runs = [];
   for (let i = 0; i < N; i++) {
@@ -405,11 +541,11 @@ function simulate() {
     }
     let decision = "escalate";
     if (rnd() < pDec) decision = DECISIONS[1 + Math.floor(rnd()*2)];
-    const evidence = new Set(tools.map((t,k) => {
-      const variant = rnd() < pEv ? "~v"+(1+Math.floor(rnd()*3)) : "";
-      return `${t}.hash=h${k}${variant}`;
-    }));
-    runs.push({decision, tools, evidence});
+    const strong = tools.map((t,k) => {
+      const variant = rnd() < pStrong ? "~v"+(1+Math.floor(rnd()*3)) : "";
+      return `${t}|args=case-${k}|result=h${k}${variant}`;
+    });
+    runs.push({decision, tools, strong});
   }
   const m = computeAll(runs);
   renderMetrics("simMetrics", m); renderRuns("simRuns", runs); verdictFor(m, "simVerdict", false);
@@ -430,21 +566,28 @@ const TOOLS_SCHEMA = Object.keys(MOCK_OUTPUTS).map(name => ({
     parameters:{type:"object", properties:{entity:{type:"string",description:"entity or customer to look up"}}, required:[]}}}));
 const SYSTEM = "You are a financial compliance triage agent. Use the tools to gather evidence about the alert, " +
   "then give a final line exactly in the form DECISION: ESCALATE or DECISION: DISMISS or DECISION: INVESTIGATE.";
-function extractDecision(text) {       // word-boundary, last DECISION: marker wins
-  if (!text) return null;
-  const up = text.toUpperCase();
-  const idx = up.lastIndexOf("DECISION:");
-  const zone = idx >= 0 ? up.slice(idx, idx+50) : up;
-  for (const scope of [zone, up]) {
-    for (const d of DECISIONS) if (new RegExp(`\\b${d.toUpperCase()}\\b`).test(scope)) return d;
+function canonicalValue(value) {
+  if (Array.isArray(value)) return value.map(canonicalValue);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.keys(value).sort().map(k => [k, canonicalValue(value[k])]));
   }
-  return null;
+  return value;
+}
+function canonicalJSON(value) {
+  return JSON.stringify(canonicalValue(value === undefined ? null : value));
+}
+function extractDecision(text) {
+  if (!text) return null;
+  const matches = [...text.matchAll(
+    /^\s*DECISION:\s*(ESCALATE|DISMISS|INVESTIGATE)\s*[.!]?\s*$/gim
+  )];
+  return matches.length === 1 ? matches[0][1].toLowerCase() : null;
 }
 async function liveReplay(url, model, onTool) {
   const messages = [
     {role:"system", content:SYSTEM},
     {role:"user", content:"Alert "+CASE.alert_id+": "+JSON.stringify(CASE)}];
-  const tools = [];
+  const tools = [], strong = [];
   let content = "";
   for (let turn = 0; turn < 4; turn++) {
     const resp = await fetch(url + "/api/chat", {method:"POST", headers:{"Content-Type":"application/json"},
@@ -459,14 +602,19 @@ async function liveReplay(url, model, onTool) {
     messages.push(msg);
     for (const tc of calls) {
       const name = tc.function && tc.function.name;
-      if (!MOCK_OUTPUTS[name]) continue;
+      if (!MOCK_OUTPUTS[name]) {
+        throw new Error(`model called undeclared or unsupported tool: ${name || "(missing name)"}`);
+      }
       tools.push(name); onTool(name);
+      strong.push(`${name}|args=${canonicalJSON(tc.function.arguments)}|result=${canonicalJSON(MOCK_OUTPUTS[name])}`);
       messages.push({role:"tool", content: JSON.stringify(MOCK_OUTPUTS[name])});
     }
   }
-  const decision = extractDecision(content) || "investigate";  // flagged fallback semantics
-  const evidence = new Set(tools.map(t => t + ".hash=" + JSON.stringify(MOCK_OUTPUTS[t]).length));
-  return {decision, tools, evidence};
+  const decision = extractDecision(content);
+  if (!decision) {
+    throw new Error("model response did not contain one declared decision label");
+  }
+  return {decision, tools, strong};
 }
 document.getElementById("o_run").onclick = async () => {
   const btn = document.getElementById("o_run"), st = document.getElementById("o_status");

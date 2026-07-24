@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 5. Cross-Provider Testing - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 5. Cross-Provider Testing - Output Drift + DFAH</title>
       
     
     
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
@@ -103,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -238,6 +240,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../resources/paper/" class="md-tabs__link">
           
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -724,10 +746,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-gaap-materiality-threshold-5" class="md-nav__link">
+  <a href="#step-4-illustrative-numeric-tolerance-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: GAAP Materiality Threshold (±5%)
+        Step 4: Illustrative Numeric Tolerance (±5%)
       
     </span>
   </a>
@@ -918,7 +940,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -971,7 +993,7 @@
   <span class="md-ellipsis">
     
   
-    Resources
+    DFAH Package
   
 
     
@@ -984,6 +1006,207 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1188,10 +1411,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-gaap-materiality-threshold-5" class="md-nav__link">
+  <a href="#step-4-illustrative-numeric-tolerance-5" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: GAAP Materiality Threshold (±5%)
+        Step 4: Illustrative Numeric Tolerance (±5%)
       
     </span>
   </a>
@@ -1325,16 +1548,19 @@
 
 <h1 id="lab-5-cross-provider-testing">Lab 5: Cross-Provider Testing<a class="headerlink" href="#lab-5-cross-provider-testing" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>In this lab, you'll validate output consistency between local (Ollama) and cloud (IBM watsonx.ai) deployments using the framework's <code>CrossProviderValidator</code>. This ensures your models produce reliable results regardless of deployment environment.</p>
+<p>In this lab, you'll compare outputs from local (Ollama) and cloud (IBM
+watsonx.ai) configurations using the framework's <code>CrossProviderValidator</code>.
+The comparison measures agreement in the captured examples; it does not
+establish provider-independent reliability.</p>
 <p><strong>Duration</strong>: ~30 minutes</p>
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <p>By the end of this lab, you will:</p>
 <ul>
 <li>Use the <code>CrossProviderValidator</code> from your framework</li>
 <li>Compare outputs between Ollama and watsonx.ai</li>
-<li>Understand GAAP materiality thresholds (±5%)</li>
-<li>Validate cross-provider consistency for compliance</li>
-<li>Make deployment decisions based on provider reliability</li>
+<li>Use an illustrative numeric tolerance (±5%)</li>
+<li>Measure cross-provider consistency for follow-up review</li>
+<li>Prioritize validation work when providers differ</li>
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1348,11 +1574,13 @@
 <li><strong>Migrate</strong> between providers without changing behavior</li>
 <li><strong>Redundancy</strong> with failover to backup providers</li>
 <li><strong>Vendor independence</strong> to avoid lock-in</li>
-<li><strong>Regulatory compliance</strong> requiring reproducibility across environments</li>
+<li><strong>Governance and review</strong> when replay evidence changes across environments</li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">The Risk</p>
-<p>A model that works locally but behaves differently in production (cloud) creates <strong>audit trail inconsistencies</strong> and <strong>compliance violations</strong>.</p>
+<p>A model that works locally but behaves differently in production (cloud)
+creates inconsistent replay evidence and may undermine downstream controls.
+The consistency test does not itself determine compliance.</p>
 </div>
 <h2 id="step-1-review-crossprovidervalidator-code">Step 1: Review CrossProviderValidator Code<a class="headerlink" href="#step-1-review-crossprovidervalidator-code" title="Permanent link">&para;</a></h2>
 <p>Open <code>harness/cross_provider_validation.py</code> to see how it works:</p>
@@ -1360,7 +1588,7 @@
 </code></pre></div>
 <p><strong>Key features</strong> (from the code):
 - Normalized edit distance for text comparison
-- <strong>±5% tolerance</strong> (GAAP materiality threshold)
+- Configurable numeric tolerance (±5% in this exercise)
 - Task-specific validation rules
 - Audit trail generation</p>
 <h2 id="step-2-test-ollama-vs-watsonxai">Step 2: Test Ollama vs watsonx.ai<a class="headerlink" href="#step-2-test-ollama-vs-watsonxai" title="Permanent link">&para;</a></h2>
@@ -1430,7 +1658,7 @@
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Similarity: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">similarity</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Cross-provider validation PASSED (≥95</span><span class="si">% s</span><span class="s2">imilarity)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Observed similarity met the exercise&#39;s 95</span><span class="si">% r</span><span class="s2">eview line&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠️  Cross-provider drift detected: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
@@ -1450,16 +1678,19 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 
 ============================================================
 🔍 Comparison:
-  Ollama length: 87 chars
-  watsonx length: 87 chars
+  Ollama length: 82 chars
+  watsonx length: 82 chars
   Exact match: True
   Similarity: 100.0%
 
-✅ Cross-provider validation PASSED (≥95% similarity)
+✅ Observed similarity met the exercise&#39;s 95% review line
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Tier 1 Cross-Provider Consistency</p>
-<p>Both Granite-3-8B (watsonx) and Qwen2.5-7B (Ollama) produce <strong>identical outputs</strong>—enabling seamless migration between local and cloud deployments.</p>
+<p>Granite-3-8B (watsonx) and Qwen2.5-7B (Ollama) produced <strong>identical
+outputs in this example</strong>. A migration decision still requires replay of
+the intended tasks plus correctness, path, cost, latency, and control
+review.</p>
 </div>
 <h2 id="step-3-use-the-frameworks-crossprovidervalidator">Step 3: Use the Framework's CrossProviderValidator<a class="headerlink" href="#step-3-use-the-frameworks-crossprovidervalidator" title="Permanent link">&para;</a></h2>
 <p>Now use the built-in validator from <code>harness/cross_provider_validation.py</code>:</p>
@@ -1473,10 +1704,10 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
-<span class="c1"># Initialize validator with GAAP materiality threshold</span>
+<span class="c1"># Initialize the validator with an exercise-specific tolerance</span>
 <span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span>
     <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span>
-    <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># +/-5% from GAAP auditing standards</span>
+    <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># illustrative; set from the approved task contract</span>
 <span class="p">)</span>
 
 <span class="c1"># Assume you&#39;ve already collected outputs from each provider</span>
@@ -1487,13 +1718,18 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 <span class="p">}</span>
 
 <span class="c1"># Validate SQL outputs</span>
-<span class="n">result_sql</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">sql_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
+<span class="n">sql_results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="mf">125000.0</span><span class="p">,</span>
+    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="mf">125000.0</span>
+<span class="p">}</span>
+<span class="n">result_sql</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
+    <span class="n">sql_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="n">sql_results</span><span class="o">=</span><span class="n">sql_results</span>
+<span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SQL Generation Task&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;FAIL&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numeric result checks: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;task_validation&#39;</span><span class="p">][</span><span class="s1">&#39;result_match&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Validate RAG outputs</span>
 <span class="n">rag_outputs</span> <span class="o">=</span> <span class="p">{</span>
@@ -1511,9 +1747,11 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">RAG Task&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation: </span><span class="si">{</span><span class="s1">&#39;PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;MINOR DRIFT&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Citation sets matched:&quot;</span><span class="p">,</span>
+    <span class="n">result_rag</span><span class="p">[</span><span class="s2">&quot;task_validation&quot;</span><span class="p">][</span><span class="s2">&quot;citation_consistent&quot;</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="c1"># Audit trail</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cross-Provider Audit Report&quot;</span><span class="p">)</span>
@@ -1525,11 +1763,14 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_cross_provider_validation.py
 </code></pre></div>
-<h2 id="step-4-gaap-materiality-threshold-5">Step 4: GAAP Materiality Threshold (±5%)<a class="headerlink" href="#step-4-gaap-materiality-threshold-5" title="Permanent link">&para;</a></h2>
-<p>The framework uses <strong>±5% tolerance</strong> based on GAAP auditing standards for financial statement materiality.</p>
+<h2 id="step-4-illustrative-numeric-tolerance-5">Step 4: Illustrative Numeric Tolerance (±5%)<a class="headerlink" href="#step-4-illustrative-numeric-tolerance-5" title="Permanent link">&para;</a></h2>
+<p>This exercise uses a configurable <strong>±5% tolerance</strong> to demonstrate numeric
+comparison. It is not a universal GAAP materiality threshold. Materiality is
+context-dependent and must be set by the responsible accounting, risk, and
+control functions.</p>
 <p><strong>Example: Numeric comparison</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_numeric_tolerance</span><span class="p">(</span><span class="n">value1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">value2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if two values are within GAAP materiality threshold.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether two values meet an exercise-specific tolerance.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">value1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">value2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">value1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">value2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1539,16 +1780,20 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
     <span class="k">return</span> <span class="n">diff_pct</span> <span class="o">&lt;=</span> <span class="n">tolerance_pct</span>
 
 <span class="c1"># Test cases</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">validate_numeric_tolerance</span><span class="p">(</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">))</span>  <span class="c1"># True (4.2% diff)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">validate_numeric_tolerance</span><span class="p">(</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">))</span>  <span class="c1"># True (4.0% diff)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">validate_numeric_tolerance</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">))</span>  <span class="c1"># False (9.1% diff)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">validate_numeric_tolerance</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1040</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">))</span>  <span class="c1"># True (3.8% diff)</span>
 </code></pre></div>
 <p><strong>Why 5%?</strong>
-- GAAP materiality standard for financial reporting
-- Industry-accepted threshold for immaterial differences
-- Balances strictness with practical variance</p>
+- It makes the comparison easy to inspect in this exercise
+- It is configurable rather than a compliance rule
+- Production tolerances should follow the task's approved control standard</p>
+<p>The standalone helper and <code>CrossProviderValidator</code> both use a symmetric
+max-denominator percentage, so reversing provider order does not change the
+numeric comparison.</p>
 <h2 id="step-5-multi-run-cross-provider-test">Step 5: Multi-Run Cross-Provider Test<a class="headerlink" href="#step-5-multi-run-cross-provider-test" title="Permanent link">&para;</a></h2>
-<p>Test consistency across multiple runs (n=5):</p>
+<p>Compare five pairs of outputs collected separately from the two provider
+configurations:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Multi-run cross-provider consistency test.</span>
@@ -1556,42 +1801,63 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
 <span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span><span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;</span>
+
+<span class="c1"># Collect these with the provider clients before comparison. They are expanded</span>
+<span class="c1"># here so the example remains runnable without unsupported validator kwargs.</span>
+<span class="n">ollama_outputs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+<span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">watsonx_outputs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+<span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">ollama_results</span> <span class="o">=</span> <span class="p">[</span><span class="mf">125000.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
+<span class="n">watsonx_results</span> <span class="o">=</span> <span class="p">[</span><span class="mf">125000.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">ollama_output</span><span class="p">,</span> <span class="n">watsonx_output</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+    <span class="nb">zip</span><span class="p">(</span><span class="n">ollama_outputs</span><span class="p">,</span> <span class="n">watsonx_outputs</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-        <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_output</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_output</span><span class="p">},</span>
         <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
-        <span class="n">model_ollama</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-        <span class="n">model_watsonx</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
-        <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+        <span class="n">sql_results</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">},</span>
     <span class="p">)</span>
-    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;✅ Consistent&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ Inconsistent&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">query_match</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="n">score</span> <span class="o">&gt;=</span> <span class="mf">0.95</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;similarity_scores&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">numeric_match</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;task_validation&quot;</span><span class="p">][</span><span class="s2">&quot;result_match&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">pair_match</span> <span class="o">=</span> <span class="n">query_match</span> <span class="ow">and</span> <span class="n">numeric_match</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair_match</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pair </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;✅ Match&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">pair_match</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️ Review&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="n">consistency_rate</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Overall consistency: </span><span class="si">{</span><span class="n">consistency_rate</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Observed pair agreement: </span><span class="si">{</span><span class="n">consistency_rate</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
-<div class="highlight"><pre><span></span><code>Run 1: ✅ Consistent
-Run 2: ✅ Consistent
-Run 3: ✅ Consistent
-Run 4: ✅ Consistent
-Run 5: ✅ Consistent
+<div class="highlight"><pre><span></span><code>Pair 1: ✅ Match
+Pair 2: ✅ Match
+Pair 3: ✅ Match
+Pair 4: ✅ Match
+Pair 5: ✅ Match
 
-Overall consistency: 100%
+Observed pair agreement: 100%
 </code></pre></div>
 <h2 id="step-6-migration-decision-matrix">Step 6: Migration Decision Matrix<a class="headerlink" href="#step-6-migration-decision-matrix" title="Permanent link">&para;</a></h2>
-<p>Based on cross-provider validation, decide whether migration is safe:</p>
+<p>Use cross-provider replay to decide whether a migration needs more investigation.
+Agreement in this exercise is evidence about repeatability, not a safety or
+compliance determination:</p>
 <table>
 <thead>
 <tr>
 <th>Scenario</th>
 <th>Ollama → watsonx</th>
-<th>Validation</th>
-<th>Safe to Migrate?</th>
+<th>Observed validation</th>
+<th>Follow-up</th>
 </tr>
 </thead>
 <tbody>
@@ -1599,53 +1865,55 @@ Overall consistency: 100%
 <td><strong>SQL (Tier 1 → Tier 1)</strong></td>
 <td>Qwen2.5-7B → Granite-3-8B</td>
 <td>100% match</td>
-<td>✅ Yes</td>
+<td>Path-aware replay</td>
 </tr>
 <tr>
 <td><strong>RAG (Tier 1 → Tier 1)</strong></td>
 <td>Qwen2.5-7B → Granite-3-8B</td>
 <td>≥95% match</td>
-<td>✅ Yes</td>
+<td>Inspect retrieval evidence</td>
 </tr>
 <tr>
 <td><strong>SQL (Tier 1 → Tier 2)</strong></td>
 <td>Qwen2.5-7B → Llama-3.3-70B</td>
 <td>100% match</td>
-<td>✅ Yes</td>
+<td>Path-aware replay</td>
 </tr>
 <tr>
 <td><strong>RAG (Tier 1 → Tier 2)</strong></td>
 <td>Qwen2.5-7B → Llama-3.3-70B</td>
 <td>&lt;95% match</td>
-<td>⚠️ Monitor</td>
+<td>Investigate variation</td>
 </tr>
 <tr>
 <td><strong>Any (Tier 1 → Tier 3)</strong></td>
 <td>Qwen2.5-7B → GPT-OSS-120B</td>
 <td>&lt;50% match</td>
-<td>❌ No</td>
+<td>Full requalification</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Migration safety check:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">is_migration_safe</span><span class="p">(</span><span class="n">source_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if migration between providers is compliance-safe.&quot;&quot;&quot;</span>
+<p><strong>Repeatability triage:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">migration_replay_status</span><span class="p">(</span>
+    <span class="n">source_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prioritize replay work; do not treat this as a deployment gate.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">source_tier</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Always safe: Tier 1 → Tier 1</span>
+        <span class="k">return</span> <span class="s2">&quot;run path-aware replay&quot;</span>
 
     <span class="k">if</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Never safe: Any → Tier 3</span>
+        <span class="k">return</span> <span class="s2">&quot;full requalification&quot;</span>
 
     <span class="k">if</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">task_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="s2">&quot;summarize&quot;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># Safe for structured tasks</span>
+        <span class="k">return</span> <span class="s2">&quot;run path-aware replay&quot;</span>
 
-    <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Requires validation</span>
+    <span class="k">return</span> <span class="s2">&quot;investigate before relying on equivalent replay&quot;</span>
 
 <span class="c1"># Examples</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_migration_safe</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>  <span class="c1"># True</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_migration_safe</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>  <span class="c1"># True</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_migration_safe</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>  <span class="c1"># False (requires validation)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">is_migration_safe</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>  <span class="c1"># False</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>
 </code></pre></div>
 <h2 id="understanding-provider-differences">Understanding Provider Differences<a class="headerlink" href="#understanding-provider-differences" title="Permanent link">&para;</a></h2>
 <p>Even with identical model versions, providers may differ in:</p>
@@ -1656,8 +1924,10 @@ Overall consistency: 100%
 <li><strong>Load balancing</strong>: Multiple model replicas</li>
 </ol>
 <div class="admonition info">
-<p class="admonition-title">Tier 1 Advantage</p>
-<p>Tier 1 models (7-20B) are <strong>small enough</strong> to fit on a single GPU consistently, reducing infrastructure-induced variance.</p>
+<p class="admonition-title">Replay the Exact Stack</p>
+<p>Provider differences can reflect hardware, quantization, batching, routing,
+or model revisions. The workshop tiers do not isolate those causes; compare
+the exact source and target configurations.</p>
 </div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="watsonxai-connection-issues">watsonx.ai Connection Issues<a class="headerlink" href="#watsonxai-connection-issues" title="Permanent link">&para;</a></h3>
@@ -1690,24 +1960,29 @@ Overall consistency: 100%
 </code></pre></div>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Cross-provider validation</strong> ensures migration safety</li>
-<li><strong>Tier 1 models</strong> (7-20B) achieve perfect cross-provider consistency</li>
-<li><strong>GAAP materiality (±5%)</strong> provides finance-calibrated tolerance</li>
+<li><strong>Cross-provider validation</strong> measures whether replay evidence changes across serving stacks</li>
+<li><strong>Tier 1 configurations</strong> showed high agreement in the bounded workshop runs</li>
+<li><strong>The ±5% example</strong> illustrates a configurable numeric tolerance</li>
 <li><strong>Framework's <code>CrossProviderValidator</code></strong> automates testing</li>
-<li><strong>Audit trails</strong> document cross-provider equivalence</li>
+<li><strong>Replay records</strong> document the compared outputs and observed agreement</li>
 </ol>
 <h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
 <details class="question">
-<summary>What is the GAAP materiality threshold used in cross-provider validation?</summary>
-<p><strong>Answer</strong>: ±5%, based on GAAP auditing standards for financial statement materiality.</p>
+<summary>What does the ±5% value represent in this lab?</summary>
+<p><strong>Answer</strong>: An illustrative, configurable comparison tolerance. It is not a
+universal GAAP materiality threshold.</p>
 </details>
 <details class="question">
 <summary>Why do Tier 1 models show better cross-provider consistency?</summary>
-<p><strong>Answer</strong>: They're small enough (7-20B params) to fit on a single GPU, reducing infrastructure-induced variance from distributed processing.</p>
+<p><strong>Answer</strong>: This exercise does not isolate the cause. Model family, serving
+stack, task, decoding, and hardware all differ and should be tested rather
+than inferred from parameter count.</p>
 </details>
 <details class="question">
-<summary>When is migration from Tier 1 to Tier 2 safe?</summary>
-<p><strong>Answer</strong>: Only for structured tasks (SQL, summarization). RAG tasks require explicit validation due to Tier 2's lower RAG consistency.</p>
+<summary>What should happen before treating two provider configurations as equivalent?</summary>
+<p><strong>Answer</strong>: Run the intended task under a frozen replay configuration,
+inspect decision and path evidence, and apply the workflow's approved
+correctness and control checks.</p>
 </details>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>Now that you understand cross-provider validation:</p>
@@ -1719,7 +1994,9 @@ Overall consistency: 100%
 <hr />
 <div class="admonition success">
 <p class="admonition-title">Lab 5 Complete!</p>
-<p>You can now validate cross-provider consistency and make migration decisions with confidence! Ready to customize the framework? Move on to <a href="../lab-6/">Lab 6: Extending the Framework</a>!</p>
+<p>You can now compare captured outputs across providers and identify where a
+migration needs deeper review. Ready to customize the framework? Move on to
+<a href="../lab-6/">Lab 6: Extending the Framework</a>!</p>
 </div>
 
 

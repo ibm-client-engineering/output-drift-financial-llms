@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 1. Understanding Output Drift - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 1. Understanding Output Drift - Output Drift + DFAH</title>
       
     
     
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
@@ -103,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -238,6 +240,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../resources/paper/" class="md-tabs__link">
           
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -785,15 +807,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#regulatory-context" class="md-nav__link">
+  <a href="#governance-context" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Regulatory Context
+        Governance Context
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Regulatory Context">
+    <nav class="md-nav" aria-label="Governance Context">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1108,7 +1130,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -1161,7 +1183,7 @@
   <span class="md-ellipsis">
     
   
-    Resources
+    DFAH Package
   
 
     
@@ -1174,6 +1196,207 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1551,15 +1774,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#regulatory-context" class="md-nav__link">
+  <a href="#governance-context" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Regulatory Context
+        Governance Context
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Regulatory Context">
+    <nav class="md-nav" aria-label="Governance Context">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1707,13 +1930,20 @@
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
 <p>In this lab, you'll learn what output drift is, why it matters for financial AI systems, and see real examples of non-deterministic behavior in large language models.</p>
 <p><strong>Duration</strong>: ~20 minutes</p>
+<div class="admonition note">
+<p class="admonition-title">Historical workshop scope</p>
+<p>This lab preserves the original workshop experiment. Its tiers summarize
+repeatability observed in those tested runs; they are not certifications of
+correctness, safety, compliance, or production readiness. For the current
+replay-eligibility and path-agreement workflow, see <a href="../lab-8/">Lab 8</a>.</p>
+</div>
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <p>By the end of this lab, you will:</p>
 <ul>
 <li>Understand what output drift is and how it differs from data drift</li>
 <li>Learn why temperature=0.0 doesn't guarantee determinism</li>
 <li>See real examples of drift in financial tasks</li>
-<li>Understand the regulatory implications for financial services</li>
+<li>Understand the governance and control implications for financial services</li>
 <li>Know which tasks are most susceptible to drift</li>
 </ul>
 <h2 id="what-is-output-drift">What is Output Drift?<a class="headerlink" href="#what-is-output-drift" title="Permanent link">&para;</a></h2>
@@ -1759,8 +1989,11 @@ Run 2 (temp=0.0): &quot;DENY - Moderate risk, recommend manual review&quot;
 Run 3 (temp=0.0): &quot;APPROVE with conditions - Reduce credit limit to $10K&quot;
 </code></pre></div>
 <div class="admonition danger">
-<p class="admonition-title">Regulatory Risk</p>
-<p>Inconsistent decisions can violate fair lending laws (ECOA, FCRA) and lead to:</p>
+<p class="admonition-title">Control Risk</p>
+<p>Inconsistent decisions in a credit workflow call for fairness, accuracy,
+policy, and legal review. Repeatability evidence alone does not establish a
+violation of ECOA, FCRA, or another requirement. Potential consequences of
+a poorly controlled workflow include:</p>
 <ul>
 <li>Discrimination claims</li>
 <li>Regulatory fines</li>
@@ -1784,8 +2017,11 @@ Run 2: &quot;Insufficient information to determine. Request additional details.&
 Run 3: &quot;No, transaction appears routine&quot;
 </code></pre></div>
 <div class="admonition warning">
-<p class="admonition-title">Compliance Failure</p>
-<p>Missed Suspicious Activity Reports (SARs) can result in:</p>
+<p class="admonition-title">Review Required</p>
+<p>A missed required Suspicious Activity Report (SAR) can have serious
+consequences, but these three model responses do not establish whether a
+filing was required. Reportability must be determined from the full facts
+and the applicable control process. Potential consequences can include:</p>
 <ul>
 <li>Multi-million dollar fines</li>
 <li>Criminal liability</li>
@@ -1802,7 +2038,7 @@ Run 3: &quot;No, transaction appears routine&quot;
 <th>Size</th>
 <th>Consistency</th>
 <th>Tier</th>
-<th>Compliance Status</th>
+<th>Observed repeatability</th>
 </tr>
 </thead>
 <tbody>
@@ -1811,14 +2047,14 @@ Run 3: &quot;No, transaction appears routine&quot;
 <td>7B</td>
 <td><strong>100%</strong></td>
 <td>Tier 1</td>
-<td>✅ Audit-ready</td>
+<td>High in tested runs</td>
 </tr>
 <tr>
 <td><strong>IBM Granite-3-8B</strong></td>
 <td>8B</td>
 <td><strong>100%</strong></td>
 <td>Tier 1</td>
-<td>✅ Audit-ready</td>
+<td>High in tested runs</td>
 </tr>
 <tr>
 <td><strong>Meta Llama-3.3-70B</strong></td>
@@ -1839,15 +2075,19 @@ Run 3: &quot;No, transaction appears routine&quot;
 <td>120B</td>
 <td><strong>12.5% [CI: 3.5–36.0%]</strong></td>
 <td>Tier 3</td>
-<td>❌ Non-compliant</td>
+<td>Low in tested runs</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Counterintuitive finding</strong>: 7-20B models achieve perfect determinism while 120B models show only 12.5% consistency!</p>
+<p><strong>Bounded finding</strong>: in these tested configurations, the 7-20B models produced
+identical outputs while the 120B configuration showed 12.5% consistency. This
+does not establish a general relationship between model size and repeatability.</p>
 <div class="admonition note">
 <p class="admonition-title">Understanding Statistical Notation</p>
 <p>Throughout this workshop, we report <strong>95% Confidence Intervals (CI)</strong> for our findings. For example, "12.5% [CI: 3.5–36.0%]" means we measured 12.5% consistency, but the true value likely falls between 3.5% and 36.0%.</p>
-<p>All Tier 1 vs Tier 3 comparisons showed 𝑝 &lt; 0.0001, meaning these differences are highly statistically significant and not due to chance.</p>
+<p>In the historical analysis, the reported Tier 1 versus Tier 3 tests had
+𝑝 &lt; 0.0001 under their stated null model. That result does not identify the
+cause of the difference or generalize it beyond the compared configurations.</p>
 </div>
 <h3 id="drift-by-task-type-temperature-00">Drift by Task Type (Temperature = 0.0)<a class="headerlink" href="#drift-by-task-type-temperature-00" title="Permanent link">&para;</a></h3>
 <table>
@@ -1855,34 +2095,34 @@ Run 3: &quot;No, transaction appears routine&quot;
 <tr>
 <th>Task</th>
 <th>Consistency</th>
-<th>Why?</th>
+<th>Observed context</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>SQL Generation</td>
 <td>100%</td>
-<td>Structured output, deterministic syntax</td>
+<td>Structured output in the tested runs</td>
 </tr>
 <tr>
 <td>Summarization</td>
 <td>100%</td>
-<td>Well-defined task, narrow output space</td>
+<td>Narrow output format in the tested runs</td>
 </tr>
 <tr>
 <td>RAG (Text-to-SQL)</td>
 <td>93.75%</td>
-<td>Retrieval adds complexity</td>
+<td>Retrieval was part of the captured stack</td>
 </tr>
 <tr>
 <td>RAG (General)</td>
 <td>75-87.5%</td>
-<td>Context-dependent, broader output space</td>
+<td>Broader natural-language outputs</td>
 </tr>
 </tbody>
 </table>
 <h3 id="impact-of-temperature">Impact of Temperature<a class="headerlink" href="#impact-of-temperature" title="Permanent link">&para;</a></h3>
-<p>At <strong>temperature = 0.2</strong> (common in production):</p>
+<p>At <strong>temperature = 0.2</strong> in the workshop:</p>
 <table>
 <thead>
 <tr>
@@ -1915,7 +2155,9 @@ Run 3: &quot;No, transaction appears routine&quot;
 </table>
 <div class="admonition insight">
 <p class="admonition-title">Key Takeaway</p>
-<p>Even small temperature increases (0.0 → 0.2) can <strong>double drift rates</strong> for retrieval-augmented tasks!</p>
+<p>In the tested retrieval-augmented condition, moving from temperature 0.0
+to 0.2 materially reduced exact-output agreement. This bounded comparison
+does not establish a universal temperature effect.</p>
 </div>
 <h2 id="visualizing-drift">Visualizing Drift<a class="headerlink" href="#visualizing-drift" title="Permanent link">&para;</a></h2>
 <h3 id="example-consistency-across-model-tiers">Example: Consistency Across Model Tiers<a class="headerlink" href="#example-consistency-across-model-tiers" title="Permanent link">&para;</a></h3>
@@ -1934,6 +2176,8 @@ Mistral Medium  ████████████████      80%  △
 Tier 3 (120B+):
 GPT-OSS-120B    ██▌                   12.5% ❌
 </code></pre></div>
+<p>The GPT-OSS-20B line is retained from a separate workshop check; it was not one
+of the five configurations in the 480-run matrix summarized above.</p>
 <h3 id="example-drift-heat-map-temperature-sensitivity">Example: Drift Heat map (Temperature Sensitivity)<a class="headerlink" href="#example-drift-heat-map-temperature-sensitivity" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>Task Type vs. Temperature
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1967,20 +2211,19 @@ Run 3: &quot;Acceptable risk with conditions&quot;
 Run 2: &quot;Q4 revenue was $550M according to the filing&quot;
 Run 3: &quot;Revenue not disclosed in available documents&quot;
 </code></pre></div>
-<p><strong>Impact</strong>: Compliance violations, incorrect recommendations</p>
-<h2 id="regulatory-context">Regulatory Context<a class="headerlink" href="#regulatory-context" title="Permanent link">&para;</a></h2>
+<p><strong>Impact</strong>: Conflicting recommendations and potential downstream control failures</p>
+<h2 id="governance-context">Governance Context<a class="headerlink" href="#governance-context" title="Permanent link">&para;</a></h2>
 <h3 id="why-financial-services-care">Why Financial Services Care<a class="headerlink" href="#why-financial-services-care" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Model Risk Management (SR 11-7)</strong>: Federal Reserve requires "validation" of models</li>
-<li><strong>Fair Lending (ECOA)</strong>: Consistent treatment of similar applicants</li>
-<li><strong>Explainability (GDPR, FCRA)</strong>: "Right to explanation" for automated decisions</li>
-<li><strong>Audit Trail</strong>: Must reproduce past decisions for regulatory review</li>
+<li><strong>Model risk</strong>: Teams need evidence about limitations, changes, and repeatability</li>
+<li><strong>Fair lending</strong>: Credit workflows require separate fairness, accuracy, and legal controls</li>
+<li><strong>Customer communications</strong>: Explanations and adverse-action processes depend on the use case</li>
+<li><strong>Records and review</strong>: Some regulated activities require records that support later reconstruction</li>
 </ol>
 <h3 id="the-drift-challenge">The Drift Challenge<a class="headerlink" href="#the-drift-challenge" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>"An AI system that produces different recommendations for identical inputs fails the fundamental requirement of <strong>consistency</strong> needed for regulatory compliance."</p>
-<p>— Financial Services AI Governance Guidelines</p>
-</blockquote>
+<p>Repeatability does not prove compliance, but unexplained variation can make a
+system harder to validate, monitor, and reconstruct. This lab measures that
+variation so the responsible reviewers can ask better questions.</p>
 <h2 id="hands-on-observe-drift-in-action">Hands-On: Observe Drift in Action<a class="headerlink" href="#hands-on-observe-drift-in-action" title="Permanent link">&para;</a></h2>
 <p>Let's see drift firsthand with a simple example:</p>
 <h3 id="step-1-create-a-test-script">Step 1: Create a Test Script<a class="headerlink" href="#step-1-create-a-test-script" title="Permanent link">&para;</a></h3>
@@ -2028,7 +2271,7 @@ Run 5: 2 + 2 = 4
 <ol>
 <li><strong>Temperature=0.0 ≠ Determinism</strong>: Even "deterministic" settings show drift</li>
 <li><strong>Task Matters</strong>: Structured tasks (SQL) are more stable than open-ended tasks (RAG)</li>
-<li><strong>Regulatory Risk</strong>: Inconsistency threatens compliance in regulated industries</li>
+<li><strong>Governance Relevance</strong>: Inconsistency raises control and compliance questions in regulated workflows</li>
 <li><strong>Provider Variance</strong>: Different models/providers show different drift characteristics</li>
 <li><strong>Measurement is Essential</strong>: You can't manage what you don't measure</li>
 </ol>
@@ -2039,7 +2282,8 @@ Run 5: 2 + 2 = 4
 </details>
 <details class="question">
 <summary>Question 2: Why is drift a problem for financial services?</summary>
-<p><strong>Answer</strong>: It creates inconsistent decisions that violate regulatory requirements for fairness, explainability, and auditability.</p>
+<p><strong>Answer</strong>: It can make decisions harder to reproduce, explain, and govern,
+which raises control and compliance questions that require separate review.</p>
 </details>
 <details class="question">
 <summary>Question 3: Which task showed the highest drift in research?</summary>
@@ -2047,7 +2291,9 @@ Run 5: 2 + 2 = 4
 </details>
 <details class="question">
 <summary>Question 4: Does setting temperature=0.0 eliminate drift?</summary>
-<p><strong>Answer</strong>: It depends on model size! Tier 1 models (7-20B) achieve 100% consistency at T=0.0, but Tier 3 models (120B+) show only 12.5% consistency even at T=0.0.</p>
+<p><strong>Answer</strong>: No guarantee follows from temperature alone. Some tested
+configurations reached 100% agreement at T=0.0, while another reached
+12.5%; the configurations also differed in model family and serving stack.</p>
 </details>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>Now that you understand what output drift is and why it matters:</p>

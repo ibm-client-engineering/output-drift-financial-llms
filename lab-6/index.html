@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 6. Extending the Framework - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 6. Extending the Framework - Output Drift + DFAH</title>
       
     
     
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
@@ -103,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -238,6 +240,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../resources/paper/" class="md-tabs__link">
           
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -774,10 +796,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-custom-compliance-validator" class="md-nav__link">
+  <a href="#step-6-custom-control-rule-scaffold" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6: Custom Compliance Validator
+        Step 6: Custom Control-Rule Scaffold
       
     </span>
   </a>
@@ -785,10 +807,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-7-export-for-regulatory-reporting" class="md-nav__link">
+  <a href="#step-7-export-an-evaluation-report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 7: Export for Regulatory Reporting
+        Step 7: Export an Evaluation Report
       
     </span>
   </a>
@@ -890,7 +912,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -943,7 +965,7 @@
   <span class="md-ellipsis">
     
   
-    Resources
+    DFAH Package
   
 
     
@@ -956,6 +978,207 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1182,10 +1405,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-6-custom-compliance-validator" class="md-nav__link">
+  <a href="#step-6-custom-control-rule-scaffold" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 6: Custom Compliance Validator
+        Step 6: Custom Control-Rule Scaffold
       
     </span>
   </a>
@@ -1193,10 +1416,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-7-export-for-regulatory-reporting" class="md-nav__link">
+  <a href="#step-7-export-an-evaluation-report" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 7: Export for Regulatory Reporting
+        Step 7: Export an Evaluation Report
       
     </span>
   </a>
@@ -1277,14 +1500,14 @@
 <li>Add custom tasks to <code>run_evaluation.py</code></li>
 <li>Modify existing prompts for your domain</li>
 <li>Integrate the framework into CI/CD pipelines</li>
-<li>Create custom compliance validators</li>
-<li>Export results for regulatory reporting</li>
+<li>Create custom control-rule scaffolds</li>
+<li>Export results for evaluation and review</li>
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Completed <a href="../lab-5/">Lab 5: Cross-Provider Testing</a></li>
 <li>Understanding of JSON structure</li>
-<li>Familiarity with your organization's compliance requirements</li>
+<li>Familiarity with your organization's approved control requirements</li>
 </ul>
 <h2 id="framework-architecture">Framework Architecture<a class="headerlink" href="#framework-architecture" title="Permanent link">&para;</a></h2>
 <p>The framework is designed for extensibility:</p>
@@ -1312,7 +1535,7 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <p>Each task uses:
 - <strong>Task formatting functions</strong> in <code>harness/task_definitions.py</code>
 - <strong>System prompts</strong> built into the formatting functions
-- <strong>temperature</strong>: 0.0 for determinism
+- <strong>temperature</strong>: 0.0 to minimize configured sampling (not a determinism guarantee)
 - <strong>seed</strong>: 42 for reproducibility</p>
 <h2 id="step-2-add-a-custom-task-credit-risk-analysis">Step 2: Add a Custom Task - Credit Risk Analysis<a class="headerlink" href="#step-2-add-a-custom-task-credit-risk-analysis" title="Permanent link">&para;</a></h2>
 <p>Let's add a new task for credit risk assessment:</p>
@@ -1331,7 +1554,7 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;expected_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;compliance_requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="nt">&quot;review_references&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="p">{</span>
 <span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cr2&quot;</span><span class="p">,</span>
@@ -1343,10 +1566,10 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <span class="w">        </span><span class="p">},</span>
 <span class="w">        </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
 <span class="w">        </span><span class="nt">&quot;expected_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;compliance_requirements&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="nt">&quot;review_references&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence. Be consistent: identical inputs must always produce identical outputs for regulatory compliance.&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence. The repeated-run evaluation will measure whether identical inputs produce identical outputs.&quot;</span><span class="p">,</span>
 <span class="w">    </span><span class="nt">&quot;output_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
 <span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
 <span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -1366,12 +1589,14 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Custom credit risk classification task with drift testing.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="c1"># Define custom task configuration inline</span>
 <span class="n">credit_risk_task</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;You are a fair and consistent credit risk analyst. Classify risk as LOW, MEDIUM, or HIGH. Provide a brief explanation in one sentence.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
     <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
 <span class="p">}</span>
@@ -1386,7 +1611,7 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <span class="s2">- Debt-to-Income Ratio: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;debt_to_income&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span>
 <span class="s2">- Employment Years: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;employment_years&#39;</span><span class="p">]</span><span class="si">}</span>
 
-<span class="si">{</span><span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">&#39;prompts&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="si">{</span><span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_runs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -1403,20 +1628,27 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Check consistency</span>
-    <span class="n">unique</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>
-    <span class="n">consistency</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">unique</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">unique</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">100.0</span>
+    <span class="c1"># Calculate modal exact-output agreement.</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="n">unique</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+    <span class="n">modal_count</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">consistency</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Results:&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total runs: </span><span class="si">{</span><span class="n">n_runs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Unique outputs: </span><span class="si">{</span><span class="n">unique</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Consistency: </span><span class="si">{</span><span class="n">consistency</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Status: </span><span class="si">{</span><span class="s1">&#39;✅ Audit-ready&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️ Drift detected&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Status: </span><span class="si">{</span><span class="s1">&#39;✅ Exact replay agreement&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️ Drift detected&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">results</span>
 
-<span class="c1"># Test with the first profile</span>
-<span class="n">profile1</span> <span class="o">=</span> <span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">&#39;prompts&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;profile&#39;</span><span class="p">]</span>
+<span class="c1"># Test with a synthetic profile</span>
+<span class="n">profile1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;credit_score&quot;</span><span class="p">:</span> <span class="mi">680</span><span class="p">,</span>
+    <span class="s2">&quot;income&quot;</span><span class="p">:</span> <span class="mi">75000</span><span class="p">,</span>
+    <span class="s2">&quot;debt_to_income&quot;</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">,</span>
+    <span class="s2">&quot;employment_years&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<span class="p">}</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 Testing Credit Risk Assessment</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">run_credit_risk_assessment</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">n_runs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
@@ -1436,7 +1668,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
   Total runs: 5
   Unique outputs: 1
   Consistency: 100%
-  Status: ✅ Audit-ready
+  Status: ✅ Exact replay agreement
 </code></pre></div>
 <h2 id="step-4-add-domain-specific-documents">Step 4: Add Domain-Specific Documents<a class="headerlink" href="#step-4-add-domain-specific-documents" title="Permanent link">&para;</a></h2>
 <p>To use RAG with your own documents:</p>
@@ -1446,12 +1678,24 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>data/custom_docs
 </code></pre></div>
 <ol>
-<li><strong>Update <code>deterministic_retriever.py</code></strong> to point to your folder:</li>
+<li><strong>Build the retriever from your text files</strong>:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
+
+<span class="n">document_paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/custom_docs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.txt&quot;</span><span class="p">))</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+        <span class="s2">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)},</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">document_paths</span>
+<span class="p">]</span>
 
 <span class="n">retriever</span> <span class="o">=</span> <span class="n">DeterministicRetriever</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/custom_docs/&quot;</span><span class="p">,</span>  <span class="c1"># Your documents here</span>
+    <span class="n">docs</span><span class="o">=</span><span class="n">documents</span><span class="p">,</span>
     <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
@@ -1460,9 +1704,9 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <li><strong>Test retrieval</strong>:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is our company&#39;s annual revenue?&quot;</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">][:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">snippet_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="step-5-cicd-integration">Step 5: CI/CD Integration<a class="headerlink" href="#step-5-cicd-integration" title="Permanent link">&para;</a></h2>
 <p>Integrate drift testing into your CI/CD pipeline:</p>
@@ -1497,47 +1741,66 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="w">          </span><span class="nt">WATSONX_PROJECT_ID</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.WATSONX_PROJECT_ID }}</span>
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">          </span><span class="no">python run_evaluation.py \</span>
-<span class="w">            </span><span class="no">--model ibm/granite-3-8b-instruct \</span>
-<span class="w">            </span><span class="no">--temperature 0.0 \</span>
+<span class="w">            </span><span class="no">--providers watsonx \</span>
+<span class="w">            </span><span class="no">--models ibm/granite-3-8b-instruct \</span>
+<span class="w">            </span><span class="no">--temperatures 0.0 \</span>
 <span class="w">            </span><span class="no">--concurrency 16 \</span>
-<span class="w">            </span><span class="no">--task sql \</span>
-<span class="w">            </span><span class="no">--output traces/ci_test.jsonl</span>
+<span class="w">            </span><span class="no">--tasks sql \</span>
+<span class="w">            </span><span class="no">--repeats 16 \</span>
+<span class="w">            </span><span class="no">--output traces/ci_test</span>
 
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validate consistency</span>
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">python -c &quot;</span>
+<span class="w">          </span><span class="no">python - &lt;&lt;&#39;PY&#39;</span>
+<span class="w">          </span><span class="no">from collections import defaultdict</span>
 <span class="w">          </span><span class="no">import json</span>
-<span class="w">          </span><span class="no">with open(&#39;traces/ci_test.jsonl&#39;) as f:</span>
-<span class="w">              </span><span class="no">data = [json.loads(line) for line in f]</span>
-<span class="w">          </span><span class="no">unique = len(set(d[&#39;response_hash&#39;] for d in data))</span>
-<span class="w">          </span><span class="no">assert unique == 1, f&#39;Drift detected: {unique} unique outputs&#39;</span>
-<span class="w">          </span><span class="no">print(&#39;✅ Consistency check passed&#39;)</span>
-<span class="w">          </span><span class="no">&quot;</span>
+<span class="w">          </span><span class="no">from pathlib import Path</span>
 
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload audit trail</span>
-<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v3</span>
+<span class="w">          </span><span class="no">trace_files = list(Path(&quot;traces/ci_test&quot;).glob(&quot;trace_*.jsonl&quot;))</span>
+<span class="w">          </span><span class="no">assert trace_files, &quot;No trace files were produced&quot;</span>
+
+<span class="w">          </span><span class="no">groups = defaultdict(list)</span>
+<span class="w">          </span><span class="no">for trace_file in trace_files:</span>
+<span class="w">              </span><span class="no">with trace_file.open() as handle:</span>
+<span class="w">                  </span><span class="no">for line in handle:</span>
+<span class="w">                      </span><span class="no">record = json.loads(line)</span>
+<span class="w">                      </span><span class="no">groups[(record[&quot;task&quot;], record[&quot;prompt_id&quot;])].append(</span>
+<span class="w">                          </span><span class="no">record[&quot;output&quot;]</span>
+<span class="w">                      </span><span class="no">)</span>
+
+<span class="w">          </span><span class="no">varied = {</span>
+<span class="w">              </span><span class="no">group: len(set(outputs))</span>
+<span class="w">              </span><span class="no">for group, outputs in groups.items()</span>
+<span class="w">              </span><span class="no">if len(set(outputs)) != 1</span>
+<span class="w">          </span><span class="no">}</span>
+<span class="w">          </span><span class="no">assert not varied, f&quot;Exact-output variation detected: {varied}&quot;</span>
+<span class="w">          </span><span class="no">print(&quot;✅ All captured replay groups had exact output agreement&quot;)</span>
+<span class="w">          </span><span class="no">PY</span>
+
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload replay records</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v4</span>
 <span class="w">        </span><span class="nt">with</span><span class="p">:</span>
 <span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">drift-test-results</span>
-<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traces/ci_test.jsonl</span>
+<span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">traces/ci_test/</span>
 </code></pre></div>
 <p>This pipeline:
 - Runs on every PR and daily
-- Tests for drift with n=16
-- Fails CI if drift detected
-- Uploads audit trails as artifacts</p>
-<h2 id="step-6-custom-compliance-validator">Step 6: Custom Compliance Validator<a class="headerlink" href="#step-6-custom-compliance-validator" title="Permanent link">&para;</a></h2>
-<p>Create a validator for your specific regulations:</p>
-<p><strong>Create <code>custom_compliance_validator.py</code></strong>:</p>
+- Runs 16 repeats for each built-in SQL prompt
+- Applies an intentionally strict exact-output replay assertion
+- Uploads replay records as artifacts</p>
+<h2 id="step-6-custom-control-rule-scaffold">Step 6: Custom Control-Rule Scaffold<a class="headerlink" href="#step-6-custom-control-rule-scaffold" title="Permanent link">&para;</a></h2>
+<p>Create a small rule scaffold for your workflow. The keyword checks below are
+teaching examples only. They are not legal interpretations, fairness tests, or
+evidence of regulatory compliance.</p>
+<p><strong>Create <code>custom_control_validator.py</code></strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Custom compliance validator for specific regulatory frameworks.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Illustrative workflow-rule checks; not a compliance determination.&quot;&quot;&quot;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="k">class</span><span class="w"> </span><span class="nc">CustomComplianceValidator</span><span class="p">:</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomControlValidator</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Validate LLM outputs against custom compliance requirements.</span>
+<span class="sd">    Evaluate illustrative workflow rules against captured outputs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameworks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
@@ -1545,7 +1808,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="sd">        Initialize validator.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            frameworks: List of compliance frameworks (e.g., [&quot;ECOA&quot;, &quot;FCRA&quot;, &quot;GDPR&quot;])</span>
+<span class="sd">            frameworks: Labels used to select example rules for this lab.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span> <span class="o">=</span> <span class="n">frameworks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_rules</span><span class="p">()</span>
@@ -1554,7 +1817,8 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load validation rules for each framework.&quot;&quot;&quot;</span>
         <span class="n">rules</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c1"># ECOA (Equal Credit Opportunity Act)</span>
+        <span class="c1"># Illustrative checks grouped under familiar labels. These simple</span>
+        <span class="c1"># heuristics do not implement or interpret the cited laws.</span>
         <span class="k">if</span> <span class="s2">&quot;ECOA&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
             <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;ecoa_consistency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_consistency</span>
             <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;ecoa_no_discrimination&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_no_discrimination</span>
@@ -1571,21 +1835,21 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
         <span class="k">return</span> <span class="n">rules</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_consistency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;ECOA: Similar applicants must receive similar treatment.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check exact agreement across the supplied examples.&quot;&quot;&quot;</span>
         <span class="n">unique_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">outputs</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">unique_outputs</span> <span class="o">==</span> <span class="mi">1</span>  <span class="c1"># 100% consistency required</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_no_discrimination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;ECOA: No references to protected classes.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flag a small demonstration vocabulary for manual review.&quot;&quot;&quot;</span>
         <span class="n">protected_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;religion&quot;</span><span class="p">,</span> <span class="s2">&quot;nationality&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">term</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">protected_terms</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_explainability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;FCRA/GDPR: Must include explanation.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for an explanation marker in this teaching example.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s2">&quot;explanation&quot;</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;because&quot;</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_data_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;GDPR: Don&#39;t expose unnecessary personal data.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flag a small demonstration vocabulary for manual review.&quot;&quot;&quot;</span>
         <span class="n">pii_indicators</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ssn&quot;</span><span class="p">,</span> <span class="s2">&quot;social security&quot;</span><span class="p">,</span> <span class="s2">&quot;passport&quot;</span><span class="p">,</span> <span class="s2">&quot;driver license&quot;</span><span class="p">]</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">indicator</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">indicator</span> <span class="ow">in</span> <span class="n">pii_indicators</span><span class="p">)</span>
 
@@ -1598,7 +1862,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {</span>
-<span class="sd">                &quot;compliant&quot;: bool,</span>
+<span class="sd">                &quot;all_example_rules_passed&quot;: bool,</span>
 <span class="sd">                &quot;passed_rules&quot;: List[str],</span>
 <span class="sd">                &quot;failed_rules&quot;: List[str],</span>
 <span class="sd">                &quot;details&quot;: Dict[str, bool]</span>
@@ -1616,14 +1880,14 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
         <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;compliant&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;all_example_rules_passed&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
             <span class="s2">&quot;passed_rules&quot;</span><span class="p">:</span> <span class="n">passed</span><span class="p">,</span>
             <span class="s2">&quot;failed_rules&quot;</span><span class="p">:</span> <span class="n">failed</span><span class="p">,</span>
             <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="n">results</span>
         <span class="p">}</span>
 
 <span class="c1"># Example usage</span>
-<span class="n">validator</span> <span class="o">=</span> <span class="n">CustomComplianceValidator</span><span class="p">(</span><span class="n">frameworks</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span> <span class="s2">&quot;FCRA&quot;</span><span class="p">])</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">CustomControlValidator</span><span class="p">(</span><span class="n">frameworks</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span> <span class="s2">&quot;FCRA&quot;</span><span class="p">])</span>
 
 <span class="c1"># Test outputs from credit risk assessment</span>
 <span class="n">test_outputs</span> <span class="o">=</span> <span class="p">[</span>
@@ -1634,9 +1898,12 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">test_outputs</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 Compliance Validation Report&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 Example Control-Rule Report&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Compliant: </span><span class="si">{</span><span class="s1">&#39;✅ YES&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;compliant&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ NO&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;All example rules passed: &quot;</span>
+    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;✅ YES&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;all_example_rules_passed&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ NO&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Passed rules (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;passed_rules&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;passed_rules&#39;</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ✅ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1646,43 +1913,76 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ❌ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>custom_compliance_validator.py
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>custom_control_validator.py
 </code></pre></div>
-<h2 id="step-7-export-for-regulatory-reporting">Step 7: Export for Regulatory Reporting<a class="headerlink" href="#step-7-export-for-regulatory-reporting" title="Permanent link">&para;</a></h2>
-<p>Generate compliance reports from audit trails:</p>
-<p><strong>Create <code>generate_compliance_report.py</code></strong>:</p>
+<h2 id="step-7-export-an-evaluation-report">Step 7: Export an Evaluation Report<a class="headerlink" href="#step-7-export-an-evaluation-report" title="Permanent link">&para;</a></h2>
+<p>Generate a review report from replay records:</p>
+<p><strong>Create <code>generate_evaluation_report.py</code></strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Generate compliance report from audit trails.</span>
+<span class="sd">Generate an evaluation report from replay records.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="n">trace_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;html&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate compliance report from JSONL audit trail.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a descriptive replay report from a JSONL trace.&quot;&quot;&quot;</span>
 
-    <span class="c1"># Load audit trail</span>
+    <span class="c1"># Load replay records</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">trace_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">traces</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
 
     <span class="c1"># Calculate metrics</span>
-    <span class="n">total_runs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
-    <span class="n">unique_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;response_hash&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">))</span>
-    <span class="n">consistency</span> <span class="o">=</span> <span class="p">(</span><span class="n">unique_outputs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">consistency_pct</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">unique_outputs</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="k">if</span> <span class="n">unique_outputs</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">100.0</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">traces</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trace file contains no records&quot;</span><span class="p">)</span>
 
-    <span class="c1"># Compliance metrics</span>
-    <span class="n">schema_violations</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="ow">not</span> <span class="n">t</span><span class="p">[</span><span class="s1">&#39;compliance_metrics&#39;</span><span class="p">][</span><span class="s1">&#39;schema_valid&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">)</span>
-    <span class="n">decision_flips</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;compliance_metrics&#39;</span><span class="p">][</span><span class="s1">&#39;decision_flip&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">)</span>
-    <span class="n">mean_drift</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s1">&#39;compliance_metrics&#39;</span><span class="p">][</span><span class="s1">&#39;factual_drift&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_runs</span>
+    <span class="n">total_runs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
+        <span class="n">groups</span><span class="p">[(</span><span class="n">trace</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">],</span> <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;prompt_id&quot;</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+
+    <span class="n">modal_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">consistency_pct</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="n">total_runs</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">consistency</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
+        <span class="nb">len</span><span class="p">({</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">})</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Descriptive review metrics</span>
+    <span class="n">schema_violations</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="nb">bool</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema_violation&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span> <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span>
+    <span class="p">)</span>
+    <span class="n">decision_flips</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">reference_output</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+        <span class="n">reference_decision</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decision_ok&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+            <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span>
+                    <span class="n">reference_output</span><span class="p">,</span> <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">reference_decision</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="ow">and</span> <span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decision_ok&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">reference_decision</span>
+            <span class="p">):</span>
+                <span class="n">decision_flips</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">mean_drift</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
 
     <span class="c1"># Generate HTML report</span>
     <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
 <span class="s2">    &lt;!DOCTYPE html&gt;</span>
 <span class="s2">    &lt;html&gt;</span>
 <span class="s2">    &lt;head&gt;</span>
-<span class="s2">        &lt;title&gt;LLM Compliance Report&lt;/title&gt;</span>
+<span class="s2">        &lt;title&gt;LLM Replay Evaluation Report&lt;/title&gt;</span>
 <span class="s2">        &lt;style&gt;</span>
 <span class="s2">            body </span><span class="se">{{</span><span class="s2"> font-family: Arial, sans-serif; margin: 40px; </span><span class="se">}}</span>
 <span class="s2">            h1 </span><span class="se">{{</span><span class="s2"> color: #0f62fe; </span><span class="se">}}</span>
@@ -1695,13 +1995,14 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="s2">        &lt;/style&gt;</span>
 <span class="s2">    &lt;/head&gt;</span>
 <span class="s2">    &lt;body&gt;</span>
-<span class="s2">        &lt;h1&gt;LLM Output Drift Compliance Report&lt;/h1&gt;</span>
+<span class="s2">        &lt;h1&gt;LLM Replay Evaluation Report&lt;/h1&gt;</span>
 <span class="s2">        &lt;p&gt;&lt;strong&gt;Generated:&lt;/strong&gt; </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
-<span class="s2">        &lt;p&gt;&lt;strong&gt;Audit Trail:&lt;/strong&gt; </span><span class="si">{</span><span class="n">trace_file</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">        &lt;p&gt;&lt;strong&gt;Replay Record:&lt;/strong&gt; </span><span class="si">{</span><span class="n">trace_file</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
 
 <span class="s2">        &lt;h2&gt;Executive Summary&lt;/h2&gt;</span>
 <span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
-<span class="s2">            &lt;strong&gt;Consistency:&lt;/strong&gt; </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% (</span><span class="si">{</span><span class="n">unique_outputs</span><span class="si">}</span><span class="s2"> unique output</span><span class="si">{</span><span class="s1">&#39;s&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">unique_outputs</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span><span class="s2">)</span>
+<span class="s2">            &lt;strong&gt;Modal exact-output agreement:&lt;/strong&gt; </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%</span>
+<span class="s2">            across </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="si">}</span><span class="s2"> replay group</span><span class="si">{</span><span class="s1">&#39;s&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
 <span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">schema_violations</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
 <span class="s2">            &lt;strong&gt;Schema Violations:&lt;/strong&gt; </span><span class="si">{</span><span class="n">schema_violations</span><span class="si">}</span>
@@ -1713,29 +2014,33 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="s2">            &lt;strong&gt;Mean Drift:&lt;/strong&gt; </span><span class="si">{</span><span class="n">mean_drift</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
 
-<span class="s2">        &lt;h2&gt;Regulatory Compliance Status&lt;/h2&gt;</span>
+<span class="s2">        &lt;h2&gt;Illustrative Review Signals&lt;/h2&gt;</span>
 <span class="s2">        &lt;table&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
-<span class="s2">                &lt;th&gt;Requirement&lt;/th&gt;</span>
+<span class="s2">                &lt;th&gt;Signal&lt;/th&gt;</span>
 <span class="s2">                &lt;th&gt;Status&lt;/th&gt;</span>
 <span class="s2">                &lt;th&gt;Evidence&lt;/th&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
-<span class="s2">                &lt;td&gt;SR 11-7 (Model Validation)&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;Exact output replay&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
-<span class="s2">                &lt;td&gt;Deterministic behavior: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;Observed agreement: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
-<span class="s2">                &lt;td&gt;ECOA (Consistent Decisions)&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;No decision flips in this trace&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">decision_flips</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;Decision flips: </span><span class="si">{</span><span class="n">decision_flips</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
-<span class="s2">                &lt;td&gt;FSB (Output Consistency)&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;Illustrative normalized string-distance review line&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mean_drift</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;Mean drift: </span><span class="si">{</span><span class="n">mean_drift</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">        &lt;/table&gt;</span>
+
+<span class="s2">        &lt;p&gt;&lt;strong&gt;Interpretation:&lt;/strong&gt; These signals summarize the captured</span>
+<span class="s2">        run. They do not determine correctness, safety, fairness, or regulatory</span>
+<span class="s2">        compliance.&lt;/p&gt;</span>
 
 <span class="s2">        &lt;h2&gt;Model Configuration&lt;/h2&gt;</span>
 <span class="s2">        &lt;pre&gt;</span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)[:</span><span class="mi">500</span><span class="p">]</span><span class="si">}</span><span class="s2">...&lt;/pre&gt;</span>
@@ -1744,35 +2049,36 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="s2">    &quot;&quot;&quot;</span>
 
     <span class="c1"># Save report</span>
-    <span class="n">output_file</span> <span class="o">=</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.jsonl&#39;</span><span class="p">,</span> <span class="s1">&#39;_compliance_report.html&#39;</span><span class="p">)</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.jsonl&#39;</span><span class="p">,</span> <span class="s1">&#39;_evaluation_report.html&#39;</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Compliance report generated: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Evaluation report generated: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_file</span>
 
-<span class="c1"># Generate report</span>
-<span class="n">generate_report</span><span class="p">(</span><span class="s2">&quot;traces/lab3_sql.jsonl&quot;</span><span class="p">)</span>
+<span class="c1"># Generate a report from the isolated Lab 3 run</span>
+<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="n">generate_report</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">trace_file</span><span class="p">))</span>
 </code></pre></div>
 <p>Run it:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>generate_compliance_report.py
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>generate_evaluation_report.py
 </code></pre></div>
-<p>Open the HTML report in your browser to see a formatted compliance report.</p>
+<p>Open the HTML report in your browser to see the formatted evaluation summary.</p>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
 <li><strong>Templates are JSON</strong> - Easy to add custom tasks</li>
 <li><strong>Modular design</strong> - Extend components independently</li>
-<li><strong>CI/CD ready</strong> - Integrate into deployment pipelines</li>
-<li><strong>Custom validators</strong> - Implement your regulatory requirements</li>
-<li><strong>Exportable reports</strong> - Generate audit documentation</li>
+<li><strong>CI integration</strong> - Run an explicitly chosen replay assertion in an existing pipeline</li>
+<li><strong>Custom rule scaffolds</strong> - Encode organization-approved review rules</li>
+<li><strong>Exportable reports</strong> - Generate descriptive replay documentation</li>
 </ol>
 <h2 id="best-practices-for-extensions">Best Practices for Extensions<a class="headerlink" href="#best-practices-for-extensions" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Always test with n≥16</strong> to detect drift</li>
-<li><strong>Use T=0.0 and explicit seeds</strong> for determinism</li>
-<li><strong>Document compliance mappings</strong> in audit trails</li>
+<li><strong>Choose replay count from the decision risk and precision needed</strong>; n=16 is the workshop example, not a universal minimum</li>
+<li><strong>Record T=0.0 and explicit seeds when supported</strong>, but do not treat them as determinism guarantees</li>
+<li><strong>Document control references as review metadata</strong>, not automated compliance findings</li>
 <li><strong>Version your prompts</strong> (metadata section)</li>
-<li><strong>Validate cross-provider</strong> before production deployment</li>
+<li><strong>Requalify the intended provider stack</strong> before relying on replay equivalence</li>
 </ol>
 <h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
 <details class="question">
@@ -1781,11 +2087,15 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 </details>
 <details class="question">
 <summary>What's the minimum number of runs recommended for drift testing?</summary>
-<p><strong>Answer</strong>: 16 (n=16), as used in the paper's methodology.</p>
+<p><strong>Answer</strong>: There is no universal minimum. This workshop uses n=16; a real
+workflow should select replay count from risk, expected variation, cost,
+and the precision needed for the decision.</p>
 </details>
 <details class="question">
 <summary>How do you ensure determinism in custom tasks?</summary>
-<p><strong>Answer</strong>: Set <code>temperature: 0.0</code> and <code>seed: 42</code> in the template, and test consistency with multiple runs.</p>
+<p><strong>Answer</strong>: You cannot ensure it from temperature and seed alone. Pin the
+full configuration, capture required channels, and measure repeatability
+across comparable runs.</p>
 </details>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>You've completed all workshop labs! Now you can:</p>

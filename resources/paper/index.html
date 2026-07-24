@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/resources/paper/">
       
       
-        <link rel="prev" href="../../lab-8/">
+        <link rel="prev" href="../../dfah/releasing/">
       
       
         <link rel="next" href="../api/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Research Paper - Output Drift in Financial LLMs Workshop</title>
+        <title>Research Paper - Output Drift + DFAH</title>
       
     
     
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href="../.." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../../images/ibm-blue-background.png" alt="logo">
 
@@ -103,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -232,6 +234,26 @@
   
   
   
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
     
   
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href="../.." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -675,7 +697,208 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DFAH Package
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
   
 
     
@@ -721,10 +944,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -742,8 +965,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -831,10 +1054,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dfah-bench-benchmarking-observable-agent-instability-2026" class="md-nav__link">
+  <a href="#same-decision-different-path-dfah-bench-for-ai-agents-in-finance-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        DFAH-Bench: Benchmarking Observable Agent Instability (2026)
+        Same Decision, Different Path: DFAH-Bench for AI Agents in Finance (2026)
       
     </span>
   </a>
@@ -842,10 +1065,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows" class="md-nav__link">
+  <a href="#earlier-study-llm-output-drift" class="md-nav__link">
     <span class="md-ellipsis">
       
-        LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows
+        Earlier study: LLM Output Drift
       
     </span>
   </a>
@@ -876,10 +1099,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#smaller-models-win-for-determinism" class="md-nav__link">
+  <a href="#a-model-size-pattern-in-the-tested-conditions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Smaller Models Win for Determinism
+        A model-size pattern in the tested conditions
       
     </span>
   </a>
@@ -954,10 +1177,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-3-tier-model-classification" class="md-nav__link">
+  <a href="#1-study-groupings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 3-Tier Model Classification
+        1. Study groupings
       
     </span>
   </a>
@@ -1048,10 +1271,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-bi-temporal-audit-trails" class="md-nav__link">
+  <a href="#3-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Bi-Temporal Audit Trails
+        3. Replay Records
       
     </span>
   </a>
@@ -1278,10 +1501,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#dfah-bench-benchmarking-observable-agent-instability-2026" class="md-nav__link">
+  <a href="#same-decision-different-path-dfah-bench-for-ai-agents-in-finance-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        DFAH-Bench: Benchmarking Observable Agent Instability (2026)
+        Same Decision, Different Path: DFAH-Bench for AI Agents in Finance (2026)
       
     </span>
   </a>
@@ -1289,10 +1512,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows" class="md-nav__link">
+  <a href="#earlier-study-llm-output-drift" class="md-nav__link">
     <span class="md-ellipsis">
       
-        LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows
+        Earlier study: LLM Output Drift
       
     </span>
   </a>
@@ -1323,10 +1546,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#smaller-models-win-for-determinism" class="md-nav__link">
+  <a href="#a-model-size-pattern-in-the-tested-conditions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Smaller Models Win for Determinism
+        A model-size pattern in the tested conditions
       
     </span>
   </a>
@@ -1401,10 +1624,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-3-tier-model-classification" class="md-nav__link">
+  <a href="#1-study-groupings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. 3-Tier Model Classification
+        1. Study groupings
       
     </span>
   </a>
@@ -1495,10 +1718,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-bi-temporal-audit-trails" class="md-nav__link">
+  <a href="#3-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Bi-Temporal Audit Trails
+        3. Replay Records
       
     </span>
   </a>
@@ -1647,8 +1870,8 @@
 </thead>
 <tbody>
 <tr>
-<td>DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making</td>
-<td>arXiv preprint (announcement pending)</td>
+<td><a href="https://arxiv.org/abs/2607.20491">Same Decision, Different Path: DFAH-Bench for AI Agents in Finance</a></td>
+<td><a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a></td>
 <td>2026</td>
 </tr>
 <tr>
@@ -1658,42 +1881,49 @@
 </tr>
 <tr>
 <td><a href="https://arxiv.org/abs/2511.07585">LLM Output Drift</a></td>
-<td><a href="https://ai4f-workshop.github.io/">ACM ICAIF 2025 AI4F Workshop</a></td>
+<td><a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</a></td>
 <td>2025</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="dfah-bench-benchmarking-observable-agent-instability-2026">DFAH-Bench: Benchmarking Observable Agent Instability (2026)<a class="headerlink" href="#dfah-bench-benchmarking-observable-agent-instability-2026" title="Permanent link">&para;</a></h2>
+<h2 id="same-decision-different-path-dfah-bench-for-ai-agents-in-finance-2026">Same Decision, Different Path: DFAH-Bench for AI Agents in Finance (2026)<a class="headerlink" href="#same-decision-different-path-dfah-bench-for-ai-agents-in-finance-2026" title="Permanent link">&para;</a></h2>
+<p><strong>Paper</strong>: <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> |
+<strong>DOI</strong>: <a href="https://doi.org/10.48550/arXiv.2607.20491">10.48550/arXiv.2607.20491</a></p>
 <p>The newest paper in this research line measures <strong>whether agents that agree on
-decisions also agree on how they got there</strong> — across 8,127 replay episodes,
-10 models, and 3 financial tasks, with cryptographically verifiable audit
-bundles.</p>
-<p><strong>Key result</strong>: among 912 case groups where decisions agree (DAR ≥ 0.9),
-<strong>21.8% hide trajectory divergence</strong> (TAR &lt; 0.9) and 19.4% diverge strongly
-(TAR &lt; 0.7). Outcome-only evaluation misses all of it. For trajectory-diverger
-models the rates are striking: 55.6% (Claude Sonnet 4) and 56.6%
-(Gemini 2.5 Pro) of their decision-stable cases vary in tool path.</p>
-<p><strong>Reproduce it yourself</strong> — the full replay corpus is in this repository:</p>
+decisions also agree on the recorded path to those decisions</strong>. The corrected
+primary analysis uses 4,157 episodes from configurations with observed tool
+use across 719 comparable groups, eight configurations, and two synthetic
+financial tasks.</p>
+<p><strong>Key result</strong>: 122 of 627 unanimous-decision groups (19.5%) changed tool
+sequence, and 47 (7.5%) changed the tool-name set. A separate prospective API
+diagnostic found 94.2–95.1% decision agreement but only 66.9–69.4% exact
+name-path agreement. The benchmark measures repeatability and observable
+execution fidelity, not correctness.</p>
+<p>The default command regenerates and verifies the corrected v2 release:</p>
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper
+make<span class="w"> </span>reproduce-paper-v1<span class="w">  </span><span class="c1"># archived lineage only</span>
 </code></pre></div>
 <p>See <a href="../../lab-8/">Lab 8</a> for the guided walkthrough and the
 <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms#dfah-bench-results-new-paper">README results table</a>
-for the headline numbers per model.</p>
+for the package and corrected-analysis walkthrough.</p>
 <hr />
-<h2 id="llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows">LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows<a class="headerlink" href="#llm-output-drift-cross-provider-validation-mitigation-for-financial-workflows" title="Permanent link">&para;</a></h2>
+<h2 id="earlier-study-llm-output-drift">Earlier study: LLM Output Drift<a class="headerlink" href="#earlier-study-llm-output-drift" title="Permanent link">&para;</a></h2>
 <p>This page summarizes the key findings from our research papers on output drift and agent determinism in large language models used for financial applications.</p>
 <hr />
 <h2 id="the-core-problem">The Core Problem<a class="headerlink" href="#the-core-problem" title="Permanent link">&para;</a></h2>
-<p>Large Language Models (LLMs) exhibit <strong>output drift</strong>: non-deterministic behavior where the same prompt produces different outputs across multiple runs, even at temperature=0.0. For financial institutions subject to regulations like SR 11-7 (Model Risk Management), ECOA, and GDPR, this creates significant compliance risks.</p>
+<p>Large Language Models (LLMs) can exhibit <strong>output drift</strong>: the same prompt can
+produce different outputs across repeated runs, even at temperature=0.0. In
+regulated workflows, that variation creates additional validation,
+documentation, and monitoring work.</p>
 <p><strong>The Question</strong>: Can smaller models be more reliable than larger ones for deterministic, compliance-critical tasks?</p>
 <hr />
 <h2 id="the-counterintuitive-finding">The Counterintuitive Finding<a class="headerlink" href="#the-counterintuitive-finding" title="Permanent link">&para;</a></h2>
-<h3 id="smaller-models-win-for-determinism">Smaller Models Win for Determinism<a class="headerlink" href="#smaller-models-win-for-determinism" title="Permanent link">&para;</a></h3>
+<h3 id="a-model-size-pattern-in-the-tested-conditions">A model-size pattern in the tested conditions<a class="headerlink" href="#a-model-size-pattern-in-the-tested-conditions" title="Permanent link">&para;</a></h3>
 <p>Our research reveals a <strong>counterintuitive result</strong>:</p>
 <ul>
-<li><strong>7-20B parameter models</strong>: Achieve <strong>100% output consistency</strong> at temperature=0.0</li>
-<li><strong>120B parameter models</strong>: Only <strong>12.5% consistency [95% CI: 3.5–36.0%]</strong> under identical conditions</li>
+<li><strong>7-20B tested configurations</strong>: up to <strong>100% observed output consistency</strong> at temperature=0.0</li>
+<li><strong>The tested 120B configuration</strong>: <strong>12.5% observed consistency [95% CI: 3.5–36.0%]</strong></li>
 </ul>
 <p>This challenges the conventional wisdom that "bigger is always better" in AI systems.</p>
 <div class="admonition info">
@@ -1706,7 +1936,8 @@ for the headline numbers per model.</p>
 <p>All Tier 1 vs Tier 3 comparisons showed 𝑝 &lt; 0.0001, indicating the performance differences are highly statistically significant.</p>
 </div>
 <h3 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h3>
-<p>For regulated financial applications requiring <strong>reproducible audit trails</strong>, smaller models are not just adequate—they are <strong>superior</strong> to larger models when deterministic behavior is required.</p>
+<p>The result motivates measuring the exact deployed model, task, provider path,
+and harness rather than inferring repeatability from parameter count.</p>
 <hr />
 <h2 id="methodology">Methodology<a class="headerlink" href="#methodology" title="Permanent link">&para;</a></h2>
 <h3 id="experimental-design">Experimental Design<a class="headerlink" href="#experimental-design" title="Permanent link">&para;</a></h3>
@@ -1737,42 +1968,42 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 </code></pre></div>
 <hr />
 <h2 id="key-findings">Key Findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h2>
-<h3 id="1-3-tier-model-classification">1. 3-Tier Model Classification<a class="headerlink" href="#1-3-tier-model-classification" title="Permanent link">&para;</a></h3>
+<h3 id="1-study-groupings">1. Study groupings<a class="headerlink" href="#1-study-groupings" title="Permanent link">&para;</a></h3>
 <p>Based on output consistency at temperature=0.0:</p>
 <table>
 <thead>
 <tr>
-<th>Tier</th>
-<th>Models</th>
-<th>Consistency</th>
-<th>Compliance Status</th>
+<th>Study label</th>
+<th>Tested configurations</th>
+<th>Observed consistency</th>
+<th>Interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Tier 1</strong></td>
+<td><strong>Group 1</strong></td>
 <td>7-20B (Qwen2.5-7B, Granite-3-8B, GPT-OSS-20B)</td>
-<td><strong>100%</strong></td>
-<td>✅ Audit-ready</td>
+<td>up to <strong>100%</strong></td>
+<td>High repeatability in the tested condition</td>
 </tr>
 <tr>
-<td><strong>Tier 2</strong></td>
+<td><strong>Group 2</strong></td>
 <td>40-70B (Llama-3.3-70B, Mistral-Medium)</td>
 <td>56-100%</td>
-<td>⚠️ Task-specific</td>
+<td>Task-dependent in this sample</td>
 </tr>
 <tr>
-<td><strong>Tier 3</strong></td>
+<td><strong>Group 3</strong></td>
 <td>120B+ (GPT-OSS-120B)</td>
 <td><strong>12.5%</strong></td>
-<td>❌ Non-compliant</td>
+<td>Low repeatability in this condition</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Interpretation</strong>:
-- <strong>Tier 1</strong>: Can be deployed in regulated environments requiring deterministic behavior
-- <strong>Tier 2</strong>: Requires careful task-specific validation
-- <strong>Tier 3</strong>: Unsuitable for compliance-critical applications despite superior general capabilities</p>
+- These are bounded observations, not deployment or compliance ratings.
+- Validate the exact model, provider, task, prompt, and harness configuration.
+- Repeatability and correctness need separate measurements.</p>
 <h3 id="2-task-specific-results-temperature00">2. Task-Specific Results (Temperature=0.0)<a class="headerlink" href="#2-task-specific-results-temperature00" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
@@ -1804,7 +2035,8 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 </tr>
 </tbody>
 </table>
-<p><strong>Key Insight</strong>: Even for less structured tasks (RAG), Tier 1 models maintain &gt;90% consistency.</p>
+<p><strong>Key Insight</strong>: The tested less-structured RAG task retained more than 90%
+consistency for the highest-repeatability study group.</p>
 <h3 id="3-temperature-sensitivity">3. Temperature Sensitivity<a class="headerlink" href="#3-temperature-sensitivity" title="Permanent link">&para;</a></h3>
 <p>RAG task consistency as temperature increases:</p>
 <table>
@@ -1837,7 +2069,8 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 </tr>
 </tbody>
 </table>
-<p><strong>Takeaway</strong>: Even small temperature increases (0.0 → 0.2) cause significant drift. For compliance, <strong>T=0.0 is mandatory</strong>.</p>
+<p><strong>Takeaway</strong>: In this experiment, moving from 0.0 to 0.2 increased drift.
+Record the setting and test it, but do not treat temperature 0 as a guarantee.</p>
 <h3 id="4-cross-provider-validation">4. Cross-Provider Validation<a class="headerlink" href="#4-cross-provider-validation" title="Permanent link">&para;</a></h3>
 <p>Testing Tier 1 model consistency across providers:</p>
 <table>
@@ -1870,9 +2103,10 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 </tr>
 </tbody>
 </table>
-<p><strong>Finding</strong>: Tier 1 models enable <strong>seamless migration</strong> between local (Ollama) and cloud (watsonx.ai) deployments without behavioral changes.</p>
+<p><strong>Finding</strong>: Some tested local/cloud pairs had high agreement. A migration
+still requires validation of the actual serving stack and workload.</p>
 <h3 id="5-regulatory-alignment">5. Regulatory Alignment<a class="headerlink" href="#5-regulatory-alignment" title="Permanent link">&para;</a></h3>
-<p>Our framework addresses specific regulatory requirements:</p>
+<p>The framework can contribute evidence to broader governance processes:</p>
 <table>
 <thead>
 <tr>
@@ -1885,35 +2119,26 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <tr>
 <td><strong>SR 11-7</strong></td>
 <td>Model validation &amp; ongoing monitoring</td>
-<td>Bi-temporal audit trails</td>
+<td>Versioned replay records</td>
 </tr>
 <tr>
-<td><strong>ECOA</strong></td>
-<td>Consistent credit decisions</td>
-<td>100% SQL consistency (Tier 1)</td>
-</tr>
-<tr>
-<td><strong>FCRA</strong></td>
-<td>Reproducible adverse action rationales</td>
-<td>Deterministic RAG retrieval</td>
+<td><strong>ECOA / FCRA</strong></td>
+<td>Decision documentation</td>
+<td>Reconstructable run artifacts</td>
 </tr>
 <tr>
 <td><strong>GDPR Art. 22</strong></td>
-<td>Explainable automated decisions</td>
-<td>Citation validation</td>
+<td>Review of automated decisions</td>
+<td>Decision and tool-path capture</td>
 </tr>
 <tr>
 <td><strong>FSB</strong></td>
 <td>Third-party model risk</td>
-<td>Cross-provider validation</td>
-</tr>
-<tr>
-<td><strong>CFTC 23.402</strong></td>
-<td>Predictive model documentation</td>
-<td>JSONL audit format</td>
+<td>Configuration-specific comparison</td>
 </tr>
 </tbody>
 </table>
+<p>These mappings are design aids, not a certification of regulatory compliance.</p>
 <hr />
 <h2 id="technical-innovations">Technical Innovations<a class="headerlink" href="#technical-innovations" title="Permanent link">&para;</a></h2>
 <h3 id="1-deterministicretriever">1. DeterministicRetriever<a class="headerlink" href="#1-deterministicretriever" title="Permanent link">&para;</a></h3>
@@ -1927,25 +2152,28 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <p>Validates consistency across deployment environments:</p>
 <ul>
 <li><strong>Problem</strong>: Models behave differently on different infrastructure</li>
-<li><strong>Solution</strong>: Automated comparison with finance-calibrated tolerance (±5% GAAP)</li>
-<li><strong>Benefit</strong>: Certify migration safety before production deployment</li>
+<li><strong>Workshop implementation</strong>: Automated comparison with a configurable numeric
+  tolerance (±5% in the example; not a universal GAAP threshold)</li>
+<li><strong>Benefit</strong>: Measure behavior before and after a deployment change</li>
 </ul>
-<h3 id="3-bi-temporal-audit-trails">3. Bi-Temporal Audit Trails<a class="headerlink" href="#3-bi-temporal-audit-trails" title="Permanent link">&para;</a></h3>
+<h3 id="3-replay-records">3. Replay Records<a class="headerlink" href="#3-replay-records" title="Permanent link">&para;</a></h3>
 <p>JSONL format capturing:</p>
 <ul>
 <li>Input prompt + response hashes (SHA-256)</li>
 <li>Model parameters (temperature, seed, version)</li>
-<li>Compliance metrics (schema validity, citation accuracy)</li>
-<li>Regulatory mappings (SR 11-7, ECOA, FCRA)</li>
+<li>Descriptive checks (schema validity, source-reference matching)</li>
+<li>Workshop metadata for later governance review</li>
 </ul>
+<p>The example contains a single event timestamp. It does not implement
+bi-temporal data modeling or determine compliance with a named rule.</p>
 <hr />
 <h2 id="practical-implications">Practical Implications<a class="headerlink" href="#practical-implications" title="Permanent link">&para;</a></h2>
 <h3 id="for-financial-institutions">For Financial Institutions<a class="headerlink" href="#for-financial-institutions" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Vendor Selection</strong>: Prioritize Tier 1 models (7-20B) for compliance-critical tasks</li>
-<li><strong>Temperature Policy</strong>: Mandate T=0.0 for all regulated applications</li>
-<li><strong>Model Validation</strong>: Use cross-provider validation before production deployment</li>
-<li><strong>Audit Trail</strong>: Implement bi-temporal logging per CFTC 23.402 requirements</li>
+<li><strong>Vendor Selection</strong>: Measure the workload, not parameter count alone</li>
+<li><strong>Decoding Policy</strong>: Pin and record decoding settings</li>
+<li><strong>Model Validation</strong>: Compare the exact provider stacks before a change</li>
+<li><strong>Run Records</strong>: Retain inputs, outputs, versions, and observable tool paths</li>
 </ol>
 <h3 id="for-model-developers">For Model Developers<a class="headerlink" href="#for-model-developers" title="Permanent link">&para;</a></h3>
 <ol>
@@ -1955,7 +2183,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 </ol>
 <h3 id="for-regulators">For Regulators<a class="headerlink" href="#for-regulators" title="Permanent link">&para;</a></h3>
 <ol>
-<li><strong>Standards</strong>: Define acceptable consistency thresholds (our research suggests 100% for Tier 1 tasks)</li>
+<li><strong>Standards</strong>: Define risk-based repeatability and review thresholds</li>
 <li><strong>Validation</strong>: Require cross-provider equivalence testing</li>
 <li><strong>Monitoring</strong>: Mandate ongoing drift detection in production</li>
 </ol>
@@ -1978,7 +2206,19 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <hr />
 <h2 id="citation">Citation<a class="headerlink" href="#citation" title="Permanent link">&para;</a></h2>
 <p>If you use this framework or findings in your research, please cite:</p>
-<div class="highlight"><pre><span></span><code><span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">khatchadourian2026replayable</span><span class="p">,</span>
+<div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">khatchadourian2026dfahbench</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Same Decision, Different Path: DFAH-Bench for AI Agents in Finance}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2607.20491}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2026}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">eprint</span><span class="p">=</span><span class="s">{2607.20491}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">archivePrefix</span><span class="p">=</span><span class="s">{arXiv}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">primaryClass</span><span class="p">=</span><span class="s">{cs.AI}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">doi</span><span class="p">=</span><span class="s">{10.48550/arXiv.2607.20491}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">url</span><span class="p">=</span><span class="s">{https://arxiv.org/abs/2607.20491}</span>
+<span class="p">}</span>
+
+<span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">khatchadourian2026replayable</span><span class="p">,</span>
 <span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">booktitle</span><span class="p">=</span><span class="s">{The 2nd ICLR Workshop on Advances in Financial AI (FinAI)}</span><span class="p">,</span>
@@ -1989,12 +2229,13 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">khatchadourian2025output</span><span class="p">,</span>
 <span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{LLM Output Drift: Cross-Provider Validation \&amp; Mitigation for Financial Workflows}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi and Franco, Rolando}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">booktitle</span><span class="p">=</span><span class="s">{ACM International Conference on AI in Finance (ICAIF), AI4F Workshop}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">booktitle</span><span class="p">=</span><span class="s">{AI4F Workshop}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2025}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">url</span><span class="p">=</span><span class="s">{https://arxiv.org/abs/2511.07585}</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Replayable Agents</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a> | <strong>DOI</strong>: <a href="https://doi.org/10.48550/arXiv.2601.15322">10.48550/arXiv.2601.15322</a>
+<p><strong>DFAH-Bench</strong>: <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> | <strong>DOI</strong>: <a href="https://doi.org/10.48550/arXiv.2607.20491">10.48550/arXiv.2607.20491</a>
+<strong>Replayable Agents</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a> | <strong>DOI</strong>: <a href="https://doi.org/10.48550/arXiv.2601.15322">10.48550/arXiv.2601.15322</a>
 <strong>Output Drift</strong>: <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a> | <strong>DOI</strong>: <a href="https://doi.org/10.48550/arXiv.2511.07585">10.48550/arXiv.2511.07585</a></p>
 <hr />
 <h2 id="related-resources">Related Resources<a class="headerlink" href="#related-resources" title="Permanent link">&para;</a></h2>
@@ -2007,11 +2248,11 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <hr />
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Size isn't everything</strong>: 7-20B models outperform 120B models for deterministic tasks</li>
-<li><strong>Temperature=0.0 is mandatory</strong>: Even T=0.2 causes significant drift</li>
-<li><strong>Tier 1 models are audit-ready</strong>: 100% consistency enables regulatory compliance</li>
-<li><strong>Cross-provider validation works</strong>: Seamless migration between Ollama and watsonx.ai</li>
-<li><strong>Framework is open source</strong>: MIT-licensed, production-ready, extensible</li>
+<li><strong>Size is not a repeatability guarantee</strong>: test the exact configuration</li>
+<li><strong>Temperature 0 is not a determinism guarantee</strong>: pin and measure settings</li>
+<li><strong>Repeatability is not correctness or compliance</strong></li>
+<li><strong>Provider changes need replay validation</strong></li>
+<li><strong>The framework is open source and extensible</strong></li>
 </ol>
 <hr />
 <p><strong>Questions?</strong> See <a href="../troubleshooting/">Troubleshooting Guide</a> or open an issue on <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/issues">GitHub</a>.</p>
@@ -2046,7 +2287,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../lab-8/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 8. DFAH-Bench — Replay Determinism &amp; Audit Bundles">
+          <a href="../../dfah/releasing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release Process">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2056,7 +2297,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
                 Previous
               </span>
               <div class="md-ellipsis">
-                Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+                Release Process
               </div>
             </div>
           </a>

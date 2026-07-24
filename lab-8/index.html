@@ -16,7 +16,7 @@
         <link rel="prev" href="../lab-7/">
       
       
-        <link rel="next" href="../resources/paper/">
+        <link rel="next" href="../dfah/quickstart/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 8. DFAH-Bench — Replay Measurement - Output Drift + DFAH</title>
       
     
     
@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -76,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-8-dfah-bench-replay-determinism-audit-bundles" class="md-skip">
+        <a href="#lab-8-dfah-bench-replay-measurement" class="md-skip">
           Skip to content
         </a>
       
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
@@ -103,13 +105,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+              Lab 8. DFAH-Bench — Replay Measurement
             
           </span>
         </div>
@@ -238,6 +240,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../resources/paper/" class="md-tabs__link">
           
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -687,7 +709,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -705,7 +727,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -745,7 +767,7 @@
   <a href="#learning-objectives" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Learning Objectives
+        Learning objectives
       
     </span>
   </a>
@@ -753,49 +775,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
+  <a href="#the-measures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Metrics
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-the-gap-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why the gap matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Run the test suite
+        The measures
       
     </span>
   </a>
@@ -803,10 +786,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
+  <a href="#track-a-qualify-the-packaged-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Reproduce the paper
+        Track A: qualify the packaged integration
       
     </span>
   </a>
@@ -814,32 +797,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
+  <a href="#track-b-inspect-the-public-research-lineage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Read the kill criterion
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Extend to a new domain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Verify an audit bundle
+        Track B: inspect the public research lineage
       
     </span>
   </a>
@@ -858,21 +819,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bonus-the-live-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bonus: the Live Explorer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Further Reading
+        Further reading
       
     </span>
   </a>
@@ -927,7 +877,7 @@
   <span class="md-ellipsis">
     
   
-    Resources
+    DFAH Package
   
 
     
@@ -940,6 +890,207 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1081,7 +1232,7 @@
   <a href="#learning-objectives" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Learning Objectives
+        Learning objectives
       
     </span>
   </a>
@@ -1089,49 +1240,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
+  <a href="#the-measures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#the-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The Metrics
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#why-the-gap-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why the gap matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-run-the-test-suite" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Run the test suite
+        The measures
       
     </span>
   </a>
@@ -1139,10 +1251,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-2-reproduce-the-paper" class="md-nav__link">
+  <a href="#track-a-qualify-the-packaged-integration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 2: Reproduce the paper
+        Track A: qualify the packaged integration
       
     </span>
   </a>
@@ -1150,32 +1262,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-3-read-the-kill-criterion" class="md-nav__link">
+  <a href="#track-b-inspect-the-public-research-lineage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 3: Read the kill criterion
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-extend-to-a-new-domain" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Extend to a new domain
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-verify-an-audit-bundle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Verify an audit bundle
+        Track B: inspect the public research lineage
       
     </span>
   </a>
@@ -1194,21 +1284,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#bonus-the-live-explorer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bonus: the Live Explorer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Further Reading
+        Further reading
       
     </span>
   </a>
@@ -1235,127 +1314,118 @@
   
 
 
-<h1 id="lab-8-dfah-bench-replay-determinism-audit-bundles">Lab 8: DFAH-Bench — Replay Determinism &amp; Audit Bundles<a class="headerlink" href="#lab-8-dfah-bench-replay-determinism-audit-bundles" title="Permanent link">&para;</a></h1>
+<h1 id="lab-8-dfah-bench-replay-measurement">Lab 8: DFAH-Bench — Replay Measurement<a class="headerlink" href="#lab-8-dfah-bench-replay-measurement" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This lab introduces <strong>DFAH-Bench</strong>, the replay benchmark behind our newest
-paper, <em>DFAH-Bench: Benchmarking Observable Agent Instability in Financial
-Decision-Making</em> (arXiv preprint). It is the deepest layer of the framework:
-where Lab 7 measured whether an agent is deterministic, DFAH-Bench measures
-<strong>how</strong> it diverges — by decision, trajectory, or evidence — and packages the
-proof in verifiable audit bundles.</p>
-<p><strong>The headline finding</strong>: outcome-only evaluation reports stable agents whose
-reasoning is not stable. Across 8,127 replay episodes, <strong>21.8% of
-decision-stable case groups hide trajectory divergence</strong> that final-answer
-metrics cannot see.</p>
-<p><strong>Duration</strong>: ~25 minutes. <strong>No LLM, no API keys, no network needed</strong> — the
-full 8,129-episode replay corpus is checked into this repository, and every
-number in the paper regenerates from it on your laptop.</p>
-<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
-<p>By the end of this lab, you will:</p>
+<p>This lab introduces <strong>DFAH-Bench</strong>, the replay benchmark behind
+<em>Same Decision, Different Path: DFAH-Bench for AI Agents in Finance</em>
+(<a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a>).
+It asks a practical question: when repeated agent runs reach the same decision,
+did they also follow the same recorded tool path?</p>
+<p>The corrected primary analysis contains <strong>4,157 episodes from configurations
+with observed tool use across 719 comparable groups</strong>, eight configurations,
+and two synthetic financial tasks. Among 627 unanimous-decision groups, 122
+(19.5%) changed tool sequence and 47 (7.5%) changed the tool-name set. These
+are replay and observability results, not claims about correctness or safety.</p>
+<p><strong>Duration</strong>: about 30 minutes. The package track is local and makes no provider
+calls.</p>
+<h2 id="learning-objectives">Learning objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
+<p>By the end of this lab, you will be able to:</p>
 <ul>
-<li>Distinguish the three observable divergence channels: decision, trajectory, evidence</li>
-<li>Regenerate every number in the DFAH-Bench paper with one command</li>
-<li>Read a channel-availability matrix and know why it must accompany results</li>
-<li>Extend the benchmark to a brand-new domain with zero metric-code changes</li>
+<li>distinguish decision agreement from recorded path agreement;</li>
+<li>explain why missing required channels make a replay group ineligible;</li>
+<li>qualify an adapter before spending money on a larger replay;</li>
+<li>run, analyze, and inspect a versioned replay group; and</li>
+<li>separate bounded repeatability evidence from model accuracy.</li>
 </ul>
-<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
-<h3 id="the-metrics">The Metrics<a class="headerlink" href="#the-metrics" title="Permanent link">&para;</a></h3>
+<h2 id="the-measures">The measures<a class="headerlink" href="#the-measures" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Definition</th>
-<th>Failure mode it exposes</th>
+<th>Measure</th>
+<th>Question</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>DAR</strong></td>
-<td>Decision Agreement Rate — fraction of N replays agreeing with the modal decision</td>
-<td>Outcome instability</td>
+<td>What fraction of replays match the modal decision?</td>
 </tr>
 <tr>
-<td><strong>TAR</strong></td>
-<td>Trajectory Agreement Rate — fraction matching the modal tool-call sequence exactly</td>
-<td>Process instability</td>
+<td><strong>TARseq</strong></td>
+<td>What fraction match the modal ordered tool-name path?</td>
+</tr>
+<tr>
+<td><strong>TARstrong</strong></td>
+<td>What fraction match ordered names, canonical arguments, and result identities?</td>
 </tr>
 <tr>
 <td><strong>DAR − TAR gap</strong></td>
-<td>The central diagnostic</td>
-<td>"Same conclusion, different path"</td>
-</tr>
-<tr>
-<td><strong>ECD</strong></td>
-<td>Evidence-Contact Divergence — mean pairwise Jaccard distance over evidence sets</td>
-<td>"Same conclusion, different evidence"</td>
-</tr>
-<tr>
-<td><strong>DCB</strong></td>
-<td>Decision Concentration Bias — 1 − H(p)/log K</td>
-<td>Pattern matching (always picking the same label)</td>
+<td>How much more stable is the decision than the recorded path?</td>
 </tr>
 </tbody>
 </table>
-<h3 id="why-the-gap-matters">Why the gap matters<a class="headerlink" href="#why-the-gap-matters" title="Permanent link">&para;</a></h3>
-<p>A model can score DAR = 0.947 (outcomes look rock-solid) while TAR = 0.767 —
-meaning nearly a quarter of its replays took a <em>different tool path</em> to that
-same answer. In a demo that's invisible. In an audit, the path is the product.</p>
-<h2 id="step-1-run-the-test-suite">Step 1: Run the test suite<a class="headerlink" href="#step-1-run-the-test-suite" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>test-bench
-<span class="c1"># 143 tests: metric math, schema round-trips, hash-chain tamper vectors,</span>
-<span class="c1"># Ed25519 certificates, pipeline conventions — all offline</span>
+<p>All measures use the same eligible replay denominator. An observed empty path
+is data. A missing or malformed required channel is not: the group fails
+closed and is excluded from agreement estimates.</p>
+<h2 id="track-a-qualify-the-packaged-integration">Track A: qualify the packaged integration<a class="headerlink" href="#track-a-qualify-the-packaged-integration" title="Permanent link">&para;</a></h2>
+<p>From the repository root, create a clean Python 3.10+ environment:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-dfah
+<span class="nb">source</span><span class="w"> </span>.venv-dfah/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
 </code></pre></div>
-<h2 id="step-2-reproduce-the-paper">Step 2: Reproduce the paper<a class="headerlink" href="#step-2-reproduce-the-paper" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper-fast<span class="w">    </span><span class="c1"># ~2 min: skips the B=10,000 bootstrap</span>
-make<span class="w"> </span>reproduce-paper<span class="w">         </span><span class="c1"># full verification incl. bootstrap CIs</span>
+<p>Run the no-network conformance check:</p>
+<div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>check-agent<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
-<p>Watch for the five stages: episode accounting (8,129 raw → 8,127 analyzed),
-pipeline regeneration, reference diff, paper-claim assertions, and the
-C(8,3)=56 subsampling robustness check. Every <code>PASS</code> line is a paper number
-regenerating from raw logs. The command <strong>fails loudly</strong> if anything drifts.</p>
-<h2 id="step-3-read-the-kill-criterion">Step 3: Read the kill criterion<a class="headerlink" href="#step-3-read-the-kill-criterion" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>results/dfah_kill_criterion.csv
-cat<span class="w"> </span>results/dfah_kill_criterion_by_model.csv
+<p>The report checks parse provenance, request/manifest echoing, deterministic
+tool outputs, replay-visible ambient-state leakage, resumability, and channel
+eligibility.</p>
+<p>Now capture three replays and inspect them:</p>
+<div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--replays<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/runs/lab-8
+
+dfah<span class="w"> </span>analyze<span class="w"> </span>.dfah/runs/lab-8<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--report<span class="w"> </span>.dfah/runs/lab-8/report.html
+
+dfah<span class="w"> </span>inspect<span class="w"> </span>.dfah/runs/lab-8<span class="w"> </span>--case<span class="w"> </span>CASE-001
 </code></pre></div>
-<p>Among 912 case groups with high decision agreement (DAR ≥ 0.9): 21.8% show
-trajectory divergence (TAR &lt; 0.9), 19.4% show strong divergence (TAR &lt; 0.7).
-Per model: 55.6% of Claude Sonnet's and 56.6% of Gemini 2.5 Pro's eligible
-cases diverge. These are the numbers in §4.4 of the paper — now on your screen.</p>
-<h2 id="step-4-extend-to-a-new-domain">Step 4: Extend to a new domain<a class="headerlink" href="#step-4-extend-to-a-new-domain" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/domain_extension_medical.py
+<p>The toy agent should show perfect observed agreement because its policy and
+tool are deliberately fixed. That confirms the integration contract. It does
+not establish real-world model quality or general determinism.</p>
+<h2 id="track-b-inspect-the-public-research-lineage">Track B: inspect the public research lineage<a class="headerlink" href="#track-b-inspect-the-public-research-lineage" title="Permanent link">&para;</a></h2>
+<p>Use a separate environment for the frozen research pipeline:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-research
+<span class="nb">source</span><span class="w"> </span>.venv-research/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+make<span class="w"> </span>test-bench
+make<span class="w"> </span>reproduce-paper
 </code></pre></div>
-<p>This registers a <strong>medical triage</strong> ontology (escalate / treat / refer) with
-two mock tools and computes every DFAH metric with the unmodified <code>bench/</code>
-library. CASE-B in the output is the paper's central failure mode reproduced
-in a domain the benchmark has never seen: DAR = 1.000, TAR = 0.333.</p>
-<p>To add your own domain: define a <code>DecisionOntology</code> + <code>TaskSpec</code>, call
-<code>register_task(spec)</code>, and feed it replay episodes. No metric code changes.</p>
-<h2 id="step-5-verify-an-audit-bundle">Step 5: Verify an audit bundle<a class="headerlink" href="#step-5-verify-an-audit-bundle" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>bench.provenance.verify<span class="w"> </span>--help
-</code></pre></div>
-<p>Audit bundles are SHA-256 hash-chained and Ed25519-signed (the provenance
-layer depends only on the standard library + <code>cryptography</code>). The test suite
-includes six tamper vectors — payload modification, deletion, reordering,
-backward timestamps, genesis tampering, duplicate sequence numbers — all
-detected.</p>
+<p>The default target regenerates and verifies corrected v2. The raw ledger
+contains 8,129 records; its legacy analysis retained 8,127. The corrected
+analysis narrows that lineage to 5,501 retained-task episodes and then to
+4,157 episodes from configurations with observed tool use. Use
+<code>make reproduce-paper-v1</code> only for the archived lineage.</p>
+<p>Do not compare the package smoke test, historical study, prospective API
+diagnostic, and local systems check as one model leaderboard. They use
+different tasks, replay counts, and capture contracts.</p>
 <h2 id="what-to-take-away">What to take away<a class="headerlink" href="#what-to-take-away" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Decision stability ≠ trajectory stability.</strong> Measure both, per channel.</li>
-<li><strong>Channel availability is part of the result.</strong> Metrics only run on
-   channels actually present — and the matrix saying which is published
-   alongside every table.</li>
-<li><strong>Reproducibility is a command, not a promise.</strong> If <code>make reproduce-paper</code>
-   passes, the paper's numbers are your numbers.</li>
+<li>A stable decision can conceal a changing recorded path.</li>
+<li>Eligibility is part of the estimand; missingness is not agreement.</li>
+<li>Argument-aware capture can reveal scope changes that name-only paths miss.</li>
+<li>Replay results describe the tested contract. Accuracy and materiality
+   require separate evidence.</li>
 </ol>
-<h2 id="bonus-the-live-explorer">Bonus: the Live Explorer<a class="headerlink" href="#bonus-the-live-explorer" title="Permanent link">&para;</a></h2>
-<p>Prefer to see it before you clone it? The <strong><a href="../explorer/">interactive explorer</a></strong> renders the
-DAR-TAR scatter and kill criterion from these same results, lets you feel the gap with a seeded replay
-simulator, and can even drive your local Ollama model through the compliance case live in the browser.</p>
-<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md"><code>REPRODUCIBILITY.md</code></a> — exact environment, commands, disclosed caveats</li>
-<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/DFAH.md"><code>DFAH.md</code></a> — harness documentation</li>
-<li><a href="../resources/paper/">Research Papers</a> — all three papers in this research line</li>
+<li><a href="../explorer/">Interactive explorer</a></li>
+<li><a href="../resources/paper/">Research papers</a></li>
+<li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md">Reproducibility notes</a></li>
 </ul>
 
 
@@ -1405,13 +1475,13 @@ simulator, and can even drive your local Ollama model through the compliance cas
         
         
           
-          <a href="../resources/paper/" class="md-footer__link md-footer__link--next" aria-label="Next: Research Paper">
+          <a href="../dfah/quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Quickstart">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Research Paper
+                Quickstart
               </div>
             </div>
             <div class="md-footer__button md-icon">

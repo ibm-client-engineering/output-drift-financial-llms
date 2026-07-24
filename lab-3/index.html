@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 3. Running Your First Experiment - Output Drift in Financial LLMs Workshop</title>
+        <title>Lab 3. Running Your First Experiment - Output Drift + DFAH</title>
       
     
     
@@ -52,6 +52,8 @@
         <style>:root{--md-text-font:"IBM Plex Sans";--md-code-font:"IBM Plex Mono"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -90,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-header__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
@@ -103,7 +105,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Output Drift in Financial LLMs Workshop
+            Output Drift + DFAH
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -238,6 +240,26 @@
     
     
       <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
+          
+  
+  
+  DFAH Package
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
         <a href="../resources/paper/" class="md-tabs__link">
           
   
@@ -272,12 +294,12 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Output Drift in Financial LLMs Workshop" class="md-nav__button md-logo" aria-label="Output Drift in Financial LLMs Workshop" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   <img src="../images/ibm-blue-background.png" alt="logo">
 
     </a>
-    Output Drift in Financial LLMs Workshop
+    Output Drift + DFAH
   </label>
   
     <div class="md-nav__source">
@@ -724,10 +746,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mean-drift-metric" class="md-nav__link">
+  <a href="#mean-string-distance-metric" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mean Drift Metric
+        Mean String-Distance Metric
       
     </span>
   </a>
@@ -751,10 +773,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#analyzing-audit-trails" class="md-nav__link">
+  <a href="#analyzing-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Analyzing Audit Trails
+        Analyzing Replay Records
       
     </span>
   </a>
@@ -762,10 +784,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comparing-audit-trails" class="md-nav__link">
+  <a href="#comparing-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparing Audit Trails
+        Comparing Replay Records
       
     </span>
   </a>
@@ -773,10 +795,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-full-paper-replication" class="md-nav__link">
+  <a href="#advanced-historical-experiment-subset" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Full Paper Replication
+        Advanced: Historical Experiment Subset
       
     </span>
   </a>
@@ -1001,7 +1023,7 @@
   <span class="md-ellipsis">
     
   
-    Lab 8. DFAH-Bench — Replay Determinism & Audit Bundles
+    Lab 8. DFAH-Bench — Replay Measurement
   
 
     
@@ -1054,7 +1076,7 @@
   <span class="md-ellipsis">
     
   
-    Resources
+    DFAH Package
   
 
     
@@ -1067,6 +1089,207 @@
         
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Production Rollout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/releasing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Process
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resources
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1327,10 +1550,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#mean-drift-metric" class="md-nav__link">
+  <a href="#mean-string-distance-metric" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Mean Drift Metric
+        Mean String-Distance Metric
       
     </span>
   </a>
@@ -1354,10 +1577,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#analyzing-audit-trails" class="md-nav__link">
+  <a href="#analyzing-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Analyzing Audit Trails
+        Analyzing Replay Records
       
     </span>
   </a>
@@ -1365,10 +1588,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#comparing-audit-trails" class="md-nav__link">
+  <a href="#comparing-replay-records" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Comparing Audit Trails
+        Comparing Replay Records
       
     </span>
   </a>
@@ -1376,10 +1599,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-full-paper-replication" class="md-nav__link">
+  <a href="#advanced-historical-experiment-subset" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Advanced: Full Paper Replication
+        Advanced: Historical Experiment Subset
       
     </span>
   </a>
@@ -1491,7 +1714,9 @@
 
 <h1 id="lab-3-running-your-first-experiment">Lab 3: Running Your First Experiment<a class="headerlink" href="#lab-3-running-your-first-experiment" title="Permanent link">&para;</a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>In this lab, you'll run a complete drift evaluation experiment, just like the ones from the paper. You'll test different concurrency levels, temperatures, and task types to understand how these factors affect determinism.</p>
+<p>In this lab, you'll run a complete drift evaluation experiment, like the
+historical workshop study. You'll vary concurrency, temperature, and task type
+and observe how repeatability changes in the resulting runs.</p>
 <p><strong>Duration</strong>: ~30 minutes</p>
 <h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
 <p>By the end of this lab, you will:</p>
@@ -1499,7 +1724,7 @@
 <li>Run experiments with varying concurrency (1, 4, 16 runs)</li>
 <li>Compare drift at temperature 0.0 vs 0.2</li>
 <li>Understand how task types affect consistency</li>
-<li>Analyze JSONL audit trails</li>
+<li>Analyze JSONL replay records</li>
 <li>Reproduce key findings from the paper</li>
 </ul>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
@@ -1545,7 +1770,8 @@
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">1</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step1
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>🚀 Output Drift Evaluation Framework
@@ -1569,7 +1795,7 @@ Results:
   Runs completed: 1
   Schema valid: ✅ Yes
 
-Audit trail: traces/lab3_single.jsonl
+Replay record: traces/lab3_step1/trace_*.jsonl
 ✅ Single-run baseline complete!
 </code></pre></div>
 <p><strong>Analysis</strong>: With n=1, we can't measure drift yet. We need multiple runs.</p>
@@ -1581,7 +1807,8 @@ Audit trail: traces/lab3_single.jsonl
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">4</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step2
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 4 concurrent queries...
@@ -1598,11 +1825,13 @@ Unique responses: 1
 Response 1 (4 occurrences):
   &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
 
-✅ Perfect consistency at n=4!
+✅ Exact output agreement at n=4!
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Tier 1 Performance</p>
-<p>7-20B models maintain 100% consistency even with concurrent requests—critical for production workloads.</p>
+<p>The tested 7-20B configurations retained 100% observed agreement under the
+exercise's concurrent requests. Re-run the test for the intended serving
+stack before drawing an operational conclusion.</p>
 </div>
 <h2 id="step-3-paper-standard-test-n16">Step 3: Paper-Standard Test (n=16)<a class="headerlink" href="#step-3-paper-standard-test-n16" title="Permanent link">&para;</a></h2>
 <p>Now run the same configuration used in the paper (n=16):</p>
@@ -1612,7 +1841,8 @@ Response 1 (4 occurrences):
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step3
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1629,9 +1859,11 @@ Unique responses: 1
 Response 1 (16 occurrences):
   &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
 
-✅ Perfect consistency at n=16!
+✅ Exact output agreement at n=16!
 </code></pre></div>
-<p><strong>Key Finding</strong>: Qwen2.5-7B achieves <strong>100% consistency</strong> at n=16, confirming Tier 1 classification.</p>
+<p><strong>Bounded result</strong>: Qwen2.5-7B reached <strong>100% consistency</strong> across these 16
+runs, which meets the historical workshop's Tier 1 definition. Re-run the
+exact intended configuration before relying on that label elsewhere.</p>
 <h2 id="step-4-temperature-sensitivity-test">Step 4: Temperature Sensitivity Test<a class="headerlink" href="#step-4-temperature-sensitivity-test" title="Permanent link">&para;</a></h2>
 <p>Now let's test what happens when we increase temperature to 0.2:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
@@ -1640,7 +1872,8 @@ Response 1 (16 occurrences):
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step4
 </code></pre></div>
 <p><strong>Expected output (SQL task):</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1651,11 +1884,14 @@ Results:
   Mean Drift: 0.000
   Temperature: 0.2
 
-✅ SQL generation remains deterministic at T=0.2!
+✅ SQL outputs matched exactly in this T=0.2 run!
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">Structured Task Resilience</p>
-<p>SQL generation maintains 100% consistency even at T=0.2 because of its <strong>structured output format</strong> and <strong>deterministic syntax</strong>.</p>
+<p>The SQL outputs reached 100% exact agreement at T=0.2 in the workshop
+result. The structured format may constrain variation, but this single
+comparison does not establish a causal explanation or guarantee future
+replay.</p>
 </div>
 <h2 id="step-5-rag-task-comparison">Step 5: RAG Task Comparison<a class="headerlink" href="#step-5-rag-task-comparison" title="Permanent link">&para;</a></h2>
 <p>Now let's test a RAG task, which our paper shows is more susceptible to drift:</p>
@@ -1665,7 +1901,8 @@ Results:
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step5_t0
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Running 16 concurrent queries...
@@ -1687,7 +1924,7 @@ Response 1 (15 occurrences):
 Response 2 (1 occurrence):
   &quot;Citigroup reported net credit losses of $2.4B in 2023 (10-K filing, page 145).&quot;
 
-✅ Minor syntactic drift, but factual consistency maintained!
+✅ The shown outputs differ in form while retaining the same displayed value and citation.
 </code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">RAG vs SQL</p>
@@ -1705,17 +1942,20 @@ Response 2 (1 occurrence):
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>rag<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_step5_t02
 </code></pre></div>
 <p><strong>Expected output (from paper findings):</strong></p>
 <div class="highlight"><pre><span></span><code>Results:
   Consistency: 56.25% (9/16 identical)
   Mean Drift: 0.081
-  Factual Drift Range: 0.000 - 0.375
+  Token-Set Drift Range: 0.000 - 0.375
 
 ⚠️ Substantial drift at T=0.2 for RAG tasks!
 </code></pre></div>
-<p><strong>Paper Finding Confirmed</strong>: RAG tasks at T=0.2 show <strong>56.25% consistency</strong>, making them unsuitable for compliance workflows without strict T=0.0.</p>
+<p><strong>Historical result reproduced</strong>: the tested RAG configuration at T=0.2
+shows <strong>56.25% consistency</strong>. This result calls for investigation; it does not
+by itself decide whether a workflow is compliant or suitable for use.</p>
 <h2 id="step-6-multi-task-evaluation">Step 6: Multi-Task Evaluation<a class="headerlink" href="#step-6-multi-task-evaluation" title="Permanent link">&para;</a></h2>
 <p>Run all three task types in sequence:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Run all three tasks at once</span>
@@ -1725,28 +1965,53 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>rag,summary,sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_multi
 </code></pre></div>
 <p><strong>Summary script</strong> to compare results:</p>
 <p>Create <code>analyze_lab3.py</code>:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 
 <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">]</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;traces/lab3_</span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+<span class="n">trace_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected one trace file, found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trace_files</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">consistency</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
-    <span class="n">consistency_pct</span> <span class="o">=</span> <span class="mf">100.0</span> <span class="k">if</span> <span class="n">consistency</span> <span class="k">else</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">)))</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="k">with</span> <span class="n">trace_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">all_records</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">all_records</span> <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">task</span><span class="p">]</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;prompt_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+
+    <span class="n">modal_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">consistency_pct</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+        <span class="n">distances</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span>
+        <span class="p">)</span>
 
     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
         <span class="s2">&quot;Task&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
         <span class="s2">&quot;Runs&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-        <span class="s2">&quot;Consistency&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Mean Drift&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;compliance_metrics&#39;</span><span class="p">][</span><span class="s1">&#39;factual_drift&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">data</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="s2">&quot;Modal exact agreement&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Mean normalized distance&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
     <span class="p">})</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
@@ -1757,29 +2022,38 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>analyze_lab3.py
 </code></pre></div>
-<p><strong>Expected output:</strong></p>
+<p>The script prints one row per task. Counts reflect all built-in prompt IDs, so
+they may be larger than the one-prompt historical examples used elsewhere in
+this lab:</p>
 <div class="highlight"><pre><span></span><code>📊 Multi-Task Evaluation Results (T=0.0, n=16)
 ============================================================
-      Task  Runs Consistency Mean Drift
-       SQL    16       100.0%      0.000
-SUMMARIZE    16       100.0%      0.000
-       RAG    16        93.8%      0.012
+      Task  Runs Modal exact agreement Mean normalized distance
+       SQL    ...                  ...%                      ...
+   SUMMARY    ...                  ...%                      ...
+       RAG    ...                  ...%                      ...
 </code></pre></div>
 <h2 id="understanding-the-results">Understanding the Results<a class="headerlink" href="#understanding-the-results" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Interpretation boundary</p>
+<p>These thresholds summarize replay variation in the exercise. They are
+investigation cues, not compliance or safety thresholds.</p>
+</div>
 <h3 id="consistency-metric">Consistency Metric<a class="headerlink" href="#consistency-metric" title="Permanent link">&para;</a></h3>
-<p><strong>Formula</strong>: <code>consistency = (identical_responses / total_runs) * 100</code></p>
+<p><strong>Formula</strong>: within each prompt's replay group, count the modal exact output;
+then divide the summed modal counts by the total runs.</p>
 <ul>
 <li><strong>100%</strong>: All responses identical (byte-for-byte)</li>
 <li><strong>93.75%</strong>: 15/16 responses identical, 1 syntactic variant</li>
-<li><strong>&lt;90%</strong>: Significant drift, not compliance-safe</li>
+<li><strong>&lt;90%</strong>: Significant drift; investigate before relying on exact replay</li>
 </ul>
-<h3 id="mean-drift-metric">Mean Drift Metric<a class="headerlink" href="#mean-drift-metric" title="Permanent link">&para;</a></h3>
-<p><strong>Formula</strong>: Jaccard distance between token sets</p>
+<h3 id="mean-string-distance-metric">Mean String-Distance Metric<a class="headerlink" href="#mean-string-distance-metric" title="Permanent link">&para;</a></h3>
+<p><strong>Formula in <code>run_evaluation.py</code></strong>: normalized Levenshtein distance from each
+replay group's first output.</p>
 <ul>
-<li><strong>0.000</strong>: Perfect determinism</li>
+<li><strong>0.000</strong>: No measured drift in this run</li>
 <li><strong>0.012</strong>: Minor syntactic variation</li>
-<li><strong>&gt;0.05</strong>: Semantic drift</li>
-<li><strong>&gt;0.1</strong>: Factual inconsistencies</li>
+<li><strong>&gt;0.05</strong>: Larger token-set variation</li>
+<li><strong>&gt;0.1</strong>: Substantial token-set variation; inspect the outputs directly</li>
 </ul>
 <h3 id="paper-findings-reproduced">Paper Findings Reproduced<a class="headerlink" href="#paper-findings-reproduced" title="Permanent link">&para;</a></h3>
 <table>
@@ -1812,86 +2086,82 @@ SUMMARIZE    16       100.0%      0.000
 </tr>
 </tbody>
 </table>
-<h2 id="analyzing-audit-trails">Analyzing Audit Trails<a class="headerlink" href="#analyzing-audit-trails" title="Permanent link">&para;</a></h2>
-<p>Audit trails are stored as JSONL (JSON Lines)—one JSON object per line.</p>
+<h2 id="analyzing-replay-records">Analyzing Replay Records<a class="headerlink" href="#analyzing-replay-records" title="Permanent link">&para;</a></h2>
+<p>Replay records are stored as JSONL (JSON Lines), one JSON object per line.</p>
 <p><strong>View a specific run:</strong></p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Pretty-print the 5th run</span>
-sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#39;</span><span class="w"> </span>traces/lab3_concurrent_16.jsonl<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+<div class="highlight"><pre><span></span><code><span class="c1"># Pretty-print the 5th run from the isolated Lab 3 directory</span>
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#39;</span><span class="w"> </span>traces/lab3_multi/trace_*.jsonl<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </code></pre></div>
 <p><strong>Example entry:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-07T14:23:45.123Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;run_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;lab3_concurrent_16_005&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525425123</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ts_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525426368</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;task&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
 <span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;concurrency_idx&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;task_type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256:a3d8f92b1c4e5f6789abcdef&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;response_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sha256:b2c1e7d8a9f6543210fedcba&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;execution_time_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1245</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;compliance_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;schema_valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;citation_accuracy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;decision_flip&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;factual_drift&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;regulatory_mappings&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;FSB&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;consistent_decisions&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;CFTC&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;document_ai_outcomes&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;SR_11_7&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;model_validation&quot;</span>
-<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="nt">&quot;temp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;conc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;prompt_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s1&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Compute total \&quot;amount\&quot; across all transactions.&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SELECT SUM(amount) FROM transactions;&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;decision_ok&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;latency&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.245</span>
 <span class="p">}</span>
 </code></pre></div>
-<p><strong>Key fields for audits:</strong></p>
+<p><strong>Key fields for review:</strong></p>
 <ul>
-<li><code>prompt_hash</code>: SHA-256 of input (for duplicate detection)</li>
-<li><code>response_hash</code>: SHA-256 of output (for consistency checking)</li>
-<li><code>compliance_metrics</code>: Drift measures</li>
-<li><code>regulatory_mappings</code>: Compliance framework mappings</li>
+<li><code>task</code> and <code>prompt_id</code>: identify the replay group</li>
+<li><code>provider</code>, <code>model</code>, <code>temp</code>, and <code>conc</code>: record the captured configuration</li>
+<li><code>prompt</code> and <code>output</code>: preserve the request text and observed response</li>
+<li><code>decision_ok</code>, <code>schema_violation</code>, or <code>citations</code>: task-specific fields when available</li>
+<li><code>ts</code>, <code>ts_end</code>, and <code>latency</code>: timing fields for the recorded call</li>
 </ul>
-<h2 id="comparing-audit-trails">Comparing Audit Trails<a class="headerlink" href="#comparing-audit-trails" title="Permanent link">&para;</a></h2>
+<h2 id="comparing-replay-records">Comparing Replay Records<a class="headerlink" href="#comparing-replay-records" title="Permanent link">&para;</a></h2>
 <p>Compare two runs to find differences:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Load two runs</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;traces/lab3_concurrent_16.jsonl&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="k">with</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
 <span class="n">run1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">run2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1 response hash:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2 response hash:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Identical?&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response_hash&quot;</span><span class="p">])</span>
+<span class="n">hash1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="n">hash2</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1 output hash:&quot;</span><span class="p">,</span> <span class="n">hash1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2 output hash:&quot;</span><span class="p">,</span> <span class="n">hash2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Identical?&quot;</span><span class="p">,</span> <span class="n">hash1</span> <span class="o">==</span> <span class="n">hash2</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">]:</span>
+<span class="k">if</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Response Diff:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;response&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
 <span class="k">else</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Responses are identical!&quot;</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="advanced-full-paper-replication">Advanced: Full Paper Replication<a class="headerlink" href="#advanced-full-paper-replication" title="Permanent link">&para;</a></h2>
-<p>To fully reproduce the paper's 480 runs:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># This will take ~30-45 minutes</span>
-python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<h2 id="advanced-historical-experiment-subset">Advanced: Historical Experiment Subset<a class="headerlink" href="#advanced-historical-experiment-subset" title="Permanent link">&para;</a></h2>
+<p>To run the three locally named configurations shown below across the listed
+conditions, budget for up to <strong>1,728 calls</strong> (3 models × 2 temperatures × 3
+concurrency settings × 3 tasks × 2 built-in prompts × 16 repeats):</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct,granite-3-8b,llama-3.3-70b<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--temperatures<span class="w"> </span><span class="m">0</span>.0,0.2<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span>,4,16<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--tasks<span class="w"> </span>rag,summary,sql<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lab3_historical_subset
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Resource Intensive</p>
-<p>Full replication requires:
-- All 5 models available (some may require API keys)
-- ~45 minutes of runtime
-- ~500 MB of trace data</p>
+<p>This subset requires:
+- The three listed models available
+- Capacity and time for up to 1,728 calls
+- Sufficient local storage for the resulting traces</p>
 </div>
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h2>
 <h3 id="inconsistent-results">Inconsistent Results<a class="headerlink" href="#inconsistent-results" title="Permanent link">&para;</a></h3>
@@ -1904,35 +2174,51 @@ ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct
 </code></pre></div>
 <h3 id="rate-limiting">Rate Limiting<a class="headerlink" href="#rate-limiting" title="Permanent link">&para;</a></h3>
 <p>If using cloud providers (watsonx, OpenAI):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Add rate limiting in configuration</span>
-<span class="o">--</span><span class="n">rate</span><span class="o">-</span><span class="n">limit</span> <span class="mi">10</span>  <span class="c1"># requests per minute</span>
-<span class="o">--</span><span class="n">retry</span><span class="o">-</span><span class="n">delay</span> <span class="mi">5</span>  <span class="c1"># seconds between retries</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># The historical runner has no rate-limit flag. Lower concurrency to reduce</span>
+<span class="c1"># simultaneous requests, and use the provider SDK/account retry controls.</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>anthropic<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>YOUR_MODEL_ID<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/rate_limit_check
 </code></pre></div>
 <h3 id="out-of-memory">Out of Memory<a class="headerlink" href="#out-of-memory" title="Permanent link">&para;</a></h3>
 <p>For large concurrency (n=16):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Reduce batch size</span>
---batch-size<span class="w"> </span><span class="m">4</span><span class="w">  </span><span class="c1"># Process 4 at a time instead of 16</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Reduce simultaneous requests</span>
+python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--providers<span class="w"> </span>ollama<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--models<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--concurrency<span class="w"> </span><span class="m">4</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--tasks<span class="w"> </span>sql<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--repeats<span class="w"> </span><span class="m">16</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>traces/lower_concurrency
 </code></pre></div>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>7-20B models</strong> (Tier 1) achieve 100% consistency at T=0.0 for all tasks</li>
-<li><strong>Concurrency doesn't affect consistency</strong> for Tier 1 models (n=1, 4, or 16)</li>
-<li><strong>Task structure matters</strong>: SQL/summarization &gt; RAG for determinism</li>
-<li><strong>Temperature sensitivity</strong>: RAG tasks degrade significantly at T=0.2</li>
-<li><strong>Audit trails</strong> provide complete reproducibility for regulatory review</li>
+<li><strong>The tested 7-20B configurations</strong> reached 100% consistency at T=0.0 in this exercise</li>
+<li><strong>Concurrency did not change measured consistency</strong> for those runs (n=1, 4, or 16)</li>
+<li><strong>Task structure mattered in these runs</strong>: SQL/summarization had higher exact-output agreement than RAG</li>
+<li><strong>Temperature sensitivity was visible</strong>: the tested RAG condition had lower agreement at T=0.2</li>
+<li><strong>Replay records</strong> support reproduction and review within their captured scope</li>
 </ol>
 <h2 id="quiz-test-your-understanding">Quiz: Test Your Understanding<a class="headerlink" href="#quiz-test-your-understanding" title="Permanent link">&para;</a></h2>
 <details class="question">
 <summary>Why does SQL maintain 100% consistency even at T=0.2?</summary>
-<p><strong>Answer</strong>: SQL has a structured output format with deterministic syntax, limiting the output space and making it more resistant to temperature-induced drift.</p>
+<p><strong>Answer</strong>: The tested SQL outputs reached 100% exact agreement at T=0.2.
+A structured format can constrain the output space, but the exercise does
+not prove that structure caused the result or that it will recur.</p>
 </details>
 <details class="question">
 <summary>What consistency % did RAG tasks achieve at T=0.2 in the paper?</summary>
-<p><strong>Answer</strong>: 56.25% (9/16 runs identical), showing substantial drift that makes them unsuitable for compliance workflows at elevated temperatures.</p>
+<p><strong>Answer</strong>: 56.25% (9/16 runs identical), showing substantial variation
+that should be investigated before relying on exact replay.</p>
 </details>
 <details class="question">
-<summary>What is the purpose of the response_hash field in audit trails?</summary>
-<p><strong>Answer</strong>: SHA-256 hash enables fast consistency checking across runs without string comparison—critical for large-scale audits.</p>
+<summary>How can you compare outputs when a trace has no stored output hash?</summary>
+<p><strong>Answer</strong>: Hash the captured <code>output</code> value during analysis, as shown
+above. Keep the raw output if later review needs more than equality.</p>
 </details>
 <h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h2>
 <p>Now that you've run experiments and understand the methodology:</p>
@@ -1944,7 +2230,9 @@ ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct
 <hr />
 <div class="admonition success">
 <p class="admonition-title">Lab 3 Complete!</p>
-<p>You've successfully run drift evaluations and reproduced key paper findings! Ready to analyze the data? Move on to <a href="../lab-4/">Lab 4: Analyzing Drift Metrics</a>!</p>
+<p>You've run drift evaluations and compared your results with the historical
+workshop examples. Ready to analyze the data? Move on to
+<a href="../lab-4/">Lab 4: Analyzing Drift Metrics</a>!</p>
 </div>
 
 
