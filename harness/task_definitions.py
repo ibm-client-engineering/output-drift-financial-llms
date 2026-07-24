@@ -17,7 +17,7 @@ Regulatory Framework:
     - FSB BCBS-239: Consistent decision outputs for regulatory reporting
     - CFTC Rule 17a-4: Audit trail requirements for automated decisions
 
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
 import re
 import json

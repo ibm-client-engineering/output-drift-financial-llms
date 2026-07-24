@@ -4,38 +4,43 @@
 
 | Paper | Venue | Year |
 |-------|-------|------|
-| DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making | arXiv preprint (announcement pending) | 2026 |
+| [Same Decision, Different Path: DFAH-Bench for AI Agents in Finance](https://arxiv.org/abs/2607.20491) | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | 2026 |
 | [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | 2026 |
-| [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [ACM ICAIF 2025 AI4F Workshop](https://ai4f-workshop.github.io/) | 2025 |
+| [LLM Output Drift](https://arxiv.org/abs/2511.07585) | [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | 2025 |
 
 ---
 
-## DFAH-Bench: Benchmarking Observable Agent Instability (2026)
+## Same Decision, Different Path: DFAH-Bench for AI Agents in Finance (2026)
+
+**Paper**: [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
+**DOI**: [10.48550/arXiv.2607.20491](https://doi.org/10.48550/arXiv.2607.20491)
 
 The newest paper in this research line measures **whether agents that agree on
-decisions also agree on how they got there** — across 8,127 replay episodes,
-10 models, and 3 financial tasks, with cryptographically verifiable audit
-bundles.
+decisions also agree on the recorded path to those decisions**. The corrected
+primary analysis uses 4,157 episodes from configurations with observed tool
+use across 719 comparable groups, eight configurations, and two synthetic
+financial tasks.
 
-**Key result**: among 912 case groups where decisions agree (DAR ≥ 0.9),
-**21.8% hide trajectory divergence** (TAR < 0.9) and 19.4% diverge strongly
-(TAR < 0.7). Outcome-only evaluation misses all of it. For trajectory-diverger
-models the rates are striking: 55.6% (Claude Sonnet 4) and 56.6%
-(Gemini 2.5 Pro) of their decision-stable cases vary in tool path.
+**Key result**: 122 of 627 unanimous-decision groups (19.5%) changed tool
+sequence, and 47 (7.5%) changed the tool-name set. A separate prospective API
+diagnostic found 94.2–95.1% decision agreement but only 66.9–69.4% exact
+name-path agreement. The benchmark measures repeatability and observable
+execution fidelity, not correctness.
 
-**Reproduce it yourself** — the full replay corpus is in this repository:
+The default command regenerates and verifies the corrected v2 release:
 
 ```bash
 make reproduce-paper
+make reproduce-paper-v1  # archived lineage only
 ```
 
 See [Lab 8](../lab-8/README.md) for the guided walkthrough and the
 [README results table](https://github.com/ibm-client-engineering/output-drift-financial-llms#dfah-bench-results-new-paper)
-for the headline numbers per model.
+for the package and corrected-analysis walkthrough.
 
 ---
 
-## LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows
+## Earlier study: LLM Output Drift
 
 This page summarizes the key findings from our research papers on output drift and agent determinism in large language models used for financial applications.
 
@@ -43,7 +48,10 @@ This page summarizes the key findings from our research papers on output drift a
 
 ## The Core Problem
 
-Large Language Models (LLMs) exhibit **output drift**: non-deterministic behavior where the same prompt produces different outputs across multiple runs, even at temperature=0.0. For financial institutions subject to regulations like SR 11-7 (Model Risk Management), ECOA, and GDPR, this creates significant compliance risks.
+Large Language Models (LLMs) can exhibit **output drift**: the same prompt can
+produce different outputs across repeated runs, even at temperature=0.0. In
+regulated workflows, that variation creates additional validation,
+documentation, and monitoring work.
 
 **The Question**: Can smaller models be more reliable than larger ones for deterministic, compliance-critical tasks?
 
@@ -51,12 +59,12 @@ Large Language Models (LLMs) exhibit **output drift**: non-deterministic behavio
 
 ## The Counterintuitive Finding
 
-### Smaller Models Win for Determinism
+### A model-size pattern in the tested conditions
 
 Our research reveals a **counterintuitive result**:
 
-- **7-20B parameter models**: Achieve **100% output consistency** at temperature=0.0
-- **120B parameter models**: Only **12.5% consistency [95% CI: 3.5–36.0%]** under identical conditions
+- **7-20B tested configurations**: up to **100% observed output consistency** at temperature=0.0
+- **The tested 120B configuration**: **12.5% observed consistency [95% CI: 3.5–36.0%]**
 
 This challenges the conventional wisdom that "bigger is always better" in AI systems.
 
@@ -70,7 +78,8 @@ This challenges the conventional wisdom that "bigger is always better" in AI sys
 
 ### Why This Matters
 
-For regulated financial applications requiring **reproducible audit trails**, smaller models are not just adequate—they are **superior** to larger models when deterministic behavior is required.
+The result motivates measuring the exact deployed model, task, provider path,
+and harness rather than inferring repeatability from parameter count.
 
 ---
 
@@ -107,20 +116,20 @@ python run_evaluation.py \
 
 ## Key Findings
 
-### 1. 3-Tier Model Classification
+### 1. Study groupings
 
 Based on output consistency at temperature=0.0:
 
-| Tier | Models | Consistency | Compliance Status |
+| Study label | Tested configurations | Observed consistency | Interpretation |
 |------|--------|-------------|-------------------|
-| **Tier 1** | 7-20B (Qwen2.5-7B, Granite-3-8B, GPT-OSS-20B) | **100%** | ✅ Audit-ready |
-| **Tier 2** | 40-70B (Llama-3.3-70B, Mistral-Medium) | 56-100% | ⚠️ Task-specific |
-| **Tier 3** | 120B+ (GPT-OSS-120B) | **12.5%** | ❌ Non-compliant |
+| **Group 1** | 7-20B (Qwen2.5-7B, Granite-3-8B, GPT-OSS-20B) | up to **100%** | High repeatability in the tested condition |
+| **Group 2** | 40-70B (Llama-3.3-70B, Mistral-Medium) | 56-100% | Task-dependent in this sample |
+| **Group 3** | 120B+ (GPT-OSS-120B) | **12.5%** | Low repeatability in this condition |
 
 **Interpretation**:
-- **Tier 1**: Can be deployed in regulated environments requiring deterministic behavior
-- **Tier 2**: Requires careful task-specific validation
-- **Tier 3**: Unsuitable for compliance-critical applications despite superior general capabilities
+- These are bounded observations, not deployment or compliance ratings.
+- Validate the exact model, provider, task, prompt, and harness configuration.
+- Repeatability and correctness need separate measurements.
 
 ### 2. Task-Specific Results (Temperature=0.0)
 
@@ -130,7 +139,8 @@ Based on output consistency at temperature=0.0:
 | **Summarization** | 100% | 87.5% | 12.5% |
 | **RAG Q&A** | 93.75% | 75.0% | 12.5% |
 
-**Key Insight**: Even for less structured tasks (RAG), Tier 1 models maintain >90% consistency.
+**Key Insight**: The tested less-structured RAG task retained more than 90%
+consistency for the highest-repeatability study group.
 
 ### 3. Temperature Sensitivity
 
@@ -142,7 +152,8 @@ RAG task consistency as temperature increases:
 | **T=0.2** | 56.25% | 43.75% | 6.25% |
 | **T=1.0** | 18.75% | 12.5% | 0% |
 
-**Takeaway**: Even small temperature increases (0.0 → 0.2) cause significant drift. For compliance, **T=0.0 is mandatory**.
+**Takeaway**: In this experiment, moving from 0.0 to 0.2 increased drift.
+Record the setting and test it, but do not treat temperature 0 as a guarantee.
 
 ### 4. Cross-Provider Validation
 
@@ -154,20 +165,21 @@ Testing Tier 1 model consistency across providers:
 | Ollama ↔ watsonx.ai | Granite-3-8B → Granite-3-8B | 100% | ✅ |
 | Ollama ↔ OpenAI | Qwen2.5-7B → GPT-4 | <50% | ❌ |
 
-**Finding**: Tier 1 models enable **seamless migration** between local (Ollama) and cloud (watsonx.ai) deployments without behavioral changes.
+**Finding**: Some tested local/cloud pairs had high agreement. A migration
+still requires validation of the actual serving stack and workload.
 
 ### 5. Regulatory Alignment
 
-Our framework addresses specific regulatory requirements:
+The framework can contribute evidence to broader governance processes:
 
 | Regulation | Requirement | Framework Solution |
 |------------|-------------|--------------------|
-| **SR 11-7** | Model validation & ongoing monitoring | Bi-temporal audit trails |
-| **ECOA** | Consistent credit decisions | 100% SQL consistency (Tier 1) |
-| **FCRA** | Reproducible adverse action rationales | Deterministic RAG retrieval |
-| **GDPR Art. 22** | Explainable automated decisions | Citation validation |
-| **FSB** | Third-party model risk | Cross-provider validation |
-| **CFTC 23.402** | Predictive model documentation | JSONL audit format |
+| **SR 11-7** | Model validation & ongoing monitoring | Versioned replay records |
+| **ECOA / FCRA** | Decision documentation | Reconstructable run artifacts |
+| **GDPR Art. 22** | Review of automated decisions | Decision and tool-path capture |
+| **FSB** | Third-party model risk | Configuration-specific comparison |
+
+These mappings are design aids, not a certification of regulatory compliance.
 
 ---
 
@@ -187,7 +199,7 @@ Validates consistency across deployment environments:
 
 - **Problem**: Models behave differently on different infrastructure
 - **Solution**: Automated comparison with finance-calibrated tolerance (±5% GAAP)
-- **Benefit**: Certify migration safety before production deployment
+- **Benefit**: Measure behavior before and after a deployment change
 
 ### 3. Bi-Temporal Audit Trails
 
@@ -204,10 +216,10 @@ JSONL format capturing:
 
 ### For Financial Institutions
 
-1. **Vendor Selection**: Prioritize Tier 1 models (7-20B) for compliance-critical tasks
-2. **Temperature Policy**: Mandate T=0.0 for all regulated applications
-3. **Model Validation**: Use cross-provider validation before production deployment
-4. **Audit Trail**: Implement bi-temporal logging per CFTC 23.402 requirements
+1. **Vendor Selection**: Measure the workload, not parameter count alone
+2. **Decoding Policy**: Pin and record decoding settings
+3. **Model Validation**: Compare the exact provider stacks before a change
+4. **Run Records**: Retain inputs, outputs, versions, and observable tool paths
 
 ### For Model Developers
 
@@ -217,7 +229,7 @@ JSONL format capturing:
 
 ### For Regulators
 
-1. **Standards**: Define acceptable consistency thresholds (our research suggests 100% for Tier 1 tasks)
+1. **Standards**: Define risk-based repeatability and review thresholds
 2. **Validation**: Require cross-provider equivalence testing
 3. **Monitoring**: Mandate ongoing drift detection in production
 
@@ -246,6 +258,18 @@ JSONL format capturing:
 If you use this framework or findings in your research, please cite:
 
 ```bibtex
+@article{khatchadourian2026dfahbench,
+  title={Same Decision, Different Path: DFAH-Bench for AI Agents in Finance},
+  author={Khatchadourian, Raffi},
+  journal={arXiv preprint arXiv:2607.20491},
+  year={2026},
+  eprint={2607.20491},
+  archivePrefix={arXiv},
+  primaryClass={cs.AI},
+  doi={10.48550/arXiv.2607.20491},
+  url={https://arxiv.org/abs/2607.20491}
+}
+
 @inproceedings{khatchadourian2026replayable,
   title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
   author={Khatchadourian, Raffi},
@@ -257,12 +281,13 @@ If you use this framework or findings in your research, please cite:
 @inproceedings{khatchadourian2025output,
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={ACM International Conference on AI in Finance (ICAIF), AI4F Workshop},
+  booktitle={AI4F Workshop},
   year={2025},
   url={https://arxiv.org/abs/2511.07585}
 }
 ```
 
+**DFAH-Bench**: [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | **DOI**: [10.48550/arXiv.2607.20491](https://doi.org/10.48550/arXiv.2607.20491)
 **Replayable Agents**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) | **DOI**: [10.48550/arXiv.2601.15322](https://doi.org/10.48550/arXiv.2601.15322)
 **Output Drift**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) | **DOI**: [10.48550/arXiv.2511.07585](https://doi.org/10.48550/arXiv.2511.07585)
 
@@ -279,11 +304,11 @@ If you use this framework or findings in your research, please cite:
 
 ## Key Takeaways
 
-1. **Size isn't everything**: 7-20B models outperform 120B models for deterministic tasks
-2. **Temperature=0.0 is mandatory**: Even T=0.2 causes significant drift
-3. **Tier 1 models are audit-ready**: 100% consistency enables regulatory compliance
-4. **Cross-provider validation works**: Seamless migration between Ollama and watsonx.ai
-5. **Framework is open source**: MIT-licensed, production-ready, extensible
+1. **Size is not a repeatability guarantee**: test the exact configuration
+2. **Temperature 0 is not a determinism guarantee**: pin and measure settings
+3. **Repeatability is not correctness or compliance**
+4. **Provider changes need replay validation**
+5. **The framework is open source and extensible**
 
 ---
 

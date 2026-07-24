@@ -22,7 +22,7 @@ Regulatory Framework:
 The stable ordering ensures that identical queries at T=0.0 produce identical
 context windows, satisfying FSB consistency requirements for regulatory reporting.
 
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
 import re
 import hashlib

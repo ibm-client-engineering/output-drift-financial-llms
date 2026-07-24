@@ -1,0 +1,6 @@
+stage,episodes,groups,episode_change,group_change,interpretation
+raw_replay_ledger,8129,1340,0,0,all sanitized compact episode records
+archived_v1_after_singleton_removal,8127,1338,-2,-2,three-task repeated-execution corpus
+remove_analyzed_portfolio_fixture,5515,889,-2612,-449,compliance and dataops only
+remove_deepseek_compliance_pilot,5501,887,-14,-2,measurement-audited retained ledger
+retain_configurations_with_observed_tool_use,4157,719,-1344,-168,primary retrospective DAR-TAR analysis

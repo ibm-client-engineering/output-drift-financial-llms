@@ -1,0 +1,16 @@
+model,model_name,task,n_cases,n_episodes,min_repeats,max_repeats,decision_concentration,modal_decision_counts,dar,tar,tar_multiset,tar_set,gap,gap_multiset,gap_set
+claude-opus-4-20250514,Claude Opus 4,compliance,50,150,3,3,0.07328707511273513,"{""dismiss"": 19, ""escalate"": 23, ""investigate"": 8}",0.8999999999999999,0.78,0.84,0.9933333333333333,0.12,0.06000000000000001,-0.09333333333333334
+claude-opus-4-20250514,Claude Opus 4,dataops,25,75,3,3,0.6660104797138697,"{""escalate"": 3, ""quarantine"": 22}",0.88,0.6266666666666666,0.6666666666666665,0.72,0.2533333333333333,0.21333333333333332,0.16
+claude-sonnet-4-20250514,Claude Sonnet 4,compliance,50,150,3,3,0.24143808542134404,"{""dismiss"": 2, ""escalate"": 24, ""investigate"": 24}",0.94,0.7933333333333333,0.82,1.0,0.14666666666666667,0.12,-0.06
+claude-sonnet-4-20250514,Claude Sonnet 4,dataops,50,150,3,3,0.9107609533490758,"{""escalate"": 1, ""quarantine"": 49}",0.9466666666666665,0.6733333333333331,0.7533333333333332,0.84,0.2733333333333334,0.19333333333333338,0.10666666666666667
+gemini-2.0-flash,Gemini 2.0 Flash,compliance,50,150,3,3,0.019837409137049344,"{""dismiss"": 12, ""escalate"": 18, ""investigate"": 20}",0.8933333333333333,0.8866666666666666,0.9066666666666666,0.96,0.006666666666666665,-0.013333333333333332,-0.06666666666666667
+gemini-2.0-flash,Gemini 2.0 Flash,dataops,50,150,3,3,0.1601192327080475,"{""auto_fix"": 8, ""escalate"": 31, ""quarantine"": 11}",0.98,0.8866666666666666,0.8933333333333333,0.92,0.09333333333333335,0.08666666666666668,0.06
+gemini-2.5-pro,Gemini 2.5 Pro,compliance,44,132,3,3,0.15102698779809054,"{""dismiss"": 5, ""escalate"": 25, ""investigate"": 14}",0.8863636363636362,0.75,0.7954545454545454,0.856060606060606,0.13636363636363635,0.09090909090909091,0.0303030303030303
+gemma4_latest,Gemma 4,compliance,50,400,8,8,0.027538331853315445,"{""dismiss"": 16, ""escalate"": 22, ""investigate"": 12}",0.9975,0.995,0.9975,0.9975,0.0025,0.0,0.0
+gemma4_latest,Gemma 4,dataops,50,400,8,8,0.2476530241321786,"{""auto_fix"": 13, ""escalate"": 33, ""quarantine"": 4}",1.0,1.0,1.0,1.0,0.0,0.0,0.0
+gpt-oss_20b,GPT-OSS 20B,compliance,50,400,8,8,0.2862199022784614,"{""dismiss"": 6, ""escalate"": 8, ""investigate"": 36}",0.98,0.99,0.9925,1.0,-0.01,-0.0125,-0.02
+gpt-oss_20b,GPT-OSS 20B,dataops,50,400,8,8,0.004660012293154492,"{""auto_fix"": 19, ""escalate"": 16, ""quarantine"": 15}",0.98,0.9675,0.9675,0.975,0.0125,0.0125,0.005
+qwen2.5_7b-instruct,Qwen 2.5 7B,compliance,50,400,8,8,0.43572398523595157,"{""dismiss"": 11, ""escalate"": 1, ""investigate"": 38}",1.0,1.0,1.0,1.0,0.0,0.0,0.0
+qwen2.5_7b-instruct,Qwen 2.5 7B,dataops,50,400,8,8,0.10606056573356992,"{""auto_fix"": 17, ""escalate"": 26, ""quarantine"": 7}",0.9925,0.9925,0.9925,0.9925,0.0,0.0,0.0
+qwen3.5_latest,Qwen 3.5,compliance,50,400,8,8,0.04341733171115192,"{""dismiss"": 10, ""escalate"": 22, ""investigate"": 18}",1.0,1.0,1.0,1.0,0.0,0.0,0.0
+qwen3.5_latest,Qwen 3.5,dataops,50,400,8,8,0.04311691261509287,"{""auto_fix"": 12, ""escalate"": 24, ""quarantine"": 14}",1.0,1.0,1.0,1.0,0.0,0.0,0.0

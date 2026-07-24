@@ -22,7 +22,7 @@ Regulatory Framework References:
     - SEC Rule 10b-5: Citation accuracy requirements
     - GAAP ASC 450-20: 5% materiality threshold
 
-ACM ICAIF 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Financial Workflows"
+AI4F Workshop 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Financial Workflows"
 """
 
 from typing import Dict, Any, List, Optional, Union
@@ -624,7 +624,7 @@ class ComplianceJudge:
             confidence_score=avg_confidence,
             attestation_hash=attestation_hash,
             regulatory_metadata={
-                "framework": "ACM_ICAIF_2025_JFDS_Financial_AI",
+                "framework": "AI4F_2025_JFDS_Financial_AI",
                 "thresholds": self.thresholds,
                 "regulatory_bodies": ["FSB", "BIS", "CFTC", "SEC"],
                 "evaluation_count": len(evals)

@@ -4,12 +4,16 @@ A harness for measuring whether LLM agents produce consistent, auditable behavio
 
 From the paper: [Replayable Financial Agents](https://arxiv.org/abs/2601.15322) (ICLR 2026 FinAI Workshop).
 
+> This page documents the earlier research API. For the supported prospective
+> package, use [`README_DFAH.md`](README_DFAH.md) and
+> `dfah check-agent --agent dfah.demo:toy_agent`.
+
 ---
 
 ## Who This Is For
 
 - **AI/ML Engineers** deploying LLM agents in production and needing to measure behavioral consistency
-- **Compliance & Risk Teams** requiring audit-ready evidence that agent decisions are reproducible
+- **Compliance & Risk Teams** reviewing replay and execution evidence
 - **Researchers** studying LLM non-determinism in tool-using agents
 
 ## What DFAH Measures
@@ -23,7 +27,10 @@ DFAH runs an agent N times on the same input and compares the trajectories:
 | **Decision Determinism** | Did it reach the same final decision? |
 | **Accuracy** | Did the decision match ground truth? |
 
-**Key finding**: Decision determinism and accuracy are *not correlated* (r = -0.11, p = 0.63 across 4,705 runs). A highly deterministic agent can be consistently wrong; a variable agent can be right more often. Both must be measured independently.
+**Earlier-study result**: Decision determinism and historical task-label match
+were *not detectably correlated* (r = -0.11, p = 0.63 across 4,705 runs).
+This archived result includes the portfolio fixture excluded from corrected
+DFAH-Bench v2. Repeatability and correctness require separate evidence.
 
 ---
 
@@ -119,9 +126,11 @@ print(metrics.summary())
 
 ---
 
-## Three Benchmark Tasks
+## Legacy benchmark fixtures
 
-DFAH ships with three financial agent tasks (50 test cases each):
+The earlier runner includes three synthetic fixtures. The corrected DFAH-Bench
+analysis retains compliance and DataOps only; portfolio is excluded because its
+fixture failed consistency review.
 
 | Task | Decision Space | Tools |
 |------|---------------|-------|
@@ -131,15 +140,12 @@ DFAH ships with three financial agent tasks (50 test cases each):
 
 ---
 
-## Behavioral Profiles (from the paper)
+## Interpretation
 
-Real LLM experiments reveal three agent profiles:
-
-| Profile | Example | Determinism | Accuracy | Behavior |
-|---------|---------|-------------|----------|----------|
-| **Pattern Matcher** | Qwen 7B | 98% | 33% | Always picks the same action regardless of evidence |
-| **Balanced Reasoner** | Claude Sonnet | 84% | 38% | Reads evidence, sometimes varies approach |
-| **Explorer** | Claude Opus | 71% | 44% | Most variable but highest genuine reasoning |
+Do not infer hidden reasoning or model type from a replay score. A high
+decision-agreement value can coexist with a changing recorded path, and a
+stable path can still be wrong. Report the tested task, configuration, replay
+count, required channels, and eligibility alongside every measure.
 
 ---
 

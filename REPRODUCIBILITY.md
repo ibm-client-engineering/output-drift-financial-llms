@@ -1,144 +1,179 @@
-# REPRODUCIBILITY — DFAH-Bench
+# Reproducibility — DFAH-Bench
 
-Every number in the DFAH-Bench paper regenerates from the raw replay logs in
-this repository with one command. This document records the exact
-environment, commands, and known caveats.
+This repository contains two related but separate reproducibility surfaces:
 
-## TL;DR
+1. the frozen historical research pipeline under `bench/`, `scripts/`, and
+   `results/`; and
+2. the prospective, pip-installable package under `src/dfah/`.
+
+Do not treat the package smoke test, historical analysis, prospective API
+diagnostic, and local systems check as a single model comparison. Their tasks,
+replay counts, and capture contracts differ.
+
+Package commands and package-document links below require the prospective
+package surface (`pyproject.toml`, `src/dfah/`, and `docs/dfah/`) from the
+first-stage package change. The corrected v2 research reproduction is
+independent of that package surface and runs from `requirements.txt`.
+
+## Prospective package
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-make reproduce-paper          # full verification incl. B=10,000 bootstrap
-make test-bench               # unit/regression test suite
+python3 -m venv .venv-dfah
+source .venv-dfah/bin/activate
+python -m pip install -e ".[dev,otel]"
+
+make test-dfah
+dfah check-agent --agent dfah.demo:toy_agent
+dfah run \
+  --agent dfah.demo:toy_agent \
+  --replays 3 \
+  --out .dfah/runs/quickstart
+dfah analyze .dfah/runs/quickstart
 ```
 
-`make reproduce-paper` exits non-zero and prints a mismatch table if ANY
-published number fails to regenerate. `make reproduce-paper-fast` skips the
-bootstrap and subsampling stages for quick iteration.
+The demo is local and makes no provider calls. Perfect agreement establishes
+that bounded adapter/tool/replay contract only.
 
-## Environment
+## Historical public pipeline
 
-| Component | Version |
+Use a separate environment:
+
+```bash
+python3 -m venv .venv-research
+source .venv-research/bin/activate
+python -m pip install -r requirements.txt
+
+make test-bench
+make reproduce-paper
+make verify-v2-manifest
+make reproduce-paper-v1  # archived lineage, when specifically needed
+```
+
+The Makefile honors `PYTHON=/path/to/python` when the research environment is
+not activated in the current shell.
+
+The default `reproduce-paper` target regenerates every corrected retrospective
+CSV from the sanitized public fixture in a temporary directory, compares it
+with the committed v2 artifact, and verifies the aggregate-only prospective
+extensions and manifest. `reproduce-paper-v1` is preserved only for version
+lineage.
+
+## Corrected evidence lineage
+
+The corrected primary analysis is:
+
+```text
+8,129 raw episode records
+−     2 singleton episodes
+= 8,127 records in the archived v1 analysis
+− 2,612 portfolio episodes / 449 groups
+−    14 DeepSeek episodes / 2 groups
+= 5,501 retained-task episodes / 887 groups
+− 1,344 episodes in two configurations with zero observed tool calls / 168 groups
+= 4,157 episodes from configurations with observed tool use / 719 groups
+```
+
+The primary slice contains eight retained configurations and two synthetic
+tasks (compliance triage and financial DataOps). Its case-level analysis is
+task-weighted and uses three or eight replays per group, shown explicitly in
+every table. Twenty-five retained episodes in nine groups have observed empty
+tool sequences; the denominator therefore describes configurations with
+observed tool use, not per-episode tool calls.
+
+The portfolio fixture and its dependent aggregates are excluded. Historical
+Evidence Contact Divergence is also excluded because a legacy overwrite made
+that channel missing not at random, and the retained hashes represented output
+integrity rather than source contacts.
+
+## Eligibility semantics
+
+A replay group contributes to agreement only when:
+
+- its suite, model, provider, prompt, tools, decoding settings, and required
+  contract fields are comparable;
+- every required channel is present and valid; and
+- the required replay count is met.
+
+An observed empty tool path is a valid path. A missing or malformed channel
+makes the group ineligible and is never scored as agreement or zero
+divergence.
+
+## Corrected primary measures
+
+| Measure | Definition |
 |---|---|
-| Python | 3.10+ (development and paper numbers produced on CPython 3.11) |
-| numpy | 1.26.4 (pinned) |
-| pandas | 2.2.3 (pinned) |
-| scipy | 1.14.1 (pinned) |
-| cryptography | >= 42.0 (provenance layer only) |
-| sentence-transformers | >= 2.2.0 (SCDR rationale mode only — NOT needed for any paper number; lazily imported) |
-| OS | macOS 14+ / Linux x86_64 (float results identical to numeric tolerance 1e-9) |
+| DAR | modal decision share within an eligible replay group |
+| TARseq | modal exact ordered tool-name path share on the same denominator |
+| Gap | paired per-case DAR − TARseq, aggregated with equal task weight |
 
-No network access, API keys, or model downloads are required to reproduce
-the paper numbers — the raw replay corpus is checked in.
+Historical multiset and set projections are retained as sensitivity analyses.
+Historical argument and result channels were not captured and cannot be
+reconstructed.
 
-## Data: the raw replay corpus
+## Prospective extensions
 
-```
-econometrics/benchmarks/results/run_logs/{compliance,dataops,portfolio}/<model>/
-    case_<id>_run_<n>.json        # one replay episode (8,129 files)
-    case_<id>_run_<n>_full.json   # full tool outputs where captured (4,697 files)
-```
+### API diagnostic
 
-Episode accounting (asserted by `reproduce_paper.py`):
+- 600 terminal episodes;
+- 570 eligible episodes across 190 exact three-replay groups;
+- 288 eligible Terra episodes / 96 groups;
+- 282 eligible Sonnet 5 episodes / 94 groups.
 
-- 8,129 raw episodes → **8,127 analyzed** (2 single-run case groups excluded;
-  they are listed in `results/dfah_skipped_case_groups.csv`)
-- **1,338 case groups**, **30 benchmark–model configurations**
-- N ∈ {3, 8} replays per case group (3 for API models, 8 for local);
-  a handful of groups have intermediate N due to crashed runs — these are
-  explicit in the case-level CSV (`n_runs` column), never silently padded
-- DeepSeek-R1 8B (14 episodes, compliance only) is excluded from main
-  results per the paper footnote; Qwen 3.5 portfolio is partial (3/50 cases)
+One Sonnet/DataOps stratum retained 44 groups against a predeclared minimum of
+45, so the global publication gate did not pass. The aggregate remains a
+diagnostic extension, not a provider ranking.
 
-## Pipeline
+The public component projection reports decision agreement, ordered tool-name
+agreement, name-plus-canonical-argument agreement, and result-only agreement.
+The API captures needed to recompute those aggregates remain approval-gated;
+the public target verifies their safety-projected files by hash, schema,
+denominator, gate, and published values.
 
-`make reproduce-paper` runs, in order:
+### Local systems check
 
-| Stage | Script | Paper artifact |
-|---|---|---|
-| Case/task/model metrics + kill criterion | `scripts/compute_dfah_metrics.py` | Table 1 DAR/TAR/Gap/ECD; §4.4 kill criterion (912 / 21.8% / 19.4%; per-model 55.6% Sonnet, 56.6% Gemini Pro) |
-| Cross-case DCB | `scripts/compute_dcb_across_case.py` | Table 1 DCB column |
-| Task-weighted accuracy | `scripts/compute_dfah_accuracy.py` | Table 1 Acc column |
-| Chance-corrected agreement | `scripts/compute_kappa.py` | Table 1 κ column |
-| Ground-truth baselines | `scripts/compute_gt_baselines.py` | Table 1 GT reference row |
-| Tool-call counts | `scripts/compute_tool_call_counts.py` | Appendix B channel matrix |
-| Task-level gap CIs | `scripts/compute_task_gap_cis.py` | Table 5 (B=10,000, seed=42) |
-| Model-level bootstrap CIs | `scripts/compute_bootstrap_cis.py` | Appendix CI table (B=10,000, seed=42) |
-| Metric–accuracy correlations | `scripts/compute_accuracy_metric_correlations.py` | §5.2 orthogonality stats |
-| N=3 subsampling robustness | `scripts/n3_subsampling_sensitivity.py` | §5 robustness (all C(8,3)=56 subsets, 568 case groups, Spearman ρ=1.0) |
+- 800 completed episodes;
+- 792 eligible episodes across 99 eight-replay groups;
+- Gemma 4 E4B: 400/400 eligible;
+- Qwen 3.5: 392/400 eligible after eight parse failures made one group
+  ineligible.
 
-All stochastic stages use `numpy.random.default_rng(seed=42)` and are
-byte-reproducible given the pinned numpy version. `PYTHONHASHSEED=0` is set
-by the harness for belt-and-braces determinism (no result depends on hash
-ordering; all iteration is over sorted keys).
+All eligible local groups repeated the fixed required path. This validates
+capture and replay mechanics in that synthetic harness, not general model
+determinism or financial accuracy.
 
-## Verification semantics
+## Provenance
 
-1. Reference CSVs under `results/` are snapshotted to `build/repro/reference/`.
-2. The full pipeline regenerates every CSV from raw logs.
-3. Regenerated CSVs are diffed against the reference (exact for counts and
-   strings, |a−b| ≤ 1e-12 + 1e-9·|b| for floats).
-4. The paper's headline numbers are asserted **directly against the
-   regenerated CSVs** — an edited reference file cannot mask drift.
-5. On failure, the reference is restored and divergent outputs are preserved
-   in `build/repro/regenerated/` for inspection.
+The research API contains deterministic JSON canonicalization, SHA-256 hash
+chains, and Ed25519 certificate utilities. The prospective package records
+manifests, versioned suites, episode keys, parse provenance, and resumable
+commits.
 
-## Provenance layer
+These capabilities do not imply that raw provider logs or signed provider
+bundles are publicly releasable. Public releases should contain only approved,
+sanitized artifacts.
+
+## Test targets
 
 ```bash
-python3 -m bench.provenance.verify --help
+make test-bench  # frozen research tests, excludes tests/dfah
+make test-dfah   # prospective package tests
+make test-all    # both layers
 ```
 
-Audit bundles are hash-chained (SHA-256) and signed (Ed25519 via the
-`cryptography` package — the provenance layer has no other non-stdlib
-dependency). Canonical JSON serialization is deterministic for the value
-domain used; it does **not** claim RFC 8785 compliance.
+All tests are offline unless an explicitly opt-in integration environment is
+configured.
 
-## Known caveats (disclosed, not hidden)
+## Version 2 correction note
 
-1. **Anthropic temperature (corpus episodes logged before 2026-06-09).**
-   The runner omitted `temperature` in Anthropic API calls, so Claude
-   episodes in the corpus were sampled at the provider default (1.0) while
-   their log metadata records 0.0. Ollama and Gemini runs correctly used
-   temperature 0.0. The runner is fixed (explicit `temperature=0.0`,
-   metadata threaded from the same constants as the request — see
-   `tests/test_runner_protocol.py`). Implications for interpretation are
-   discussed in the paper's limitations section: Gemini 2.5 Pro exhibits the
-   same trajectory-divergence phenomenon (56.6% diverger rate) at
-   temperature 0.0, so the paper's central claim does not rest on the
-   Claude rows.
-2. **Evidence channel for decision-divergent groups.** A legacy logging bug
-   overwrote tool outputs with empty lists when a case group was re-logged
-   as non-deterministic (1,499 episodes). ECD is therefore computed on the
-   case groups where evidence survived — predominantly decision-stable
-   groups. The logger is fixed (re-logs preserve outputs; an overwrite guard
-   refuses to clobber richer full logs). The destroyed outputs are not
-   recoverable, so published ECD values are unchanged and the
-   channel-availability matrix (Appendix B) reflects actual coverage.
-3. **Replay vs. inference-stack determinism.** API models (Claude, Gemini)
-   expose no seed parameter; API-layer nondeterminism is part of the
-   deployment behavior under measurement (paper §3.2).
+Version 2:
 
-## Test suite
+- corrects `claude-opus-4-20250514` from “Claude Opus 4.5” to **Claude Opus
+  4**;
+- excludes the inconsistent portfolio fixture and its dependent results;
+- removes historical evidence-contact analysis affected by nonrandom
+  missingness;
+- formalizes fail-closed replay eligibility; and
+- adds separate prospective argument/result-aware evaluations.
 
-```bash
-make test-bench   # = python3 -m pytest tests/ -q
-```
-
-- Metric math: `test_dcb.py`, `test_ecd.py`, `test_scdr.py` (embeddings mocked — no network)
-- Schema/round-trip: `test_schema.py`
-- Provenance: `test_canonicalize.py`, `test_chain.py`, `test_certificate.py`, `test_verify.py`
-- Stats/bootstrap determinism: `test_stats.py`
-- Pipeline conventions (TAR/DAR denominators, kill criterion, aggregation weighting): `test_dfah_pipeline.py`
-- Runner replay protocol (temperature, logged-metadata honesty, evidence preservation, decision parsing): `test_runner_protocol.py`
-- Domain extension (§3.1, zero-metric-change): `test_domain_extension.py`
-
-## Domain-agnostic claim (§3.1)
-
-```bash
-python3 examples/domain_extension_medical.py
-```
-
-Registers a medical-triage ontology (escalate / treat / refer) with two mock
-tools and computes DAR/TAR/ECD/DCB with the unmodified `bench/` library.
+The central conclusion remains unchanged: stable decisions can conceal
+unstable observable tool paths.

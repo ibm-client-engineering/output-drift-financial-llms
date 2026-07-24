@@ -5,7 +5,7 @@ Generate synthetic financial database (toy_finance.sqlite) for evaluation.
 Uses Faker library to create realistic transactions, accounts, and balances
 for deterministic SQL query evaluation.
 
-Based on methodology from ACM ICAIF 2025:
+Based on methodology from the 2025 AI4F Workshop paper:
 "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
 import sqlite3

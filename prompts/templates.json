@@ -97,7 +97,7 @@
   "metadata": {
     "version": "1.0.0",
     "paper": "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows",
-    "conference": "ACM ICAIF 2025",
+    "venue": "AI4F Workshop 2025",
     "authors": ["Raffi Khatchadourian", "Rolando Franco"],
     "created": "2025-11-01",
     "license": "Apache 2.0"

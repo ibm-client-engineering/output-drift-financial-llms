@@ -1,0 +1,13 @@
+model,model_name,metric,median,p2_5,p97_5,n_subsamples,subsample_replays,conditioning
+qwen3.5_latest,Qwen 3.5,dar,1.0,1.0,1.0,500,3,conditional_on_observed_8_replays
+qwen3.5_latest,Qwen 3.5,tar,1.0,1.0,1.0,500,3,conditional_on_observed_8_replays
+qwen3.5_latest,Qwen 3.5,gap,0.0,0.0,0.0,500,3,conditional_on_observed_8_replays
+gemma4_latest,Gemma 4,dar,1.0,0.9966666666666666,1.0,500,3,conditional_on_observed_8_replays
+gemma4_latest,Gemma 4,tar,0.9966666666666667,0.9933333333333333,1.0,500,3,conditional_on_observed_8_replays
+gemma4_latest,Gemma 4,gap,0.0,0.0,0.0033333333333333335,500,3,conditional_on_observed_8_replays
+qwen2.5_7b-instruct,Qwen 2.5 7B,dar,0.9966666666666666,0.99,1.0,500,3,conditional_on_observed_8_replays
+qwen2.5_7b-instruct,Qwen 2.5 7B,tar,0.9966666666666666,0.99,1.0,500,3,conditional_on_observed_8_replays
+qwen2.5_7b-instruct,Qwen 2.5 7B,gap,0.0,-0.0033333333333333335,0.0033333333333333335,500,3,conditional_on_observed_8_replays
+gpt-oss_20b,GPT-OSS 20B,dar,0.98,0.96825,0.9933333333333333,500,3,conditional_on_observed_8_replays
+gpt-oss_20b,GPT-OSS 20B,tar,0.98,0.9633333333333333,0.99,500,3,conditional_on_observed_8_replays
+gpt-oss_20b,GPT-OSS 20B,gap,0.003333333333333333,-0.006666666666666667,0.01,500,3,conditional_on_observed_8_replays

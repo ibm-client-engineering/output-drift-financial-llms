@@ -7,5 +7,5 @@ mistral_7b,Mistral 7B,3,945,0.0,0.0,0.0,100.0
 gpt-oss_20b,GPT-OSS 20B,3,1200,3.59,3.98,3.36,0.7
 gemini-2.0-flash,Gemini 2.0 Flash,3,450,3.61,3.78,3.45,0.4
 gemini-2.5-pro,Gemini 2.5 Pro,2,271,3.08,3.35,2.81,6.2
-claude-opus-4-20250514,Claude Opus 4.5,3,375,4.53,4.88,4.16,0.0
+claude-opus-4-20250514,Claude Opus 4,3,375,4.53,4.88,4.16,0.0
 claude-sonnet-4-20250514,Claude Sonnet 4,3,450,4.53,5.01,3.99,0.0

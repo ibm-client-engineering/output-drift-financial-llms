@@ -21,7 +21,7 @@ Regulatory Framework References:
     - GAAP ASC 450: Materiality threshold of 5% for financial statement disclosures.
     - EU AI Act (2024): High-risk AI systems require documented decision rationale.
 
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 """
 
 from typing import Dict, Any, List, Optional, Callable
@@ -553,6 +553,6 @@ def get_regulatory_metadata_for_task(task_type: str) -> Dict[str, Any]:
             "task_type": task_type,
             "applicable_requirements": applicable_req_ids,
             "requirements_detail": requirements_detail,
-            "compliance_standard": "ACM_ICAIF_2025_Financial_AI"
+            "compliance_standard": "AI4F_2025_Financial_AI"
         }
     }

@@ -1,5 +1,5 @@
 benchmark,model,model_display,n_cases,total_runs,p_e_chance_agreement,mean_p_o_observed_agreement,kappa
-compliance,claude-opus-4-20250514,Claude Opus 4.5,50,150,0.3749,0.8067,0.6907
+compliance,claude-opus-4-20250514,Claude Opus 4,50,150,0.3749,0.8067,0.6907
 compliance,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,0.4701,0.88,0.7735
 compliance,deepseek-r1_8b,DeepSeek-R1 8B,2,14,0.5102,1.0,1.0
 compliance,gemini-2.0-flash,Gemini 2.0 Flash,50,150,0.3486,0.7867,0.6725
@@ -10,7 +10,7 @@ compliance,granite3.3_latest,Granite 3.3,50,400,0.6264,1.0,1.0
 compliance,mistral_7b,Mistral 7B,50,400,0.5395,0.98,0.9566
 compliance,qwen2.5_7b-instruct,Qwen 2.5 7B,50,400,0.6264,1.0,1.0
 compliance,qwen3.5_latest,Qwen 3.5,50,400,0.3632,1.0,1.0
-dataops,claude-opus-4-20250514,Claude Opus 4.5,25,75,0.6964,0.76,0.2096
+dataops,claude-opus-4-20250514,Claude Opus 4,25,75,0.6964,0.76,0.2096
 dataops,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,0.8872,0.8933,0.0544
 dataops,gemini-2.0-flash,Gemini 2.0 Flash,50,150,0.4758,0.96,0.9237
 dataops,gemma4_latest,Gemma 4,50,400,0.5096,1.0,1.0
@@ -19,7 +19,7 @@ dataops,granite3.3_latest,Granite 3.3,50,400,0.9608,1.0,1.0
 dataops,mistral_7b,Mistral 7B,18,145,0.4133,1.0,1.0
 dataops,qwen2.5_7b-instruct,Qwen 2.5 7B,50,400,0.4066,0.985,0.9747
 dataops,qwen3.5_latest,Qwen 3.5,50,400,0.3664,1.0,1.0
-portfolio,claude-opus-4-20250514,Claude Opus 4.5,50,150,0.5228,0.8533,0.6927
+portfolio,claude-opus-4-20250514,Claude Opus 4,50,150,0.5228,0.8533,0.6927
 portfolio,claude-sonnet-4-20250514,Claude Sonnet 4,50,150,0.3896,0.9067,0.8471
 portfolio,gemini-2.0-flash,Gemini 2.0 Flash,50,150,0.4646,0.9733,0.9502
 portfolio,gemini-2.5-pro,Gemini 2.5 Pro,46,139,0.3406,0.6667,0.4945

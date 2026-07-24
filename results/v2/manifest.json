@@ -1,0 +1,227 @@
+{
+  "archived_v1": {
+    "case_groups": 1338,
+    "episodes": 8127,
+    "location": "results/*.csv",
+    "status": "historical machine outputs retained for lineage; not the corrected-v2 default"
+  },
+  "artifacts": [
+    {
+      "bytes": 1447609,
+      "data_rows": 8129,
+      "path": "results/v2/fixtures/retrospective_episodes.jsonl",
+      "sha256": "33917728db1601ab5cde7a354ff93b4428e38c5686e75ebd3b544e53dd062d0a"
+    },
+    {
+      "bytes": 71987,
+      "data_rows": 719,
+      "path": "results/v2/retrospective/analysis_case_level.csv",
+      "sha256": "c44e0a542579f048cbe2875ac921858fc3361e8b2c59d9e99ba355453481b2d9"
+    },
+    {
+      "bytes": 277,
+      "data_rows": 1,
+      "path": "results/v2/retrospective/analysis_channel_eligibility.csv",
+      "sha256": "dfb81fe42699ee83ca380c01dd0a15980e518d96e240f924602fc4422ba3ad9c"
+    },
+    {
+      "bytes": 6422,
+      "data_rows": 56,
+      "path": "results/v2/retrospective/analysis_cluster_cis.csv",
+      "sha256": "ea99dce74d5c2006c8fb77d3738021d95d0540a89cbd460bee040e917103daa0"
+    },
+    {
+      "bytes": 495,
+      "data_rows": 5,
+      "path": "results/v2/retrospective/analysis_corpus_lineage.csv",
+      "sha256": "d65bffad58a30d7ac25d1f56a8f99308920df9c09d43d1ab980f179cedc4110b"
+    },
+    {
+      "bytes": 1177,
+      "data_rows": 10,
+      "path": "results/v2/retrospective/analysis_fallback_bound.csv",
+      "sha256": "a93e0cd2d4d6ae1af2a60316eb37b9cf69d9b2c0ba63281be4218ac468087cd6"
+    },
+    {
+      "bytes": 1282,
+      "data_rows": 8,
+      "path": "results/v2/retrospective/analysis_first_replay.csv",
+      "sha256": "8db703c8b53fa09f0b8fefd28e1cd8117fee6f61c8682cfe0f5e52e7b605aae9"
+    },
+    {
+      "bytes": 12359,
+      "data_rows": 100,
+      "path": "results/v2/retrospective/analysis_flash_leave_one_case_out.csv",
+      "sha256": "90f9bfbb05059d8869b9c7e23caaf189baeeaf38c1742d44f4f158865d82b95e"
+    },
+    {
+      "bytes": 1269,
+      "data_rows": 12,
+      "path": "results/v2/retrospective/analysis_n3_subsample.csv",
+      "sha256": "0885665dc9efedf95f60c15395555473b2b8ccb87375b5c2241aba374e062bb3"
+    },
+    {
+      "bytes": 304,
+      "data_rows": 2,
+      "path": "results/v2/retrospective/analysis_permutation.csv",
+      "sha256": "5c74d0a34eaa38627b1969238b475a574359c6a04ec698bf8d6d790588b05338"
+    },
+    {
+      "bytes": 941,
+      "data_rows": 10,
+      "path": "results/v2/retrospective/analysis_rq2_decomposition.csv",
+      "sha256": "58884bddbdd2e8c24c9262c1029477de9fc00473b3c93e6db30200ec4062c2ee"
+    },
+    {
+      "bytes": 8448,
+      "data_rows": 47,
+      "path": "results/v2/retrospective/analysis_rq2_tool_set_changes.csv",
+      "sha256": "356b7f11a3e07b48af21ed5271a76cd99175dc597ea9f71b124bca0fe2025383"
+    },
+    {
+      "bytes": 830,
+      "data_rows": 8,
+      "path": "results/v2/retrospective/analysis_shadow_flag_load.csv",
+      "sha256": "f9895fce7fda92b0ceee17ade801468ada19feb3effc221bdfef33c7ac1e0fc2"
+    },
+    {
+      "bytes": 1656,
+      "data_rows": 8,
+      "path": "results/v2/retrospective/analysis_summary.csv",
+      "sha256": "bd5b7dbf4843ce1a6799d877046ea324cd190d86005c2e0cd48e4eebd20e85aa"
+    },
+    {
+      "bytes": 3056,
+      "data_rows": 15,
+      "path": "results/v2/retrospective/analysis_task_level.csv",
+      "sha256": "3b2c204ef5d3a69e52adf66b2d76f1d1ec173bca04eec6694bf539dd490f30de"
+    },
+    {
+      "bytes": 345,
+      "data_rows": 2,
+      "path": "results/v2/retrospective/analysis_zero_tool_configuration_exclusions.csv",
+      "sha256": "b1ff2503dff493f9c549a8c53671253196e03523e40e0a3545eaf9f1c375e740"
+    },
+    {
+      "bytes": 360,
+      "data_rows": 2,
+      "path": "results/v2/retrospective/analysis_zero_tool_inclusion_sensitivity.csv",
+      "sha256": "84bdec910222f1c8d8c24fee666ffa690d138417e3eb924d6353dccbfe9f7464"
+    },
+    {
+      "bytes": 2790,
+      "data_rows": 2,
+      "path": "results/v2/extensions/analysis_local_reconciliation_extension.csv",
+      "sha256": "291effe5a933d946f71c3860642f892ca665ec4418f8723c78735139fe5dba6e"
+    },
+    {
+      "bytes": 65,
+      "path": "results/v2/extensions/analysis_local_reconciliation_extension.csv.sha256",
+      "sha256": "44ed0177e460cedae72fb223439882f917e398e12804c5dc060a7213385844ae"
+    },
+    {
+      "bytes": 2858,
+      "data_rows": 2,
+      "path": "results/v2/extensions/analysis_prospective_components.csv",
+      "sha256": "3f83e27dd0e5f4bf010bae29a8a1f30ef8772f31f0844a804aea10b5bc7114b6"
+    },
+    {
+      "bytes": 65,
+      "path": "results/v2/extensions/analysis_prospective_components.csv.sha256",
+      "sha256": "d03b915a7bd1aae502e8dd54515bd6dc4fafc10c2c75a0bbef6f8203cf6ed86f"
+    },
+    {
+      "bytes": 1797,
+      "data_rows": 2,
+      "path": "results/v2/extensions/analysis_v6_diagnostic.csv",
+      "sha256": "bfe3cc1ef40986686347c396d8f7c4ddf68e5b75bee1e84e99bb9527b6e453c7"
+    },
+    {
+      "bytes": 65,
+      "path": "results/v2/extensions/analysis_v6_diagnostic.csv.sha256",
+      "sha256": "429e5f12931955c678b92c673a85d1f268fff57ef6f50d5d3915aab05000bf72"
+    },
+    {
+      "bytes": 47639,
+      "path": "scripts/build_v2_analysis.py",
+      "sha256": "801da4af39441a249eaa05630ed35af8ffdac3dc326acfdce283127629af2dce"
+    },
+    {
+      "bytes": 3456,
+      "path": "scripts/export_v2_fixture.py",
+      "sha256": "294b0248e169281005f17529da31ff06d186968425d1ce20ea98efbce0ddb944"
+    },
+    {
+      "bytes": 10243,
+      "path": "scripts/make_v2_manifest.py",
+      "sha256": "b6304828099566f783395ee003b0b05d3a0d3fc9a41d638fb2acf7f389e31fbe"
+    },
+    {
+      "bytes": 9726,
+      "path": "scripts/reproduce_paper_v2.py",
+      "sha256": "5eae2aedcddedc9ef39d9d186316c7ccdb1fdb9e476f292698e8ce2ae3713f35"
+    }
+  ],
+  "prospective_extensions": {
+    "local_reconciliation": {
+      "eligible_case_groups": 99,
+      "eligible_episodes": 792
+    },
+    "prospective_components": {
+      "eligible_case_groups": 190,
+      "eligible_episodes": 570
+    },
+    "publication_mode": "aggregate_only",
+    "raw_provider_captures_in_release": false,
+    "regeneration": "integrity and schema validation only; raw provider captures remain approval-gated",
+    "v6_diagnostic": {
+      "eligible_case_groups": 190,
+      "eligible_episodes": 570,
+      "global_publication_gate_passed": false
+    }
+  },
+  "release": "arXiv v2 corrected analysis",
+  "retrospective": {
+    "case_groups_with_an_empty_tool_sequence": 9,
+    "empty_tool_sequence_episodes_retained": 25,
+    "exact_model_identity": {
+      "claude-opus-4-20250514": "Claude Opus 4"
+    },
+    "lineage": [
+      {
+        "case_groups": 1340,
+        "episodes": 8129,
+        "stage": "raw_replay_ledger"
+      },
+      {
+        "case_groups": 1338,
+        "episodes": 8127,
+        "stage": "archived_v1_after_singleton_removal"
+      },
+      {
+        "case_groups": 889,
+        "episodes": 5515,
+        "stage": "remove_analyzed_portfolio_fixture"
+      },
+      {
+        "case_groups": 887,
+        "episodes": 5501,
+        "stage": "remove_deepseek_compliance_pilot"
+      },
+      {
+        "case_groups": 719,
+        "episodes": 4157,
+        "stage": "retain_configurations_with_observed_tool_use"
+      }
+    ],
+    "nonempty_tool_sequence_episodes": 4132,
+    "primary_case_groups": 719,
+    "primary_episodes": 4157,
+    "primary_tasks": [
+      "compliance",
+      "dataops"
+    ],
+    "scope_wording": "episodes from configurations with observed tool use"
+  },
+  "schema_version": "dfah-arxiv-v2-public-manifest-v1"
+}

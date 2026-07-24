@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 LLM Output Drift Evaluation Framework
-ACM ICAIF 2025: Financial AI Compliance
+AI4F Workshop 2025: Financial AI Compliance
 
 Experiment runner for evaluating deterministic behavior of LLMs across:
   1) RAG Q&A over SEC filings with citation validation
@@ -680,7 +680,7 @@ def build_prompts() -> Dict[str, List[Tuple[str, str]]]:
 # ----------------------------- Main ------------------------------------------
 async def main():
     parser = argparse.ArgumentParser(
-        description="LLM Output Drift Evaluation Framework (ACM ICAIF 2025)",
+        description="LLM Output Drift Evaluation Framework (AI4F 2025)",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -783,7 +783,7 @@ For more information: https://github.com/ibm-client-engineering/output-drift-fin
 
     print("=" * 70)
     print("LLM Output Drift Evaluation Framework")
-    print("ACM ICAIF 2025: Financial AI Compliance")
+    print("AI4F Workshop 2025: Financial AI Compliance")
     print("=" * 70)
     print(f"Models: {', '.join(models)}")
     print(f"Providers: {', '.join(providers)}")

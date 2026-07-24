@@ -16,7 +16,7 @@ Regulatory Framework:
     - SEC Rule 10b-5: Citation accuracy requirements
     - GAAP ASC 450-20: 5% materiality threshold
 
-ACM ICAIF 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
+AI4F Workshop 2025: "LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"
 ICLR 2026 FinAI: "Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness"
 """
 

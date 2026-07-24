@@ -1,6 +1,6 @@
 # Replayable Agents (v2): Econometric & Agentic Analysis of LLM Drift
 
-> **v2 Extension** of the [LLM Output Drift framework](https://arxiv.org/abs/2511.07585) (v1, ICAIF 2025). This module adds econometric methods for LLMs as measurement instruments and replayability/auditability frameworks for tool-using agents.
+> **v2 Extension** of the [LLM Output Drift framework](https://arxiv.org/abs/2511.07585) (v1, AI4F Workshop 2025). This module adds econometric methods for LLMs as measurement instruments and replayability/auditability frameworks for tool-using agents.
 
 ---
 
@@ -8,7 +8,7 @@
 
 | Version | Focus | Status |
 |---------|-------|--------|
-| **v1** | Output drift measurement (single-turn tasks) | Published (ICAIF 2025) |
+| **v1** | Output drift measurement (single-turn tasks) | Published (AI4F Workshop 2025) |
 | **v2** | Agent trajectory determinism & faithfulness | Current |
 | **v3** | Panel econometrics for drift-contaminated data | Planned |
 
@@ -146,7 +146,7 @@ If building on the drift findings:
   title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
   author={Khatchadourian, Raffi and Franco, Rolando},
   year={2025},
-  howpublished={AI4F Workshop at ACM ICAIF '25, Singapore},
+  howpublished={AI4F Workshop 2025, Singapore},
   eprint={2511.07585},
   archivePrefix={arXiv},
   primaryClass={cs.CL},
