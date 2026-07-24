@@ -25,7 +25,7 @@ source .venv-dfah/bin/activate
 python -m pip install -e ".[otel]"
 ```
 
-The package-index command will be:
+After the first PyPI release:
 
 ```bash
 python -m pip install "dfah-bench[otel]"
