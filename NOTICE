@@ -7,31 +7,13 @@ This product includes software developed by:
 - IBM Corporation
 
 ================================================================================
-PATENT DISCLOSURE
+PATENT AND SCOPE NOTICE
 ================================================================================
 
-This software implements novel techniques for measuring and mitigating LLM
-output drift in regulated financial services applications, which may be
-subject to patent protection.
-
-Patent application(s) related to this work have been filed or are pending
-with IBM Corporation. This includes but is not limited to:
-
-- Cross-provider validation frameworks for LLM determinism
-- Three-tier mitigation protocols for financial AI compliance
-- Task-specific invariant checking for RAG, JSON, and SQL outputs
-- Audit-ready attestation systems with dual-provider validation
-
-This software is licensed under the MIT License. Users should be aware that
-while the MIT License provides broad permissions, additional patent rights
-related to the novel techniques implemented herein may exist and are not
-automatically granted by the MIT License.
-
-For patent licensing inquiries, please contact:
-IBM Corporation
-Intellectual Property Law Department
-New Orchard Road
-Armonk, NY 10504
+Related inventions may be subject to separate patent review. This software
+does not provide regulatory or legal attestation. Nothing in this notice
+confirms patent status, regulatory approval, compliance certification, or
+deployment authorization.
 
 ================================================================================
 THIRD-PARTY COMPONENTS
@@ -48,19 +30,13 @@ This software may include or depend upon third-party open source components:
 See individual component licenses for details.
 
 ================================================================================
-REGULATORY COMPLIANCE NOTICE
+USAGE NOTICE
 ================================================================================
 
-This software is designed for use in regulated financial services environments
-and implements controls aligned with:
-
-- Financial Stability Board (FSB) AI guidance
-- Bank for International Settlements (BIS) requirements
-- Commodity Futures Trading Commission (CFTC) standards
-- Federal Reserve and OCC model risk management frameworks
-
-Users are responsible for ensuring their use complies with applicable
-regulatory requirements in their jurisdiction.
+This project reports observed behavior under stated evaluation conditions.
+It does not establish correctness, safety, regulatory compliance, or
+suitability for a particular deployment. Users remain responsible for their
+own technical, legal, and regulatory review.
 
 ================================================================================
 
