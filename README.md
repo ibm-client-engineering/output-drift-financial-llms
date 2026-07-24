@@ -317,7 +317,7 @@ If you use this framework, please cite:
 
 ```bibtex
 @article{khatchadourian2026dfahbench,
-  title={Same Decision, Different Path: DFAH-Bench for AI Agents in Finance},
+  title={DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making},
   author={Khatchadourian, Raffi},
   journal={arXiv preprint arXiv:2607.20491},
   year={2026},
@@ -363,4 +363,4 @@ This software may be covered by patent applications filed by IBM Corporation. Se
 
 **Questions?** Open an issue or contact: raffi.khatchadourian1@ibm.com · rfranco@us.ibm.com
 
-**Acknowledgments**: IBM watsonx.ai, IBM Research, Ollama, Qwen, OpenAI OSS, ACM ICAIF
+**Acknowledgments**: IBM watsonx.ai, IBM Research, Ollama, Qwen, OpenAI gpt-oss
