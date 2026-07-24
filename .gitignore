@@ -25,6 +25,7 @@ venv/
 ENV/
 env/
 .venv
+.venv*/
 
 # Environment variables and secrets
 .env
@@ -58,6 +59,7 @@ site/
 traces/
 results/
 dfah_results/
+.dfah/
 *.sqlite
 *.db
 

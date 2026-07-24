@@ -1,0 +1,189 @@
+name: DFAH package
+
+on:
+  pull_request:
+    paths:
+      - "src/dfah/**"
+      - "tests/dfah/**"
+      - "examples/dfah_*.py"
+      - "examples/dfah_gate.yaml"
+      - "docs/dfah/**"
+      - "README_DFAH.md"
+      - "CHANGELOG.md"
+      - "CITATION.cff"
+      - "LICENSE"
+      - "NOTICE"
+      - "noxfile.py"
+      - "hatch_build.py"
+      - "pyproject.toml"
+      - ".gitignore"
+      - ".github/workflows/dfah-package.yml"
+      - ".github/workflows/dfah-release.yml"
+  push:
+    branches: [main]
+    paths:
+      - "src/dfah/**"
+      - "tests/dfah/**"
+      - "examples/dfah_*.py"
+      - "examples/dfah_gate.yaml"
+      - "docs/dfah/**"
+      - "README_DFAH.md"
+      - "CHANGELOG.md"
+      - "CITATION.cff"
+      - "LICENSE"
+      - "NOTICE"
+      - "noxfile.py"
+      - "hatch_build.py"
+      - "pyproject.toml"
+      - ".gitignore"
+      - ".github/workflows/dfah-package.yml"
+      - ".github/workflows/dfah-release.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reject changes outside the prospective package boundary
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import os
+          import subprocess
+
+          exact = {
+              ".github/workflows/dfah-package.yml",
+              ".github/workflows/dfah-release.yml",
+              ".gitignore",
+              "CHANGELOG.md",
+              "CITATION.cff",
+              "LICENSE",
+              "NOTICE",
+              "README.md",
+              "README_DFAH.md",
+              "examples/dfah_gate.yaml",
+              "examples/dfah_quickstart.py",
+              "hatch_build.py",
+              "noxfile.py",
+              "pyproject.toml",
+          }
+          prefixes = ("docs/dfah/", "src/dfah/", "tests/dfah/")
+          changed = subprocess.check_output(
+              ["git", "diff", "--name-only", os.environ["BASE_SHA"], os.environ["HEAD_SHA"]],
+              text=True,
+          ).splitlines()
+          unexpected = [
+              path
+              for path in changed
+              if path not in exact and not path.startswith(prefixes)
+          ]
+          if unexpected:
+              for path in unexpected:
+                  print(f"::error file={path}::outside the DFAH package PR boundary")
+              raise SystemExit(
+                  "Package PR changes historical or unreviewed paths; split those changes first."
+              )
+          print(f"Package scope verified: {len(changed)} changed paths.")
+          PY
+
+  test:
+    needs: scope
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev,otel]"
+      - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
+      - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
+      - run: mypy src/dfah
+      - run: pytest -q tests/dfah
+      - name: Enforce metrics and parser coverage
+        env:
+          # Avoid importing DFAH through its installed pytest entry point
+          # before coverage starts measuring the target modules.
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: >-
+          pytest -p pytest_cov -q tests/dfah
+          -k "not episode_timeout_is_unknown_after_dispatch_and_never_reissued"
+          --cov=dfah.metrics
+          --cov=dfah.parse
+          --cov-report=term-missing
+          --cov-fail-under=85
+      - run: python -m build
+
+  distribution:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install --upgrade pip build twine pytest
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - name: Reject internal or credential-bearing archive content
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import tarfile
+          import zipfile
+
+          forbidden_names = (".gitignore", "private_exports", "paper/reviews", ".env")
+          forbidden_content = (b"/Users/", b"/home/", b"C:\\Users\\")
+          credential_test_sources = ("_canonical.py", "test_tools_recovery_security.py")
+          for archive in Path("dist").iterdir():
+              if archive.suffix == ".whl":
+                  with zipfile.ZipFile(archive) as bundle:
+                      members = [(name, bundle.read(name)) for name in bundle.namelist()]
+              else:
+                  with tarfile.open(archive, "r:gz") as bundle:
+                      members = [
+                          (member.name, bundle.extractfile(member).read())
+                          for member in bundle.getmembers()
+                          if member.isfile()
+                      ]
+              for name, payload in members:
+                  assert not any(value in name for value in forbidden_names), name
+                  assert not any(value in payload for value in forbidden_content), name
+                  if not name.endswith(credential_test_sources):
+                      assert b"sk-ant-" not in payload and b"sk-proj-" not in payload, name
+          PY
+      - run: python -m pip install --force-reinstall dist/*.whl
+      - run: dfah doctor
+      - run: dfah suites list
+      - run: pytest --help | grep -- --dfah-report
+      - name: Smoke-test the installed wheel outside the repository
+        run: |
+          smoke_dir="$(mktemp -d)"
+          cd "$smoke_dir"
+          dfah check-agent \
+            --agent dfah.demo:toy_agent \
+            --episode-timeout-s 5
+          dfah run \
+            --agent dfah.demo:toy_agent \
+            --replays 2 \
+            --episode-timeout-s 5 \
+            --out run
+          dfah analyze run --report report.html
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dfah-distributions
+          path: dist/*

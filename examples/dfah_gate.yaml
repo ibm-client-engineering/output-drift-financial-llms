@@ -1,0 +1,10 @@
+required_replays: 3
+min_dar: 0.95
+min_tar_seq: 0.90
+max_gap: 0.05
+max_unanimous_path_change_rate: 0.05
+max_flags_per_100_cases: 5.0
+max_cost_per_case_usd: 0.02
+min_eligible_fraction: 1.0
+min_observed_groups: 20
+require_complete: true
