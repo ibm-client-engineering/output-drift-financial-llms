@@ -1,7 +1,6 @@
 ---
 title: Output Drift in Financial LLMs Workshop
 description: Learn how to measure, analyze, and mitigate output drift in financial AI systems
-logo: images/ibm-blue-background.png
 ---
 
 ## Output Drift in Financial LLMs Workshop
@@ -61,7 +60,7 @@ By the end of this workshop, you will:
 
 This workshop is based on three papers from the same research line:
 
-**["Same Decision, Different Path: DFAH-Bench for AI Agents in Finance"](https://arxiv.org/abs/2607.20491)**
+**["DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"](https://arxiv.org/abs/2607.20491)**
 [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
 [DOI](https://doi.org/10.48550/arXiv.2607.20491) |
 Paper artifacts reproduce from this repository with `make reproduce-paper`
@@ -211,7 +210,7 @@ If you use this framework in your research, please cite:
 
 ```bibtex
 @article{khatchadourian2026dfahbench,
-  title={Same Decision, Different Path: DFAH-Bench for AI Agents in Finance},
+  title={DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making},
   author={Khatchadourian, Raffi},
   journal={arXiv preprint arXiv:2607.20491},
   year={2026},
