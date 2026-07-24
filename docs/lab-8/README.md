@@ -3,7 +3,8 @@
 ## Overview
 
 This lab introduces **DFAH-Bench**, the replay benchmark behind
-*Same Decision, Different Path: DFAH-Bench for AI Agents in Finance*
+*DFAH-Bench: Benchmarking Observable Agent Instability in Financial
+Decision-Making*
 ([arXiv:2607.20491](https://arxiv.org/abs/2607.20491)).
 It asks a practical question: when repeated agent runs reach the same decision,
 did they also follow the same recorded tool path?
