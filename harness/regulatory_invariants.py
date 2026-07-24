@@ -13,8 +13,8 @@ Regulatory Framework References:
       requires "consistent decisions" across identical inputs for regulatory reporting.
     - BIS (Bank for International Settlements): Basel III framework requires
       reproducible risk calculations within defined tolerance bands.
-    - CFTC (Commodity Futures Trading Commission): Rule 17a-4 mandates complete
-      audit trails for automated trading decisions.
+    - CFTC 17 CFR 1.31 addresses records and recordkeeping; applicability to a
+      particular workflow requires qualified review.
     - SEC Rule 17a-4: Requires broker-dealers to preserve records in non-rewritable format.
     - EU AI Act (2024): High-risk AI systems require documented decision rationale.
 
@@ -52,9 +52,8 @@ FSB_IDENTITY_REQUIREMENT: float = 1.0  # 100% identity rate required
 # Citations must map to actual provided documents with high accuracy.
 SEC_CITATION_ACCURACY_THRESHOLD: float = 0.95  # 95% citation validity required
 
-# CFTC Audit Trail Completeness
-# CFTC Rule 17a-4 requires complete, immutable audit trails for all
-# automated trading and advisory decisions.
+# Historical workshop trace-completeness target. CFTC recordkeeping is addressed
+# in 17 CFR 1.31; this benchmark target is not a legal interpretation.
 CFTC_AUDIT_COMPLETENESS_THRESHOLD: float = 1.0  # 100% trace coverage required
 
 

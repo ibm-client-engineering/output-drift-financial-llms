@@ -19,7 +19,7 @@ Historical design notes:
 Regulatory Framework References:
     - FSB BCBS-239: "Consistent and predictable" AI outputs
     - BIS Article 15: Cross-provider validation requirements
-    - CFTC Rule 17a-4: Audit trail completeness
+    - CFTC 17 CFR 1.31: recordkeeping touchpoint; applicability varies
     - SEC Rule 10b-5: Citation accuracy requirements
 AI4F Workshop 2025 / JFDS 2025: "LLM Output Drift: Cross-Provider Validation for Financial Workflows"
 """
