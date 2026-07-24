@@ -16,7 +16,6 @@ on:
       - "noxfile.py"
       - "hatch_build.py"
       - "pyproject.toml"
-      - ".gitignore"
       - ".github/workflows/dfah-package.yml"
       - ".github/workflows/dfah-release.yml"
   push:
@@ -35,7 +34,6 @@ on:
       - "noxfile.py"
       - "hatch_build.py"
       - "pyproject.toml"
-      - ".gitignore"
       - ".github/workflows/dfah-package.yml"
       - ".github/workflows/dfah-release.yml"
 
