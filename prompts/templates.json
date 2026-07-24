@@ -100,6 +100,6 @@
     "venue": "AI4F Workshop 2025",
     "authors": ["Raffi Khatchadourian", "Rolando Franco"],
     "created": "2025-11-01",
-    "license": "Apache 2.0"
+    "license": "MIT"
   }
 }

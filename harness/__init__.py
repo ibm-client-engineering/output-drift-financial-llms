@@ -18,7 +18,7 @@ ICLR 2026 FinAI: "Replayable Financial Agents: A Determinism-Faithfulness Assura
 
 __version__ = "1.1.0"  # Historical workshop API
 __author__ = "Raffi Khatchadourian, Rolando Franco"
-__license__ = "Apache 2.0"
+__license__ = "MIT"
 
 from .deterministic_retriever import (
     DeterministicRetriever,
