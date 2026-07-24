@@ -1,0 +1,114 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dfah-bench"
+version = "0.1.0"
+description = "Replay-based stability measurement for tool-using AI agents"
+readme = "README_DFAH.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Raffi Khatchadourian" }]
+keywords = ["ai-agents", "evaluation", "replay", "financial-ai", "observability"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+dependencies = [
+  "anyio>=4.4",
+  "jsonschema>=4.23",
+  "pydantic>=2.7",
+  "pyyaml>=6",
+  "rich>=13.7",
+  "typer>=0.12",
+  "typing-extensions>=4.10",
+]
+
+[project.urls]
+Homepage = "https://github.com/ibm-client-engineering/output-drift-financial-llms"
+Documentation = "https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/quickstart/"
+Repository = "https://github.com/ibm-client-engineering/output-drift-financial-llms"
+Issues = "https://github.com/ibm-client-engineering/output-drift-financial-llms/issues"
+Paper = "https://arxiv.org/abs/2607.20491"
+Changelog = "https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+otel = ["opentelemetry-api>=1.27", "opentelemetry-sdk>=1.27"]
+dev = [
+  "build>=1.2",
+  "hypothesis>=6.108",
+  "mypy>=1.11",
+  "nox>=2024.4.15",
+  "pytest>=8.2",
+  "pytest-cov>=5",
+  "pytest-randomly>=3.15",
+  "respx>=0.21",
+  "ruff>=0.5",
+  "types-jsonschema>=4.23",
+]
+
+[project.scripts]
+dfah = "dfah.cli:main"
+
+[project.entry-points.pytest11]
+dfah = "dfah.pytest_plugin"
+
+[tool.hatch.build]
+# Explicit allowlists keep research data and unrelated workshop files out of
+# the package distributions.
+ignore-vcs = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dfah"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src/dfah",
+  "/tests/dfah",
+  "/docs/dfah",
+  "/examples/dfah_quickstart.py",
+  "/examples/dfah_gate.yaml",
+  "/README_DFAH.md",
+  "/CHANGELOG.md",
+  "/CITATION.cff",
+  "/LICENSE",
+  "/NOTICE",
+  "/noxfile.py",
+  "/hatch_build.py",
+  "/pyproject.toml",
+]
+
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
+
+[tool.pytest.ini_options]
+# A bare ``pytest`` exercises the installable package. The frozen research
+# suite remains available through ``make test-bench`` and its explicit CI job.
+testpaths = ["tests/dfah"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 96
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"] # formatter owns code width; long report templates remain readable
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+packages = ["dfah"]
+mypy_path = "src"

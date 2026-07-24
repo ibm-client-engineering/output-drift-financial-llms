@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use DFAH-Bench or its replay artifacts, please cite the paper below."
+title: "DFAH-Bench"
+type: software
+version: 0.1.0
+authors:
+  - family-names: Khatchadourian
+    given-names: Raffi
+repository-code: "https://github.com/ibm-client-engineering/output-drift-financial-llms"
+url: "https://ibm-client-engineering.github.io/output-drift-financial-llms/"
+license: MIT
+keywords:
+  - AI agents
+  - replay
+  - observability
+  - evaluation
+  - financial AI
+preferred-citation:
+  type: article
+  title: "Same Decision, Different Path: DFAH-Bench for AI Agents in Finance"
+  authors:
+    - family-names: Khatchadourian
+      given-names: Raffi
+  year: 2026
+  journal: "arXiv"
+  doi: "10.48550/arXiv.2607.20491"
+  url: "https://arxiv.org/abs/2607.20491"
