@@ -12,6 +12,7 @@ import run_dfah_demo
 import run_evaluation
 from scripts.workshop import make_tables, plot_results
 from scripts.workshop import run_dfah_demo as canonical_demo
+from scripts.workshop import run_evaluation as canonical_evaluation
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -59,6 +60,8 @@ def test_runner_output_paths_remain_at_repository_root() -> None:
     assert run_dfah_demo.OUTPUT_DIR == REPO_ROOT / "dfah_results"
     assert canonical_demo.OUTPUT_DIR == REPO_ROOT / "dfah_results"
     assert run_dfah_demo.main is canonical_demo.main
+    assert canonical_evaluation.BASE == REPO_ROOT
+    assert run_evaluation is canonical_evaluation
 
 
 def test_canonical_demo_help_works() -> None:
@@ -73,6 +76,20 @@ def test_canonical_demo_help_works() -> None:
 
     assert completed.returncode == 0, completed.stderr
     assert "--n-cases" in completed.stdout
+
+
+def test_canonical_evaluation_help_works() -> None:
+    completed = subprocess.run(
+        [sys.executable, "-m", "scripts.workshop.run_evaluation", "--help"],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "--providers" in completed.stdout
 
 
 def test_table_help_works_without_results(tmp_path: Path) -> None:
