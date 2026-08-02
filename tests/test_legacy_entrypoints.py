@@ -1,0 +1,58 @@
+"""Compatibility checks for documented workshop entry points."""
+
+from __future__ import annotations
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+import pytest
+
+import run_dfah_demo
+import run_evaluation
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.mark.parametrize(
+    "relative_path",
+    [
+        "run_evaluation.py",
+        "run_dfah_demo.py",
+        "make_tables.py",
+        "plot_results.py",
+        "DFAH.md",
+        "COMMUNITY_FINDINGS.md",
+    ],
+)
+def test_documented_root_paths_remain_available(relative_path: str) -> None:
+    assert (REPO_ROOT / relative_path).is_file()
+
+
+@pytest.mark.parametrize("script", ["run_evaluation.py", "run_dfah_demo.py"])
+def test_runner_help_works_outside_repository(tmp_path: Path, script: str) -> None:
+    env = os.environ.copy()
+    env["MPLBACKEND"] = "Agg"
+    env["MPLCONFIGDIR"] = str(tmp_path / "matplotlib")
+
+    completed = subprocess.run(
+        [sys.executable, str(REPO_ROOT / script), "--help"],
+        cwd=tmp_path,
+        env=env,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "usage:" in completed.stdout
+
+
+def test_runner_output_paths_remain_at_repository_root() -> None:
+    assert run_evaluation.BASE == REPO_ROOT
+    assert run_evaluation.DATA_DIR == REPO_ROOT / "data"
+    assert run_evaluation.RESULTS_DIR == REPO_ROOT / "results"
+    assert run_evaluation.TRACES_DIR == REPO_ROOT / "traces"
+    assert run_dfah_demo.OUTPUT_DIR == REPO_ROOT / "dfah_results"
