@@ -47,8 +47,22 @@ import sqlite3
 import glob
 import pathlib
 import itertools
+import sys
 from dataclasses import dataclass
 from typing import List, Dict, Any, Optional, Tuple
+
+
+def _repository_root() -> pathlib.Path:
+    here = pathlib.Path(__file__).resolve().parent
+    for candidate in (here, *here.parents):
+        if (candidate / "pyproject.toml").is_file():
+            return candidate
+    raise RuntimeError("Could not locate repository root")
+
+
+BASE = _repository_root()
+if str(BASE) not in sys.path:
+    sys.path.insert(0, str(BASE))
 
 import httpx
 import pandas as pd
@@ -81,16 +95,6 @@ DEFAULT_PROVIDERS = ["ollama"]  # Available: "ollama", "watsonx", "mock"
 REPEATS = 16  # n=16 per condition as in paper
 MAX_TOKENS = 512
 CITATION_PATTERN = re.compile(r"\[([^\]]+)\]")
-
-def _repository_root() -> pathlib.Path:
-    here = pathlib.Path(__file__).resolve().parent
-    for candidate in (here, *here.parents):
-        if (candidate / "pyproject.toml").is_file():
-            return candidate
-    raise RuntimeError("Could not locate repository root")
-
-
-BASE = _repository_root()
 DATA_DIR = BASE / "data"
 RESULTS_DIR = BASE / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)

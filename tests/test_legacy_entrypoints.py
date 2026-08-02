@@ -92,6 +92,24 @@ def test_canonical_evaluation_help_works() -> None:
     assert "--providers" in completed.stdout
 
 
+def test_canonical_evaluation_file_help_works_outside_repository(tmp_path: Path) -> None:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts/workshop/run_evaluation.py"),
+            "--help",
+        ],
+        cwd=tmp_path,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "--providers" in completed.stdout
+
+
 def test_table_help_works_without_results(tmp_path: Path) -> None:
     completed = subprocess.run(
         [sys.executable, str(REPO_ROOT / "make_tables.py"), "--help"],
