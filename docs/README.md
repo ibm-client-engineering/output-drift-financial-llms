@@ -90,11 +90,17 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
 - Missing or malformed required channels make a replay group ineligible; they are not treated as agreement
 
-**Earlier workshop contribution**:
-- Determinism is model-specific, not size-based
-- **Gemma2-9B**: 100% observed output agreement in the contributed bounded run
-- **Mistral-7B**: Task-dependent (33% RAG, 100% SQL)
-- Architecture and training matter more than parameter count
+**Community reports and findings:**
+- A November 17, 2025 contributor report preserved four of six stated results
+  but not the materials needed for independent reproduction
+- The bounded observations vary by model/task combination; they do not
+  establish a size law or isolate architecture, provider, task, or harness
+  effects
+- Public issue #2, reported July 20 and fixed August 2, 2026, hardened the
+  legacy validators against absent outputs, unknown task types, and missing
+  evaluations
+- See the dated [community ledger](resources/community-findings.md) for the
+  evidence limits, anonymized review themes, and resolution links
 
 ## Prerequisites
 
@@ -141,7 +147,7 @@ output-drift-financial-llms/
 ├── run_dfah_demo.py        # DFAH demo (no LLM needed)
 ├── Makefile                # make reproduce-paper / make test-bench
 ├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
-├── COMMUNITY_FINDINGS.md   # Independent validation results
+├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
 ├── docs/                   # Workshop documentation (labs 0-8)
 ├── bench/                  # DFAH-Bench library (v3)
 │   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations

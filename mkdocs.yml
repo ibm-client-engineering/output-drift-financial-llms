@@ -30,6 +30,7 @@ nav:
     - Release Process: dfah/releasing.md
   - Resources:
     - Research Paper: resources/paper.md
+    - Community Reports: resources/community-findings.md
     - API Reference: resources/api.md
     - Troubleshooting: resources/troubleshooting.md
 

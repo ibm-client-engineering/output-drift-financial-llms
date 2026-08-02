@@ -1,14 +1,7 @@
-# Community Findings
+# Community reports and findings
 
-> **Work in Progress** - Community members are actively experimenting with the framework. Results below are preliminary.
+The maintained, dated community ledger now lives at
+[`docs/resources/community-findings.md`](docs/resources/community-findings.md).
 
-## Independent Validation (November 17, 2025)
-
-**Paul Merrison** ([paul@paulmerrison.io](mailto:paul@paulmerrison.io), [FINOS](https://www.finos.org/)) tested 6 models (3B-20B) and found that determinism is **model-specific**, not size-based:
-
-- **Qwen2.5-7B**: 100% (confirms paper)
-- **Gemma2-9B**: 100% (new Tier 1 candidate)
-- **Llama3.1-8B**: 62.5% (engineering matters)
-- **Mistral-7B**: Task-dependent (33% RAG, 100% SQL)
-
-Key insight: Architecture and training approach matter more than parameter count alone for deterministic behavior in regulated applications.
+This compatibility page remains at the repository root so existing links and
+published workshop paths continue to work.
