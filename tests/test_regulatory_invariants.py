@@ -119,6 +119,22 @@ def test_explicit_not_evaluated_profile_is_incomplete() -> None:
     assert result["not_evaluated_requirements"] == [missing_id]
 
 
+def test_not_evaluated_status_overrides_contradictory_boolean() -> None:
+    profiles = {
+        requirement_id: {"compliant": True}
+        for requirement_id in TASK_REGULATORY_MAPPINGS["summary"]
+    }
+    missing_id = TASK_REGULATORY_MAPPINGS["summary"][0]
+    profiles[missing_id] = {"compliant": True, "status": "not_evaluated"}
+
+    result = validate_task_compliance("summary", profiles)
+
+    assert result["overall_compliant"] is False
+    assert result["all_profiles_passed"] is False
+    assert result["status"] == "incomplete"
+    assert result["not_evaluated_requirements"] == [missing_id]
+
+
 def test_complete_required_profiles_preserve_aggregate_behavior() -> None:
     passing_profiles = {
         requirement_id: {"compliant": True}

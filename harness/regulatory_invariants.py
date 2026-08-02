@@ -533,13 +533,15 @@ def validate_task_compliance(
         if req_id in validation_results:
             result = validation_results[req_id]
             compliance_results[req_id] = result
-            if not result.get("compliant", False):
+            is_not_evaluated = (
+                result.get("compliant") is None
+                or result.get("status") == "not_evaluated"
+            )
+            if is_not_evaluated:
                 all_compliant = False
-                if (
-                    result.get("compliant") is None
-                    or result.get("status") == "not_evaluated"
-                ):
-                    not_evaluated_requirements.append(req_id)
+                not_evaluated_requirements.append(req_id)
+            elif result.get("compliant") is not True:
+                all_compliant = False
         else:
             compliance_results[req_id] = {
                 "compliant": None,
