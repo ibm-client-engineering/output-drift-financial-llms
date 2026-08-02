@@ -2,6 +2,10 @@
 
 **Replay stability measurement for tool-using AI agents**
 
+> **Research notice:** This is an experimental research project led by Raffi
+> Khatchadourian. The views expressed are personal and do not represent an
+> official position of IBM or any other organization.
+
 DFAH-Bench is a financial AI research artifact and alpha Python package for
 measuring whether repeated agent runs preserve both their decisions and their
 observable execution paths.
