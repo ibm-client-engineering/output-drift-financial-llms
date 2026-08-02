@@ -1,36 +1,51 @@
 #!/usr/bin/env python3
-# Writes LaTeX tables with wrapped text columns and short headers.
-import pandas as pd
-from pathlib import Path
-import matplotlib.pyplot as plt
-import os
+"""Generate the historical workshop tables and composite table figure."""
+
+from __future__ import annotations
+
 import argparse
+from collections.abc import Sequence
+from pathlib import Path
 
-src = Path("results/aggregate.csv")
-outdir = Path("tables"); outdir.mkdir(exist_ok=True)
+import matplotlib.pyplot as plt
+import pandas as pd
 
-df = pd.read_csv(src)
-
-# The current runner emits ``identity_rate`` as a percentage. Older workshop
-# artifacts used ``pct_identical``. Keep table generation compatible with both.
-if "pct_identical" not in df.columns and "identity_rate" in df.columns:
-    df["pct_identical"] = df["identity_rate"]
-
-# Keep columns and give short, print-friendly headers
 COLS_BASE = [
-    "task","provider","model","concurrency","runs",
-    "pct_identical","mean_drift","factual_drift_rate",
-    "schema_violation_rate","decision_flip_rate","mean_latency_s"
+    "task",
+    "provider",
+    "model",
+    "concurrency",
+    "runs",
+    "pct_identical",
+    "mean_drift",
+    "factual_drift_rate",
+    "schema_violation_rate",
+    "decision_flip_rate",
+    "mean_latency_s",
 ]
 COLS_ALL = [
-    "task","provider","model","temp","concurrency","runs",
-    "pct_identical","mean_drift","factual_drift_rate",
-    "schema_violation_rate","decision_flip_rate","mean_latency_s"
+    "task",
+    "provider",
+    "model",
+    "temp",
+    "concurrency",
+    "runs",
+    "pct_identical",
+    "mean_drift",
+    "factual_drift_rate",
+    "schema_violation_rate",
+    "decision_flip_rate",
+    "mean_latency_s",
 ]
 COLS_CROSS_PROVIDER = [
-    "task","provider","model","temp","pct_identical","mean_drift","mean_latency_s"
+    "task",
+    "provider",
+    "model",
+    "temp",
+    "pct_identical",
+    "mean_drift",
+    "mean_latency_s",
 ]
-
 RENAME = {
     "task": "Task",
     "provider": "Prov.",
@@ -45,162 +60,193 @@ RENAME = {
     "decision_flip_rate": "Flip rate",
     "mean_latency_s": "Lat. (s)",
 }
+COLFMT_BASE = "p{1.3cm}p{1.2cm}p{3.0cm}" + "r" * 8
+COLFMT_ALL = "p{1.3cm}p{1.2cm}p{3.0cm}r" + "r" * 8
+COLFMT_CROSS = "p{1.3cm}p{1.2cm}p{3.0cm}r" + "r" * 3
 
-# Format + sort
-def prep(df, cols, sort_cols):
-    out = df[cols].copy()
-    out = out.sort_values(sort_cols).rename(columns=RENAME)
-    return out
 
-baseline = prep(df[df["temp"]==0.0], COLS_BASE, ["task","concurrency"])
-all_rows = prep(df, COLS_ALL, ["task","temp","concurrency"])
+def _repository_root() -> Path:
+    here = Path(__file__).resolve().parent
+    for candidate in (here, *here.parents):
+        if (candidate / "pyproject.toml").is_file():
+            return candidate
+    raise RuntimeError("Could not locate repository root")
 
-# Cross-provider table: filter concurrency in {1,16} and temps in {0.0,0.2}
-cross_provider = df[(df["concurrency"].isin([1, 16])) & (df["temp"].isin([0.0, 0.2]))]
-cross_provider = prep(cross_provider, COLS_CROSS_PROVIDER, ["task","provider","model","temp"])
 
-# Column formats:
-# p{..} for the 3 text columns to allow wrapping; r for numbers.
-# Choose slightly wider model column since it carries "qwen2.5:7b-instruct".
-colfmt_base = "p{1.3cm}p{1.2cm}p{3.0cm}" + "r"*8
-colfmt_all  = "p{1.3cm}p{1.2cm}p{3.0cm}r" + "r"*8  # (+temp)
+REPO_ROOT = _repository_root()
 
-def to_tex(df, colfmt):
-    # Use escape=True so underscores are handled, shorter float format for readability
-    tex = df.to_latex(
+
+def _prepare(frame: pd.DataFrame, columns: list[str], sort_columns: list[str]) -> pd.DataFrame:
+    return frame[columns].copy().sort_values(sort_columns).rename(columns=RENAME)
+
+
+def _load_frames(source: Path) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    frame = pd.read_csv(source)
+    if "pct_identical" not in frame.columns and "identity_rate" in frame.columns:
+        frame["pct_identical"] = frame["identity_rate"]
+
+    baseline = _prepare(frame[frame["temp"] == 0.0], COLS_BASE, ["task", "concurrency"])
+    all_rows = _prepare(frame, COLS_ALL, ["task", "temp", "concurrency"])
+    cross_provider = frame[frame["concurrency"].isin([1, 16]) & frame["temp"].isin([0.0, 0.2])]
+    cross_provider = _prepare(
+        cross_provider,
+        COLS_CROSS_PROVIDER,
+        ["task", "provider", "model", "temp"],
+    )
+    return frame, baseline, all_rows, cross_provider
+
+
+def _to_tex(frame: pd.DataFrame, column_format: str) -> str:
+    return frame.to_latex(
         index=False,
         escape=True,
         float_format="%.3f",
-        column_format=colfmt,
-        longtable=False
+        column_format=column_format,
+        longtable=False,
     )
-    # to_latex emits \begin{tabular} ... keep it; we'll control width from main .tex with adjustbox
-    return tex
 
-def main():
+
+def _extract_latex_rows(tex_content: str) -> str:
+    """Return data rows from either booktabs or classic tabular output."""
+    lines = tex_content.splitlines()
+    stripped = [line.strip() for line in lines]
+
+    if "\\midrule" in stripped:
+        start = stripped.index("\\midrule") + 1
+    else:
+        hlines = [index for index, line in enumerate(stripped) if line == "\\hline"]
+        if not hlines:
+            raise ValueError("LaTeX table has no header boundary")
+        start = hlines[1] + 1 if len(hlines) > 1 else hlines[0] + 1
+
+    end = len(lines)
+    for index in range(start, len(lines)):
+        if stripped[index] in {"\\bottomrule", "\\hline", "\\end{tabular}"}:
+            end = index
+            break
+
+    body = [line for line in lines[start:end] if line.strip()]
+    if not body:
+        raise ValueError("LaTeX table contains no data rows")
+    return "\n".join(body) + "\n"
+
+
+def _format_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    formatted = frame.copy()
+    for column in formatted.columns:
+        if formatted[column].dtype.kind == "f":
+            formatted[column] = formatted[column].map(
+                lambda value: "" if pd.isna(value) else f"{value:.3f}"
+            )
+    return formatted
+
+
+def _style_table(table, frame: pd.DataFrame) -> None:
+    table.auto_set_font_size(False)
+    table.set_fontsize(8)
+    table.scale(1.3, 2.2)
+    for index in range(len(frame.columns)):
+        table[(0, index)].set_facecolor("#40466e")
+        table[(0, index)].set_text_props(weight="bold", color="white", wrap=True)
+    for row in range(len(frame)):
+        for column in range(len(frame.columns)):
+            table[(row + 1, column)].set_text_props(wrap=True)
+
+
+def _render_two_tables_png(
+    top: pd.DataFrame,
+    top_title: str,
+    bottom: pd.DataFrame,
+    bottom_title: str,
+    output_path: Path,
+) -> None:
+    figure = plt.figure(figsize=(20, 16), dpi=150)
+    grid = figure.add_gridspec(nrows=2, ncols=1, height_ratios=[1, 1], hspace=0.4)
+
+    top_axis = figure.add_subplot(grid[0])
+    top_axis.axis("off")
+    top_axis.set_title(top_title, fontsize=16, pad=25, weight="bold")
+    top_table = top_axis.table(
+        cellText=top.values,
+        colLabels=top.columns.tolist(),
+        loc="center",
+        cellLoc="center",
+    )
+    _style_table(top_table, top)
+
+    bottom_axis = figure.add_subplot(grid[1])
+    bottom_axis.axis("off")
+    bottom_axis.set_title(bottom_title, fontsize=16, pad=25, weight="bold")
+    bottom_table = bottom_axis.table(
+        cellText=bottom.values,
+        colLabels=bottom.columns.tolist(),
+        loc="center",
+        cellLoc="center",
+    )
+    _style_table(bottom_table, bottom)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    figure.savefig(output_path, bbox_inches="tight", dpi=150, pad_inches=0.5)
+    plt.close(figure)
+
+
+def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--rows-only", action="store_true",
-                        help="Output rows-only version (no tabular wrapper)")
-    args = parser.parse_args()
+    parser.add_argument(
+        "--rows-only",
+        action="store_true",
+        help="Output rows-only version without a tabular wrapper",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    args = _parse_args(argv)
+    source = Path("results/aggregate.csv")
+    output_directory = Path("tables")
+    output_directory.mkdir(exist_ok=True)
+    frame, baseline, all_rows, cross_provider = _load_frames(source)
 
     if args.rows_only:
-        # Output rows-only version without tabular wrapper
-        # Extract just the body rows by parsing the LaTeX output
-        baseline_tex = to_tex(baseline, colfmt_base)
-        all_rows_tex = to_tex(all_rows, colfmt_all)
-        colfmt_cross = "p{1.3cm}p{1.2cm}p{3.0cm}r" + "r"*3
-        cross_provider_tex = to_tex(cross_provider, colfmt_cross)
-
-        # Extract body rows (skip header and tabular wrapper)
-        def extract_rows(tex_content):
-            lines = tex_content.split('\n')
-            body_lines = []
-            in_body = False
-            for line in lines:
-                if line.strip().startswith('\\hline') and not in_body:
-                    in_body = True
-                    continue
-                elif line.strip().startswith('\\end{tabular}'):
-                    break
-                elif in_body and not line.strip().startswith('\\hline'):
-                    body_lines.append(line)
-            return '\n'.join(body_lines)
-
-        (outdir/"table_1_baseline_rows.tex").write_text(extract_rows(baseline_tex))
-        (outdir/"table_2_all_rows.tex").write_text(extract_rows(all_rows_tex))
-        (outdir/"table_3_cross_provider_rows.tex").write_text(extract_rows(cross_provider_tex))
+        outputs = {
+            "table_1_baseline_rows.tex": _extract_latex_rows(_to_tex(baseline, COLFMT_BASE)),
+            "table_2_all_rows.tex": _extract_latex_rows(_to_tex(all_rows, COLFMT_ALL)),
+            "table_3_cross_provider_rows.tex": _extract_latex_rows(
+                _to_tex(cross_provider, COLFMT_CROSS)
+            ),
+        }
+        for filename, content in outputs.items():
+            (output_directory / filename).write_text(content, encoding="utf-8")
         print("[ok] wrote rows-only tables")
     else:
-        # Regular tabular output
-        (outdir/"table_1_baseline.tex").write_text(to_tex(baseline, colfmt_base))
-        (outdir/"table_2_all.tex").write_text(to_tex(all_rows, colfmt_all))
+        outputs = {
+            "table_1_baseline.tex": _to_tex(baseline, COLFMT_BASE),
+            "table_2_all.tex": _to_tex(all_rows, COLFMT_ALL),
+            "table_3_cross_provider.tex": _to_tex(cross_provider, COLFMT_CROSS),
+        }
+        for filename, content in outputs.items():
+            (output_directory / filename).write_text(content, encoding="utf-8")
+        print("[ok] wrote workshop LaTeX tables")
 
-        # Cross-provider table with appropriate column format
-        colfmt_cross = "p{1.3cm}p{1.2cm}p{3.0cm}r" + "r"*3
-        (outdir/"table_3_cross_provider.tex").write_text(to_tex(cross_provider, colfmt_cross))
+    baseline_original = (
+        frame[frame["temp"] == 0.0][COLS_BASE]
+        .sort_values(["task", "concurrency"])
+        .reset_index(drop=True)
+    )
+    all_rows_original = (
+        frame[COLS_ALL].sort_values(["task", "temp", "concurrency"]).reset_index(drop=True)
+    )
+    figure_path = REPO_ROOT / "figs" / "figure1_tables.png"
+    _render_two_tables_png(
+        _format_frame(baseline_original),
+        "Table 1 (baseline): temp=0.0",
+        _format_frame(all_rows_original),
+        "Table 2 (all): includes temp ∈ {0.0, 0.2}",
+        figure_path,
+    )
+    print("[ok] wrote figs/figure1_tables.png")
+    return 0
 
-        print("[ok] wrote tables/table_1_baseline.tex, tables/table_2_all.tex, and tables/table_3_cross_provider.tex")
-
-# ---- Composite Figure 1 (PNG with both tables stacked) ----
-HERE = Path(__file__).parent
-os.makedirs(HERE/"figs", exist_ok=True)
-
-def _format_df(d):
-    # Show blanks (—not NaN text) for NAs; 3 decimals like LaTeX output
-    d = d.copy()
-    for c in d.columns:
-        if d[c].dtype.kind in "f":
-            d[c] = d[c].map(lambda x: "" if pd.isna(x) else f"{x:.3f}")
-    return d
-
-# For figure generation, use original column names
-baseline_orig = df[df["temp"]==0.0][COLS_BASE].sort_values(["task","concurrency"]).reset_index(drop=True)
-all_rows_orig = df[COLS_ALL].sort_values(["task","temp","concurrency"]).reset_index(drop=True)
-
-bshow = _format_df(baseline_orig)
-ashow = _format_df(all_rows_orig)
-
-def render_two_tables_png(df_top, title_top, df_bottom, title_bottom, outpath):
-    # Improved matplotlib table render with better spacing and text wrapping
-    fig = plt.figure(figsize=(20, 16), dpi=150)
-    gs = fig.add_gridspec(nrows=2, ncols=1, height_ratios=[1, 1], hspace=0.4)
-
-    # Top table
-    ax1 = fig.add_subplot(gs[0])
-    ax1.axis("off")
-    ax1.set_title(title_top, fontsize=16, pad=25, weight='bold')
-
-    table1 = ax1.table(cellText=df_top.values,
-                       colLabels=df_top.columns.tolist(),
-                       loc="center",
-                       cellLoc="center")
-    table1.auto_set_font_size(False)
-    table1.set_fontsize(8)
-    table1.scale(1.3, 2.2)  # More vertical space
-
-    # Style header row with better text wrapping
-    for i in range(len(df_top.columns)):
-        table1[(0, i)].set_facecolor('#40466e')
-        table1[(0, i)].set_text_props(weight='bold', color='white', wrap=True)
-
-    # Enable text wrapping for all cells
-    for i in range(len(df_top)):
-        for j in range(len(df_top.columns)):
-            table1[(i+1, j)].set_text_props(wrap=True)
-
-    # Bottom table
-    ax2 = fig.add_subplot(gs[1])
-    ax2.axis("off")
-    ax2.set_title(title_bottom, fontsize=16, pad=25, weight='bold')
-
-    table2 = ax2.table(cellText=df_bottom.values,
-                       colLabels=df_bottom.columns.tolist(),
-                       loc="center",
-                       cellLoc="center")
-    table2.auto_set_font_size(False)
-    table2.set_fontsize(8)
-    table2.scale(1.3, 2.2)  # More vertical space
-
-    # Style header row with better text wrapping
-    for i in range(len(df_bottom.columns)):
-        table2[(0, i)].set_facecolor('#40466e')
-        table2[(0, i)].set_text_props(weight='bold', color='white', wrap=True)
-
-    # Enable text wrapping for all cells
-    for i in range(len(df_bottom)):
-        for j in range(len(df_bottom.columns)):
-            table2[(i+1, j)].set_text_props(wrap=True)
-
-    fig.savefig(outpath, bbox_inches="tight", dpi=150, pad_inches=0.5)
-    plt.close(fig)
-
-# Generate the composite figure
-render_two_tables_png(
-    bshow, "Table 1 (baseline): temp=0.0",
-    ashow, "Table 2 (all): includes temp ∈ {0.0, 0.2}",
-    HERE/"figs"/"figure1_tables.png"
-)
-print("[ok] wrote figs/figure1_tables.png")
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

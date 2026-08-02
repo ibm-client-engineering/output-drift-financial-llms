@@ -7,8 +7,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import make_tables
 import pytest
-
 import run_dfah_demo
 import run_evaluation
 
@@ -56,3 +56,31 @@ def test_runner_output_paths_remain_at_repository_root() -> None:
     assert run_evaluation.RESULTS_DIR == REPO_ROOT / "results"
     assert run_evaluation.TRACES_DIR == REPO_ROOT / "traces"
     assert run_dfah_demo.OUTPUT_DIR == REPO_ROOT / "dfah_results"
+
+
+def test_table_help_works_without_results(tmp_path: Path) -> None:
+    completed = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "make_tables.py"), "--help"],
+        cwd=tmp_path,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "--rows-only" in completed.stdout
+
+
+def test_rows_only_export_supports_booktabs() -> None:
+    content = """\\begin{tabular}{lr}
+\\toprule
+Name & Value \\\\
+\\midrule
+alpha & 1 \\\\
+beta & 2 \\\\
+\\bottomrule
+\\end{tabular}
+"""
+
+    assert make_tables._extract_latex_rows(content) == "alpha & 1 \\\\\nbeta & 2 \\\\\n"
