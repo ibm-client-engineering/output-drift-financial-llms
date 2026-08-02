@@ -7,10 +7,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-import make_tables
 import pytest
 import run_dfah_demo
 import run_evaluation
+from scripts.workshop import make_tables
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -70,6 +70,18 @@ def test_table_help_works_without_results(tmp_path: Path) -> None:
 
     assert completed.returncode == 0, completed.stderr
     assert "--rows-only" in completed.stdout
+
+    canonical = subprocess.run(
+        [sys.executable, "-m", "scripts.workshop.make_tables", "--help"],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert canonical.returncode == 0, canonical.stderr
+    assert "--rows-only" in canonical.stdout
 
 
 def test_rows_only_export_supports_booktabs() -> None:
