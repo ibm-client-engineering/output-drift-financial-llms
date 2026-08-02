@@ -7,11 +7,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-import plot_results
 import pytest
 import run_dfah_demo
 import run_evaluation
-from scripts.workshop import make_tables
+from scripts.workshop import make_tables, plot_results
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
@@ -112,3 +111,15 @@ def test_plot_help_works_without_results(tmp_path: Path) -> None:
     assert completed.returncode == 0, completed.stderr
     assert "workshop figures" in completed.stdout
     assert plot_results.TASKS == ["rag", "summary", "sql"]
+
+    canonical = subprocess.run(
+        [sys.executable, "-m", "scripts.workshop.plot_results", "--help"],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert canonical.returncode == 0, canonical.stderr
+    assert "workshop figures" in canonical.stdout
