@@ -11,6 +11,7 @@ pandas>=2.0.0
 numpy>=1.24.0
 scikit-learn>=1.3.0
 scipy>=1.14.0              # Statistical analysis for plot_results.py
+statsmodels>=0.14.0        # Econometric validation and replay demo modules
 
 # Visualization and reporting
 matplotlib>=3.7.0          # Required for plot_results.py
