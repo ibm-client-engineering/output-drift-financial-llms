@@ -85,6 +85,7 @@ with the [package guide](README_DFAH.md) and the
 | Try DFAH locally | [Run the bundled demo](#quick-start-local-free-and-no-api-key) |
 | Test an existing agent | `dfah check-agent --agent package.module:agent` |
 | Explore the published results | [Live results explorer](https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/) |
+| Review community reports and resolved defects | [Community reports and findings](docs/resources/community-findings.md) |
 | Reproduce DFAH-Bench v2 | `make reproduce-paper` and [the reproducibility guide](REPRODUCIBILITY.md) |
 | Use the interactive workshop | [Workshop labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
 
@@ -249,7 +250,7 @@ python econometrics/benchmarks/run_all.py
 
 Maintained implementations of the four root workshop launchers live under
 `scripts/workshop/`. See the [historical harness guide](DFAH.md),
-[community findings](COMMUNITY_FINDINGS.md), [agent benchmark guide](econometrics/benchmarks/README.md),
+[community reports and findings](docs/resources/community-findings.md), [agent benchmark guide](econometrics/benchmarks/README.md),
 and [econometrics guide](econometrics/README.md).
 
 ### Optional provider setup
@@ -386,8 +387,8 @@ Removing those launchers would break published labs and external command paths.
 | `harness/`, `providers/`, `prompts/`, `data/` | Historical output-drift evaluation components |
 | `econometrics/` | Replayable Agents benchmarks, metrics, and stress tests |
 | `scripts/` | Reproduction, workshop, and data-fetching utilities |
-| `docs/` | Workshop labs, package guides, and results explorer |
-| `DFAH.md`, `COMMUNITY_FINDINGS.md` | Historical public documentation paths |
+| `docs/` | Workshop labs, package guides, community ledger, and results explorer |
+| `DFAH.md`, `COMMUNITY_FINDINGS.md` | Stable compatibility paths for historical public links |
 
 </details>
 
