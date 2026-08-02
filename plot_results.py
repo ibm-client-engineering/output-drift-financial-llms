@@ -1,252 +1,303 @@
 #!/usr/bin/env python3
-# One composite figure per provider/model from results/aggregate.csv
-import pandas as pd, matplotlib.pyplot as plt
-from pathlib import Path
-import numpy as np
+"""Generate historical workshop figures from results/aggregate.csv."""
+
+from __future__ import annotations
+
+import argparse
 import re
-from scipy import stats
+from collections.abc import Sequence
+from pathlib import Path
 
-# --- Load ---
-root = Path(".")
-candidates = [root/"results"/"aggregate.csv", root/"aggregate.csv"]
-for p in candidates:
-    if p.exists():
-        agg = pd.read_csv(p)
-        break
-else:
-    raise FileNotFoundError("aggregate.csv not found in ./results/ or ./")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-# The current runner emits ``identity_rate`` as a percentage. Older workshop
-# artifacts used ``pct_identical``. Keep plotting compatible with both schemas.
-if "pct_identical" not in agg.columns and "identity_rate" in agg.columns:
-    agg["pct_identical"] = agg["identity_rate"]
-
-figs = root/"figs"
-figs.mkdir(exist_ok=True)
-
-# Helper: safe subset
-def sub(df, **kwargs):
-    out = df.copy()
-    for k, v in kwargs.items():
-        out = out[out[k] == v]
-    return out
-
-# Tasks to plot in fixed order
 TASKS = ["rag", "summary", "sql"]
 
-# --- Plot per (provider, model) ---
-for (provider, model), dfpm in agg.groupby(["provider","model"]):
-    temps = sorted(dfpm["temp"].dropna().unique().tolist())
-    concs = sorted(dfpm["concurrency"].dropna().unique().tolist())
 
-    # Prepare 2x2 composite
-    fig, axes = plt.subplots(2, 2, figsize=(12, 8), dpi=150)
-    axes = axes.ravel()
+def _subset(frame: pd.DataFrame, **filters) -> pd.DataFrame:
+    selected = frame.copy()
+    for column, value in filters.items():
+        selected = selected[selected[column] == value]
+    return selected
 
-    # Panels A/B/C: drift vs concurrency per task, lines = temp
-    for i, task in enumerate(TASKS):
-        ax = axes[i]
-        has_any = False
-        for t in temps:
-            dft = sub(dfpm, task=task, temp=t).sort_values("concurrency")
-            if dft.empty:
+
+def _safe_model_name(model: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9_-]", "_", model)
+
+
+def _load_aggregate(root: Path) -> pd.DataFrame:
+    for candidate in (root / "results" / "aggregate.csv", root / "aggregate.csv"):
+        if candidate.exists():
+            aggregate = pd.read_csv(candidate)
+            break
+    else:
+        raise FileNotFoundError("aggregate.csv not found in ./results/ or ./")
+
+    if "pct_identical" not in aggregate.columns and "identity_rate" in aggregate.columns:
+        aggregate["pct_identical"] = aggregate["identity_rate"]
+    return aggregate
+
+
+def _plot_provider_composites(aggregate: pd.DataFrame, figures: Path) -> None:
+    for (provider, model), model_rows in aggregate.groupby(["provider", "model"]):
+        temperatures = sorted(model_rows["temp"].dropna().unique().tolist())
+        figure, axes = plt.subplots(2, 2, figsize=(12, 8), dpi=150)
+        axes = axes.ravel()
+
+        for index, task in enumerate(TASKS):
+            axis = axes[index]
+            has_data = False
+            for temperature in temperatures:
+                task_rows = _subset(
+                    model_rows,
+                    task=task,
+                    temp=temperature,
+                ).sort_values("concurrency")
+                if task_rows.empty:
+                    continue
+                has_data = True
+                axis.plot(
+                    task_rows["concurrency"],
+                    task_rows["mean_drift"],
+                    marker="o",
+                    label=f"T={temperature}",
+                )
+            axis.set_title(f"{task.upper()} — mean drift")
+            axis.set_xlabel("Concurrency")
+            axis.set_ylabel("Normalized Levenshtein")
+            axis.grid(True, alpha=0.3)
+            if has_data:
+                axis.legend(frameon=False)
+            else:
+                axis.text(
+                    0.5,
+                    0.5,
+                    "no data",
+                    ha="center",
+                    va="center",
+                    transform=axis.transAxes,
+                )
+
+        latency_axis = axes[3]
+        for temperature in temperatures:
+            temperature_rows = (
+                model_rows[model_rows["temp"] == temperature]
+                .groupby(["temp", "concurrency"], as_index=False)
+                .agg(mean_latency_s=("mean_latency_s", "mean"))
+                .sort_values("concurrency")
+            )
+            if temperature_rows.empty:
                 continue
-            has_any = True
-            ax.plot(dft["concurrency"], dft["mean_drift"], marker="o", label=f"T={t}")
-        ax.set_title(f"{task.upper()} — mean drift")
-        ax.set_xlabel("Concurrency")
-        ax.set_ylabel("Normalized Levenshtein")
-        ax.grid(True, alpha=0.3)
-        if has_any:
-            ax.legend(frameon=False)
-        else:
-            ax.text(0.5, 0.5, "no data", ha="center", va="center", transform=ax.transAxes)
+            latency_axis.plot(
+                temperature_rows["concurrency"],
+                temperature_rows["mean_latency_s"],
+                marker="o",
+                label=f"latency (T={temperature})",
+            )
 
-    # Panel D: latency & throughput (avg over tasks) vs concurrency, lines = temp
-    ax = axes[3]
-    for t in temps:
-        dft = (dfpm[dfpm["temp"] == t]
-               .groupby(["temp","concurrency"], as_index=False)
-               .agg(mean_latency_s=("mean_latency_s","mean")))
-        dft = dft.sort_values("concurrency")
-        if dft.empty:
-            continue
-        ax.plot(dft["concurrency"], dft["mean_latency_s"], marker="o", label=f"latency (T={t})")
+        latency_axis.set_title("Latency & Throughput (avg over tasks)")
+        latency_axis.set_xlabel("Concurrency")
+        latency_axis.set_ylabel("Mean latency (s)")
+        latency_axis.grid(True, alpha=0.3)
 
-    ax.set_title("Latency & Throughput (avg over tasks)")
-    ax.set_xlabel("Concurrency")
-    ax.set_ylabel("Mean latency (s)")
-    ax.grid(True, alpha=0.3)
+        throughput_axis = latency_axis.twinx()
+        for temperature in temperatures:
+            temperature_rows = (
+                model_rows[model_rows["temp"] == temperature]
+                .groupby(["temp", "concurrency"], as_index=False)
+                .agg(mean_latency_s=("mean_latency_s", "mean"))
+                .sort_values("concurrency")
+            )
+            if temperature_rows.empty:
+                continue
+            throughput = temperature_rows["concurrency"] / temperature_rows["mean_latency_s"]
+            throughput_axis.plot(
+                temperature_rows["concurrency"],
+                throughput,
+                marker="x",
+                linestyle="--",
+                label=f"throughput (T={temperature})",
+            )
+        throughput_axis.set_ylabel("Throughput (QPS)")
 
-    # Twin axis: throughput = concurrency / latency
-    ax2 = ax.twinx()
-    for t in temps:
-        dft = (dfpm[dfpm["temp"] == t]
-               .groupby(["temp","concurrency"], as_index=False)
-               .agg(mean_latency_s=("mean_latency_s","mean")))
-        dft = dft.sort_values("concurrency")
-        if dft.empty:
-            continue
-        thr = dft["concurrency"] / dft["mean_latency_s"]
-        ax2.plot(dft["concurrency"], thr, marker="x", linestyle="--", label=f"throughput (T={t})")
-    ax2.set_ylabel("Throughput (QPS)")
+        lines, labels = latency_axis.get_legend_handles_labels()
+        throughput_lines, throughput_labels = throughput_axis.get_legend_handles_labels()
+        if lines or throughput_lines:
+            throughput_axis.legend(
+                lines + throughput_lines,
+                labels + throughput_labels,
+                frameon=False,
+                loc="best",
+            )
 
-    # Combined legend for panel D
-    lines, labels = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    if lines or lines2:
-        ax2.legend(lines + lines2, labels + labels2, frameon=False, loc="best")
+        figure.suptitle(
+            f"Drift & Performance — {provider} / {model}",
+            y=0.98,
+            fontsize=12,
+        )
+        figure.tight_layout(rect=[0, 0, 1, 0.96])
+        output = figures / f"figure2_{provider}_{_safe_model_name(model)}.png"
+        figure.savefig(output, bbox_inches="tight")
+        plt.close(figure)
 
-    fig.suptitle(f"Drift & Performance — {provider} / {model}", y=0.98, fontsize=12)
-    fig.tight_layout(rect=[0,0,1,0.96])
+    print("[ok] wrote a single composite figure per provider/model to figs/figure2_*.png")
 
-    model_safe = re.sub(r'[^a-zA-Z0-9_-]', '_', model)
-    out = figs / f"figure2_{provider}_{model_safe}.png"
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
 
-print("[ok] wrote a single composite figure per provider/model to figs/figure2_*.png")
-
-# --- New plots ---
-
-# Drift surface heatmaps at concurrency=4
-for (provider, model), dfpm in agg.groupby(["provider","model"]):
-    # Filter to concurrency=4
-    df_surface = dfpm[dfpm["concurrency"] == 4]
-
-    if df_surface.empty:
-        continue
-
-    # Check if we have temperature and top_p data
-    if "top_p" not in df_surface.columns:
-        continue
-
-    temps = sorted(df_surface["temp"].dropna().unique())
-    top_ps = sorted(df_surface["top_p"].dropna().unique())
-
-    if len(temps) < 2 or len(top_ps) < 2:
-        continue  # Need at least 2x2 grid
-
-    # Create small multiples over tasks
-    n_tasks = len(TASKS)
-    fig, axes = plt.subplots(1, n_tasks, figsize=(4*n_tasks, 4), dpi=150)
-    if n_tasks == 1:
-        axes = [axes]
-
-    for i, task in enumerate(TASKS):
-        ax = axes[i]
-        task_data = df_surface[df_surface["task"] == task]
-
-        if task_data.empty:
-            ax.text(0.5, 0.5, "no data", ha="center", va="center", transform=ax.transAxes)
-            ax.set_title(f"{task.upper()}")
+def _plot_drift_surfaces(aggregate: pd.DataFrame, figures: Path) -> None:
+    for (provider, model), model_rows in aggregate.groupby(["provider", "model"]):
+        surface_rows = model_rows[model_rows["concurrency"] == 4]
+        if surface_rows.empty or "top_p" not in surface_rows.columns:
             continue
 
-        # Create heatmap matrix
-        heatmap_data = np.full((len(temps), len(top_ps)), np.nan)
+        temperatures = sorted(surface_rows["temp"].dropna().unique())
+        top_ps = sorted(surface_rows["top_p"].dropna().unique())
+        if len(temperatures) < 2 or len(top_ps) < 2:
+            continue
 
-        for j, temp in enumerate(temps):
-            for k, top_p in enumerate(top_ps):
-                subset = task_data[(task_data["temp"] == temp) & (task_data["top_p"] == top_p)]
-                if not subset.empty:
-                    heatmap_data[j, k] = subset["mean_drift"].iloc[0]
+        figure, axes = plt.subplots(1, len(TASKS), figsize=(4 * len(TASKS), 4), dpi=150)
+        if len(TASKS) == 1:
+            axes = [axes]
 
-        # Plot heatmap
-        im = ax.imshow(heatmap_data, cmap="viridis", aspect="auto")
-        ax.set_xticks(range(len(top_ps)))
-        ax.set_yticks(range(len(temps)))
-        ax.set_xticklabels([f"{p:.1f}" for p in top_ps])
-        ax.set_yticklabels([f"{t:.1f}" for t in temps])
-        ax.set_xlabel("top_p")
-        ax.set_ylabel("temperature")
-        ax.set_title(f"{task.upper()}")
+        for index, task in enumerate(TASKS):
+            axis = axes[index]
+            task_rows = surface_rows[surface_rows["task"] == task]
+            if task_rows.empty:
+                axis.text(
+                    0.5,
+                    0.5,
+                    "no data",
+                    ha="center",
+                    va="center",
+                    transform=axis.transAxes,
+                )
+                axis.set_title(task.upper())
+                continue
 
-        # Add colorbar
-        plt.colorbar(im, ax=ax, shrink=0.6)
+            heatmap = np.full((len(temperatures), len(top_ps)), np.nan)
+            for row, temperature in enumerate(temperatures):
+                for column, top_p in enumerate(top_ps):
+                    selected = task_rows[
+                        (task_rows["temp"] == temperature) & (task_rows["top_p"] == top_p)
+                    ]
+                    if not selected.empty:
+                        heatmap[row, column] = selected["mean_drift"].iloc[0]
 
-    model_safe = re.sub(r'[^a-zA-Z0-9_-]', '_', model)
-    fig.suptitle(f"Drift Surface (conc=4) — {provider} / {model}", y=0.98)
-    fig.tight_layout(rect=[0,0,1,0.94])
+            image = axis.imshow(heatmap, cmap="viridis", aspect="auto")
+            axis.set_xticks(range(len(top_ps)))
+            axis.set_yticks(range(len(temperatures)))
+            axis.set_xticklabels([f"{value:.1f}" for value in top_ps])
+            axis.set_yticklabels([f"{value:.1f}" for value in temperatures])
+            axis.set_xlabel("top_p")
+            axis.set_ylabel("temperature")
+            axis.set_title(task.upper())
+            plt.colorbar(image, ax=axis, shrink=0.6)
 
-    out = figs / f"figure3_drift_surface_{provider}_{model_safe}.png"
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
+        figure.suptitle(f"Drift Surface (conc=4) — {provider} / {model}", y=0.98)
+        figure.tight_layout(rect=[0, 0, 1, 0.94])
+        output = figures / f"figure3_drift_surface_{provider}_{_safe_model_name(model)}.png"
+        figure.savefig(output, bbox_inches="tight")
+        plt.close(figure)
 
-print("[ok] wrote drift surface heatmaps to figs/figure3_*.png")
+    print("[ok] wrote drift surface heatmaps to figs/figure3_*.png")
 
-# Seed-sweep bar plots for SUMMARY at T=0.0, concurrency=16
-for (provider, model), dfpm in agg.groupby(["provider","model"]):
-    # Filter to SUMMARY task, T=0.0, concurrency=16
-    df_seed = dfpm[
-        (dfpm["task"] == "summary") &
-        (dfpm["temp"] == 0.0) &
-        (dfpm["concurrency"] == 16)
-    ]
 
-    if df_seed.empty or "seed" not in df_seed.columns:
-        continue
+def _plot_seed_sweeps(aggregate: pd.DataFrame, figures: Path) -> None:
+    for (provider, model), model_rows in aggregate.groupby(["provider", "model"]):
+        seed_rows = model_rows[
+            (model_rows["task"] == "summary")
+            & (model_rows["temp"] == 0.0)
+            & (model_rows["concurrency"] == 16)
+        ]
+        if seed_rows.empty or "seed" not in seed_rows.columns:
+            continue
 
-    seeds = sorted(df_seed["seed"].dropna().unique())
-    if len(seeds) < 2:
-        continue
+        seeds = sorted(seed_rows["seed"].dropna().unique())
+        if len(seeds) < 2:
+            continue
 
-    # Extract identical_pct values
-    identical_pcts = []
-    sample_sizes = []
-    seed_labels = []
+        percentages: list[float] = []
+        sample_sizes: list[int] = []
+        labels: list[str] = []
+        for seed in seeds:
+            selected = seed_rows[seed_rows["seed"] == seed]
+            if not selected.empty:
+                percentages.append(selected["pct_identical"].iloc[0])
+                sample_sizes.append(int(selected["runs"].iloc[0]))
+                labels.append(str(int(seed)))
+        if not percentages:
+            continue
 
-    for seed in seeds:
-        seed_data = df_seed[df_seed["seed"] == seed]
-        if not seed_data.empty:
-            identical_pcts.append(seed_data["pct_identical"].iloc[0])
-            sample_sizes.append(int(seed_data["runs"].iloc[0]))
-            seed_labels.append(str(int(seed)))
+        lower_bounds = []
+        upper_bounds = []
+        for percentage, sample_size in zip(percentages, sample_sizes, strict=True):
+            if sample_size <= 0:
+                raise ValueError("Seed-sweep aggregate contains a non-positive run count")
+            proportion = percentage / 100.0
+            z_score = 1.96
+            denominator = 1 + z_score**2 / sample_size
+            center = (proportion + z_score**2 / (2 * sample_size)) / denominator
+            margin = (
+                z_score
+                * np.sqrt(
+                    proportion * (1 - proportion) / sample_size
+                    + z_score**2 / (4 * sample_size**2)
+                )
+                / denominator
+            )
+            lower_bounds.append(max(0, (center - margin) * 100))
+            upper_bounds.append(min(100, (center + margin) * 100))
 
-    if not identical_pcts:
-        continue
+        figure, axis = plt.subplots(figsize=(8, 6), dpi=150)
+        positions = np.arange(len(labels))
+        axis.bar(positions, percentages, alpha=0.7)
+        errors = [
+            np.array(percentages) - np.array(lower_bounds),
+            np.array(upper_bounds) - np.array(percentages),
+        ]
+        axis.errorbar(
+            positions,
+            percentages,
+            yerr=errors,
+            fmt="none",
+            capsize=5,
+            color="black",
+        )
+        axis.set_xlabel("Seed")
+        axis.set_ylabel("Identical %")
+        axis.set_title(f"Seed Sweep (SUMMARY, T=0.0, conc=16) — {provider} / {model}")
+        axis.set_xticks(positions)
+        axis.set_xticklabels(labels)
+        axis.grid(True, alpha=0.3)
+        axis.set_ylim(0, 105)
+        figure.tight_layout()
 
-    # Calculate descriptive 95% Wilson intervals using each aggregate row's
-    # actual run count. These do not imply population-level sampling.
-    ci_lower = []
-    ci_upper = []
+        output = figures / f"figure4_seed_sweep_{provider}_{_safe_model_name(model)}.png"
+        figure.savefig(output, bbox_inches="tight")
+        plt.close(figure)
 
-    for pct, n in zip(identical_pcts, sample_sizes):
-        if n <= 0:
-            raise ValueError("Seed-sweep aggregate contains a non-positive run count")
-        p = pct / 100.0
-        # Wilson interval approximation
-        z = 1.96  # 95% CI
-        denom = 1 + z**2/n
-        center = (p + z**2/(2*n)) / denom
-        margin = z * np.sqrt(p*(1-p)/n + z**2/(4*n**2)) / denom
+    print("[ok] wrote seed sweep bar plots to figs/figure4_*.png")
 
-        ci_lower.append(max(0, (center - margin) * 100))
-        ci_upper.append(min(100, (center + margin) * 100))
 
-    # Create bar plot
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=150)
+def _parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Generate historical output-drift workshop figures"
+    )
+    return parser.parse_args(argv)
 
-    x_pos = np.arange(len(seed_labels))
-    bars = ax.bar(x_pos, identical_pcts, alpha=0.7)
 
-    # Add error bars
-    errors = [np.array(identical_pcts) - np.array(ci_lower),
-              np.array(ci_upper) - np.array(identical_pcts)]
-    ax.errorbar(x_pos, identical_pcts, yerr=errors, fmt='none', capsize=5, color='black')
+def main(argv: Sequence[str] | None = None) -> int:
+    _parse_args(argv)
+    root = Path(".")
+    aggregate = _load_aggregate(root)
+    figures = root / "figs"
+    figures.mkdir(exist_ok=True)
 
-    ax.set_xlabel("Seed")
-    ax.set_ylabel("Identical %")
-    ax.set_title(f"Seed Sweep (SUMMARY, T=0.0, conc=16) — {provider} / {model}")
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(seed_labels)
-    ax.grid(True, alpha=0.3)
-    ax.set_ylim(0, 105)
+    _plot_provider_composites(aggregate, figures)
+    _plot_drift_surfaces(aggregate, figures)
+    _plot_seed_sweeps(aggregate, figures)
+    return 0
 
-    model_safe = re.sub(r'[^a-zA-Z0-9_-]', '_', model)
-    fig.tight_layout()
 
-    out = figs / f"figure4_seed_sweep_{provider}_{model_safe}.png"
-    fig.savefig(out, bbox_inches="tight")
-    plt.close(fig)
-
-print("[ok] wrote seed sweep bar plots to figs/figure4_*.png")
+if __name__ == "__main__":
+    raise SystemExit(main())

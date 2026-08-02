@@ -7,6 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+import plot_results
 import pytest
 import run_dfah_demo
 import run_evaluation
@@ -96,3 +97,18 @@ beta & 2 \\\\
 """
 
     assert make_tables._extract_latex_rows(content) == "alpha & 1 \\\\\nbeta & 2 \\\\\n"
+
+
+def test_plot_help_works_without_results(tmp_path: Path) -> None:
+    completed = subprocess.run(
+        [sys.executable, str(REPO_ROOT / "plot_results.py"), "--help"],
+        cwd=tmp_path,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "workshop figures" in completed.stdout
+    assert plot_results.TASKS == ["rag", "summary", "sql"]
