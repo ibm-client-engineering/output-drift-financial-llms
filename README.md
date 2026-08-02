@@ -33,11 +33,19 @@ correctness, safety, or regulatory compliance.
 | **Replayable Financial Agents** (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | Agent determinism, faithfulness metrics, stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | **LLM Output Drift** (2025) | [AI4F Workshop 2025](https://ai4f.org/) | Cross-provider validation, model tier classification | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
-**Code Organization**:
-- **Root** (`harness/`, `providers/`, `run_evaluation.py`): Output Drift evaluation framework
-- **`econometrics/`**: Replayable Agents extensions—benchmarks, stress testing, econometric modules
-- **`bench/`**: frozen DFAH-Bench metrics and paper-reproduction pipeline
-- **`src/dfah/`**: prospective, pip-installable replay package
+## Repository map
+
+The root keeps standard project metadata and documented command launchers. The
+launcher names remain stable for published labs; their maintained workshop
+implementations live under `scripts/workshop/`.
+
+| Area | Paths | Role |
+| --- | --- | --- |
+| DFAH-Bench paper artifact | `bench/`, `results/v2/`, `scripts/reproduce_paper_v2.py` | Frozen research API, corrected v2 outputs, and offline reproduction |
+| DFAH package | `src/dfah/`, `tests/dfah/`, `docs/dfah/` | Installable `dfah-bench` package, conformance tests, and integration guides |
+| Output-drift workshop | Root Python launchers, `scripts/workshop/`, `harness/`, `providers/`, `prompts/`, `data/` | Stable workshop commands and their evaluation components |
+| Replayable Agents | `econometrics/`, `scripts/reproduce_paper.py` | Earlier agent benchmarks, trajectory metrics, econometric extensions, and archived reproduction |
+| Documentation | `docs/` | Workshop labs, package guides, and the results explorer |
 
 ---
 
@@ -303,14 +311,16 @@ a bi-temporal record or a regulatory compliance attestation.
 | `tests/dfah/` | Package conformance, recovery, privacy, and metric tests |
 | `docs/dfah/` | Package quickstart, integration, production, and design guides |
 | `bench/` | Frozen metrics and reproduction code for arXiv:2607.20491 |
-| `run_dfah_demo.py` | Historical DFAH demo |
+| `results/v2/` | Corrected v2 paper outputs and release manifest |
+| `run_evaluation.py`, `run_dfah_demo.py`, `plot_results.py`, `make_tables.py` | Stable compatibility launchers for published commands |
+| `scripts/workshop/` | Maintained implementations behind the root workshop launchers |
 | `DFAH.md` | Historical harness documentation |
 | `examples/dfah_custom_task.py` | Bring-your-own-cases template |
 | `harness/` | Core evaluation framework (retriever, tasks, validation) |
 | `providers/` | LLM providers (watsonx, anthropic, gemini) |
 | `econometrics/` | Replayable Agents research (benchmarks, metrics, stress tests) |
 | `data/` | Synthetic database generation |
-| `scripts/` | SEC data fetching utilities |
+| `scripts/` | Reproduction, workshop, and data-fetching utilities |
 | `prompts/` | Versioned prompt templates |
 
 ---
