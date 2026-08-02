@@ -299,7 +299,7 @@ def validate_gaap_materiality(
 
 
 def validate_fsb_consistency(
-    outputs: List[str],
+    outputs: List[Any],
     require_identity: bool = True
 ) -> Dict[str, Any]:
     """
@@ -309,16 +309,41 @@ def validate_fsb_consistency(
     check does not establish compliance with BCBS 239 or any other rule.
 
     Args:
-        outputs: List of outputs from identical inputs
+        outputs: List of outputs from identical inputs. Every observation must
+            be a non-blank string.
         require_identity: If True, requires 100% identity; otherwise reports rate
 
     Returns:
         Dict with profile status and consistency metrics
     """
-    if not outputs:
+    invalid_output_indices = [
+        index
+        for index, output in enumerate(outputs)
+        if not isinstance(output, str) or not output.strip()
+    ]
+    if not outputs or invalid_output_indices:
+        status = "not_evaluated" if not outputs else "invalid_input"
+        error = (
+            "No outputs provided for consistency validation"
+            if not outputs
+            else "Outputs must be non-blank strings for consistency validation"
+        )
         return {
             "compliant": False,
-            "error": "No outputs provided for consistency validation",
+            "passed_profile": False,
+            "status": status,
+            "error": error,
+            "identity_rate": None,
+            "total_outputs": len(outputs),
+            "identical_outputs": 0,
+            "valid_output_count": len(outputs) - len(invalid_output_indices),
+            "invalid_output_count": len(invalid_output_indices),
+            "invalid_output_indices": invalid_output_indices,
+            "threshold": FSB_IDENTITY_REQUIREMENT,
+            "regulatory_basis": REGULATORY_REQUIREMENTS["fsb_consistent_decisions"],
+            "requirement_id": "fsb_consistent_decisions",
+            "regulatory_body": RegulatoryBody.BENCHMARK.value,
+            "rule_citation": "Historical workshop exact-output profile",
             "interpretation": "Illustrative workshop profile; not legal or regulatory compliance",
         }
 
@@ -330,9 +355,13 @@ def validate_fsb_consistency(
 
     return {
         "compliant": is_compliant,
+        "status": "passed" if is_compliant else "failed",
         "identity_rate": identity_rate,
         "total_outputs": len(outputs),
         "identical_outputs": identical_count,
+        "valid_output_count": len(outputs),
+        "invalid_output_count": 0,
+        "invalid_output_indices": [],
         "threshold": FSB_IDENTITY_REQUIREMENT,
         "regulatory_basis": REGULATORY_REQUIREMENTS["fsb_consistent_decisions"],
         "requirement_id": "fsb_consistent_decisions",
@@ -479,16 +508,39 @@ def validate_task_compliance(
     Returns:
         Composite profile report with legacy compatibility fields
     """
-    applicable_requirements = TASK_REGULATORY_MAPPINGS.get(task_type, [])
+    if task_type not in TASK_REGULATORY_MAPPINGS:
+        return {
+            "task_type": task_type,
+            "overall_compliant": False,
+            "all_profiles_passed": False,
+            "status": "invalid_task_type",
+            "error": f"Unknown task type: {task_type!r}",
+            "supported_task_types": sorted(TASK_REGULATORY_MAPPINGS),
+            "applicable_requirements": [],
+            "validation_results": {},
+            "not_evaluated_requirements": [],
+            "interpretation": "Illustrative workshop profiles; not legal or regulatory compliance",
+            "regulatory_bodies_involved": [],
+        }
+
+    applicable_requirements = TASK_REGULATORY_MAPPINGS[task_type]
 
     compliance_results = {}
     all_compliant = True
+    not_evaluated_requirements = []
 
     for req_id in applicable_requirements:
         if req_id in validation_results:
             result = validation_results[req_id]
             compliance_results[req_id] = result
-            if not result.get("compliant", False):
+            is_not_evaluated = (
+                result.get("compliant") is None
+                or result.get("status") == "not_evaluated"
+            )
+            if is_not_evaluated:
+                all_compliant = False
+                not_evaluated_requirements.append(req_id)
+            elif result.get("compliant") is not True:
                 all_compliant = False
         else:
             compliance_results[req_id] = {
@@ -496,13 +548,24 @@ def validate_task_compliance(
                 "status": "not_evaluated",
                 "requirement": REGULATORY_REQUIREMENTS.get(req_id)
             }
+            not_evaluated_requirements.append(req_id)
+            all_compliant = False
+
+    if not_evaluated_requirements:
+        status = "incomplete"
+    elif all_compliant:
+        status = "passed"
+    else:
+        status = "failed"
 
     return {
         "task_type": task_type,
         "overall_compliant": all_compliant,
         "all_profiles_passed": all_compliant,
+        "status": status,
         "applicable_requirements": applicable_requirements,
         "validation_results": compliance_results,
+        "not_evaluated_requirements": not_evaluated_requirements,
         "interpretation": "Illustrative workshop profiles; not legal or regulatory compliance",
         "regulatory_bodies_involved": list(set(
             REGULATORY_REQUIREMENTS[req_id].body.value
