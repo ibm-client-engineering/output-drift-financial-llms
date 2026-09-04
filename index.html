@@ -897,6 +897,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lab-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 9. Replay, Review, and Retest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1001,6 +1029,62 @@
     
   
     Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dfah/replay-review-loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replay and Review Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dfah/every-eval-ever/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Every Eval Ever Export
   
 
     
@@ -1475,9 +1559,16 @@
 temperature=0.0. In the tested tasks, that variation reached 35%, which
 complicates replay, change review, and monitoring.</p>
 <div class="admonition tip">
-<p class="admonition-title">New: interactive results explorer</p>
-<p>Explore the DFAH-Bench results, play with the replay metrics live in your browser, and drive a real
-  local model through the benchmark — no install needed: <strong><a href="explorer/">Open the Live Explorer</a></strong></p>
+<p class="admonition-title">New in 0.1.2: replay, review, retest</p>
+<p>See a stable decision hide a changing tool path, inspect the failed gate, and check a supplied
+correction: <strong><a href="explorer/#review-loop">Open the recorded example</a></strong> or
+<strong><a href="lab-9/">run it locally in Lab 9</a></strong>. The lab also covers blocking policies and verified EEE export.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Interactive results explorer</p>
+<p>Explore the research results and simulate replay metrics in your browser with no installation.
+Live model replay requires Ollama and a downloaded model:
+<strong><a href="explorer/">Open the explorer</a></strong>.</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">New: corrected DFAH-Bench walkthrough</p>
@@ -1552,9 +1643,15 @@ compare decision and path agreement: <strong><a href="lab-8/">Start Lab 8</a></s
 <td style="text-align: left;">Test the package, then reproduce the paper from the checked-in replay corpus</td>
 <td style="text-align: left;">30 min</td>
 </tr>
+<tr>
+<td style="text-align: left;"><a href="lab-9/">Lab 9: Replay, Review, and Retest</a></td>
+<td style="text-align: left;">Evaluate a correction with a fixed policy and export verified results using 0.1.2</td>
+<td style="text-align: left;">25 min</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Total Duration</strong>: Approximately 3.5-4 hours</p>
+<p><strong>Total Duration</strong>: Approximately 4–4.5 hours. Labs 8 (package track) and 9 can
+also be taken independently, without a model service or API key.</p>
 <h2 id="research-foundation">Research Foundation<a class="headerlink" href="#research-foundation" title="Permanent link">&para;</a></h2>
 <p>This workshop is based on three papers from the same research line:</p>
 <p><strong><a href="https://arxiv.org/abs/2607.20491">"DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"</a></strong>
@@ -1601,7 +1698,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 - Familiarity with LLMs and prompt engineering
 - Basic knowledge of financial concepts
 - Experience with data analysis (pandas, visualization)</p>
-<p><strong>API Access (at least one):</strong>
+<p><strong>Model access for provider experiments (not needed for Labs 8–9):</strong>
 - Ollama (free, local)
 - IBM watsonx.ai (trial available)
 - OpenAI, Anthropic, or other providers</p>
@@ -1630,7 +1727,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 ├── Makefile                # make reproduce-paper / make test-bench
 ├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
 ├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-8)
+├── docs/                   # Workshop documentation (labs 0-9) and explorer
 ├── bench/                  # DFAH-Bench library (v3)
 │   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
 │   ├── spec/               # Replay episode schema + task ontologies

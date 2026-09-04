@@ -10,13 +10,13 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-7/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-9/">
       
       
-        <link rel="prev" href="../lab-6/">
+        <link rel="prev" href="../lab-8/">
       
       
-        <link rel="next" href="../lab-8/">
+        <link rel="next" href="../dfah/quickstart/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Lab 7. Replayable Financial Agents - Output Drift + DFAH</title>
+        <title>Lab 9. Replay, Review, and Retest - Output Drift + DFAH</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lab-7-replayable-financial-agents-iclr-2026" class="md-skip">
+        <a href="#lab-9-replay-review-and-retest" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lab 7. Replayable Financial Agents
+              Lab 9. Replay, Review, and Retest
             
           </span>
         </div>
@@ -664,37 +664,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 7. Replayable Financial Agents
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../lab-7/" class="md-nav__link">
         
   
   
@@ -710,270 +683,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#learning-objectives" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Learning Objectives
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-output-drift-to-agent-determinism" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        From Output Drift to Agent Determinism
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#separate-repeatability-from-task-label-evidence" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Separate repeatability from task-label evidence
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-1-understand-the-benchmarks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 1: Understand the Benchmarks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Understand the Benchmarks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-triage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compliance Triage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#portfolio-constraint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Portfolio Constraint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dataops-exception" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DataOps Exception
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-run-the-deterministic-benchmark-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Run the Deterministic Benchmark Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2: Run the Deterministic Benchmark Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-benchmark" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a single benchmark:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-run-agentic-benchmarks-with-an-llm-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Run Agentic Benchmarks with an LLM (Optional)
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-4-interpret-results" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 4: Interpret Results
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 4: Interpret Results">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-the-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading the Output
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-to-look-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to Look For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-same-conclusion-different-recorded-path-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The "Same Conclusion, Different Recorded Path" Pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-explore-the-metrics-modules" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Explore the Metrics Modules
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key Takeaways
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Reading
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1011,10 +720,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../lab-9/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 9. Replay, Review, and Retest
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1030,6 +766,92 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-install-the-released-package-and-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Install the released package and example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-run-the-two-candidate-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Run the two-candidate loop
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-inspect-what-changed-and-what-stayed-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Inspect what changed and what stayed fixed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-require-a-policy-in-blocking-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Require a policy in blocking mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-export-verified-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Export verified results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-this-to-your-own-change" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply this to your own change
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1499,10 +1321,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
+  <a href="#1-install-the-released-package-and-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Overview
+        1. Install the released package and example
       
     </span>
   </a>
@@ -1510,10 +1332,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#learning-objectives" class="md-nav__link">
+  <a href="#2-run-the-two-candidate-loop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Learning Objectives
+        2. Run the two-candidate loop
       
     </span>
   </a>
@@ -1521,49 +1343,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-concepts" class="md-nav__link">
+  <a href="#3-inspect-what-changed-and-what-stayed-fixed" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Concepts
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Concepts">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#from-output-drift-to-agent-determinism" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        From Output Drift to Agent Determinism
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#separate-repeatability-from-task-label-evidence" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Separate repeatability from task-label evidence
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
+        3. Inspect what changed and what stayed fixed
       
     </span>
   </a>
@@ -1571,88 +1354,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-1-understand-the-benchmarks" class="md-nav__link">
+  <a href="#4-require-a-policy-in-blocking-mode" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 1: Understand the Benchmarks
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 1: Understand the Benchmarks">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#compliance-triage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Compliance Triage
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#portfolio-constraint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Portfolio Constraint
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dataops-exception" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DataOps Exception
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-2-run-the-deterministic-benchmark-simulation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 2: Run the Deterministic Benchmark Simulation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 2: Run the Deterministic Benchmark Simulation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#run-a-single-benchmark" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run a single benchmark:
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-3-run-agentic-benchmarks-with-an-llm-optional" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 3: Run Agentic Benchmarks with an LLM (Optional)
+        4. Require a policy in blocking mode
       
     </span>
   </a>
@@ -1660,60 +1365,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#step-4-interpret-results" class="md-nav__link">
+  <a href="#5-export-verified-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Step 4: Interpret Results
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Step 4: Interpret Results">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#reading-the-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading the Output
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-to-look-for" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What to Look For
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#the-same-conclusion-different-recorded-path-pattern" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        The "Same Conclusion, Different Recorded Path" Pattern
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#step-5-explore-the-metrics-modules" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Step 5: Explore the Metrics Modules
+        5. Export verified results
       
     </span>
   </a>
@@ -1721,21 +1376,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#key-takeaways" class="md-nav__link">
+  <a href="#apply-this-to-your-own-change" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Key Takeaways
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#further-reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Further Reading
+        Apply this to your own change
       
     </span>
   </a>
@@ -1762,219 +1406,157 @@
   
 
 
-<h1 id="lab-7-replayable-financial-agents-iclr-2026">Lab 7: Replayable Financial Agents (ICLR 2026)<a class="headerlink" href="#lab-7-replayable-financial-agents-iclr-2026" title="Permanent link">&para;</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>This lab introduces the <strong>Replayable Financial Agents</strong> research track, extending the Output Drift framework from single-turn tasks (Labs 1-6) to multi-step, tool-using LLM agents. This work is based on the <a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> paper.</p>
-<div class="admonition warning">
-<p class="admonition-title">Historical study boundary</p>
-<p>This lab preserves the earlier three-task study. Its portfolio fixture and
-dependent task-label-match results are not part of the corrected
-DFAH-Bench v2 analysis. Use Lab 8 for the corrected evidence.</p>
-</div>
-<p><strong>Paper</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
-<p><strong>Duration</strong>: ~30 minutes (benchmark simulation) or ~2+ hours (full agentic runs with LLMs)</p>
-<h2 id="learning-objectives">Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permanent link">&para;</a></h2>
-<p>By the end of this lab, you will:</p>
-<ul>
-<li>Understand how determinism extends from single-turn outputs to multi-step agent trajectories</li>
-<li>Run the 3 financial agent benchmarks (Compliance Triage, Portfolio Constraint, DataOps Exception)</li>
-<li>Measure trajectory determinism, decision determinism, and historical
-  task-label match</li>
-<li>Distinguish final-decision agreement from recorded tool-path agreement</li>
-</ul>
-<h2 id="key-concepts">Key Concepts<a class="headerlink" href="#key-concepts" title="Permanent link">&para;</a></h2>
-<h3 id="from-output-drift-to-agent-determinism">From Output Drift to Agent Determinism<a class="headerlink" href="#from-output-drift-to-agent-determinism" title="Permanent link">&para;</a></h3>
-<p>Labs 1-6 measured whether the same prompt produces the same output. Agent determinism asks a harder question: <strong>does an agent take the same actions and reach the same conclusion when given the same task?</strong></p>
+<h1 id="lab-9-replay-review-and-retest">Lab 9: Replay, Review, and Retest<a class="headerlink" href="#lab-9-replay-review-and-retest" title="Permanent link">&para;</a></h1>
+<p>Run a bounded review cycle with <strong>DFAH-Bench 0.1.2</strong>: capture a path change,
+inspect the failed policy checks, and evaluate a supplied correction against
+the same policy. Then export the verified evidence for other evaluation tools.</p>
+<p><strong>Duration:</strong> about 25 minutes. <strong>Requirements:</strong> Python 3.10+, Git, and an
+internet connection for installation. The experiment uses local synthetic
+tools and needs no model service or API key. Optional upstream export validation
+requires Python 3.12+.</p>
+<p>Preview the <a href="../explorer/#review-loop">recorded example in the explorer</a>.
+That page displays saved results; the steps below execute the Python example.</p>
+<h2 id="1-install-the-released-package-and-example">1. Install the released package and example<a class="headerlink" href="#1-install-the-released-package-and-example" title="Permanent link">&para;</a></h2>
+<p>Use a fresh directory and the release tag so the example matches the package:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>--branch<span class="w"> </span>dfah-v0.1.2<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://github.com/ibm-client-engineering/output-drift-financial-llms.git<span class="w"> </span>dfah-012
+<span class="nb">cd</span><span class="w"> </span>dfah-012
+python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-dfah
+<span class="nb">source</span><span class="w"> </span>.venv-dfah/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench==0.1.2'</span>
+python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>--version
+</code></pre></div>
+<p>The version should be <code>0.1.2</code>. On Windows, activate with
+<code>.venv-dfah\Scripts\activate</code> instead. The example is in the tagged repository;
+the package itself comes from PyPI.</p>
+<h2 id="2-run-the-two-candidate-loop">2. Run the two-candidate loop<a class="headerlink" href="#2-run-the-two-candidate-loop" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/dfah_gate_loop.py<span class="w"> </span>--out<span class="w"> </span>.dfah/lab9-review
+</code></pre></div>
+<p>Each candidate runs two cases twice, calling <code>read_status</code> and <code>read_rule</code>
+in every episode: <strong>eight episodes and 16 recorded tool calls</strong> in total.
+The first candidate reverses the order on the second replay of each case.
+The second uses a fixed order. Both implementations are prewritten; the loop
+evaluates exactly two candidates and does not generate or edit code.</p>
 <table>
 <thead>
 <tr>
-<th>Metric</th>
-<th>Definition</th>
-<th>What It Captures</th>
+<th>Candidate</th>
+<th style="text-align: right;">DAR</th>
+<th style="text-align: right;">TARseq</th>
+<th style="text-align: right;">Flagged groups</th>
+<th>Gate</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Signature Determinism</strong></td>
-<td>Identical tool calls with identical arguments</td>
-<td>Exact trajectory reproducibility</td>
+<td><code>01-varying-path</code></td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2 of 2</td>
+<td>Fail</td>
 </tr>
 <tr>
-<td><strong>Decision Determinism</strong></td>
-<td>Same final action (e.g., escalate/dismiss)</td>
-<td>Outcome consistency</td>
-</tr>
-<tr>
-<td><strong>Historical task-label match</strong></td>
-<td>Decision matches the fixture label</td>
-<td>Earlier-study diagnostic</td>
+<td><code>02-fixed-path</code></td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">0 of 2</td>
+<td>Pass</td>
 </tr>
 </tbody>
 </table>
-<h3 id="separate-repeatability-from-task-label-evidence">Separate repeatability from task-label evidence<a class="headerlink" href="#separate-repeatability-from-task-label-evidence" title="Permanent link">&para;</a></h3>
-<p>The earlier study reported across 4,705 agentic runs:</p>
-<blockquote>
-<p>Decision determinism and task accuracy are <strong>not detectably correlated</strong> (r = -0.11, p = 0.63).</p>
-</blockquote>
-<p>The null result does not show that the two quantities are equivalent or that
-either validates deployment. The study used the following descriptive
-groupings; they do not establish hidden reasoning:</p>
-<table>
-<thead>
-<tr>
-<th>Observed grouping</th>
-<th>Example Models</th>
-<th>Determinism</th>
-<th>Historical task-label match</th>
-<th>Recorded behavior</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>High repeatability</strong></td>
-<td>Qwen 2.5 7B, Granite 3.3</td>
-<td>91-98%</td>
-<td>33-42%</td>
-<td>Concentrated decisions in these tasks</td>
-</tr>
-<tr>
-<td><strong>Moderate repeatability</strong></td>
-<td>Claude Sonnet 4, Gemini Flash</td>
-<td>77-86%</td>
-<td>33-53%</td>
-<td>Some recorded path variation</td>
-</tr>
-<tr>
-<td><strong>Variable paths</strong></td>
-<td>Claude Opus 4, Gemini 2.5 Pro</td>
-<td>59-71%</td>
-<td>40-69%</td>
-<td>Highest observed signature variability in these tasks</td>
-</tr>
-</tbody>
-</table>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>The command exits successfully because the supplied correction passes. The
+earlier failure remains recorded. Reusing this output directory is rejected
+before existing evidence changes; use a fresh <code>--out</code> for another run.</p>
+<h2 id="3-inspect-what-changed-and-what-stayed-fixed">3. Inspect what changed and what stayed fixed<a class="headerlink" href="#3-inspect-what-changed-and-what-stayed-fixed" title="Permanent link">&para;</a></h2>
+<p>Open the two local reports in your browser:</p>
+<div class="highlight"><pre><span></span><code>.dfah/lab9-review/01-varying-path/report.html
+.dfah/lab9-review/02-fixed-path/report.html
+</code></pre></div>
+<p>Or inspect the recorded episodes in your terminal:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>inspect<span class="w"> </span>.dfah/lab9-review/01-varying-path<span class="w"> </span>--case<span class="w"> </span>CASE-001
+python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>inspect<span class="w"> </span>.dfah/lab9-review/02-fixed-path<span class="w"> </span>--case<span class="w"> </span>CASE-001
+</code></pre></div>
+<p>For <code>CASE-001</code>, both decisions are <code>proceed</code>. Only the first candidate changes
+the order of its two tool calls. The second case keeps its <code>review</code> decision
+and shows the same path pattern.</p>
+<p>The candidates have separate output directories, adapter versions,
+implementation hashes, manifests, and episode commitments. The cases, tool
+schemas, and gate policy stay fixed. <code>summary.json</code> records both outcomes and
+their commitments; each candidate's <code>gate.json</code> records individual checks.
+Each gate uses a report reloaded and verified against its committed episode store.</p>
+<p>The policy in <code>.dfah/lab9-review/policy.json</code> requires complete,
+artifact-verified evidence, two eligible groups, two replays per case, full
+eligibility, decision and ordered-path agreement of 1.0, and zero gap or flags.
+Run the checks separately:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>gate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/01-varying-path<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/policy.json
+</code></pre></div>
+<p><strong>Expected exit code: 1.</strong> The failed checks are <code>tar_seq</code>, <code>gap</code>, and
+<code>flags_per_100_cases</code>. This is the intended failure. Then run:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>gate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/02-fixed-path<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/policy.json
+</code></pre></div>
+<p><strong>Expected exit code: 0.</strong> Do not join these commands with <code>&amp;&amp;</code>: the first
+failure would prevent the second check from running.</p>
+<p>The two read tools in this example are independent. A path change therefore
+provides a review signal without establishing a wrong decision. The correction
+meets the declared policy on these cases; that is bounded repeatability evidence.</p>
+<h2 id="4-require-a-policy-in-blocking-mode">4. Require a policy in blocking mode<a class="headerlink" href="#4-require-a-policy-in-blocking-mode" title="Permanent link">&para;</a></h2>
+<p>In 0.1.2, a blocking run requires an explicit policy before the agent is loaded.
+This separate CLI demonstration uses the packaged toy suite, with the same
+thresholds. It is not a third candidate in the paired comparison above.</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mode<span class="w"> </span>blocking<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--policy<span class="w"> </span>.dfah/lab9-review/policy.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--replays<span class="w"> </span><span class="m">2</span><span class="w"> </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/lab9-review/toy-blocking
+</code></pre></div>
+<p>The deterministic toy run passes. Omitting <code>--policy</code> is a configuration error;
+a completed replay that fails its policy exits with code 1 and retains its
+evidence for review. For pytest integrations, an explicit <code>--dfah-policy</code> is
+also checked before test collection, even if no test requests a DFAH fixture.
+See the <a href="../dfah/quickstart/">package quickstart</a> for pytest setup.</p>
+<h2 id="5-export-verified-results">5. Export verified results<a class="headerlink" href="#5-export-verified-results" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/02-fixed-path<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/lab9-review/eee-fixed
+</code></pre></div>
+<p>The command prints paths to a UUID-named <code>.every-eval-ever.json</code> aggregate
+and a <code>.jsonl</code> file with <strong>four committed episode records</strong>. It writes local
+files; it does not upload them. Add <code>--aggregate-only</code> when you need only the
+summary. The exporter checks that the report and episode snapshot match.</p>
+<p>For optional validation against the upstream schema, use Python 3.12+:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench[eee]==0.1.2'</span>
+python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>.dfah/lab9-review/02-fixed-path<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/lab9-review/eee-validated<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--validate
+</code></pre></div>
+<p>The extra pins upstream validator <code>0.2.3rc1</code>; the exported schema is <code>0.2.2</code>.
+EEE's required <code>is_correct</code> field means <strong>membership in an eligible replay
+group</strong> here. It means neither that the gate passed nor that the financial
+decision was correct. The export includes the explicit semantic marker
+<code>replay_group_retention_not_decision_correctness</code>.</p>
+<p>Raw prompts, arguments, and results are excluded. Case IDs, decision labels,
+tool names, deployment identifiers, and equality hashes remain; inspect those
+before sharing a real deployment's export. Read the
+<a href="../dfah/every-eval-ever/">export guide</a> for the exact mapping and privacy boundary.</p>
+<h2 id="apply-this-to-your-own-change">Apply this to your own change<a class="headerlink" href="#apply-this-to-your-own-change" title="Permanent link">&para;</a></h2>
+<p>Choose a small synthetic suite representative of your tool contract. Fix the
+policy before evaluating the change, give each implementation a distinct version
+and run directory, and review the failed checks and paths before accepting it.
+Decide separately whether the observed differences matter to the task.</p>
 <ul>
-<li>Completed Labs 0-3 (environment setup, basic experiments)</li>
-<li>Python environment with <code>requirements.txt</code> installed</li>
+<li><a href="../dfah/bring-your-own-agent/">Bring your own agent</a></li>
+<li><a href="../dfah/replay-review-loop/">Full example guide</a></li>
+<li><a href="../lab-8/">Lab 8: Replay Measurement</a></li>
+<li><a href="../explorer/#review-loop">Return to the explorer</a></li>
 </ul>
-<h2 id="step-1-understand-the-benchmarks">Step 1: Understand the Benchmarks<a class="headerlink" href="#step-1-understand-the-benchmarks" title="Permanent link">&para;</a></h2>
-<p>The framework includes 3 financial agent benchmarks, each with 50 test cases:</p>
-<h3 id="compliance-triage">Compliance Triage<a class="headerlink" href="#compliance-triage" title="Permanent link">&para;</a></h3>
-<p>A compliance agent receives a suspicious transaction alert and must decide: <strong>escalate</strong>, <strong>dismiss</strong>, or <strong>investigate</strong>.</p>
-<p>Tools available: <code>check_sanctions_list</code>, <code>get_customer_profile</code>, <code>search_precedents</code>, <code>calculate_risk_score</code></p>
-<h3 id="portfolio-constraint">Portfolio Constraint<a class="headerlink" href="#portfolio-constraint" title="Permanent link">&para;</a></h3>
-<p>A portfolio agent evaluates proposed trades against position limits, sector caps, and liquidity requirements. Decision: <strong>approve</strong>, <strong>reject</strong>, or <strong>modify</strong>.</p>
-<p>Tools available: <code>get_current_holdings</code>, <code>get_market_data</code>, <code>check_position_limit</code>, <code>calculate_sector_exposure</code>, <code>get_regulatory_constraints</code></p>
-<h3 id="dataops-exception">DataOps Exception<a class="headerlink" href="#dataops-exception" title="Permanent link">&para;</a></h3>
-<p>A data operations agent resolves data quality exceptions in a financial pipeline. Decision: <strong>auto_fix</strong>, <strong>escalate</strong>, or <strong>quarantine</strong>.</p>
-<p>Tools available: <code>get_exception_details</code>, <code>query_reference_data</code>, <code>get_historical_fixes</code>, <code>validate_fix</code>, <code>apply_fix</code>, <code>escalate_to_human</code></p>
-<h2 id="step-2-run-the-deterministic-benchmark-simulation">Step 2: Run the Deterministic Benchmark Simulation<a class="headerlink" href="#step-2-run-the-deterministic-benchmark-simulation" title="Permanent link">&para;</a></h2>
-<p>The benchmark suite includes a <strong>deterministic simulation mode</strong> that runs without an LLM. This tests the benchmark infrastructure and demonstrates the metrics computation:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Run all 3 benchmarks (no LLM needed, completes in seconds)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_all.py
-</code></pre></div>
-<p><strong>Expected output:</strong></p>
-<div class="highlight"><pre><span></span><code>============================================================
-V3 FINANCIAL AGENT BENCHMARK SUITE
-============================================================
-Configuration: 5 runs/test, max 50 tests
-
-Running benchmark: compliance_triage
-Loaded 50 test cases
-
-COMPLIANCE_TRIAGE RESULTS:
-  Tests: 50
-  Runs per test: 5
-  Action Determinism: 100.0%
-  Signature Determinism: 100.0%
-  Decision Determinism: 100.0%
-  Accuracy: XX.X%
-</code></pre></div>
-<div class="admonition info">
-<p class="admonition-title">Why 100% Determinism?</p>
-<p>The simulation mode uses deterministic agent logic (no LLM), so it always produces identical results. This validates the benchmark infrastructure. Real LLM-driven runs will show the behavioral differences described in the paper.</p>
-</div>
-<h3 id="run-a-single-benchmark">Run a single benchmark:<a class="headerlink" href="#run-a-single-benchmark" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>econometrics/benchmarks/run_all.py<span class="w"> </span>--task<span class="w"> </span>compliance_triage<span class="w"> </span>--n-runs<span class="w"> </span><span class="m">8</span>
-</code></pre></div>
-<h2 id="step-3-run-agentic-benchmarks-with-an-llm-optional">Step 3: Run Agentic Benchmarks with an LLM (Optional)<a class="headerlink" href="#step-3-run-agentic-benchmarks-with-an-llm-optional" title="Permanent link">&para;</a></h2>
-<div class="admonition warning">
-<p class="admonition-title">API Costs</p>
-<p>Running the full benchmark suite (50 cases x 8 runs x 3 benchmarks = 1,200 runs per model) requires significant API calls. Start small with <code>--n-cases 5</code> to test, then scale up. Our full v2 experiments cost ~$66 across all providers.</p>
-</div>
-<p>To run benchmarks with actual LLM tool-calling (requires Ollama):</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Small test run (5 cases, fast)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_agentic_benchmark.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-cases<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-runs<span class="w"> </span><span class="m">4</span>
-
-<span class="c1"># Larger run (50 cases, matches paper methodology)</span>
-python<span class="w"> </span>econometrics/benchmarks/run_agentic_benchmark.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--model<span class="w"> </span>qwen2.5:7b-instruct<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-cases<span class="w"> </span><span class="m">50</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--n-runs<span class="w"> </span><span class="m">8</span>
-</code></pre></div>
-<p>Results are saved to <code>econometrics/benchmarks/results/</code>.</p>
-<h2 id="step-4-interpret-results">Step 4: Interpret Results<a class="headerlink" href="#step-4-interpret-results" title="Permanent link">&para;</a></h2>
-<h3 id="reading-the-output">Reading the Output<a class="headerlink" href="#reading-the-output" title="Permanent link">&para;</a></h3>
-<p>Each benchmark run produces:</p>
-<ul>
-<li><strong>Action Determinism</strong>: Do all runs call the same set of tools?</li>
-<li><strong>Signature Determinism</strong>: Do all runs call tools with the same arguments in the same order?</li>
-<li><strong>Decision Determinism</strong>: Do all runs reach the same final decision?</li>
-<li><strong>Historical task-label match</strong>: How often does the decision match the
-  fixture label? This is retained only for the earlier study.</li>
-</ul>
-<h3 id="what-to-look-for">What to Look For<a class="headerlink" href="#what-to-look-for" title="Permanent link">&para;</a></h3>
-<p><strong>High repeatability + lower task-label match</strong>:
-The tested configuration often repeats the same decision, but that decision is
-not necessarily correct.</p>
-<p><strong>Moderate repeatability + higher task-label match</strong>:
-The recorded tool path and decision vary more often. The logs show the
-variation, not the model's hidden reason for it.</p>
-<p><strong>Lower repeatability + variable task-label match</strong>:
-The recorded path changes across runs. Inspect which calls or arguments
-changed before deciding whether the variation matters.</p>
-<h3 id="the-same-conclusion-different-recorded-path-pattern">The "Same Conclusion, Different Recorded Path" Pattern<a class="headerlink" href="#the-same-conclusion-different-recorded-path-pattern" title="Permanent link">&para;</a></h3>
-<p>Across the API configurations, <strong>decision determinism exceeds signature
-determinism</strong>. For example, Claude Sonnet 4 shows 84% decision determinism but
-43% signature determinism across the earlier benchmarks. The final decision
-can therefore stay fixed while observable tool calls change.</p>
-<h2 id="step-5-explore-the-metrics-modules">Step 5: Explore the Metrics Modules<a class="headerlink" href="#step-5-explore-the-metrics-modules" title="Permanent link">&para;</a></h2>
-<p>The determinism metrics are implemented in reusable modules:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Trajectory determinism computation</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">econometrics.agentic.metrics.trajectory_determinism</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">compute_trajectory_determinism</span>  <span class="c1"># if available</span>
-<span class="p">)</span>
-
-<span class="c1"># Faithfulness metrics</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">econometrics.agentic.metrics.faithfulness</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">compute_faithfulness</span>  <span class="c1"># if available</span>
-<span class="p">)</span>
-</code></pre></div>
-<p>See <code>econometrics/agentic/metrics/</code> for the full implementation.</p>
-<h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
-<ol>
-<li><strong>Repeatability is not correctness</strong>: each requires separate evidence</li>
-<li><strong>Study versions matter</strong>: the corrected DFAH-Bench result excludes the
-   portfolio fixture and its dependent task-label matches</li>
-<li><strong>Task and contract matter</strong>: report them alongside every replay measure</li>
-<li><strong>Recorded paths can differ</strong>: Decision determinism can exceed signature determinism</li>
-<li><strong>Start small</strong>: Use <code>--n-cases 5</code> to validate your setup before scaling to full 50-case runs</li>
-</ol>
-<h2 id="further-reading">Further Reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Full paper</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a> (Replayable Financial Agents)</li>
-<li><strong>Benchmark details</strong>: <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/econometrics/benchmarks/README.md"><code>econometrics/benchmarks/README.md</code></a></li>
-<li><strong>v1 Output Drift paper</strong>: <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a></li>
-</ul>
-<hr />
-<div class="admonition success">
-<p class="admonition-title">Lab 7 Complete!</p>
-<p>You now understand how determinism extends from single-turn outputs to multi-step agent trajectories, and how to run and interpret the financial agent benchmarks from the Replayable Financial Agents paper.</p>
-</div>
 
 
 
@@ -2006,7 +1588,7 @@ can therefore stay fixed while observable tool calls change.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../lab-6/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 6. Extending the Framework">
+          <a href="../lab-8/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 8. DFAH-Bench — Replay Measurement">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2016,20 +1598,20 @@ can therefore stay fixed while observable tool calls change.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Lab 6. Extending the Framework
+                Lab 8. DFAH-Bench — Replay Measurement
               </div>
             </div>
           </a>
         
         
           
-          <a href="../lab-8/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 8. DFAH-Bench — Replay Measurement">
+          <a href="../dfah/quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Quickstart">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Lab 8. DFAH-Bench — Replay Measurement
+                Quickstart
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -16,7 +16,7 @@
         <link rel="prev" href="../lab-7/">
       
       
-        <link rel="next" href="../dfah/quickstart/">
+        <link rel="next" href="../lab-9/">
       
       
         
@@ -840,6 +840,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 9. Replay, Review, and Retest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -944,6 +972,62 @@
     
   
     Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/replay-review-loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replay and Review Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/every-eval-ever/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Every Eval Ever Export
   
 
     
@@ -1399,19 +1483,20 @@ calls.</p>
 is data. A missing or malformed required channel is not: the group fails
 closed and is excluded from agreement estimates.</p>
 <h2 id="track-a-qualify-the-packaged-integration">Track A: qualify the packaged integration<a class="headerlink" href="#track-a-qualify-the-packaged-integration" title="Permanent link">&para;</a></h2>
-<p>From the repository root, create a clean Python 3.10+ environment:</p>
+<p>Create a clean Python 3.10+ environment. This track uses the published package
+and needs neither a repository checkout nor an API key:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-dfah
 <span class="nb">source</span><span class="w"> </span>.venv-dfah/bin/activate
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">".[dev]"</span>
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench==0.1.2'</span>
 </code></pre></div>
 <p>Run the no-network conformance check:</p>
 <div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>check-agent<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--episode-timeout-s<span class="w"> </span><span class="m">5</span>
 </code></pre></div>
-<p>The report checks parse provenance, request/manifest echoing, deterministic
-tool outputs, replay-visible ambient-state leakage, resumability, and channel
-eligibility.</p>
+<p>The report checks parse provenance, request/manifest echoing, declared tool
+outputs, resumability, and channel eligibility. Replay variation is a diagnostic:
+a passing check does not prove that ambient-state dependencies are absent.</p>
 <p>Now capture three replays and inspect them:</p>
 <div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--agent<span class="w"> </span>dfah.demo:toy_agent<span class="w"> </span><span class="se">\</span>
@@ -1428,7 +1513,8 @@ dfah<span class="w"> </span>inspect<span class="w"> </span>.dfah/runs/lab-8<span
 tool are deliberately fixed. That confirms the integration contract. It does
 not establish real-world model quality or general determinism.</p>
 <h2 id="track-b-inspect-the-public-research-lineage">Track B: inspect the public research lineage<a class="headerlink" href="#track-b-inspect-the-public-research-lineage" title="Permanent link">&para;</a></h2>
-<p>Use a separate environment for the frozen research pipeline:</p>
+<p>From a checkout of the public repository, use a separate environment for the
+frozen research pipeline:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-research
 <span class="nb">source</span><span class="w"> </span>.venv-research/bin/activate
 python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
@@ -1454,6 +1540,8 @@ different tasks, replay counts, and capture contracts.</p>
 </ol>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
+<li><a href="../lab-9/">Lab 9: Replay, Review, and Retest</a> — catch a path change,
+  check a supplied correction against a fixed gate, and export verified results.</li>
 <li><a href="../explorer/">Interactive explorer</a></li>
 <li><a href="../resources/paper/">Research papers</a></li>
 <li><a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md">Reproducibility notes</a></li>
@@ -1506,13 +1594,13 @@ different tasks, replay counts, and capture contracts.</p>
         
         
           
-          <a href="../dfah/quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Quickstart">
+          <a href="../lab-9/" class="md-footer__link md-footer__link--next" aria-label="Next: Lab 9. Replay, Review, and Retest">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Quickstart
+                Lab 9. Replay, Review, and Retest
               </div>
             </div>
             <div class="md-footer__button md-icon">
