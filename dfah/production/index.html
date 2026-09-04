@@ -1388,7 +1388,7 @@ cost without blocking the surrounding workflow.</p>
     <span class="n">require_complete</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">by_task</span><span class="o">=</span><span class="p">(</span>
         <span class="n">TaskGatePolicy</span><span class="p">(</span>
-            <span class="n">task</span><span class="o">=</span><span class="s2">&quot;compliance&quot;</span><span class="p">,</span>
+            <span class="n">task</span><span class="o">=</span><span class="s2">"compliance"</span><span class="p">,</span>
             <span class="n">min_tar_seq</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
             <span class="n">max_unanimous_path_change_rate</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span>
             <span class="n">min_observed_groups</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
@@ -1397,10 +1397,10 @@ cost without blocking the surrounding workflow.</p>
 <span class="p">)</span>
 
 <span class="n">shadow_report</span> <span class="o">=</span> <span class="n">Replay</span><span class="p">(</span>
-    <span class="n">suite</span><span class="o">=</span><span class="s2">&quot;my-suite.json&quot;</span><span class="p">,</span>
+    <span class="n">suite</span><span class="o">=</span><span class="s2">"my-suite.json"</span><span class="p">,</span>
     <span class="n">replays</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-    <span class="n">out</span><span class="o">=</span><span class="s2">&quot;.dfah/runs/my-suite-shadow&quot;</span><span class="p">,</span>
+    <span class="n">out</span><span class="o">=</span><span class="s2">".dfah/runs/my-suite-shadow"</span><span class="p">,</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">ReplayMode</span><span class="o">.</span><span class="n">SHADOW</span><span class="p">,</span>
     <span class="n">gate</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
     <span class="n">capture_tool_arguments</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -1430,10 +1430,10 @@ fails when that denominator is zero. Start serially: higher <code>concurrency</c
 increase outstanding budget reservations and external provider load.</p>
 <p>Promote only a reviewed policy to blocking mode:</p>
 <div class="highlight"><pre><span></span><code><span class="n">blocking_report</span> <span class="o">=</span> <span class="n">Replay</span><span class="p">(</span>
-    <span class="n">suite</span><span class="o">=</span><span class="s2">&quot;my-suite.json&quot;</span><span class="p">,</span>
+    <span class="n">suite</span><span class="o">=</span><span class="s2">"my-suite.json"</span><span class="p">,</span>
     <span class="n">replays</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
-    <span class="n">out</span><span class="o">=</span><span class="s2">&quot;.dfah/runs/my-suite-blocking&quot;</span><span class="p">,</span>
+    <span class="n">out</span><span class="o">=</span><span class="s2">".dfah/runs/my-suite-blocking"</span><span class="p">,</span>
     <span class="n">mode</span><span class="o">=</span><span class="n">ReplayMode</span><span class="o">.</span><span class="n">BLOCKING</span><span class="p">,</span>
     <span class="n">gate</span><span class="o">=</span><span class="n">policy</span><span class="p">,</span>
     <span class="n">budget_usd</span><span class="o">=</span><span class="mf">10.00</span><span class="p">,</span>
@@ -1441,8 +1441,19 @@ increase outstanding budget reservations and external provider load.</p>
 <span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">my_agent</span><span class="p">)</span>
 </code></pre></div>
 <p>In blocking mode a failed gate raises <code>GateViolationError</code> <strong>after</strong> the
-report is persisted, so preserve the run directory for review. Without a
-<code>gate</code> policy, blocking mode has no threshold to enforce.</p>
+report is persisted, so preserve the run directory for review. Blocking mode
+requires an explicit <code>GatePolicy</code>; omitting it is a configuration error before
+the agent is called. <code>GatePolicy()</code> explicitly selects the default completeness
+and artifact-verification checks.</p>
+<p>The CLI accepts the same policy in YAML or JSON:</p>
+<div class="highlight"><pre><span></span><code>dfah<span class="w"> </span>run<span class="w"> </span>--agent<span class="w"> </span>my_project.provider_adapter:my_agent<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mode<span class="w"> </span>blocking<span class="w"> </span>--policy<span class="w"> </span>examples/dfah_gate.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--replays<span class="w"> </span><span class="m">3</span><span class="w"> </span>--episode-timeout-s<span class="w"> </span><span class="m">90</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/runs/release-candidate
+</code></pre></div>
+<p><code>--mode blocking</code> requires <code>--policy</code>. Invalid policy files are rejected before
+the agent is imported or called. In shadow mode, <code>--policy</code> evaluates the
+policy without making a threshold failure stop the run.</p>
 <h2 id="interpret-and-review">Interpret and review<a class="headerlink" href="#interpret-and-review" title="Permanent link">&para;</a></h2>
 <p>Require a <code>complete</code> report for a release gate unless an explicit exception is
 approved. A partial report can arise from a budget stop, parse failure,
@@ -1552,7 +1563,15 @@ report is inspection-only and cannot satisfy the default gate policy.</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>--dfah-report<span class="w"> </span>.dfah/runs/release-candidate<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--dfah-policy<span class="w"> </span>examples/dfah_gate.yaml
 </code></pre></div>
-<p>For an explicit policy assertion, use the second fixture:</p>
+<p>Supplying <code>--dfah-policy</code> enforces that policy against the verified report
+before pytest collects tests. A failing gate exits with code 1 even when no
+test uses a DFAH fixture or no tests would be collected. The option requires
+<code>--dfah-report</code>; a missing report, invalid policy, or unverified artifact is a
+pytest usage error (exit code 4). A passing gate preserves pytest's ordinary
+test result, including exit code 5 when no tests are collected.</p>
+<p>Without <code>--dfah-policy</code>, the plugin remains optional: tests requesting a DFAH
+fixture skip when no report is supplied. To evaluate a policy explicitly
+inside a test, use the second fixture:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">test_dfah_release_gate</span><span class="p">(</span><span class="n">dfah_gate</span><span class="p">):</span>
     <span class="n">dfah_gate</span><span class="p">()</span><span class="o">.</span><span class="n">raise_for_failures</span><span class="p">()</span>
 </code></pre></div>

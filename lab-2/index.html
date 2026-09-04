@@ -1828,23 +1828,23 @@ Database: data/toy_finance.sqlite (45 KB)
 
 <span class="c1"># Initialize retriever from SEC filings directory</span>
 <span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_files</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec&quot;</span><span class="p">,</span>  <span class="c1"># SEC 10-K filings</span>
+    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">"data/sec"</span><span class="p">,</span>  <span class="c1"># SEC 10-K filings</span>
     <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
 
 <span class="c1"># Test query</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What were net credit losses in 2023?&quot;</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">"What were net credit losses in 2023?"</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deterministic Retrieval Test&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Deterministic Retrieval Test"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">snippet_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Snippet ID: </span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Text: </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Snippet ID: </span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Text: </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Retrieval order is stable in the pinned exercise!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Retrieval order is stable in the pinned exercise!"</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_retriever.py
@@ -1860,33 +1860,33 @@ separate governance decision.</p>
 <p>Now let's run a minimal drift test with 5 runs using the OpenAI client:</p>
 <p>Create <code>test_simple_drift.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;Simple drift evaluation using Ollama via OpenAI client.&quot;&quot;&quot;</span>
+<span class="sd">"""Simple drift evaluation using Ollama via OpenAI client."""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="c1"># Initialize Ollama client</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span>  <span class="c1"># Not used by Ollama</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"ollama"</span>  <span class="c1"># Not used by Ollama</span>
 <span class="p">)</span>
 
 <span class="c1"># Simple prompt</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;What is the sum of 2 + 2? Answer with just the number.&quot;</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">"What is the sum of 2 + 2? Answer with just the number."</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 Running 5 identical queries at T=0.0&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"🧪 Running 5 identical queries at T=0.0"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
 
 <span class="n">responses</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">"qwen2.5:7b-instruct"</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
         <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
     <span class="p">)</span>
     <span class="n">answer</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
     <span class="n">responses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Measure modal exact-output agreement</span>
 <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span>
@@ -1894,9 +1894,9 @@ separate governance decision.</p>
 <span class="n">modal_count</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">consistency_pct</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">responses</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unique responses: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_responses</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Modal exact-output agreement: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Unique responses: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_responses</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Modal exact-output agreement: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_simple_drift.py
@@ -1969,25 +1969,25 @@ head<span class="w"> </span>-n<span class="w"> </span><span class="m">1</span><s
 </code></pre></div>
 <p><strong>Example audit trail entry:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;timestamp&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2025-11-01T14:23:45Z&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;granite-3-8b-instruct&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;watsonx.ai&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;top_p&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;What were JPMorgan&#39;s net credit losses in 2023?&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;a3d8f9c2e1b4d7f8&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;response_hash&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;b2c1e7a9f3d8c5b1&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;response&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JPMorgan reported net credit losses of $X billion in 2023 [jpm_2024_10k].&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;citations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;jpm_2024_10k&quot;</span><span class="p">],</span>
-<span class="w">  </span><span class="nt">&quot;compliance_metrics&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;citation_accuracy&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;schema_valid&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;decision_flip&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-11-01T14:23:45Z"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"granite-3-8b-instruct"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"watsonx.ai"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"temperature"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"seed"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"top_p"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"prompt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"What were JPMorgan's net credit losses in 2023?"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"prompt_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a3d8f9c2e1b4d7f8"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"response_hash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b2c1e7a9f3d8c5b1"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"response"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JPMorgan reported net credit losses of $X billion in 2023 [jpm_2024_10k]."</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"citations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"jpm_2024_10k"</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"compliance_metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"citation_accuracy"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"schema_valid"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"decision_flip"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
 <span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;latency_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;concurrency&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;corpus_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sec_2024_q4&quot;</span>
+<span class="w">  </span><span class="nt">"latency_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">1240</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"concurrency"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"corpus_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sec_2024_q4"</span>
 <span class="p">}</span>
 </code></pre></div>
 <div class="admonition info">
@@ -2003,7 +2003,7 @@ them.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_retriever_from_files</span>
 
 <span class="n">retriever</span> <span class="o">=</span> <span class="n">create_retriever_from_files</span><span class="p">(</span>
-    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">&quot;data/sec&quot;</span><span class="p">,</span>
+    <span class="n">corpus_path</span><span class="o">=</span><span class="s2">"data/sec"</span><span class="p">,</span>
     <span class="n">chunk_size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
     <span class="n">overlap</span><span class="o">=</span><span class="mi">50</span>
 <span class="p">)</span>
@@ -2051,15 +2051,15 @@ pinned exercise.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
 <span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span>
-    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">"ollama"</span><span class="p">,</span> <span class="s2">"watsonx"</span><span class="p">],</span>
     <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># illustrative, task-specific tolerance</span>
 <span class="p">)</span>
 
 <span class="c1"># Validate pre-collected outputs from different providers</span>
-<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_result</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_result</span><span class="p">}</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Consistent: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;consistent&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">outputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"ollama"</span><span class="p">:</span> <span class="n">ollama_result</span><span class="p">,</span> <span class="s2">"watsonx"</span><span class="p">:</span> <span class="n">watsonx_result</span><span class="p">}</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">"sql"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Consistent: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'consistent'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'similarity_scores'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Purpose</strong>: Compare pre-collected outputs from local (Ollama) and cloud
 (watsonx.ai) configurations.</p>

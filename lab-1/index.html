@@ -2011,12 +2011,12 @@ replay-eligibility and path-agreement workflow, see <a href="../lab-8/">Lab 8</a
 <p>This workshop focuses on <strong>output drift</strong>—the model's internal inconsistency.</p>
 <h2 id="financial-impact-real-world-scenarios">Financial Impact: Real-World Scenarios<a class="headerlink" href="#financial-impact-real-world-scenarios" title="Permanent link">&para;</a></h2>
 <h3 id="scenario-1-loan-approval-recommendations">Scenario 1: Loan Approval Recommendations<a class="headerlink" href="#scenario-1-loan-approval-recommendations" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Input: &quot;Analyze credit risk for applicant with 680 credit score, $75K income,
-        20% debt-to-income ratio. Recommend approval decision.&quot;
+<div class="highlight"><pre><span></span><code>Input: "Analyze credit risk for applicant with 680 credit score, $75K income,
+        20% debt-to-income ratio. Recommend approval decision."
 
-Run 1 (temp=0.0): &quot;APPROVE - Low risk profile&quot;
-Run 2 (temp=0.0): &quot;DENY - Moderate risk, recommend manual review&quot;
-Run 3 (temp=0.0): &quot;APPROVE with conditions - Reduce credit limit to $10K&quot;
+Run 1 (temp=0.0): "APPROVE - Low risk profile"
+Run 2 (temp=0.0): "DENY - Moderate risk, recommend manual review"
+Run 3 (temp=0.0): "APPROVE with conditions - Reduce credit limit to $10K"
 </code></pre></div>
 <div class="admonition danger">
 <p class="admonition-title">Control Risk</p>
@@ -2032,19 +2032,19 @@ a poorly controlled workflow include:</p>
 </ul>
 </div>
 <h3 id="scenario-2-financial-document-analysis">Scenario 2: Financial Document Analysis<a class="headerlink" href="#scenario-2-financial-document-analysis" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Input: SEC 10-K filing, Question: &quot;What is the company&#39;s total debt?&quot;
+<div class="highlight"><pre><span></span><code>Input: SEC 10-K filing, Question: "What is the company's total debt?"
 
-Run 1: &quot;$2.4 billion&quot;
-Run 2: &quot;$2.4B in long-term debt, excluding short-term obligations&quot;
-Run 3: &quot;Total debt: $2.4 billion (page 42, footnote 7)&quot;
+Run 1: "$2.4 billion"
+Run 2: "$2.4B in long-term debt, excluding short-term obligations"
+Run 3: "Total debt: $2.4 billion (page 42, footnote 7)"
 </code></pre></div>
 <p><strong>Issue</strong>: All factually correct, but inconsistent formatting breaks downstream automation.</p>
 <h3 id="scenario-3-regulatory-compliance-queries">Scenario 3: Regulatory Compliance Queries<a class="headerlink" href="#scenario-3-regulatory-compliance-queries" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>Input: &quot;Is this transaction reportable under FinCEN SAR requirements?&quot;
+<div class="highlight"><pre><span></span><code>Input: "Is this transaction reportable under FinCEN SAR requirements?"
 
-Run 1: &quot;Yes, meets threshold for suspicious activity reporting&quot;
-Run 2: &quot;Insufficient information to determine. Request additional details.&quot;
-Run 3: &quot;No, transaction appears routine&quot;
+Run 1: "Yes, meets threshold for suspicious activity reporting"
+Run 2: "Insufficient information to determine. Request additional details."
+Run 3: "No, transaction appears routine"
 </code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Review Required</p>
@@ -2223,23 +2223,23 @@ RAG-General  🟡87%   🟡70%   🔴56%   🔴25%
 <h2 id="three-types-of-drift">Three Types of Drift<a class="headerlink" href="#three-types-of-drift" title="Permanent link">&para;</a></h2>
 <h3 id="1-syntactic-drift">1. <strong>Syntactic Drift</strong><a class="headerlink" href="#1-syntactic-drift" title="Permanent link">&para;</a></h3>
 <p>Changes in formatting, whitespace, or presentation without semantic changes.</p>
-<div class="highlight"><pre><span></span><code>Run 1: &quot;Total Assets: $2,400,000,000&quot;
-Run 2: &quot;Total Assets: $2.4B&quot;
-Run 3: &quot;Total Assets: 2.4 billion USD&quot;
+<div class="highlight"><pre><span></span><code>Run 1: "Total Assets: $2,400,000,000"
+Run 2: "Total Assets: $2.4B"
+Run 3: "Total Assets: 2.4 billion USD"
 </code></pre></div>
 <p><strong>Impact</strong>: Breaks parsing logic, automation fails</p>
 <h3 id="2-semantic-drift">2. <strong>Semantic Drift</strong><a class="headerlink" href="#2-semantic-drift" title="Permanent link">&para;</a></h3>
 <p>Changes in meaning or interpretation.</p>
-<div class="highlight"><pre><span></span><code>Run 1: &quot;High risk - recommend denial&quot;
-Run 2: &quot;Moderate risk - manual review suggested&quot;
-Run 3: &quot;Acceptable risk with conditions&quot;
+<div class="highlight"><pre><span></span><code>Run 1: "High risk - recommend denial"
+Run 2: "Moderate risk - manual review suggested"
+Run 3: "Acceptable risk with conditions"
 </code></pre></div>
 <p><strong>Impact</strong>: Different business outcomes, inconsistent decisions</p>
 <h3 id="3-factual-drift">3. <strong>Factual Drift</strong><a class="headerlink" href="#3-factual-drift" title="Permanent link">&para;</a></h3>
 <p>Contradictory or incorrect information across runs.</p>
-<div class="highlight"><pre><span></span><code>Run 1: &quot;Company reported $500M revenue in Q4&quot;
-Run 2: &quot;Q4 revenue was $550M according to the filing&quot;
-Run 3: &quot;Revenue not disclosed in available documents&quot;
+<div class="highlight"><pre><span></span><code>Run 1: "Company reported $500M revenue in Q4"
+Run 2: "Q4 revenue was $550M according to the filing"
+Run 3: "Revenue not disclosed in available documents"
 </code></pre></div>
 <p><strong>Impact</strong>: Conflicting recommendations and potential downstream control failures</p>
 <h2 id="governance-context">Governance Context<a class="headerlink" href="#governance-context" title="Permanent link">&para;</a></h2>
@@ -2263,22 +2263,22 @@ variation so the responsible reviewers can ask better questions.</p>
 
 <span class="c1"># Use Ollama (or change to your provider)</span>
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span>  <span class="c1"># Not actually used by Ollama</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"ollama"</span>  <span class="c1"># Not actually used by Ollama</span>
 <span class="p">)</span>
 
-<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;What is 2+2? Answer with just the number.&quot;</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">"What is 2+2? Answer with just the number."</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing drift with 5 identical runs:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Testing drift with 5 identical runs:</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-        <span class="n">model</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
+        <span class="n">model</span><span class="o">=</span><span class="s2">"qwen2.5:7b-instruct"</span><span class="p">,</span>
+        <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
         <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
         <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>  <span class="c1"># Explicit seed</span>
     <span class="p">)</span>
     <span class="n">answer</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="step-2-run-the-test">Step 2: Run the Test<a class="headerlink" href="#step-2-run-the-test" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_drift_simple.py

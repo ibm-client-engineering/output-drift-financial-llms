@@ -1277,10 +1277,26 @@ availability check is not a reservation; the pending publisher must be
 registered before the tag is pushed.</p>
 <h2 id="release-boundary">Release boundary<a class="headerlink" href="#release-boundary" title="Permanent link">&para;</a></h2>
 <p>For package version <code>X.Y.Z</code>, the release tag is <code>dfah-vX.Y.Z</code>. The tag must
-match the static project version in <code>pyproject.toml</code>; the release workflow
-rejects any other pairing. It then builds the wheel and source distribution
-once, checks them, transfers those exact artifacts to the protected publish
-job, and uses PyPI Trusted Publishing after the environment approval.</p>
+match the static project version in <code>pyproject.toml</code> and identify a commit
+already on <code>main</code>; the release workflow rejects any other pairing.</p>
+<p>The tag workflow then calls the reusable <code>dfah-package.yml</code> workflow from that
+same commit. Publication requires all of these checks on the tagged source:</p>
+<ul>
+<li>formatting, lint, strict type checks, and package tests on Python 3.10–3.13;</li>
+<li>at least 85% coverage of the metrics and parser modules;</li>
+<li>mandatory official Every Eval Ever schema validation on Python 3.12;</li>
+<li>distribution builds across the Python matrix;</li>
+<li>a dedicated Python 3.11 wheel and source-distribution build, metadata checks,
+  and archive scans for internal paths and credential material; and</li>
+<li>installation of that wheel, dependency checks, and CLI/plugin, replay,
+  analysis, and interchange-export smoke tests outside the source checkout.</li>
+</ul>
+<p>Only the dedicated distribution job uploads <code>dfah-distributions</code>, after its
+checks succeed. The protected publish job downloads that artifact from the
+same workflow run and publishes those exact files through PyPI Trusted
+Publishing after environment approval. There is no rebuild between this
+artifact's verification and publication. Passing a separate branch or PR
+workflow does not substitute for the tag's own validation.</p>
 <p>Before tagging, confirm that:</p>
 <ol>
 <li><code>pyproject.toml</code>, <code>CITATION.cff</code>, and <code>CHANGELOG.md</code> name the same version;</li>
@@ -1288,6 +1304,10 @@ job, and uses PyPI Trusted Publishing after the environment approval.</p>
 <li>the protected <code>pypi</code> environment and pending publisher use the values above;</li>
 <li>the release commit contains no unrelated research, result, or site changes.</li>
 </ol>
+<p>After pushing the tag, confirm that its release run completes the full
+validation matrix before approving the <code>pypi</code> deployment. Local checks cannot
+verify the hosted Python matrix, environment protections, or Trusted Publisher
+configuration.</p>
 
 
 

@@ -1814,7 +1814,7 @@ Configuration:
   Concurrency: 1
   Task: sql
 
-Prompt: &quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;
+Prompt: "Generate SQL to find all customers with account balance &gt; $100,000"
 
 Run 1/1...
   Response: SELECT customer_name, account_balance FROM accounts
@@ -1853,7 +1853,7 @@ Results:
 
 Unique responses: 1
 Response 1 (4 occurrences):
-  &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
+  "SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000"
 
 ✅ Exact output agreement at n=4!
 </code></pre></div>
@@ -1887,7 +1887,7 @@ Results:
 
 Unique responses: 1
 Response 1 (16 occurrences):
-  &quot;SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000&quot;
+  "SELECT customer_name, account_balance FROM accounts WHERE account_balance &gt; 100000"
 
 ✅ Exact output agreement at n=16!
 </code></pre></div>
@@ -1939,7 +1939,7 @@ replay.</p>
 ████████████████████████████████ 16/16 [00:18]
 
 Task: RAG (Retrieval-Augmented Generation)
-Prompt: &quot;What were Citigroup&#39;s net credit losses in 2023?&quot;
+Prompt: "What were Citigroup's net credit losses in 2023?"
 
 Results:
   Consistency: 93.75% (15/16 identical)
@@ -1949,10 +1949,10 @@ Results:
 
 Unique responses: 2
 Response 1 (15 occurrences):
-  &quot;According to Citigroup&#39;s 2024 10-K (page 145), net credit losses were $2.4 billion in 2023.&quot;
+  "According to Citigroup's 2024 10-K (page 145), net credit losses were $2.4 billion in 2023."
 
 Response 2 (1 occurrence):
-  &quot;Citigroup reported net credit losses of $2.4B in 2023 (10-K filing, page 145).&quot;
+  "Citigroup reported net credit losses of $2.4B in 2023 (10-K filing, page 145)."
 
 ✅ The shown outputs differ in form while retaining the same displayed value and citation.
 </code></pre></div>
@@ -2007,46 +2007,46 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span><span cla
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 
-<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">]</span>
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"sql"</span><span class="p">,</span> <span class="s2">"summary"</span><span class="p">,</span> <span class="s2">"rag"</span><span class="p">]</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="n">trace_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="n">trace_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"traces/lab3_multi"</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"trace_*.jsonl"</span><span class="p">))</span>
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">trace_files</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected one trace file, found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trace_files</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected one trace file, found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">trace_files</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">trace_files</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">all_records</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
 
 <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">all_records</span> <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">task</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">record</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">all_records</span> <span class="k">if</span> <span class="n">record</span><span class="p">[</span><span class="s2">"task"</span><span class="p">]</span> <span class="o">==</span> <span class="n">task</span><span class="p">]</span>
     <span class="n">groups</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
-        <span class="n">groups</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;prompt_id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+        <span class="n">groups</span><span class="p">[</span><span class="n">record</span><span class="p">[</span><span class="s2">"prompt_id"</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
 
     <span class="n">modal_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">consistency_pct</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
     <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="n">reference</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"output"</span><span class="p">]</span>
         <span class="n">distances</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-            <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+            <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">record</span><span class="p">[</span><span class="s2">"output"</span><span class="p">])</span>
             <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span>
         <span class="p">)</span>
 
     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-        <span class="s2">&quot;Task&quot;</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
-        <span class="s2">&quot;Runs&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
-        <span class="s2">&quot;Modal exact agreement&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;Mean normalized distance&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="s2">"Task"</span><span class="p">:</span> <span class="n">task</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span>
+        <span class="s2">"Runs"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="s2">"Modal exact agreement"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">,</span>
+        <span class="s2">"Mean normalized distance"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
     <span class="p">})</span>
 
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Multi-Task Evaluation Results (T=0.0, n=16)&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">📊 Multi-Task Evaluation Results (T=0.0, n=16)"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_string</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 </code></pre></div>
 <p>Run it:</p>
@@ -2120,22 +2120,22 @@ replay group's first output.</p>
 <p>Replay records are stored as JSONL (JSON Lines), one JSON object per line.</p>
 <p><strong>View a specific run:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Pretty-print the 5th run from the isolated Lab 3 directory</span>
-sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#39;</span><span class="w"> </span>traces/lab3_multi/trace_*.jsonl<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
+sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">'5p'</span><span class="w"> </span>traces/lab3_multi/trace_*.jsonl<span class="w"> </span><span class="p">|</span><span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>json.tool
 </code></pre></div>
 <p><strong>Example entry:</strong></p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;ts&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525425123</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;ts_end&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525426368</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;task&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;provider&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;temp&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;conc&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;s1&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Compute total \&quot;amount\&quot; across all transactions.&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;output&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SELECT SUM(amount) FROM transactions;&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;decision_ok&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;latency&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">1.245</span>
+<span class="w">  </span><span class="nt">"ts"</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525425123</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"ts_end"</span><span class="p">:</span><span class="w"> </span><span class="mi">1762525426368</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"task"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sql"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"qwen2.5:7b-instruct"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ollama"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"temp"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"conc"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"prompt_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s1"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"prompt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compute total \"amount\" across all transactions."</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SELECT SUM(amount) FROM transactions;"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"decision_ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"latency"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.245</span>
 <span class="p">}</span>
 </code></pre></div>
 <p><strong>Key fields for review:</strong></p>
@@ -2153,25 +2153,25 @@ sed<span class="w"> </span>-n<span class="w"> </span><span class="s1">&#39;5p&#3
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
 <span class="c1"># Load two runs</span>
-<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"traces/lab3_multi"</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"trace_*.jsonl"</span><span class="p">))</span>
 <span class="k">with</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
 <span class="n">run1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">run2</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="n">hash1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="n">hash2</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1 output hash:&quot;</span><span class="p">,</span> <span class="n">hash1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2 output hash:&quot;</span><span class="p">,</span> <span class="n">hash2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Identical?&quot;</span><span class="p">,</span> <span class="n">hash1</span> <span class="o">==</span> <span class="n">hash2</span><span class="p">)</span>
+<span class="n">hash1</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run1</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="n">hash2</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">run2</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Run 1 output hash:"</span><span class="p">,</span> <span class="n">hash1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Run 2 output hash:"</span><span class="p">,</span> <span class="n">hash2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Identical?"</span><span class="p">,</span> <span class="n">hash1</span> <span class="o">==</span> <span class="n">hash2</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Response Diff:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 1:&quot;</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Run 2:&quot;</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">run1</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span> <span class="o">!=</span> <span class="n">run2</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Response Diff:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Run 1:"</span><span class="p">,</span> <span class="n">run1</span><span class="p">[</span><span class="s2">"output"</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Run 2:"</span><span class="p">,</span> <span class="n">run2</span><span class="p">[</span><span class="s2">"output"</span><span class="p">])</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Responses are identical!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✅ Responses are identical!"</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="advanced-historical-experiment-subset">Advanced: Historical Experiment Subset<a class="headerlink" href="#advanced-historical-experiment-subset" title="Permanent link">&para;</a></h2>
 <p>To run the three locally named configurations shown below across the listed

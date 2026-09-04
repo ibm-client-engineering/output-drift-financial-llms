@@ -2083,14 +2083,14 @@ ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct<sp
 <span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
 <span class="n">load_dotenv</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;API Key: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_API_KEY&#39;</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Project ID: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_PROJECT_ID&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;URL: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_URL&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"API Key: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_API_KEY'</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Project ID: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_PROJECT_ID'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"URL: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_URL'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Verify all are set</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_API_KEY&#39;</span><span class="p">),</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_PROJECT_ID&#39;</span><span class="p">),</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">&#39;WATSONX_URL&#39;</span><span class="p">)]),</span> <span class="s2">&quot;Missing credentials&quot;</span>
+<span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_API_KEY'</span><span class="p">),</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_PROJECT_ID'</span><span class="p">),</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s1">'WATSONX_URL'</span><span class="p">)]),</span> <span class="s2">"Missing credentials"</span>
 </code></pre></div></p>
 <p><strong>Check</strong>:
 1. <code>.env</code> file exists in repository root
@@ -2119,13 +2119,13 @@ ollama<span class="w"> </span>show<span class="w"> </span>qwen2.5:7b-instruct<sp
 python<span class="w"> </span>data/generate_toy_finance.py
 
 <span class="c1"># Verify tables</span>
-sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><span class="s2">&quot;SELECT name FROM sqlite_master WHERE type=&#39;table&#39;;&quot;</span>
+sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><span class="s2">"SELECT name FROM sqlite_master WHERE type='table';"</span>
 </code></pre></div></p>
 <h3 id="schema-mismatch">Schema Mismatch<a class="headerlink" href="#schema-mismatch" title="Permanent link">&para;</a></h3>
 <p><strong>Problem</strong>: SQL queries fail with schema errors</p>
 <p><strong>Solution</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># Check schema</span>
-sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><span class="s2">&quot;.schema transactions&quot;</span>
+sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><span class="s2">".schema transactions"</span>
 
 <span class="c1"># Expected output:</span>
 <span class="c1"># CREATE TABLE transactions(</span>
@@ -2150,8 +2150,8 @@ sqlite3<span class="w"> </span>data/toy_finance.sqlite<span class="w"> </span><s
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove extra whitespace and normalize case.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+<span class="w">    </span><span class="sd">"""Remove extra whitespace and normalize case."""</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\s+'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
 
 <span class="n">output1_norm</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">output1</span><span class="p">)</span>
 <span class="n">output2_norm</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">output2</span><span class="p">)</span>
@@ -2176,21 +2176,21 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--concurr
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span>  <span class="c1"># Note: /v1 suffix</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span>  <span class="c1"># Ollama doesn&#39;t check API key</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span>  <span class="c1"># Note: /v1 suffix</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"ollama"</span>  <span class="c1"># Ollama doesn't check API key</span>
 <span class="p">)</span>
 </code></pre></div></p>
 <h3 id="import-errors">Import Errors<a class="headerlink" href="#import-errors" title="Permanent link">&para;</a></h3>
 <p><strong>Problem</strong>: <code>ModuleNotFoundError: No module named 'harness'</code></p>
 <p><strong>Solution</strong>:
-<div class="highlight"><pre><span></span><code><span class="c1"># Ensure you&#39;re in the repository root</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># Ensure you're in the repository root</span>
 <span class="nb">cd</span><span class="w"> </span>/path/to/output-drift-financial-llms
 
 <span class="c1"># Activate virtual environment</span>
 <span class="nb">source</span><span class="w"> </span>venv/bin/activate
 
 <span class="c1"># Verify installation</span>
-python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import harness; print(&#39;✅ Import successful&#39;)&quot;</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import harness; print('✅ Import successful')"</span>
 </code></pre></div></p>
 <hr />
 <h2 id="performance-issues">Performance Issues<a class="headerlink" href="#performance-issues" title="Permanent link">&para;</a></h2>
@@ -2209,7 +2209,7 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--models<
 <p><strong>Solution</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># Profile time per request</span>
 <span class="nb">time</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:11434/api/generate<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;model&quot;: &quot;qwen2.5:7b-instruct&quot;, &quot;prompt&quot;: &quot;test&quot;}&#39;</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"model": "qwen2.5:7b-instruct", "prompt": "test"}'</span>
 
 <span class="c1"># If &gt;5 seconds per request:</span>
 <span class="c1"># 1. Check CPU/GPU utilization</span>
@@ -2223,17 +2223,17 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--models<
 <p><strong>Expected</strong>: Tier 1 → Tier 1 should match ≥95%</p>
 <p><strong>Debugging</strong>:
 <div class="highlight"><pre><span></span><code><span class="c1"># Compare raw outputs</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ollama:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;watsonx:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ollama:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"watsonx:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">))</span>
 
 <span class="c1"># Check lengths</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ollama length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;watsonx length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ollama length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"watsonx length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Calculate similarity</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 <span class="n">sim</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">,</span> <span class="n">watsonx_output</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">sim</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity: </span><span class="si">{</span><span class="n">sim</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Common causes</strong>:
 1. Different model versions (Qwen vs Granite)
@@ -2251,16 +2251,16 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--models<
 <span class="c1"># Test JSON parsing</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Valid JSON&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✅ Valid JSON"</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Invalid JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"❌ Invalid JSON: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Test schema validation</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">validate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">schema</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Schema valid&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✅ Schema valid"</span><span class="p">)</span>
 <span class="k">except</span> <span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Schema invalid: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"❌ Schema invalid: </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div></p>
 <hr />
 <h2 id="common-error-messages">Common Error Messages<a class="headerlink" href="#common-error-messages" title="Permanent link">&para;</a></h2>
@@ -2308,46 +2308,46 @@ python<span class="w"> </span>run_evaluation.py<span class="w"> </span>--verbose
 <h2 id="quick-diagnostics-script">Quick Diagnostics Script<a class="headerlink" href="#quick-diagnostics-script" title="Permanent link">&para;</a></h2>
 <p>Run this to check your environment:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;Quick diagnostics for Output Drift framework.&quot;&quot;&quot;</span>
+<span class="sd">"""Quick diagnostics for Output Drift framework."""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Diagnostics</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"🔍 Diagnostics</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 
 <span class="c1"># Python version</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Python: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="s2">&quot;❌ Python 3.11+ required&quot;</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Python version OK</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Python: </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span> <span class="s2">"❌ Python 3.11+ required"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"✅ Python version OK</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Dependencies</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">openai</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Dependencies installed</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✅ Dependencies installed</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Missing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"❌ Missing dependency: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Ollama</span>
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">&quot;curl&quot;</span><span class="p">,</span> <span class="s2">&quot;-s&quot;</span><span class="p">,</span> <span class="s2">&quot;http://localhost:11434/api/tags&quot;</span><span class="p">],</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="s2">"curl"</span><span class="p">,</span> <span class="s2">"-s"</span><span class="p">,</span> <span class="s2">"http://localhost:11434/api/tags"</span><span class="p">],</span>
                           <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Ollama running</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"✅ Ollama running</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  Ollama not responding</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"⚠️  Ollama not responding</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Ollama check failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"❌ Ollama check failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Environment variables</span>
-<span class="n">env_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;WATSONX_API_KEY&quot;</span><span class="p">,</span> <span class="s2">&quot;WATSONX_PROJECT_ID&quot;</span><span class="p">]</span>
+<span class="n">env_vars</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"WATSONX_API_KEY"</span><span class="p">,</span> <span class="s2">"WATSONX_PROJECT_ID"</span><span class="p">]</span>
 <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">env_vars</span><span class="p">:</span>
     <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">var</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> set&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> set"</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> not set&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"⚠️  </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2"> not set"</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Diagnostics complete!&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Diagnostics complete!"</span><span class="p">)</span>
 </code></pre></div>
 <p>Save as <code>diagnostics.py</code> and run:
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>diagnostics.py

@@ -1323,28 +1323,28 @@ trajectory that differs from the session record is a contract error.</p>
 <span class="p">)</span>
 
 <span class="n">risk_tool</span> <span class="o">=</span> <span class="n">ToolSpec</span><span class="p">(</span>
-    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;read_risk_tier&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"read_risk_tier"</span><span class="p">,</span>
     <span class="n">input_schema</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;risk_tier&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">}},</span>
-        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;risk_tier&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"risk_tier"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+        <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"risk_tier"</span><span class="p">],</span>
+        <span class="s2">"additionalProperties"</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">},</span>
 <span class="p">)</span>
 <span class="n">suite</span> <span class="o">=</span> <span class="n">Suite</span><span class="p">(</span>
-    <span class="n">suite_id</span><span class="o">=</span><span class="s2">&quot;toy-risk&quot;</span><span class="p">,</span>
-    <span class="n">suite_version</span><span class="o">=</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
-    <span class="n">decisions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;escalate&quot;</span><span class="p">,</span> <span class="s2">&quot;dismiss&quot;</span><span class="p">),</span>
+    <span class="n">suite_id</span><span class="o">=</span><span class="s2">"toy-risk"</span><span class="p">,</span>
+    <span class="n">suite_version</span><span class="o">=</span><span class="s2">"1.0.0"</span><span class="p">,</span>
+    <span class="n">decisions</span><span class="o">=</span><span class="p">(</span><span class="s2">"escalate"</span><span class="p">,</span> <span class="s2">"dismiss"</span><span class="p">),</span>
     <span class="n">cases</span><span class="o">=</span><span class="p">(</span>
         <span class="n">Case</span><span class="p">(</span>
-            <span class="n">case_id</span><span class="o">=</span><span class="s2">&quot;RISK-001&quot;</span><span class="p">,</span>
-            <span class="n">artifact_case_id</span><span class="o">=</span><span class="s2">&quot;CASE-001&quot;</span><span class="p">,</span>
-            <span class="nb">input</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;risk_tier&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span><span class="p">},</span>
+            <span class="n">case_id</span><span class="o">=</span><span class="s2">"RISK-001"</span><span class="p">,</span>
+            <span class="n">artifact_case_id</span><span class="o">=</span><span class="s2">"CASE-001"</span><span class="p">,</span>
+            <span class="nb">input</span><span class="o">=</span><span class="p">{</span><span class="s2">"risk_tier"</span><span class="p">:</span> <span class="s2">"high"</span><span class="p">},</span>
         <span class="p">),</span>
         <span class="n">Case</span><span class="p">(</span>
-            <span class="n">case_id</span><span class="o">=</span><span class="s2">&quot;RISK-002&quot;</span><span class="p">,</span>
-            <span class="n">artifact_case_id</span><span class="o">=</span><span class="s2">&quot;CASE-002&quot;</span><span class="p">,</span>
-            <span class="nb">input</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;risk_tier&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span><span class="p">},</span>
+            <span class="n">case_id</span><span class="o">=</span><span class="s2">"RISK-002"</span><span class="p">,</span>
+            <span class="n">artifact_case_id</span><span class="o">=</span><span class="s2">"CASE-002"</span><span class="p">,</span>
+            <span class="nb">input</span><span class="o">=</span><span class="p">{</span><span class="s2">"risk_tier"</span><span class="p">:</span> <span class="s2">"low"</span><span class="p">},</span>
         <span class="p">),</span>
     <span class="p">),</span>
     <span class="n">tools</span><span class="o">=</span><span class="p">(</span><span class="n">risk_tool</span><span class="p">,),</span>
@@ -1355,14 +1355,14 @@ trajectory that differs from the session record is a contract error.</p>
 <span class="k">def</span><span class="w"> </span><span class="nf">read_risk_tier</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">risk_tier</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="k">return</span> <span class="n">risk_tier</span>
 
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;top_p&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"top_p"</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">"seed"</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
 <span class="n">implementation_hash</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 <span class="n">manifest</span> <span class="o">=</span> <span class="n">build_manifest</span><span class="p">(</span>
     <span class="n">suite</span><span class="p">,</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;my-provider&quot;</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;my-model&quot;</span><span class="p">,</span>
-    <span class="n">adapter</span><span class="o">=</span><span class="s2">&quot;my_project.adapter&quot;</span><span class="p">,</span>
-    <span class="n">adapter_version</span><span class="o">=</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">"my-provider"</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"my-model"</span><span class="p">,</span>
+    <span class="n">adapter</span><span class="o">=</span><span class="s2">"my_project.adapter"</span><span class="p">,</span>
+    <span class="n">adapter_version</span><span class="o">=</span><span class="s2">"1.0.0"</span><span class="p">,</span>
     <span class="n">implementation_hash</span><span class="o">=</span><span class="n">implementation_hash</span><span class="p">,</span>
     <span class="n">request_parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1370,25 +1370,25 @@ trajectory that differs from the session record is a contract error.</p>
 <span class="nd">@agent</span><span class="p">(</span><span class="n">manifest</span><span class="o">=</span><span class="n">manifest</span><span class="p">,</span> <span class="n">tools</span><span class="o">=</span><span class="n">tools</span><span class="p">,</span> <span class="n">suite</span><span class="o">=</span><span class="n">suite</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">my_agent</span><span class="p">(</span><span class="n">case</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
     <span class="k">assert</span> <span class="n">context</span><span class="o">.</span><span class="n">tools</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-    <span class="n">risk</span> <span class="o">=</span> <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;read_risk_tier&quot;</span><span class="p">,</span> <span class="n">risk_tier</span><span class="o">=</span><span class="n">case</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s2">&quot;risk_tier&quot;</span><span class="p">])</span>
-    <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;ESCALATE&quot;</span> <span class="k">if</span> <span class="n">risk</span> <span class="o">==</span> <span class="s2">&quot;high&quot;</span> <span class="k">else</span> <span class="s2">&quot;DISMISS&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span><span class="p">:</span> <span class="s2">&quot;my-model&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">&quot;case_id&quot;</span><span class="p">:</span> <span class="n">case</span><span class="o">.</span><span class="n">case_id</span><span class="p">}</span>
+    <span class="n">risk</span> <span class="o">=</span> <span class="k">await</span> <span class="n">context</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"read_risk_tier"</span><span class="p">,</span> <span class="n">risk_tier</span><span class="o">=</span><span class="n">case</span><span class="o">.</span><span class="n">input</span><span class="p">[</span><span class="s2">"risk_tier"</span><span class="p">])</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s2">"ESCALATE"</span> <span class="k">if</span> <span class="n">risk</span> <span class="o">==</span> <span class="s2">"high"</span> <span class="k">else</span> <span class="s2">"DISMISS"</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model"</span><span class="p">:</span> <span class="s2">"my-model"</span><span class="p">,</span> <span class="o">**</span><span class="n">parameters</span><span class="p">,</span> <span class="s2">"case_id"</span><span class="p">:</span> <span class="n">case</span><span class="o">.</span><span class="n">case_id</span><span class="p">}</span>
     <span class="k">return</span> <span class="n">AgentResult</span><span class="p">(</span>
-        <span class="n">output_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DECISION: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">output_text</span><span class="o">=</span><span class="sa">f</span><span class="s2">"DECISION: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
         <span class="n">trajectory</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">trajectory</span><span class="p">(),</span>
         <span class="n">wire_request</span><span class="o">=</span><span class="n">WireRequest</span><span class="o">.</span><span class="n">from_payload</span><span class="p">(</span>
-            <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;my-provider&quot;</span><span class="p">,</span>
-            <span class="n">model</span><span class="o">=</span><span class="s2">&quot;my-model&quot;</span><span class="p">,</span>
+            <span class="n">provider</span><span class="o">=</span><span class="s2">"my-provider"</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="s2">"my-model"</span><span class="p">,</span>
             <span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span>
             <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
-            <span class="n">adapter</span><span class="o">=</span><span class="s2">&quot;my_project.adapter&quot;</span><span class="p">,</span>
-            <span class="n">adapter_version</span><span class="o">=</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+            <span class="n">adapter</span><span class="o">=</span><span class="s2">"my_project.adapter"</span><span class="p">,</span>
+            <span class="n">adapter_version</span><span class="o">=</span><span class="s2">"1.0.0"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">usage</span><span class="o">=</span><span class="n">Usage</span><span class="p">(</span><span class="n">input_tokens</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">output_tokens</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
         <span class="n">cost_usd</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
     <span class="p">)</span>
 
-<span class="n">report</span> <span class="o">=</span> <span class="n">Replay</span><span class="p">(</span><span class="n">suite</span><span class="o">=</span><span class="n">suite</span><span class="p">,</span> <span class="n">replays</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s2">&quot;.dfah/runs/toy-risk&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">my_agent</span><span class="p">)</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">Replay</span><span class="p">(</span><span class="n">suite</span><span class="o">=</span><span class="n">suite</span><span class="p">,</span> <span class="n">replays</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">out</span><span class="o">=</span><span class="s2">".dfah/runs/toy-risk"</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">my_agent</span><span class="p">)</span>
 </code></pre></div>
 <p>A session returns raw tool values to the adapter but records only canonical
 argument and output hashes by default. Its recorded <code>ToolCall.arguments</code> is

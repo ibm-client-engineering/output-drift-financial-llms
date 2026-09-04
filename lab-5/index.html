@@ -1624,9 +1624,9 @@ The consistency test does not itself determine compliance.</p>
 <h2 id="step-2-test-ollama-vs-watsonxai">Step 2: Test Ollama vs watsonx.ai<a class="headerlink" href="#step-2-test-ollama-vs-watsonxai" title="Permanent link">&para;</a></h2>
 <p>Create <code>test_cross_provider.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Cross-provider validation test: Ollama (local) vs watsonx.ai (cloud)</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">ibm_watsonx_ai.foundation_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelInference</span>
@@ -1636,34 +1636,34 @@ The consistency test does not itself determine compliance.</p>
 <span class="n">load_dotenv</span><span class="p">()</span>
 
 <span class="c1"># Test prompt (SQL generation)</span>
-<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;Generate SQL to find all customers with account balance &gt; $100,000&quot;</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">"Generate SQL to find all customers with account balance &gt; $100,000"</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔄 Cross-Provider Validation Test&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prompt: </span><span class="si">{</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"🔄 Cross-Provider Validation Test"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Prompt: </span><span class="si">{</span><span class="n">prompt</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Provider 1: Ollama (local)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📍 Provider 1: Ollama (qwen2.5:7b-instruct)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"📍 Provider 1: Ollama (qwen2.5:7b-instruct)"</span><span class="p">)</span>
 <span class="n">ollama_client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span>
-    <span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span>
+    <span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="s2">"ollama"</span>
 <span class="p">)</span>
 <span class="n">ollama_response</span> <span class="o">=</span> <span class="n">ollama_client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"qwen2.5:7b-instruct"</span><span class="p">,</span>
+    <span class="n">messages</span><span class="o">=</span><span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}],</span>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
     <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
 <span class="p">)</span>
 <span class="n">ollama_output</span> <span class="o">=</span> <span class="n">ollama_response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">ollama_output</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Output: </span><span class="si">{</span><span class="n">ollama_output</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Provider 2: IBM watsonx.ai (cloud)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;☁️  Provider 2: watsonx.ai (granite-3-8b-instruct)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"☁️  Provider 2: watsonx.ai (granite-3-8b-instruct)"</span><span class="p">)</span>
 <span class="n">watsonx_model</span> <span class="o">=</span> <span class="n">ModelInference</span><span class="p">(</span>
-    <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_API_KEY&quot;</span><span class="p">),</span>
-    <span class="n">project_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_PROJECT_ID&quot;</span><span class="p">),</span>
-    <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_URL&quot;</span><span class="p">,</span> <span class="s2">&quot;https://us-south.ml.cloud.ibm.com&quot;</span><span class="p">)</span>
+    <span class="n">model_id</span><span class="o">=</span><span class="s2">"ibm/granite-3-8b-instruct"</span><span class="p">,</span>
+    <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_API_KEY"</span><span class="p">),</span>
+    <span class="n">project_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_PROJECT_ID"</span><span class="p">),</span>
+    <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_URL"</span><span class="p">,</span> <span class="s2">"https://us-south.ml.cloud.ibm.com"</span><span class="p">)</span>
 <span class="p">)</span>
 <span class="n">watsonx_params</span> <span class="o">=</span> <span class="p">{</span>
     <span class="n">GenParams</span><span class="o">.</span><span class="n">TEMPERATURE</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
@@ -1672,25 +1672,25 @@ The consistency test does not itself determine compliance.</p>
 <span class="p">}</span>
 <span class="n">watsonx_response</span> <span class="o">=</span> <span class="n">watsonx_model</span><span class="o">.</span><span class="n">generate_text</span><span class="p">(</span><span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">watsonx_params</span><span class="p">)</span>
 <span class="n">watsonx_output</span> <span class="o">=</span> <span class="n">watsonx_response</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output: </span><span class="si">{</span><span class="n">watsonx_output</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Output: </span><span class="si">{</span><span class="n">watsonx_output</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Compare outputs</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Comparison:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Ollama length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">)</span><span class="si">}</span><span class="s2"> chars&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  watsonx length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">)</span><span class="si">}</span><span class="s2"> chars&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Exact match: </span><span class="si">{</span><span class="n">ollama_output</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">watsonx_output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"🔍 Comparison:"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Ollama length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">)</span><span class="si">}</span><span class="s2"> chars"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  watsonx length: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">)</span><span class="si">}</span><span class="s2"> chars"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Exact match: </span><span class="si">{</span><span class="n">ollama_output</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">watsonx_output</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Calculate similarity (Levenshtein distance)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 <span class="n">distance</span> <span class="o">=</span> <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">,</span> <span class="n">watsonx_output</span><span class="p">)</span>
 <span class="n">similarity</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">distance</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Similarity: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Similarity: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="k">if</span> <span class="n">similarity</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">✅ Observed similarity met the exercise&#39;s 95</span><span class="si">% r</span><span class="s2">eview line&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">✅ Observed similarity met the exercise's 95</span><span class="si">% r</span><span class="s2">eview line"</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠️  Cross-provider drift detected: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">⚠️  Cross-provider drift detected: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>test_cross_provider.py
@@ -1713,7 +1713,7 @@ Output: SELECT customer_name, account_balance FROM accounts WHERE account_balanc
   Exact match: True
   Similarity: 100.0%
 
-✅ Observed similarity met the exercise&#39;s 95% review line
+✅ Observed similarity met the exercise's 95% review line
 </code></pre></div>
 <div class="admonition success">
 <p class="admonition-title">Tier 1 Cross-Provider Consistency</p>
@@ -1726,69 +1726,69 @@ review.</p>
 <p>Now use the built-in validator from <code>harness/cross_provider_validation.py</code>:</p>
 <p>Create <code>run_cross_provider_validation.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Use framework&#39;s CrossProviderValidator for automated testing.</span>
+<span class="sd">"""</span>
+<span class="sd">Use framework's CrossProviderValidator for automated testing.</span>
 
 <span class="sd">Note: The validator works with pre-collected outputs. You first run</span>
 <span class="sd">experiments on each provider, then validate the outputs for consistency.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
 <span class="c1"># Initialize the validator with an exercise-specific tolerance</span>
 <span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span>
-    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">"ollama"</span><span class="p">,</span> <span class="s2">"watsonx"</span><span class="p">],</span>
     <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span>  <span class="c1"># illustrative; set from the approved task contract</span>
 <span class="p">)</span>
 
-<span class="c1"># Assume you&#39;ve already collected outputs from each provider</span>
+<span class="c1"># Assume you've already collected outputs from each provider</span>
 <span class="c1"># (e.g., from running run_evaluation.py with --providers ollama and --providers watsonx)</span>
 <span class="n">sql_outputs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+    <span class="s2">"ollama"</span><span class="p">:</span> <span class="s2">"SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;"</span><span class="p">,</span>
+    <span class="s2">"watsonx"</span><span class="p">:</span> <span class="s2">"SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;"</span>
 <span class="p">}</span>
 
 <span class="c1"># Validate SQL outputs</span>
 <span class="n">sql_results</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="mf">125000.0</span><span class="p">,</span>
-    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="mf">125000.0</span>
+    <span class="s2">"ollama"</span><span class="p">:</span> <span class="mf">125000.0</span><span class="p">,</span>
+    <span class="s2">"watsonx"</span><span class="p">:</span> <span class="mf">125000.0</span>
 <span class="p">}</span>
 <span class="n">result_sql</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="n">sql_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="n">sql_results</span><span class="o">=</span><span class="n">sql_results</span>
+    <span class="n">sql_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">"sql"</span><span class="p">,</span> <span class="n">sql_results</span><span class="o">=</span><span class="n">sql_results</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">SQL Generation Task&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numeric result checks: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;task_validation&#39;</span><span class="p">][</span><span class="s1">&#39;result_match&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">SQL Generation Task"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">'similarity_scores'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Numeric result checks: </span><span class="si">{</span><span class="n">result_sql</span><span class="p">[</span><span class="s1">'task_validation'</span><span class="p">][</span><span class="s1">'result_match'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="c1"># Validate RAG outputs</span>
 <span class="n">rag_outputs</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="s2">&quot;Citigroup reported net credit losses of $1.2B in 2023. [citi_2024_10k]&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="s2">&quot;Citigroup reported net credit losses of $1.2 billion in 2023. [citi_2024_10k]&quot;</span>
+    <span class="s2">"ollama"</span><span class="p">:</span> <span class="s2">"Citigroup reported net credit losses of $1.2B in 2023. [citi_2024_10k]"</span><span class="p">,</span>
+    <span class="s2">"watsonx"</span><span class="p">:</span> <span class="s2">"Citigroup reported net credit losses of $1.2 billion in 2023. [citi_2024_10k]"</span>
 <span class="p">}</span>
 <span class="n">rag_citations</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;citi_2024_10k&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;citi_2024_10k&quot;</span><span class="p">]</span>
+    <span class="s2">"ollama"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"citi_2024_10k"</span><span class="p">],</span>
+    <span class="s2">"watsonx"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"citi_2024_10k"</span><span class="p">]</span>
 <span class="p">}</span>
 
 <span class="n">result_rag</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-    <span class="n">rag_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;rag&quot;</span><span class="p">,</span> <span class="n">citations</span><span class="o">=</span><span class="n">rag_citations</span>
+    <span class="n">rag_outputs</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">"rag"</span><span class="p">,</span> <span class="n">citations</span><span class="o">=</span><span class="n">rag_citations</span>
 <span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">RAG Task&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Similarity: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">&#39;similarity_scores&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">RAG Task"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity: </span><span class="si">{</span><span class="n">result_rag</span><span class="p">[</span><span class="s1">'similarity_scores'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;Citation sets matched:&quot;</span><span class="p">,</span>
-    <span class="n">result_rag</span><span class="p">[</span><span class="s2">&quot;task_validation&quot;</span><span class="p">][</span><span class="s2">&quot;citation_consistent&quot;</span><span class="p">],</span>
+    <span class="s2">"Citation sets matched:"</span><span class="p">,</span>
+    <span class="n">result_rag</span><span class="p">[</span><span class="s2">"task_validation"</span><span class="p">][</span><span class="s2">"citation_consistent"</span><span class="p">],</span>
 <span class="p">)</span>
 
 <span class="c1"># Audit trail</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Cross-Provider Audit Report&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">result_sql</span><span class="p">[</span><span class="s1">&#39;audit_trail&#39;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Providers: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;providers&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Output hashes: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">&#39;output_hashes&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Cross-Provider Audit Report"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">result_sql</span><span class="p">[</span><span class="s1">'audit_trail'</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Providers: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">'providers'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Output hashes: </span><span class="si">{</span><span class="n">record</span><span class="p">[</span><span class="s1">'output_hashes'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>run_cross_provider_validation.py
@@ -1800,7 +1800,7 @@ context-dependent and must be set by the responsible accounting, risk, and
 control functions.</p>
 <p><strong>Example: Numeric comparison</strong></p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_numeric_tolerance</span><span class="p">(</span><span class="n">value1</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">value2</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">tolerance_pct</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check whether two values meet an exercise-specific tolerance.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Check whether two values meet an exercise-specific tolerance."""</span>
     <span class="k">if</span> <span class="n">value1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">value2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">True</span>
     <span class="k">if</span> <span class="n">value1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">value2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -1825,20 +1825,20 @@ numeric comparison.</p>
 <p>Compare five pairs of outputs collected separately from the two provider
 configurations:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Multi-run cross-provider consistency test.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.cross_provider_validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">CrossProviderValidator</span>
 
-<span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span><span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">],</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">CrossProviderValidator</span><span class="p">(</span><span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">"ollama"</span><span class="p">,</span> <span class="s2">"watsonx"</span><span class="p">],</span> <span class="n">tolerance_pct</span><span class="o">=</span><span class="mf">5.0</span><span class="p">)</span>
 
 <span class="c1"># Collect these with the provider clients before comparison. They are expanded</span>
 <span class="c1"># here so the example remains runnable without unsupported validator kwargs.</span>
 <span class="n">ollama_outputs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+    <span class="s2">"SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;"</span>
 <span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 <span class="n">watsonx_outputs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;&quot;</span>
+    <span class="s2">"SELECT customer_id, name, balance FROM accounts WHERE balance &gt; 100000;"</span>
 <span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 <span class="n">ollama_results</span> <span class="o">=</span> <span class="p">[</span><span class="mf">125000.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
 <span class="n">watsonx_results</span> <span class="o">=</span> <span class="p">[</span><span class="mf">125000.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">5</span>
@@ -1848,25 +1848,25 @@ configurations:</p>
     <span class="nb">zip</span><span class="p">(</span><span class="n">ollama_outputs</span><span class="p">,</span> <span class="n">watsonx_outputs</span><span class="p">),</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span>
 <span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span>
-        <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_output</span><span class="p">,</span> <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_output</span><span class="p">},</span>
-        <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span>
+        <span class="n">outputs</span><span class="o">=</span><span class="p">{</span><span class="s2">"ollama"</span><span class="p">:</span> <span class="n">ollama_output</span><span class="p">,</span> <span class="s2">"watsonx"</span><span class="p">:</span> <span class="n">watsonx_output</span><span class="p">},</span>
+        <span class="n">task_type</span><span class="o">=</span><span class="s2">"sql"</span><span class="p">,</span>
         <span class="n">sql_results</span><span class="o">=</span><span class="p">{</span>
-            <span class="s2">&quot;ollama&quot;</span><span class="p">:</span> <span class="n">ollama_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
-            <span class="s2">&quot;watsonx&quot;</span><span class="p">:</span> <span class="n">watsonx_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="s2">"ollama"</span><span class="p">:</span> <span class="n">ollama_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="s2">"watsonx"</span><span class="p">:</span> <span class="n">watsonx_results</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
         <span class="p">},</span>
     <span class="p">)</span>
     <span class="n">query_match</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
-        <span class="n">score</span> <span class="o">&gt;=</span> <span class="mf">0.95</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;similarity_scores&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">score</span> <span class="o">&gt;=</span> <span class="mf">0.95</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s2">"similarity_scores"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">numeric_match</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
-        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;task_validation&quot;</span><span class="p">][</span><span class="s2">&quot;result_match&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">"task_validation"</span><span class="p">][</span><span class="s2">"result_match"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">pair_match</span> <span class="o">=</span> <span class="n">query_match</span> <span class="ow">and</span> <span class="n">numeric_match</span>
     <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pair_match</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pair </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">&#39;✅ Match&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">pair_match</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️ Review&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Pair </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="s1">'✅ Match'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">pair_match</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'⚠️ Review'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
 <span class="n">consistency_rate</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Observed pair agreement: </span><span class="si">{</span><span class="n">consistency_rate</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Observed pair agreement: </span><span class="si">{</span><span class="n">consistency_rate</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
 </code></pre></div>
 <p><strong>Expected output:</strong></p>
 <div class="highlight"><pre><span></span><code>Pair 1: ✅ Match
@@ -1927,23 +1927,23 @@ compliance determination:</p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">migration_replay_status</span><span class="p">(</span>
     <span class="n">source_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_tier</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">task_type</span><span class="p">:</span> <span class="nb">str</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prioritize replay work; do not treat this as a deployment gate.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Prioritize replay work; do not treat this as a deployment gate."""</span>
     <span class="k">if</span> <span class="n">source_tier</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;run path-aware replay&quot;</span>
+        <span class="k">return</span> <span class="s2">"run path-aware replay"</span>
 
     <span class="k">if</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;full requalification&quot;</span>
+        <span class="k">return</span> <span class="s2">"full requalification"</span>
 
-    <span class="k">if</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">task_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sql&quot;</span><span class="p">,</span> <span class="s2">&quot;summarize&quot;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="s2">&quot;run path-aware replay&quot;</span>
+    <span class="k">if</span> <span class="n">target_tier</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">task_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"sql"</span><span class="p">,</span> <span class="s2">"summarize"</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="s2">"run path-aware replay"</span>
 
-    <span class="k">return</span> <span class="s2">&quot;investigate before relying on equivalent replay&quot;</span>
+    <span class="k">return</span> <span class="s2">"investigate before relying on equivalent replay"</span>
 
 <span class="c1"># Examples</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;rag&quot;</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;sql&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"rag"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"sql"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">"rag"</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">migration_replay_status</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">"sql"</span><span class="p">))</span>
 </code></pre></div>
 <h2 id="understanding-provider-differences">Understanding Provider Differences<a class="headerlink" href="#understanding-provider-differences" title="Permanent link">&para;</a></h2>
 <p>Even with identical model versions, providers may differ in:</p>
@@ -1967,14 +1967,14 @@ the exact source and target configurations.</p>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">ModelInference</span><span class="p">(</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="s2">&quot;ibm/granite-3-8b-instruct&quot;</span><span class="p">,</span>
-        <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_API_KEY&quot;</span><span class="p">),</span>
-        <span class="n">project_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_PROJECT_ID&quot;</span><span class="p">),</span>
-        <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;WATSONX_URL&quot;</span><span class="p">)</span>
+        <span class="n">model_id</span><span class="o">=</span><span class="s2">"ibm/granite-3-8b-instruct"</span><span class="p">,</span>
+        <span class="n">api_key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_API_KEY"</span><span class="p">),</span>
+        <span class="n">project_id</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_PROJECT_ID"</span><span class="p">),</span>
+        <span class="n">url</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"WATSONX_URL"</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ watsonx.ai connection successful&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"✅ watsonx.ai connection successful"</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ watsonx.ai connection failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"❌ watsonx.ai connection failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <h3 id="similarity-below-95">Similarity Below 95%<a class="headerlink" href="#similarity-below-95" title="Permanent link">&para;</a></h3>
 <p>If cross-provider similarity is unexpectedly low:</p>
@@ -1985,8 +1985,8 @@ the exact source and target configurations.</p>
 <li><strong>Inspect raw outputs</strong>: Look for formatting differences</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="c1"># Debug output differences</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ollama output:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;watsonx output:&quot;</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Ollama output:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">ollama_output</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"watsonx output:"</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">watsonx_output</span><span class="p">))</span>
 </code></pre></div>
 <h2 id="key-takeaways">Key Takeaways<a class="headerlink" href="#key-takeaways" title="Permanent link">&para;</a></h2>
 <ol>

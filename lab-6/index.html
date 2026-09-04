@@ -1556,7 +1556,7 @@
 <h2 id="step-1-understanding-task-structure">Step 1: Understanding Task Structure<a class="headerlink" href="#step-1-understanding-task-structure" title="Permanent link">&para;</a></h2>
 <p>Task prompts are defined in <code>run_evaluation.py</code> (see the <code>build_prompts()</code> function) and task formatting/validation lives in <code>harness/task_definitions.py</code>.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># View the prompt builder</span>
-grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s2">&quot;def build_prompts&quot;</span><span class="w"> </span>run_evaluation.py
+grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><span class="w"> </span><span class="s2">"def build_prompts"</span><span class="w"> </span>run_evaluation.py
 </code></pre></div>
 <p><strong>Current tasks:</strong>
 - <code>rag</code>: RAG Q&amp;A over SEC 10-K filings
@@ -1571,92 +1571,92 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <p>Let's add a new task for credit risk assessment:</p>
 <p>To add a custom task, define a new task configuration. Here's an example credit risk assessment task structure:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;credit_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Credit risk classification with explainability requirements&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;prompts&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"credit_risk"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Credit risk classification with explainability requirements"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"prompts"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cr1&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;profile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;credit_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">680</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;income&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">75000</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;debt_to_income&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.20</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;employment_years&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cr1"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"credit_score"</span><span class="p">:</span><span class="w"> </span><span class="mi">680</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"income"</span><span class="p">:</span><span class="w"> </span><span class="mi">75000</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"debt_to_income"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.20</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"employment_years"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;expected_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;review_references&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="nt">"question"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence."</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"expected_risk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LOW"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"review_references"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ECOA"</span><span class="p">,</span><span class="w"> </span><span class="s2">"FCRA"</span><span class="p">]</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cr2&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;profile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">          </span><span class="nt">&quot;credit_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">620</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;income&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50000</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;debt_to_income&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.45</span><span class="p">,</span>
-<span class="w">          </span><span class="nt">&quot;employment_years&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cr2"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nt">"credit_score"</span><span class="p">:</span><span class="w"> </span><span class="mi">620</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"income"</span><span class="p">:</span><span class="w"> </span><span class="mi">50000</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"debt_to_income"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.45</span><span class="p">,</span>
+<span class="w">          </span><span class="nt">"employment_years"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;question&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;expected_risk&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;review_references&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;FCRA&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="nt">"question"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence."</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"expected_risk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MEDIUM"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"review_references"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"ECOA"</span><span class="p">,</span><span class="w"> </span><span class="s2">"FCRA"</span><span class="p">]</span>
 <span class="w">      </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;system_prompt&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence. The repeated-run evaluation will measure whether identical inputs produce identical outputs.&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;output_schema&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;object&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;properties&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;risk_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;enum&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;LOW&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;MEDIUM&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;HIGH&quot;</span><span class="p">]},</span>
-<span class="w">        </span><span class="nt">&quot;explanation&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;string&quot;</span><span class="p">}</span>
+<span class="w">    </span><span class="nt">"system_prompt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence. The repeated-run evaluation will measure whether identical inputs produce identical outputs."</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"output_schema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"risk_level"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"enum"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"LOW"</span><span class="p">,</span><span class="w"> </span><span class="s2">"MEDIUM"</span><span class="p">,</span><span class="w"> </span><span class="s2">"HIGH"</span><span class="p">]},</span>
+<span class="w">        </span><span class="nt">"explanation"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">}</span>
 <span class="w">      </span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;required&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;risk_level&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;explanation&quot;</span><span class="p">]</span>
+<span class="w">      </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"risk_level"</span><span class="p">,</span><span class="w"> </span><span class="s2">"explanation"</span><span class="p">]</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;temperature&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;seed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span>
+<span class="w">    </span><span class="nt">"temperature"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"seed"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span>
 <span class="w">  </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
 <h2 id="step-3-create-task-executor-for-custom-task">Step 3: Create Task Executor for Custom Task<a class="headerlink" href="#step-3-create-task-executor-for-custom-task" title="Permanent link">&para;</a></h2>
 <p>Create <code>custom_credit_risk.py</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Custom credit risk classification task with drift testing.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAI</span>
 
 <span class="c1"># Define custom task configuration inline</span>
 <span class="n">credit_risk_task</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;system_prompt&quot;</span><span class="p">:</span> <span class="s2">&quot;Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="s2">&quot;Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence.&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="s2">"system_prompt"</span><span class="p">:</span> <span class="s2">"Classify risk as LOW, MEDIUM, or HIGH from the supplied synthetic profile. Provide a brief explanation in one sentence."</span><span class="p">,</span>
+    <span class="s2">"question"</span><span class="p">:</span> <span class="s2">"Classify credit risk (LOW/MEDIUM/HIGH) and explain in one sentence."</span><span class="p">,</span>
+    <span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="s2">"seed"</span><span class="p">:</span> <span class="mi">42</span>
 <span class="p">}</span>
 
-<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">&quot;http://localhost:11434/v1&quot;</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span><span class="p">)</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">OpenAI</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s2">"http://localhost:11434/v1"</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="s2">"ollama"</span><span class="p">)</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">run_credit_risk_assessment</span><span class="p">(</span><span class="n">profile</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;qwen2.5:7b-instruct&quot;</span><span class="p">,</span> <span class="n">n_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run credit risk assessment n times to test consistency.&quot;&quot;&quot;</span>
-    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Profile:</span>
-<span class="s2">- Credit Score: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;credit_score&#39;</span><span class="p">]</span><span class="si">}</span>
-<span class="s2">- Annual Income: $</span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;income&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span>
-<span class="s2">- Debt-to-Income Ratio: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;debt_to_income&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span>
-<span class="s2">- Employment Years: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">&#39;employment_years&#39;</span><span class="p">]</span><span class="si">}</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_credit_risk_assessment</span><span class="p">(</span><span class="n">profile</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"qwen2.5:7b-instruct"</span><span class="p">,</span> <span class="n">n_runs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Run credit risk assessment n times to test consistency."""</span>
+    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""Profile:</span>
+<span class="s2">- Credit Score: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">'credit_score'</span><span class="p">]</span><span class="si">}</span>
+<span class="s2">- Annual Income: $</span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">'income'</span><span class="p">]</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span>
+<span class="s2">- Debt-to-Income Ratio: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">'debt_to_income'</span><span class="p">]</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span>
+<span class="s2">- Employment Years: </span><span class="si">{</span><span class="n">profile</span><span class="p">[</span><span class="s1">'employment_years'</span><span class="p">]</span><span class="si">}</span>
 
-<span class="si">{</span><span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">&#39;question&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="si">{</span><span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">'question'</span><span class="p">]</span><span class="si">}</span><span class="s2">"""</span>
 
     <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_runs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">completions</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
             <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
             <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
-                <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">&#39;system_prompt&#39;</span><span class="p">]},</span>
-                <span class="p">{</span><span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}</span>
+                <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">credit_risk_task</span><span class="p">[</span><span class="s1">'system_prompt'</span><span class="p">]},</span>
+                <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">prompt</span><span class="p">}</span>
             <span class="p">],</span>
             <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
             <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
         <span class="p">)</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">choices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">content</span>
         <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Run </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="c1"># Calculate modal exact-output agreement.</span>
     <span class="n">counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
@@ -1664,22 +1664,22 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
     <span class="n">modal_count</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">consistency</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Results:&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Total runs: </span><span class="si">{</span><span class="n">n_runs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Unique outputs: </span><span class="si">{</span><span class="n">unique</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Consistency: </span><span class="si">{</span><span class="n">consistency</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Status: </span><span class="si">{</span><span class="s1">&#39;✅ Exact replay agreement&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;⚠️ Drift detected&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">📊 Results:"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Total runs: </span><span class="si">{</span><span class="n">n_runs</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Unique outputs: </span><span class="si">{</span><span class="n">unique</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Consistency: </span><span class="si">{</span><span class="n">consistency</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  Status: </span><span class="si">{</span><span class="s1">'✅ Exact replay agreement'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'⚠️ Drift detected'</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">results</span>
 
 <span class="c1"># Test with a synthetic profile</span>
 <span class="n">profile1</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;credit_score&quot;</span><span class="p">:</span> <span class="mi">680</span><span class="p">,</span>
-    <span class="s2">&quot;income&quot;</span><span class="p">:</span> <span class="mi">75000</span><span class="p">,</span>
-    <span class="s2">&quot;debt_to_income&quot;</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">,</span>
-    <span class="s2">&quot;employment_years&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">"credit_score"</span><span class="p">:</span> <span class="mi">680</span><span class="p">,</span>
+    <span class="s2">"income"</span><span class="p">:</span> <span class="mi">75000</span><span class="p">,</span>
+    <span class="s2">"debt_to_income"</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">,</span>
+    <span class="s2">"employment_years"</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
 <span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🧪 Testing Credit Risk Assessment</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"🧪 Testing Credit Risk Assessment</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">run_credit_risk_assessment</span><span class="p">(</span><span class="n">profile1</span><span class="p">,</span> <span class="n">n_runs</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
@@ -1688,11 +1688,11 @@ grep<span class="w"> </span>-A<span class="w"> </span><span class="m">30</span><
 <p><strong>Expected output (Tier 1 model):</strong></p>
 <div class="highlight"><pre><span></span><code>🧪 Testing Credit Risk Assessment
 
-Run 1: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio and stable employment history.&quot;}
-Run 2: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio and stable employment history.&quot;}
-Run 3: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio and stable employment history.&quot;}
-Run 4: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio and stable employment history.&quot;}
-Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio and stable employment history.&quot;}
+Run 1: {"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio and stable employment history."}
+Run 2: {"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio and stable employment history."}
+Run 3: {"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio and stable employment history."}
+Run 4: {"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio and stable employment history."}
+Run 5: {"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio and stable employment history."}
 
 📊 Results:
   Total runs: 5
@@ -1714,12 +1714,12 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">harness.deterministic_retriever</span><span class="w"> </span><span class="kn">import</span> <span class="n">DeterministicRetriever</span>
 
-<span class="n">document_paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;data/custom_docs&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.txt&quot;</span><span class="p">))</span>
+<span class="n">document_paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"data/custom_docs"</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"*.txt"</span><span class="p">))</span>
 <span class="n">documents</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
-        <span class="s2">&quot;meta&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;filepath&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)},</span>
+        <span class="s2">"text"</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">),</span>
+        <span class="s2">"source"</span><span class="p">:</span> <span class="n">path</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span>
+        <span class="s2">"meta"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"filepath"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)},</span>
     <span class="p">}</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">document_paths</span>
 <span class="p">]</span>
@@ -1733,10 +1733,10 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <ol>
 <li><strong>Test retrieval</strong>:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;What is our company&#39;s annual revenue?&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">query</span> <span class="o">=</span> <span class="s2">"What is our company's annual revenue?"</span>
 <span class="n">results</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">retrieve</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">snippet_id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Chunk </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">snippet_id</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">text</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="step-5-cicd-integration">Step 5: CI/CD Integration<a class="headerlink" href="#step-5-cicd-integration" title="Permanent link">&para;</a></h2>
 <p>Integrate drift testing into your CI/CD pipeline:</p>
@@ -1747,7 +1747,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
 <span class="w">  </span><span class="nt">schedule</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&#39;</span><span class="w">  </span><span class="c1"># Daily at midnight</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s">'0</span><span class="nv"> </span><span class="s">0</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*'</span><span class="w">  </span><span class="c1"># Daily at midnight</span>
 
 <span class="nt">jobs</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">drift-test</span><span class="p">:</span>
@@ -1759,7 +1759,7 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up Python</span>
 <span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v4</span>
 <span class="w">        </span><span class="nt">with</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.11&#39;</span>
+<span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.11'</span>
 
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -1781,21 +1781,21 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Validate consistency</span>
 <span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">          </span><span class="no">python - &lt;&lt;&#39;PY&#39;</span>
+<span class="w">          </span><span class="no">python - &lt;&lt;'PY'</span>
 <span class="w">          </span><span class="no">from collections import defaultdict</span>
 <span class="w">          </span><span class="no">import json</span>
 <span class="w">          </span><span class="no">from pathlib import Path</span>
 
-<span class="w">          </span><span class="no">trace_files = list(Path(&quot;traces/ci_test&quot;).glob(&quot;trace_*.jsonl&quot;))</span>
-<span class="w">          </span><span class="no">assert trace_files, &quot;No trace files were produced&quot;</span>
+<span class="w">          </span><span class="no">trace_files = list(Path("traces/ci_test").glob("trace_*.jsonl"))</span>
+<span class="w">          </span><span class="no">assert trace_files, "No trace files were produced"</span>
 
 <span class="w">          </span><span class="no">groups = defaultdict(list)</span>
 <span class="w">          </span><span class="no">for trace_file in trace_files:</span>
 <span class="w">              </span><span class="no">with trace_file.open() as handle:</span>
 <span class="w">                  </span><span class="no">for line in handle:</span>
 <span class="w">                      </span><span class="no">record = json.loads(line)</span>
-<span class="w">                      </span><span class="no">groups[(record[&quot;task&quot;], record[&quot;prompt_id&quot;])].append(</span>
-<span class="w">                          </span><span class="no">record[&quot;output&quot;]</span>
+<span class="w">                      </span><span class="no">groups[(record["task"], record["prompt_id"])].append(</span>
+<span class="w">                          </span><span class="no">record["output"]</span>
 <span class="w">                      </span><span class="no">)</span>
 
 <span class="w">          </span><span class="no">varied = {</span>
@@ -1803,8 +1803,8 @@ Run 5: {&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;
 <span class="w">              </span><span class="no">for group, outputs in groups.items()</span>
 <span class="w">              </span><span class="no">if len(set(outputs)) != 1</span>
 <span class="w">          </span><span class="no">}</span>
-<span class="w">          </span><span class="no">assert not varied, f&quot;Exact-output variation detected: {varied}&quot;</span>
-<span class="w">          </span><span class="no">print(&quot;✅ All captured replay groups had exact output agreement&quot;)</span>
+<span class="w">          </span><span class="no">assert not varied, f"Exact-output variation detected: {varied}"</span>
+<span class="w">          </span><span class="no">print("✅ All captured replay groups had exact output agreement")</span>
 <span class="w">          </span><span class="no">PY</span>
 
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload replay records</span>
@@ -1824,67 +1824,67 @@ teaching examples only. They are not legal interpretations, fairness tests, or
 evidence of regulatory compliance.</p>
 <p><strong>Create <code>custom_control_validator.py</code></strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;Illustrative workflow-rule checks; not a compliance determination.&quot;&quot;&quot;</span>
+<span class="sd">"""Illustrative workflow-rule checks; not a compliance determination."""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">CustomControlValidator</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Evaluate illustrative workflow rules against captured outputs.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frameworks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Initialize validator.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            frameworks: Labels used to select example rules for this lab.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span> <span class="o">=</span> <span class="n">frameworks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_rules</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_rules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">callable</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load validation rules for each framework.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Load validation rules for each framework."""</span>
         <span class="n">rules</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="c1"># Illustrative checks grouped under familiar labels. These simple</span>
         <span class="c1"># heuristics do not implement or interpret the cited laws.</span>
-        <span class="k">if</span> <span class="s2">&quot;ECOA&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
-            <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;ecoa_consistency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_consistency</span>
-            <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;ecoa_no_discrimination&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_no_discrimination</span>
+        <span class="k">if</span> <span class="s2">"ECOA"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
+            <span class="n">rules</span><span class="p">[</span><span class="s2">"ecoa_consistency"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_consistency</span>
+            <span class="n">rules</span><span class="p">[</span><span class="s2">"ecoa_no_discrimination"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_no_discrimination</span>
 
         <span class="c1"># FCRA (Fair Credit Reporting Act)</span>
-        <span class="k">if</span> <span class="s2">&quot;FCRA&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
-            <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;fcra_explainability&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_explainability</span>
+        <span class="k">if</span> <span class="s2">"FCRA"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
+            <span class="n">rules</span><span class="p">[</span><span class="s2">"fcra_explainability"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_explainability</span>
 
         <span class="c1"># GDPR</span>
-        <span class="k">if</span> <span class="s2">&quot;GDPR&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
-            <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;gdpr_right_to_explanation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_explainability</span>
-            <span class="n">rules</span><span class="p">[</span><span class="s2">&quot;gdpr_data_minimization&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_data_minimization</span>
+        <span class="k">if</span> <span class="s2">"GDPR"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">frameworks</span><span class="p">:</span>
+            <span class="n">rules</span><span class="p">[</span><span class="s2">"gdpr_right_to_explanation"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_explainability</span>
+            <span class="n">rules</span><span class="p">[</span><span class="s2">"gdpr_data_minimization"</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_data_minimization</span>
 
         <span class="k">return</span> <span class="n">rules</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_consistency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check exact agreement across the supplied examples.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Check exact agreement across the supplied examples."""</span>
         <span class="n">unique_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">outputs</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">unique_outputs</span> <span class="o">==</span> <span class="mi">1</span>  <span class="c1"># 100% consistency required</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_no_discrimination</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flag a small demonstration vocabulary for manual review.&quot;&quot;&quot;</span>
-        <span class="n">protected_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;race&quot;</span><span class="p">,</span> <span class="s2">&quot;gender&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;religion&quot;</span><span class="p">,</span> <span class="s2">&quot;nationality&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">"""Flag a small demonstration vocabulary for manual review."""</span>
+        <span class="n">protected_terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"race"</span><span class="p">,</span> <span class="s2">"gender"</span><span class="p">,</span> <span class="s2">"age"</span><span class="p">,</span> <span class="s2">"religion"</span><span class="p">,</span> <span class="s2">"nationality"</span><span class="p">]</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">term</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">protected_terms</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_explainability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check for an explanation marker in this teaching example.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;explanation&quot;</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;because&quot;</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<span class="w">        </span><span class="sd">"""Check for an explanation marker in this teaching example."""</span>
+        <span class="k">return</span> <span class="s2">"explanation"</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">"because"</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_check_data_minimization</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Flag a small demonstration vocabulary for manual review.&quot;&quot;&quot;</span>
-        <span class="n">pii_indicators</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ssn&quot;</span><span class="p">,</span> <span class="s2">&quot;social security&quot;</span><span class="p">,</span> <span class="s2">&quot;passport&quot;</span><span class="p">,</span> <span class="s2">&quot;driver license&quot;</span><span class="p">]</span>
+<span class="w">        </span><span class="sd">"""Flag a small demonstration vocabulary for manual review."""</span>
+        <span class="n">pii_indicators</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"ssn"</span><span class="p">,</span> <span class="s2">"social security"</span><span class="p">,</span> <span class="s2">"passport"</span><span class="p">,</span> <span class="s2">"driver license"</span><span class="p">]</span>
         <span class="k">return</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">indicator</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">indicator</span> <span class="ow">in</span> <span class="n">pii_indicators</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">any</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Run all validation rules.</span>
 
 <span class="sd">        Args:</span>
@@ -1892,15 +1892,15 @@ evidence of regulatory compliance.</p>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            {</span>
-<span class="sd">                &quot;all_example_rules_passed&quot;: bool,</span>
-<span class="sd">                &quot;passed_rules&quot;: List[str],</span>
-<span class="sd">                &quot;failed_rules&quot;: List[str],</span>
-<span class="sd">                &quot;details&quot;: Dict[str, bool]</span>
+<span class="sd">                "all_example_rules_passed": bool,</span>
+<span class="sd">                "passed_rules": List[str],</span>
+<span class="sd">                "failed_rules": List[str],</span>
+<span class="sd">                "details": Dict[str, bool]</span>
 <span class="sd">            }</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">rule_name</span><span class="p">,</span> <span class="n">rule_func</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">rule_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_consistency&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">rule_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"_consistency"</span><span class="p">):</span>
                 <span class="n">results</span><span class="p">[</span><span class="n">rule_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rule_func</span><span class="p">(</span><span class="n">outputs</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># Check all outputs</span>
@@ -1910,37 +1910,37 @@ evidence of regulatory compliance.</p>
         <span class="n">failed</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">]</span>
 
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;all_example_rules_passed&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
-            <span class="s2">&quot;passed_rules&quot;</span><span class="p">:</span> <span class="n">passed</span><span class="p">,</span>
-            <span class="s2">&quot;failed_rules&quot;</span><span class="p">:</span> <span class="n">failed</span><span class="p">,</span>
-            <span class="s2">&quot;details&quot;</span><span class="p">:</span> <span class="n">results</span>
+            <span class="s2">"all_example_rules_passed"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">"passed_rules"</span><span class="p">:</span> <span class="n">passed</span><span class="p">,</span>
+            <span class="s2">"failed_rules"</span><span class="p">:</span> <span class="n">failed</span><span class="p">,</span>
+            <span class="s2">"details"</span><span class="p">:</span> <span class="n">results</span>
         <span class="p">}</span>
 
 <span class="c1"># Example usage</span>
-<span class="n">validator</span> <span class="o">=</span> <span class="n">CustomControlValidator</span><span class="p">(</span><span class="n">frameworks</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ECOA&quot;</span><span class="p">,</span> <span class="s2">&quot;FCRA&quot;</span><span class="p">])</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="n">CustomControlValidator</span><span class="p">(</span><span class="n">frameworks</span><span class="o">=</span><span class="p">[</span><span class="s2">"ECOA"</span><span class="p">,</span> <span class="s2">"FCRA"</span><span class="p">])</span>
 
 <span class="c1"># Test outputs from credit risk assessment</span>
 <span class="n">test_outputs</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;{&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio.&quot;}&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;{&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio.&quot;}&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;{&quot;risk_level&quot;: &quot;LOW&quot;, &quot;explanation&quot;: &quot;Strong credit profile with good income-to-debt ratio.&quot;}&#39;</span>
+    <span class="s1">'{"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio."}'</span><span class="p">,</span>
+    <span class="s1">'{"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio."}'</span><span class="p">,</span>
+    <span class="s1">'{"risk_level": "LOW", "explanation": "Strong credit profile with good income-to-debt ratio."}'</span>
 <span class="p">]</span>
 
 <span class="n">result</span> <span class="o">=</span> <span class="n">validator</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">test_outputs</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📋 Example Control-Rule Report&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">📋 Example Control-Rule Report"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"="</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
-    <span class="s2">&quot;All example rules passed: &quot;</span>
-    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;✅ YES&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;all_example_rules_passed&#39;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ NO&#39;</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="s2">"All example rules passed: "</span>
+    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">'✅ YES'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">result</span><span class="p">[</span><span class="s1">'all_example_rules_passed'</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'❌ NO'</span><span class="si">}</span><span class="s2">"</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Passed rules (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;passed_rules&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;passed_rules&#39;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ✅ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;failed_rules&#39;</span><span class="p">]:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Failed rules (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;failed_rules&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2">):&quot;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;failed_rules&#39;</span><span class="p">]:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ❌ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Passed rules (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'passed_rules'</span><span class="p">])</span><span class="si">}</span><span class="s2">):"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">'passed_rules'</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ✅ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span><span class="p">[</span><span class="s1">'failed_rules'</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Failed rules (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s1">'failed_rules'</span><span class="p">])</span><span class="si">}</span><span class="s2">):"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="s1">'failed_rules'</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  ❌ </span><span class="si">{</span><span class="n">rule</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <p>Run it:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>custom_control_validator.py
@@ -1949,9 +1949,9 @@ evidence of regulatory compliance.</p>
 <p>Generate a review report from replay records:</p>
 <p><strong>Create <code>generate_evaluation_report.py</code></strong>:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="sd">Generate an evaluation report from replay records.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
@@ -1959,8 +1959,8 @@ evidence of regulatory compliance.</p>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">Levenshtein</span>
 
-<span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="n">trace_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;html&quot;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a descriptive replay report from a JSONL trace.&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="n">trace_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"html"</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Generate a descriptive replay report from a JSONL trace."""</span>
 
     <span class="c1"># Load replay records</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">trace_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1968,47 +1968,47 @@ evidence of regulatory compliance.</p>
 
     <span class="c1"># Calculate metrics</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">traces</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Trace file contains no records&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Trace file contains no records"</span><span class="p">)</span>
 
     <span class="n">total_runs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">traces</span><span class="p">)</span>
     <span class="n">groups</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span><span class="p">:</span>
-        <span class="n">groups</span><span class="p">[(</span><span class="n">trace</span><span class="p">[</span><span class="s2">&quot;task&quot;</span><span class="p">],</span> <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;prompt_id&quot;</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
+        <span class="n">groups</span><span class="p">[(</span><span class="n">trace</span><span class="p">[</span><span class="s2">"task"</span><span class="p">],</span> <span class="n">trace</span><span class="p">[</span><span class="s2">"prompt_id"</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">trace</span><span class="p">)</span>
 
     <span class="n">modal_count</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">Counter</span><span class="p">(</span><span class="n">record</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
     <span class="p">)</span>
     <span class="n">consistency_pct</span> <span class="o">=</span> <span class="n">modal_count</span> <span class="o">/</span> <span class="n">total_runs</span> <span class="o">*</span> <span class="mi">100</span>
     <span class="n">consistency</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span>
-        <span class="nb">len</span><span class="p">({</span><span class="n">record</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">})</span> <span class="o">==</span> <span class="mi">1</span>
+        <span class="nb">len</span><span class="p">({</span><span class="n">record</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span> <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">group</span><span class="p">})</span> <span class="o">==</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
     <span class="p">)</span>
 
     <span class="c1"># Descriptive review metrics</span>
     <span class="n">schema_violations</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-        <span class="nb">bool</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;schema_violation&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span> <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span>
+        <span class="nb">bool</span><span class="p">(</span><span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"schema_violation"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span> <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">traces</span>
     <span class="p">)</span>
     <span class="n">decision_flips</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-        <span class="n">reference_output</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
-        <span class="n">reference_decision</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decision_ok&quot;</span><span class="p">)</span>
+        <span class="n">reference_output</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">"output"</span><span class="p">]</span>
+        <span class="n">reference_decision</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision_ok"</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">trace</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
             <span class="n">distances</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                 <span class="n">Levenshtein</span><span class="o">.</span><span class="n">normalized_distance</span><span class="p">(</span>
-                    <span class="n">reference_output</span><span class="p">,</span> <span class="n">trace</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span>
+                    <span class="n">reference_output</span><span class="p">,</span> <span class="n">trace</span><span class="p">[</span><span class="s2">"output"</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span>
                 <span class="n">reference_decision</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;decision_ok&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="n">reference_decision</span>
+                <span class="ow">and</span> <span class="n">trace</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision_ok"</span><span class="p">)</span> <span class="o">!=</span> <span class="n">reference_decision</span>
             <span class="p">):</span>
                 <span class="n">decision_flips</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="n">mean_drift</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">)</span>
 
     <span class="c1"># Generate HTML report</span>
-    <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">    &lt;!DOCTYPE html&gt;</span>
 <span class="s2">    &lt;html&gt;</span>
 <span class="s2">    &lt;head&gt;</span>
@@ -2026,21 +2026,21 @@ evidence of regulatory compliance.</p>
 <span class="s2">    &lt;/head&gt;</span>
 <span class="s2">    &lt;body&gt;</span>
 <span class="s2">        &lt;h1&gt;LLM Replay Evaluation Report&lt;/h1&gt;</span>
-<span class="s2">        &lt;p&gt;&lt;strong&gt;Generated:&lt;/strong&gt; </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
+<span class="s2">        &lt;p&gt;&lt;strong&gt;Generated:&lt;/strong&gt; </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S'</span><span class="p">)</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
 <span class="s2">        &lt;p&gt;&lt;strong&gt;Replay Record:&lt;/strong&gt; </span><span class="si">{</span><span class="n">trace_file</span><span class="si">}</span><span class="s2">&lt;/p&gt;</span>
 
 <span class="s2">        &lt;h2&gt;Executive Summary&lt;/h2&gt;</span>
-<span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">        &lt;div class="metric </span><span class="si">{</span><span class="s1">'pass'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'fail'</span><span class="si">}</span><span class="s2">"&gt;</span>
 <span class="s2">            &lt;strong&gt;Modal exact-output agreement:&lt;/strong&gt; </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%</span>
-<span class="s2">            across </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="si">}</span><span class="s2"> replay group</span><span class="si">{</span><span class="s1">&#39;s&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="si">}</span>
+<span class="s2">            across </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="si">}</span><span class="s2"> replay group</span><span class="si">{</span><span class="s1">'s'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">''</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
-<span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">schema_violations</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">        &lt;div class="metric </span><span class="si">{</span><span class="s1">'pass'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">schema_violations</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'fail'</span><span class="si">}</span><span class="s2">"&gt;</span>
 <span class="s2">            &lt;strong&gt;Schema Violations:&lt;/strong&gt; </span><span class="si">{</span><span class="n">schema_violations</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
-<span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">decision_flips</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">        &lt;div class="metric </span><span class="si">{</span><span class="s1">'pass'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">decision_flips</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'fail'</span><span class="si">}</span><span class="s2">"&gt;</span>
 <span class="s2">            &lt;strong&gt;Decision Flips:&lt;/strong&gt; </span><span class="si">{</span><span class="n">decision_flips</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
-<span class="s2">        &lt;div class=&quot;metric </span><span class="si">{</span><span class="s1">&#39;pass&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mean_drift</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;fail&#39;</span><span class="si">}</span><span class="s2">&quot;&gt;</span>
+<span class="s2">        &lt;div class="metric </span><span class="si">{</span><span class="s1">'pass'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mean_drift</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'fail'</span><span class="si">}</span><span class="s2">"&gt;</span>
 <span class="s2">            &lt;strong&gt;Mean Drift:&lt;/strong&gt; </span><span class="si">{</span><span class="n">mean_drift</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
 <span class="s2">        &lt;/div&gt;</span>
 
@@ -2053,17 +2053,17 @@ evidence of regulatory compliance.</p>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
 <span class="s2">                &lt;td&gt;Exact output replay&lt;/td&gt;</span>
-<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">'✅ PASS'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">consistency</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'❌ FAIL'</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;Observed agreement: </span><span class="si">{</span><span class="n">consistency_pct</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
 <span class="s2">                &lt;td&gt;No decision flips in this trace&lt;/td&gt;</span>
-<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">decision_flips</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">'✅ PASS'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">decision_flips</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'❌ FAIL'</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;Decision flips: </span><span class="si">{</span><span class="n">decision_flips</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">            &lt;tr&gt;</span>
 <span class="s2">                &lt;td&gt;Illustrative normalized string-distance review line&lt;/td&gt;</span>
-<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">&#39;✅ PASS&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mean_drift</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">&#39;❌ FAIL&#39;</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
+<span class="s2">                &lt;td&gt;</span><span class="si">{</span><span class="s1">'✅ PASS'</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">mean_drift</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s1">'❌ FAIL'</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">                &lt;td&gt;Mean drift: </span><span class="si">{</span><span class="n">mean_drift</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&lt;/td&gt;</span>
 <span class="s2">            &lt;/tr&gt;</span>
 <span class="s2">        &lt;/table&gt;</span>
@@ -2076,18 +2076,18 @@ evidence of regulatory compliance.</p>
 <span class="s2">        &lt;pre&gt;</span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">traces</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)[:</span><span class="mi">500</span><span class="p">]</span><span class="si">}</span><span class="s2">...&lt;/pre&gt;</span>
 <span class="s2">    &lt;/body&gt;</span>
 <span class="s2">    &lt;/html&gt;</span>
-<span class="s2">    &quot;&quot;&quot;</span>
+<span class="s2">    """</span>
 
     <span class="c1"># Save report</span>
-    <span class="n">output_file</span> <span class="o">=</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;.jsonl&#39;</span><span class="p">,</span> <span class="s1">&#39;_evaluation_report.html&#39;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">output_file</span> <span class="o">=</span> <span class="n">trace_file</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'.jsonl'</span><span class="p">,</span> <span class="s1">'_evaluation_report.html'</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s1">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Evaluation report generated: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"✅ Evaluation report generated: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">output_file</span>
 
 <span class="c1"># Generate a report from the isolated Lab 3 run</span>
-<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traces/lab3_multi&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;trace_*.jsonl&quot;</span><span class="p">))</span>
+<span class="n">trace_file</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="s2">"traces/lab3_multi"</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">"trace_*.jsonl"</span><span class="p">))</span>
 <span class="n">generate_report</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">trace_file</span><span class="p">))</span>
 </code></pre></div>
 <p>Run it:</p>

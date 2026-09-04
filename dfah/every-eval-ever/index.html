@@ -10,13 +10,9 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/bring-your-own-agent/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/every-eval-ever/">
       
       
-        <link rel="prev" href="../quickstart/">
-      
-      
-        <link rel="next" href="../production/">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Bring Your Own Agent - Output Drift + DFAH</title>
+        <title>Every Eval Ever export - Output Drift + DFAH</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#bring-your-own-agent" class="md-skip">
+        <a href="#every-eval-ever-export" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Bring Your Own Agent
+              Every Eval Ever export
             
           </span>
         </div>
@@ -235,12 +231,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../quickstart/" class="md-tabs__link">
           
   
@@ -724,31 +718,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -766,7 +757,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -809,37 +800,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Bring Your Own Agent
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../bring-your-own-agent/" class="md-nav__link">
         
   
   
@@ -855,59 +819,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#bind-source-and-wire-truth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Bind source and wire truth
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#capture-tools" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Capture tools
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#framework-and-router-integrations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework and router integrations
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1204,10 +1115,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#bind-source-and-wire-truth" class="md-nav__link">
+  <a href="#export-a-verified-run" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Bind source and wire truth
+        Export a verified run
       
     </span>
   </a>
@@ -1215,10 +1126,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#capture-tools" class="md-nav__link">
+  <a href="#privacy-boundary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Capture tools
+        Privacy boundary
       
     </span>
   </a>
@@ -1226,10 +1137,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#framework-and-router-integrations" class="md-nav__link">
+  <a href="#semantic-mapping" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Framework and router integrations
+        Semantic mapping
       
     </span>
   </a>
@@ -1256,106 +1167,91 @@
   
 
 
-<h1 id="bring-your-own-agent">Bring your own agent<a class="headerlink" href="#bring-your-own-agent" title="Permanent link">&para;</a></h1>
-<p>DFAH wraps one execution; it does not replace the agent or its provider
-client. An integration implements the small <code>Agent</code> protocol (or uses
-<code>@dfah.agent</code>) and returns a typed <code>AgentResult</code>.</p>
-<p>The adapter owns five things:</p>
-<ol>
-<li>construct the final provider request;</li>
-<li>make exactly one episode-level dispatch;</li>
-<li>capture the observable tool path;</li>
-<li>return the provider's output, usage, and cost; and</li>
-<li>attest the settings inside the final wire payload.</li>
-</ol>
-<p>API keys stay in the application. They must never be placed in a <code>Manifest</code>,
-<code>Case</code>, <code>WireRequest</code>, tool argument, error message, or report.</p>
-<h2 id="bind-source-and-wire-truth">Bind source and wire truth<a class="headerlink" href="#bind-source-and-wire-truth" title="Permanent link">&para;</a></h2>
-<p>Use a reviewed Git revision for a clean repository, or hash the exact adapter
-artifact that will execute:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">hashlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">sha256</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">dfah</span><span class="w"> </span><span class="kn">import</span> <span class="n">WireRequest</span><span class="p">,</span> <span class="n">build_manifest</span>
-
-<span class="n">adapter_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">"my_project/provider_adapter.py"</span><span class="p">)</span>
-<span class="n">implementation_hash</span> <span class="o">=</span> <span class="n">sha256</span><span class="p">(</span><span class="n">adapter_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"top_p"</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">"seed"</span><span class="p">:</span> <span class="mi">42</span><span class="p">}</span>
-
-<span class="n">manifest</span> <span class="o">=</span> <span class="n">build_manifest</span><span class="p">(</span>
-    <span class="n">suite</span><span class="p">,</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">"my-provider"</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"pinned-model-identifier"</span><span class="p">,</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="s2">"https://provider.example/v1/responses"</span><span class="p">,</span>
-    <span class="n">adapter</span><span class="o">=</span><span class="s2">"my_project.provider_adapter"</span><span class="p">,</span>
-    <span class="n">adapter_version</span><span class="o">=</span><span class="s2">"1.3.0"</span><span class="p">,</span>
-    <span class="n">implementation_hash</span><span class="o">=</span><span class="n">implementation_hash</span><span class="p">,</span>
-    <span class="n">request_parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
-<span class="p">)</span>
+<h1 id="every-eval-ever-export">Every Eval Ever export<a class="headerlink" href="#every-eval-ever-export" title="Permanent link">&para;</a></h1>
+<p>DFAH can export an artifact-verified replay run to the Every Eval Ever (EEE)
+v0.2.2 interchange schema. EEE answers “how can evaluation results travel
+between tools?” DFAH answers a different question: “which repeated executions
+are comparable and sufficiently observed, and how far do decision and path
+agreement separate?” The exporter preserves that distinction.</p>
+<h2 id="export-a-verified-run">Export a verified run<a class="headerlink" href="#export-a-verified-run" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN
 </code></pre></div>
-<p>Build the <code>WireRequest</code> only after the provider payload has reached its final
-shape. Top-level settings need no mapping:</p>
-<div class="highlight"><pre><span></span><code><span class="n">wire</span> <span class="o">=</span> <span class="n">WireRequest</span><span class="o">.</span><span class="n">from_payload</span><span class="p">(</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">"my-provider"</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"pinned-model-identifier"</span><span class="p">,</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="s2">"https://provider.example/v1/responses"</span><span class="p">,</span>
-    <span class="n">adapter</span><span class="o">=</span><span class="s2">"my_project.provider_adapter"</span><span class="p">,</span>
-    <span class="n">adapter_version</span><span class="o">=</span><span class="s2">"1.3.0"</span><span class="p">,</span>
-    <span class="n">payload</span><span class="o">=</span><span class="n">payload_sent_to_provider</span><span class="p">,</span>
-    <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
-<span class="p">)</span>
-</code></pre></div>
-<p>If a provider nests settings, declare their exact paths:</p>
-<div class="highlight"><pre><span></span><code><span class="n">wire</span> <span class="o">=</span> <span class="n">WireRequest</span><span class="o">.</span><span class="n">from_payload</span><span class="p">(</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">"my-provider"</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"pinned-model-identifier"</span><span class="p">,</span>
-    <span class="n">endpoint</span><span class="o">=</span><span class="s2">"https://provider.example/v1/responses"</span><span class="p">,</span>
-    <span class="n">adapter</span><span class="o">=</span><span class="s2">"my_project.provider_adapter"</span><span class="p">,</span>
-    <span class="n">adapter_version</span><span class="o">=</span><span class="s2">"1.3.0"</span><span class="p">,</span>
-    <span class="n">payload</span><span class="o">=</span><span class="p">{</span><span class="s2">"generation"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"temperature"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"top_p"</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">"seed"</span><span class="p">:</span> <span class="mi">42</span><span class="p">}},</span>
-    <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
-    <span class="n">parameter_paths</span><span class="o">=</span><span class="p">{</span>
-        <span class="s2">"temperature"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"generation"</span><span class="p">,</span> <span class="s2">"temperature"</span><span class="p">),</span>
-        <span class="s2">"top_p"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"generation"</span><span class="p">,</span> <span class="s2">"top_p"</span><span class="p">),</span>
-        <span class="s2">"seed"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"generation"</span><span class="p">,</span> <span class="s2">"seed"</span><span class="p">),</span>
-    <span class="p">},</span>
-<span class="p">)</span>
-</code></pre></div>
-<p>A declared setting that is absent from—or differs from—the hashed payload is a
-contract error. An adapter version string alone is not source provenance.</p>
-<h2 id="capture-tools">Capture tools<a class="headerlink" href="#capture-tools" title="Permanent link">&para;</a></h2>
-<p>Prefer a <code>ToolRegistry</code> bound to the agent. DFAH validates arguments against
-the suite's JSON Schemas, injects a per-episode <code>ToolSession</code> as
-<code>context.tools</code>, and records results before returning them to the adapter.
-Return <code>context.tools.trajectory()</code> in <code>AgentResult</code>.</p>
-<p>Manual trajectory capture is available when a framework owns tool execution,
-but every call must still use a declared tool, schema-valid arguments, an
-observed result state, and an output hash. If the framework cannot expose
-those channels, record the episode as ineligible; do not manufacture an empty
-path.</p>
-<h2 id="framework-and-router-integrations">Framework and router integrations<a class="headerlink" href="#framework-and-router-integrations" title="Permanent link">&para;</a></h2>
-<p>Pydantic AI, LangGraph, LiteLLM, provider SDKs, and custom loops can all sit
-behind the same protocol. The boundary is evidentiary, not brand-specific:</p>
+<p>The exporter refuses aggregate output when no replay group is eligible.
+Unavailable DAR, TAR, gap, and flag-rate values are never converted into
+numeric scores.</p>
+<p>This produces:</p>
 <ul>
-<li>the adapter must see the final normalized provider payload;</li>
-<li>the manifest and wire echo must identify the endpoint and pinned model;</li>
-<li>hidden provider retries must not masquerade as one replay;</li>
-<li>parse failures and tool errors are terminal episode outcomes, not retry
-  triggers; and</li>
-<li>framework traces do not replace the typed <code>Trajectory</code> contract.</li>
+<li>one aggregate JSON record with DAR, TARseq, TARbag, TARset, TARstrong,
+  decision–path gap, eligible fraction, and flags per 100 groups; and</li>
+<li>one JSONL record per committed replay episode, including tool names,
+  equality hashes, channel states, parse provenance, and replay identity.</li>
 </ul>
-<p>If a router cannot expose what was actually sent, use a lower-level adapter
-for a manifest-authoritative run. Convenience integrations can be added as
-optional packages later without weakening the core contract.</p>
-<p>Run <code>check_agent()</code> with explicit call and cost bounds before a larger replay,
-then start with sampled shadow mode as described in <code>production.md</code>.</p>
-<p>If a run reports <code>metrics_available == False</code>, do not tune thresholds around
-the missing result. Read <code>ineligibility_reasons</code>: each entry counts replay
-groups containing one normalized, content-free reason. For example,
-<code>wire_payload_mismatch</code> means the final hashed payload changed across repeats
-of the same case; terminal-status and missing-channel codes identify capture
-or execution failures. The CLI prints the same affected-group counts without
-prompts, payloads, arguments, results, or provider exception text.</p>
+<p>Use <code>--aggregate-only</code> when episode-level interoperability is unnecessary.
+For upstream model validation (Python 3.12 or newer, matching the upstream
+package requirement). The optional extra pins upstream validator 0.2.3rc1;
+the exported schema remains 0.2.2:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench[eee]==0.1.2'</span>
+python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--validate
+</code></pre></div>
+<p>The Python API is equivalent:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_every_eval_ever</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">export_every_eval_ever</span><span class="p">(</span>
+    <span class="s2">".dfah/runs/MY-RUN"</span><span class="p">,</span>
+    <span class="s2">".dfah/exports/MY-RUN"</span><span class="p">,</span>
+    <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">aggregate_path</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">instances_sha256</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="privacy-boundary">Privacy boundary<a class="headerlink" href="#privacy-boundary" title="Permanent link">&para;</a></h2>
+<p>The default profile deliberately excludes:</p>
+<ul>
+<li>prompts and raw case inputs;</li>
+<li>raw tool arguments and results;</li>
+<li>reasoning traces;</li>
+<li>provider endpoints and provider-native usage payloads; and</li>
+<li>organization identity unless the caller supplies it explicitly.</li>
+</ul>
+<p>Artifact case identifiers, normalized decision labels, model/provider/adapter
+identifiers, tool names, and SHA-256 equality fingerprints remain. Those
+identifiers can reveal a deployment or business context even when captured
+content is absent. Arbitrary request settings are committed by hash rather than
+copied into the record. Hashes are integrity commitments, not anonymization:
+low-entropy sensitive values can still be guessed. Use pseudonymous artifact
+case IDs, generic deployment identifiers, and tokenize sensitive values before
+capture.</p>
+<p>The command only writes local mode-600 files. It does not upload, publish, or
+register results with EEE or any other service.</p>
+<h2 id="semantic-mapping">Semantic mapping<a class="headerlink" href="#semantic-mapping" title="Permanent link">&para;</a></h2>
+<p>EEE’s aggregate score records carry DFAH’s metrics. Namespaced metadata retains
+the suite version, fixture and schema commitments, manifest hash, replay
+design, eligible denominator, and artifact root.</p>
+<p>EEE instance records require an <code>is_correct</code> field. In a DFAH export that field
+means only that the episode belongs to an eligible replay group in the report. It
+does <strong>not</strong> mean the agent’s financial decision was correct. Each record states
+this as <code>replay_group_retention_not_decision_correctness</code>. A capture can be
+individually valid yet excluded because its replay group is incomplete or
+incomparable. Individual capture eligibility and its reasons remain separately
+available as <code>dfah_episode_capture_eligible</code> and
+<code>dfah_episode_capture_eligibility_reasons</code>; <code>dfah_replay_group_eligible</code> records
+the group-level inclusion decision.</p>
+<p>The eligible fraction is the sum of the instance scores divided by the planned
+episode count. Uncommitted planned episodes have no JSONL row and contribute
+zero to that denominator. Eligible fraction and flags per 100 are pooled rates;
+the agreement metrics retain DFAH's task weighting.</p>
+<p>The exporter checks the exact loaded episode set against the report's artifact
+commitment. A run resumed between report verification and snapshot loading is
+rejected. Once captured, the export uses that immutable snapshot, so a later
+resume cannot change its contents or mix evidence from different report states.</p>
+<p>EEE is therefore an optional reporting layer. It does not relax DFAH’s
+manifest, suite-version, required-channel, or artifact-verification rules, and
+records from different replay contracts must not be silently compared.</p>
+<p>Upstream <a href="https://evalevalai.com/projects/every-eval-ever/">project and schema</a>.</p>
 
 
 
@@ -1382,44 +1278,6 @@ prompts, payloads, arguments, results, or provider exception text.</p>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quickstart">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Quickstart
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../production/" class="md-footer__link md-footer__link--next" aria-label="Next: Production Rollout">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Production Rollout
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">
