@@ -19,9 +19,15 @@ This workshop is based on research showing that LLM outputs can drift even at
 temperature=0.0. In the tested tasks, that variation reached 35%, which
 complicates replay, change review, and monitoring.
 
-!!! tip "New: interactive results explorer"
-    Explore the DFAH-Bench results, play with the replay metrics live in your browser, and drive a real
-      local model through the benchmark — no install needed: **[Open the Live Explorer](explorer/index.html)**
+!!! tip "New in 0.1.2: replay, review, retest"
+    See a stable decision hide a changing tool path, inspect the failed gate, and check a supplied
+    correction: **[Open the recorded example](explorer/index.html#review-loop)** or
+    **[run it locally in Lab 9](lab-9/README.md)**. The lab also covers blocking policies and verified EEE export.
+
+!!! tip "Interactive results explorer"
+    Explore the research results and simulate replay metrics in your browser with no installation.
+    Live model replay requires Ollama and a downloaded model:
+    **[Open the explorer](explorer/index.html)**.
 
 !!! tip "New: corrected DFAH-Bench walkthrough"
     Inspect the corrected replay denominator, regenerate v2, and
@@ -53,8 +59,10 @@ By the end of this workshop, you will:
 | [Lab 6: Extending the Framework](lab-6/README.md) | Add custom tasks and integrate with your workflows | 30 min |
 | [Lab 7: Replayable Financial Agents](lab-7/README.md) | Run agent benchmarks from the ICLR 2026 paper | 30 min |
 | [Lab 8: DFAH-Bench — Replay Measurement](lab-8/README.md) | Test the package, then reproduce the paper from the checked-in replay corpus | 30 min |
+| [Lab 9: Replay, Review, and Retest](lab-9/README.md) | Evaluate a correction with a fixed policy and export verified results using 0.1.2 | 25 min |
 
-**Total Duration**: Approximately 3.5-4 hours
+**Total Duration**: Approximately 4–4.5 hours. Labs 8 (package track) and 9 can
+also be taken independently, without a model service or API key.
 
 ## Research Foundation
 
@@ -114,7 +122,7 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - Basic knowledge of financial concepts
 - Experience with data analysis (pandas, visualization)
 
-**API Access (at least one):**
+**Model access for provider experiments (not needed for Labs 8–9):**
 - Ollama (free, local)
 - IBM watsonx.ai (trial available)
 - OpenAI, Anthropic, or other providers
@@ -148,7 +156,7 @@ output-drift-financial-llms/
 ├── Makefile                # make reproduce-paper / make test-bench
 ├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
 ├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-8)
+├── docs/                   # Workshop documentation (labs 0-9) and explorer
 ├── bench/                  # DFAH-Bench library (v3)
 │   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
 │   ├── spec/               # Replay episode schema + task ontologies

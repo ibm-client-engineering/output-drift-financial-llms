@@ -43,12 +43,13 @@ closed and is excluded from agreement estimates.
 
 ## Track A: qualify the packaged integration
 
-From the repository root, create a clean Python 3.10+ environment:
+Create a clean Python 3.10+ environment. This track uses the published package
+and needs neither a repository checkout nor an API key:
 
 ```bash
 python -m venv .venv-dfah
 source .venv-dfah/bin/activate
-python -m pip install -e ".[dev]"
+python -m pip install 'dfah-bench==0.1.2'
 ```
 
 Run the no-network conformance check:
@@ -59,9 +60,9 @@ dfah check-agent \
   --episode-timeout-s 5
 ```
 
-The report checks parse provenance, request/manifest echoing, deterministic
-tool outputs, replay-visible ambient-state leakage, resumability, and channel
-eligibility.
+The report checks parse provenance, request/manifest echoing, declared tool
+outputs, resumability, and channel eligibility. Replay variation is a diagnostic:
+a passing check does not prove that ambient-state dependencies are absent.
 
 Now capture three replays and inspect them:
 
@@ -84,7 +85,8 @@ not establish real-world model quality or general determinism.
 
 ## Track B: inspect the public research lineage
 
-Use a separate environment for the frozen research pipeline:
+From a checkout of the public repository, use a separate environment for the
+frozen research pipeline:
 
 ```bash
 python -m venv .venv-research
@@ -115,6 +117,8 @@ different tasks, replay counts, and capture contracts.
 
 ## Further reading
 
+- [Lab 9: Replay, Review, and Retest](../lab-9/README.md) — catch a path change,
+  check a supplied correction against a fixed gate, and export verified results.
 - [Interactive explorer](../explorer/index.html)
 - [Research papers](../resources/paper.md)
 - [Reproducibility notes](https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md)
