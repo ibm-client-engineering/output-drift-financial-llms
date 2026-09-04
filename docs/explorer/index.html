@@ -102,6 +102,20 @@
   pre{background:#161616;color:#f4f4f4;border-left:4px solid var(--blue);padding:16px;font-size:12.5px;overflow:auto}
   .small{font-size:12.5px;color:var(--muted)}
   .status{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:12px}
+  .release-link{display:inline-block;margin:8px 0 0;padding:10px 14px;background:#edf5ff;font-size:14px}
+  .review-switch{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+  .review-switch button{background:#fff;color:var(--text);border-color:var(--line);text-align:left}
+  .review-switch button[aria-pressed=true]{background:var(--blue);color:#fff;border-color:var(--blue)}
+  .review-switch small{display:block;font-weight:400;margin-top:4px}
+  .review-evidence{overflow-x:auto}
+  .review-evidence th,.review-evidence td{font-size:14px}
+  .review-evidence tr:hover{cursor:default}
+  .review-meta{font-size:14px;color:var(--muted)}
+  .review-meta code{overflow-wrap:anywhere}
+  .review-policy{font-size:14px}
+  .review-policy summary{cursor:pointer;padding:12px 0}
+  .review-policy pre{white-space:pre-wrap;overflow-wrap:anywhere}
+  :focus-visible{outline:3px solid var(--blue);outline-offset:4px}
   footer{margin-top:0;padding:36px 0 54px;color:#c6c6c6;background:#161616;font-size:13px}
   footer a{color:#78a9ff}
   .killbar{display:flex;height:34px;overflow:hidden;border:1px solid var(--line);margin:10px 0 4px}
@@ -146,6 +160,7 @@
           when available, the argument and result identities behind it. Explore
           the reproduced measurements here, then qualify your own integration
           before spending on a larger replay.</p>
+        <a class="release-link" href="#review-loop">New in 0.1.2: replay, review, retest &rarr;</a>
       </div>
       <div class="hero-system" aria-label="DFAH operating loop">
         <div class="top"><span>Replay contract / v2</span><strong>observable</strong></div>
@@ -168,12 +183,58 @@
 
 <div class="wrap">
 <nav class="toc">
+  <a href="#review-loop">0.1.2 review loop</a>
   <a href="#results">&#9632; Results explorer</a>
   <a href="#playground">&#9654; Replay playground</a>
   <a href="#live">&#9889; Live with your own model</a>
   <a href="#package">&#123; &#125; Bring your agent</a>
   <a href="#reproduce">&#8635; Reproduce the paper</a>
 </nav>
+
+<section id="review-loop">
+  <div class="kicker">DFAH-Bench 0.1.2 &middot; recorded local example</div>
+  <h2 style="margin-top:14px">See the failure.<br>Check the correction.</h2>
+  <p class="lead">The decision stays the same while the tool order changes. A fixed policy catches
+    the difference; a second, prewritten candidate passes after its order is made consistent.
+    These are saved results from the published package: two synthetic cases, two replays per case,
+    and actual local tool calls. Selecting a candidate displays its evidence; the browser does not run Python.</p>
+  <div class="review-switch" role="group" aria-label="Choose a recorded candidate">
+    <button type="button" data-review-candidate="0" aria-pressed="true">01 &middot; Varying path<small>Adapter 1.0.0 &middot; gate fails</small></button>
+    <button type="button" data-review-candidate="1" aria-pressed="false">02 &middot; Fixed path<small>Adapter 1.0.1 &middot; gate passes</small></button>
+  </div>
+  <div class="row two">
+    <div class="card">
+      <h3 style="margin-top:0">One policy, two outcomes</h3>
+      <div class="metrics">
+        <div class="m"><div class="v" id="review-dar">1.00</div><div class="l">Decision agreement</div></div>
+        <div class="m"><div class="v" id="review-tar">0.50</div><div class="l">Ordered-path agreement</div></div>
+        <div class="m"><div class="v" id="review-flags">2 / 2</div><div class="l">Flagged replay groups</div></div>
+      </div>
+      <div class="verdict bad" id="review-verdict" role="status" aria-live="polite">FAIL — ordered-path agreement, decision–path gap, and flag rate miss the policy.</div>
+      <p class="review-meta" id="review-explanation">Both replays reach the same decision for each case. Reversing the two tool calls creates a review signal.</p>
+      <p class="review-meta">The policy requires complete, artifact-verified evidence, two eligible groups,
+        two replays each, agreement of 1.0, and zero gap or flags. Both candidates use that same policy.</p>
+      <details class="review-policy"><summary>Inspect the fixed policy</summary><pre id="review-policy"></pre></details>
+    </div>
+    <div class="card review-evidence">
+      <h3 style="margin-top:0">Recorded paths</h3>
+      <table>
+        <caption class="review-meta" style="text-align:left;margin-bottom:10px" id="review-caption">01-varying-path · 4 episodes</caption>
+        <thead><tr><th scope="col">Case / replay</th><th scope="col">Decision</th><th scope="col">Tool order</th></tr></thead>
+        <tbody id="review-replays"></tbody>
+      </table>
+      <details class="review-policy"><summary>Inspect artifact commitments</summary><pre id="review-commitments"></pre></details>
+    </div>
+  </div>
+  <noscript><p>The first candidate has DAR 1.0, TARseq 0.5 and two flagged groups; the correction has DAR 1.0, TARseq 1.0 and zero flags. Enable JavaScript to inspect paths, or run Lab 9 locally.</p></noscript>
+  <p class="review-meta">The example evaluates exactly two supplied implementations. It does not edit code.
+    Its independent read tools make the order change a useful diagnostic, not proof of a wrong decision.
+    Passing these cases establishes bounded repeatability.</p>
+  <p><a href="../lab-9/">Run the full walkthrough in Lab 9 &rarr;</a> &nbsp;&middot;&nbsp;
+    <a href="../dfah/replay-review-loop/">Example guide</a> &nbsp;&middot;&nbsp;
+    <a href="../dfah/every-eval-ever/">Export verified results</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/dfah-v0.1.2/examples/dfah_gate_loop.py">Versioned source</a></p>
+</section>
 
 <!-- ============================ RESULTS ============================ -->
 <section id="results">
@@ -188,7 +249,7 @@
       <div class="legend">
         <span><span class="dot" style="background:var(--blue)"></span>Complete 100-group coverage</span>
         <span><span class="dot" style="background:var(--violet)"></span>Limited contiguous prefix</span>
-        <span style="margin-left:auto">diagonal = perfect process stability (DAR = TAR)</span>
+        <span style="margin-left:auto">diagonal = equal decision and path agreement; only (1, 1) is perfect agreement</span>
       </div>
     </div>
     <div class="card">
@@ -281,7 +342,8 @@
   <p class="lead">This page can drive a <b>real tool-using agent loop</b> against a model running on <em>your</em> machine via
     <a href="https://ollama.com">Ollama</a> — the same compliance case, deterministic mock tools, temperature 0, seed 42 —
     and compute decision, name-path, and strong-path agreement on the live replays.
-    Nothing leaves your machine; the browser talks to <code>localhost</code>.</p>
+    Requests go to the Ollama URL you enter; the default endpoint is <code>localhost</code>.
+    This mode requires Ollama and a downloaded model.</p>
   <div class="card">
     <p class="small" style="margin-top:0">1&nbsp;&middot;&nbsp;Start Ollama with this page allowed as an origin, and pull a model:</p>
     <pre>OLLAMA_ORIGINS="https://ibm-client-engineering.github.io" ollama serve
@@ -316,13 +378,15 @@ ollama pull qwen2.5:7b-instruct</pre>
       <div class="kicker">01 &middot; Install from PyPI</div>
       <pre>python -m venv .venv-dfah
 source .venv-dfah/bin/activate
-python -m pip install dfah-bench</pre>
+python -m pip install 'dfah-bench==0.1.2'</pre>
     </div>
     <div class="card">
       <div class="kicker">02 &middot; Check, run, inspect</div>
-      <pre>dfah check-agent --agent dfah.demo:toy_agent
+      <pre>dfah check-agent --agent dfah.demo:toy_agent \
+  --episode-timeout-s 5
 dfah run --agent dfah.demo:toy_agent \
-  --replays 3 --out .dfah/runs/quickstart
+  --replays 3 --episode-timeout-s 5 \
+  --out .dfah/runs/quickstart
 dfah analyze .dfah/runs/quickstart \
   --report .dfah/runs/quickstart/report.html
 dfah inspect .dfah/runs/quickstart --case CASE-001</pre>
@@ -331,7 +395,9 @@ dfah inspect .dfah/runs/quickstart --case CASE-001</pre>
   <p class="small">A perfect toy score confirms the integration contract, not
     real-world model quality. Continue with a synthetic suite that reflects
     your own tool schema, then use sampled shadow replays before considering a
-    blocking gate. See the <a href="../dfah/quickstart/">package quickstart</a>.</p>
+    blocking gate. In 0.1.2, blocking runs require an explicit policy; an explicit pytest
+    policy is checked before test collection. See the <a href="../dfah/quickstart/">package quickstart</a>
+    and <a href="../lab-9/">Lab 9 for gates and local EEE export</a>.</p>
 </section>
 
 <!-- ============================ REPRODUCE ============================ -->
@@ -369,6 +435,8 @@ make reproduce-paper   # regenerates corrected v2 and validates its manifest</pr
   </div>
 </footer>
 
+<script src="review-loop-data.js"></script>
+<script src="review-loop.js"></script>
 <script>
 "use strict";
 /* ============ Audited core: corrected, task-weighted two-task analysis ============ */
