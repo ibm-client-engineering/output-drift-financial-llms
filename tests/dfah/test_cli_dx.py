@@ -10,6 +10,8 @@ from typer.testing import CliRunner
 from dfah import (
     AgentResult,
     ChannelState,
+    GatePolicy,
+    Report,
     Suite,
     Trajectory,
     WireRequest,
@@ -17,6 +19,8 @@ from dfah import (
     build_manifest,
 )
 from dfah.cli import app
+from dfah.demo import make_toy_agent
+from dfah.exceptions import ConfigurationError, GateViolationError
 
 
 def test_cli_validates_a_builtin_suite_by_name():
@@ -121,6 +125,71 @@ def test_check_agent_cli_accepts_a_bounded_episode_timeout():
     )
     assert result.exit_code == 0, result.output
     assert "planned calls: at most 4" in result.output
+
+
+@pytest.mark.parametrize("invalid_policy", [None, "{broken-json", "min_dar: ["])
+def test_cli_rejects_missing_or_invalid_blocking_policy_before_agent_import(
+    tmp_path, monkeypatch, invalid_policy
+):
+    def unexpected_import(_reference):
+        pytest.fail("invalid policy must fail before importing the agent")
+
+    cli_module = importlib.import_module("dfah.cli.main")
+    monkeypatch.setattr(cli_module, "_load_object", unexpected_import)
+    command = ["run", "--agent", "ignored:agent", "--mode", "blocking"]
+    if invalid_policy is not None:
+        suffix = ".json" if invalid_policy.startswith("{") else ".yaml"
+        policy_path = tmp_path / f"invalid{suffix}"
+        policy_path.write_text(invalid_policy, encoding="utf-8")
+        command.extend(["--policy", str(policy_path)])
+    result = CliRunner().invoke(app, command)
+    assert result.exit_code == 1
+    assert isinstance(result.exception, (ConfigurationError, ValueError))
+    if invalid_policy is None:
+        assert "requires an explicit --policy" in str(result.exception)
+    assert not (tmp_path / ".dfah").exists()
+
+
+@pytest.mark.parametrize(
+    ("mode", "required_groups", "should_fail"),
+    [("blocking", 2, False), ("blocking", 3, True), ("shadow", 3, False)],
+)
+def test_cli_applies_run_policy_and_preserves_report(
+    tmp_path, monkeypatch, mode, required_groups, should_fail
+):
+    candidate, _suite, _tools, calls, _tool_calls = make_toy_agent()
+    cli_module = importlib.import_module("dfah.cli.main")
+    monkeypatch.setattr(cli_module, "_load_object", lambda _: candidate)
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(
+        GatePolicy(min_observed_groups=required_groups).model_dump_json(), encoding="utf-8"
+    )
+    run_dir = tmp_path / "run"
+    result = CliRunner().invoke(
+        app,
+        [
+            "run",
+            "--agent",
+            "ignored:agent",
+            "--mode",
+            mode,
+            "--policy",
+            str(policy_path),
+            "--replays",
+            "2",
+            "--out",
+            str(run_dir),
+        ],
+    )
+    assert result.exit_code == (1 if should_fail else 0), result.output
+    if should_fail:
+        assert isinstance(result.exception, GateViolationError)
+        assert "observed_groups" in str(result.exception)
+    assert calls["count"] == 4
+    report = Report.from_json(run_dir)
+    assert report.artifacts_verified
+    assert report.mode.value == mode
+    assert report.observed_groups == 2
 
 
 def test_expected_cli_error_is_concise_and_has_no_traceback(monkeypatch, capsys):

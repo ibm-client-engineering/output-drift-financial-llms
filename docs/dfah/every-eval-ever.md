@@ -27,10 +27,11 @@ This produces:
 
 Use `--aggregate-only` when episode-level interoperability is unnecessary.
 For upstream model validation (Python 3.12 or newer, matching the upstream
-package requirement):
+package requirement). The optional extra pins upstream validator 0.2.3rc1;
+the exported schema remains 0.2.2:
 
 ```bash
-python -m pip install -e '.[eee]'
+python -m pip install 'dfah-bench[eee]==0.1.2'
 python -m dfah export .dfah/runs/MY-RUN \
   --format every-eval-ever \
   --out .dfah/exports/MY-RUN \
@@ -79,12 +80,27 @@ the suite version, fixture and schema commitments, manifest hash, replay
 design, eligible denominator, and artifact root.
 
 EEE instance records require an `is_correct` field. In a DFAH export that field
-means only that the replay capture was eligible for the declared metric. It
+means only that the episode belongs to an eligible replay group in the report. It
 does **not** mean the agent’s financial decision was correct. Each record states
-this as `capture_eligibility_not_decision_correctness`.
+this as `replay_group_retention_not_decision_correctness`. A capture can be
+individually valid yet excluded because its replay group is incomplete or
+incomparable. Individual capture eligibility and its reasons remain separately
+available as `dfah_episode_capture_eligible` and
+`dfah_episode_capture_eligibility_reasons`; `dfah_replay_group_eligible` records
+the group-level inclusion decision.
+
+The eligible fraction is the sum of the instance scores divided by the planned
+episode count. Uncommitted planned episodes have no JSONL row and contribute
+zero to that denominator. Eligible fraction and flags per 100 are pooled rates;
+the agreement metrics retain DFAH's task weighting.
+
+The exporter checks the exact loaded episode set against the report's artifact
+commitment. A run resumed between report verification and snapshot loading is
+rejected. Once captured, the export uses that immutable snapshot, so a later
+resume cannot change its contents or mix evidence from different report states.
 
 EEE is therefore an optional reporting layer. It does not relax DFAH’s
 manifest, suite-version, required-channel, or artifact-verification rules, and
 records from different replay contracts must not be silently compared.
 
-Upstream project and schema: <https://evalevalai.com/projects/every-eval-ever/>
+Upstream [project and schema](https://evalevalai.com/projects/every-eval-ever/).

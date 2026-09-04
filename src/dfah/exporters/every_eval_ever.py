@@ -58,6 +58,36 @@ def _resolve_verified_run(source: str | Path) -> tuple[Report, Path]:
     )
 
 
+def _verified_episode_snapshot(report: Report, run_dir: Path) -> tuple[Episode, ...]:
+    """Bind the exact exported episode objects to the report's commitment.
+
+    Verification and this read can straddle a resumed writer. Hash the loaded
+    objects, rather than asking the store to read them again for a commitment,
+    so every exported instance belongs to the same verified snapshot.
+    """
+
+    with FileStore(run_dir, create=False) as store:
+        episodes = store.list(manifest_hash=report.manifest.hash)
+    entries = tuple(
+        {
+            "manifest_hash": episode.manifest_hash,
+            "case_id": episode.case_id,
+            "replay_index": episode.replay_index,
+            "episode_sha256": sha256(episode),
+        }
+        for episode in episodes
+    )
+    if (sha256(entries), len(episodes)) != (
+        report.episode_artifact_root_sha256,
+        report.episode_artifact_count,
+    ):
+        raise ArtifactError(
+            "run changed after report verification; reload a report matching "
+            "the committed episodes before exporting"
+        )
+    return episodes
+
+
 def _source_data(report: Report) -> dict[str, object]:
     return {
         "dataset_name": report.suite_id,
@@ -121,6 +151,14 @@ def _metric(
     maximum: float,
     unit: str,
 ) -> dict[str, object]:
+    task_weighted = metric_id not in {"dfah.eligible_fraction", "dfah.flags_per_100"}
+    denominator = (
+        "eligible episodes / planned episodes; uncommitted planned episodes contribute zero"
+        if metric_id == "dfah.eligible_fraction"
+        else "100 * flagged eligible case groups / all eligible case groups"
+        if metric_id == "dfah.flags_per_100"
+        else "task-balanced mean over eligible case groups; shared DAR and TAR replay denominator"
+    )
     return {
         "evaluation_result_id": metric_id,
         "evaluation_name": f"{report.suite_id}: {name}",
@@ -134,16 +172,14 @@ def _metric(
             "metric_unit": unit,
             "metric_parameters": {
                 "replays": report.replays_requested,
-                "task_weighted": True,
+                "task_weighted": task_weighted,
             },
             "lower_is_better": lower_is_better,
             "score_type": "continuous",
             "min_score": minimum,
             "max_score": maximum,
             "additional_details": {
-                "dfah_denominator": (
-                    "same eligible repeated case groups for decision and trajectory"
-                ),
+                "dfah_denominator": denominator,
                 "dfah_not_accuracy": "true",
             },
         },
@@ -297,6 +333,7 @@ def _instance_record(
     episode: Episode,
     *,
     evaluation_id: str,
+    group_eligible: bool,
 ) -> dict[str, object]:
     eligibility = evaluate_episode(episode)
     raw_input = f"[DFAH input withheld; artifact_case_id={episode.case_id}]"
@@ -323,7 +360,7 @@ def _instance_record(
     metadata = {
         "dfah_export_profile": "privacy_safe_hash_only",
         "dfah_input_redacted": "true",
-        "dfah_evaluation_semantics": "capture_eligibility_not_decision_correctness",
+        "dfah_evaluation_semantics": "replay_group_retention_not_decision_correctness",
         "dfah_report_id": report.report_id,
         "dfah_manifest_sha256": report.manifest.hash,
         "dfah_replay_group_id": f"{report.manifest.hash}:{episode.case_id}",
@@ -331,8 +368,9 @@ def _instance_record(
         "dfah_task": episode.task,
         "dfah_replay_index": str(episode.replay_index),
         "dfah_episode_status": episode.status.value,
-        "dfah_episode_eligible": str(eligibility.eligible).lower(),
-        "dfah_eligibility_reasons": _json_string(eligibility.reasons),
+        "dfah_replay_group_eligible": str(group_eligible).lower(),
+        "dfah_episode_capture_eligible": str(eligibility.eligible).lower(),
+        "dfah_episode_capture_eligibility_reasons": _json_string(eligibility.reasons),
         "dfah_decision_channel": eligibility.decision.value,
         "dfah_trajectory_channel": eligibility.trajectory.value,
         "dfah_evidence_channel": eligibility.evidence.value,
@@ -349,7 +387,7 @@ def _instance_record(
         "schema_version": EEE_INSTANCE_SCHEMA_VERSION,
         "evaluation_id": evaluation_id,
         "model_id": _model_id(report),
-        "evaluation_name": f"{report.suite_id}: DFAH episode eligibility",
+        "evaluation_name": f"{report.suite_id}: DFAH episode retention in eligible groups",
         "evaluation_result_id": "dfah.eligible_fraction",
         "sample_id": f"{episode.case_id}/replay-{episode.replay_index}",
         "sample_hash": sample_hash,
@@ -381,8 +419,8 @@ def _instance_record(
             }
         ],
         "evaluation": {
-            "score": 1.0 if eligibility.eligible else 0.0,
-            "is_correct": eligibility.eligible,
+            "score": 1.0 if group_eligible else 0.0,
+            "is_correct": group_eligible,
             "num_turns": 1,
             "tool_calls_count": len(tool_calls),
         },
@@ -472,8 +510,7 @@ def export_every_eval_ever(
         raise ConfigurationError("unsupported Every Eval Ever evaluator relationship")
 
     report, run_dir = _resolve_verified_run(run_path)
-    with FileStore(run_dir, create=False) as store:
-        episodes = store.list(manifest_hash=report.manifest.hash)
+    episodes = _verified_episode_snapshot(report, run_dir)
     aggregate_metrics = _aggregate_metrics(report)
 
     destination = Path(out).expanduser()
@@ -489,8 +526,14 @@ def export_every_eval_ever(
     instance_count = 0
     detailed: dict[str, object] | None = None
     if include_instances:
+        eligible_groups = {(row.task, row.case_id) for row in report.case_reports}
         records = [
-            _instance_record(report, episode, evaluation_id=evaluation_id)
+            _instance_record(
+                report,
+                episode,
+                evaluation_id=evaluation_id,
+                group_eligible=(episode.task, episode.case_id) in eligible_groups,
+            )
             for episode in episodes
         ]
         payload = b"".join(canonical_bytes(record, redact=True) + b"\n" for record in records)
@@ -507,6 +550,15 @@ def export_every_eval_ever(
             "additional_details": {
                 "dfah_export_profile": "privacy_safe_hash_only",
                 "dfah_interaction_semantics": "one record per replay episode",
+                "dfah_instance_score_semantics": "episode retained in an eligible replay group",
+                "dfah_instance_aggregation": (
+                    "sum(instance scores) / planned episodes; "
+                    "uncommitted planned episodes are omitted and contribute zero"
+                ),
+                "dfah_planned_episodes": str(report.episodes_planned),
+                "dfah_uncommitted_episodes": str(
+                    report.episodes_planned - report.episodes_completed
+                ),
             },
         }
 

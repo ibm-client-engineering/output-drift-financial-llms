@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dfah-bench"
-version = "0.1.2.dev0"
+version = "0.1.2"
 description = "Replay-based stability measurement for tool-using AI agents"
 readme = "README_DFAH.md"
 requires-python = ">=3.10"
@@ -45,8 +45,8 @@ Changelog = "https://github.com/ibm-client-engineering/output-drift-financial-ll
 
 [project.optional-dependencies]
 otel = ["opentelemetry-api>=1.27", "opentelemetry-sdk>=1.27"]
-# Unreleased development integration. This extra is not part of PyPI 0.1.1.
-eee = ["every-eval-ever>=0.2.2,<0.3; python_version >= '3.12'"]
+# The schema version is 0.2.2; the upstream validator is released separately.
+eee = ["every-eval-ever==0.2.3rc1; python_version >= '3.12'"]
 dev = [
   "build>=1.2",
   "hypothesis>=6.108",
@@ -84,6 +84,7 @@ include = [
   "/tests/dfah",
   "/docs/dfah",
   "/examples/dfah_quickstart.py",
+  "/examples/dfah_gate_loop.py",
   "/examples/dfah_gate.yaml",
   "/README_DFAH.md",
   "/CHANGELOG.md",
@@ -125,5 +126,19 @@ packages = ["dfah"]
 mypy_path = "src"
 
 [[tool.mypy.overrides]]
-module = ["every_eval_ever.*", "opentelemetry.*"]
+module = ["every_eval_ever.*"]
+# The optional upstream validator targets Python 3.12; DFAH still targets 3.10.
+# Its generated models are exercised by runtime schema tests in the 3.12 job.
+follow_imports = "skip"
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["opentelemetry.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["numpy.*"]
+# Pytest optionally imports NumPy types when the EEE extra is installed.
+# They are not used by DFAH and can require newer syntax than our 3.10 target.
+follow_imports = "skip"
+follow_imports_for_stubs = true

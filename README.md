@@ -111,6 +111,11 @@ materiality, safety, or compliance.
 The package also provides versioned suites, resumable append-only episode
 storage, review-load reporting, OpenTelemetry GenAI spans, and a pytest plugin.
 
+Version 0.1.2 adds local Every Eval Ever export, explicit blocking policies,
+session-wide pytest policy enforcement, and a
+[bounded replay-and-review example](docs/dfah/replay-review-loop.md).
+See the [package guide](README_DFAH.md) and [changelog](CHANGELOG.md).
+
 ## Current DFAH-Bench results
 
 The corrected retrospective analysis covers **4,157 episodes from

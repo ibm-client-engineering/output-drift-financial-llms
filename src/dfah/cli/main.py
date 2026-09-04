@@ -13,6 +13,7 @@ from pydantic import ValidationError
 from rich.console import Console
 from rich.json import JSON
 from rich.table import Table
+from yaml import YAMLError  # type: ignore[import-untyped]
 
 from .. import __version__
 from .._canonical import redact_text
@@ -130,6 +131,10 @@ def run(
     concurrency: int = typer.Option(1, min=1),
     sample_rate: float = typer.Option(1.0, min=0.000001, max=1.0),
     mode: ReplayMode = ReplayMode.SHADOW,
+    policy: Annotated[
+        Path | None,
+        typer.Option(help="YAML/JSON gate policy; required when --mode is blocking."),
+    ] = None,
     budget_usd: float | None = typer.Option(None, min=0.000001),
     max_episode_cost_usd: float | None = typer.Option(None, min=0.000001),
     episode_timeout_s: float | None = typer.Option(
@@ -143,6 +148,12 @@ def run(
         help="Recover a dead local writer lease after confirming no run is active.",
     ),
 ) -> None:
+    if mode is ReplayMode.BLOCKING and policy is None:
+        raise ConfigurationError("blocking mode requires an explicit --policy")
+    try:
+        gate_policy = GatePolicy.load(policy) if policy is not None else None
+    except YAMLError as exc:
+        raise ConfigurationError("gate policy must contain valid YAML or JSON") from exc
     candidate = _load_object(agent)
     suite_source = suite or getattr(candidate, "suite", None)
     if suite_source is None:
@@ -157,6 +168,7 @@ def run(
         concurrency=concurrency,
         sample_rate=sample_rate,
         mode=mode,
+        gate=gate_policy,
         budget_usd=budget_usd,
         estimated_max_episode_cost_usd=max_episode_cost_usd,
         episode_timeout_s=episode_timeout_s,

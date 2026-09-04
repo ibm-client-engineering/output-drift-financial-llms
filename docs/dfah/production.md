@@ -137,8 +137,23 @@ blocking_report = Replay(
 ```
 
 In blocking mode a failed gate raises `GateViolationError` **after** the
-report is persisted, so preserve the run directory for review. Without a
-`gate` policy, blocking mode has no threshold to enforce.
+report is persisted, so preserve the run directory for review. Blocking mode
+requires an explicit `GatePolicy`; omitting it is a configuration error before
+the agent is called. `GatePolicy()` explicitly selects the default completeness
+and artifact-verification checks.
+
+The CLI accepts the same policy in YAML or JSON:
+
+```bash
+dfah run --agent my_project.provider_adapter:my_agent \
+  --mode blocking --policy examples/dfah_gate.yaml \
+  --replays 3 --episode-timeout-s 90 \
+  --out .dfah/runs/release-candidate
+```
+
+`--mode blocking` requires `--policy`. Invalid policy files are rejected before
+the agent is imported or called. In shadow mode, `--policy` evaluates the
+policy without making a threshold failure stop the run.
 
 ## Interpret and review
 
@@ -246,7 +261,16 @@ pytest --dfah-report .dfah/runs/release-candidate \
   --dfah-policy examples/dfah_gate.yaml
 ```
 
-For an explicit policy assertion, use the second fixture:
+Supplying `--dfah-policy` enforces that policy against the verified report
+before pytest collects tests. A failing gate exits with code 1 even when no
+test uses a DFAH fixture or no tests would be collected. The option requires
+`--dfah-report`; a missing report, invalid policy, or unverified artifact is a
+pytest usage error (exit code 4). A passing gate preserves pytest's ordinary
+test result, including exit code 5 when no tests are collected.
+
+Without `--dfah-policy`, the plugin remains optional: tests requesting a DFAH
+fixture skip when no report is supplied. To evaluate a policy explicitly
+inside a test, use the second fixture:
 
 ```python
 def test_dfah_release_gate(dfah_gate):
