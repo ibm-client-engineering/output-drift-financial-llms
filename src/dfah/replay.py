@@ -210,13 +210,16 @@ class Replay:
             not math.isfinite(episode_timeout_s) or episode_timeout_s <= 0
         ):
             raise ConfigurationError("episode_timeout_s must be finite and positive")
+        selected_mode = ReplayMode(mode)
+        if selected_mode is ReplayMode.BLOCKING and gate is None:
+            raise ConfigurationError("blocking mode requires an explicit GatePolicy")
         self.suite = Suite.load(suite)
         self.replays = replays
         self.seed = seed
         self.out = Path(out) if out is not None else None
         self.concurrency = concurrency
         self.sample_rate = sample_rate
-        self.mode = ReplayMode(mode)
+        self.mode = selected_mode
         self.budget_usd = budget_usd
         self.estimated_max_episode_cost_usd = estimated_max_episode_cost_usd
         self.gate_policy = gate

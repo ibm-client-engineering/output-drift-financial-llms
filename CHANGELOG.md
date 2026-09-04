@@ -7,6 +7,46 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [0.1.2] - 2026-09-04
+
+### Added
+
+- Add a local exporter for the Every Eval Ever v0.2.2
+  interchange schema. It preserves DFAH suite, replay, eligibility, and
+  artifact commitments without uploading results.
+- Add `dfah run --policy` for explicit shadow and blocking policy checks.
+- Add a bounded, no-network replay-and-review example: a candidate with stable
+  decisions and varying tool paths fails, then a corrected version passes the
+  same policy with separate manifests and preserved evidence.
+
+### Fixed
+
+- Reject blocking mode without an explicit policy before importing or calling
+  an agent. Library callers receive the same configuration check.
+- Enforce an explicitly supplied pytest `--dfah-policy` before collection,
+  including sessions with no DFAH fixture users. Failed gates exit 1; invalid
+  policy/report configuration exits 4.
+- Align EEE episode scores with the report's eligible replay groups and
+  distinguish pooled episode/group rates from task-weighted agreement metrics.
+- Bind exported episode records to the verified report's exact artifact root;
+  a concurrent resume cannot mix a newer episode set with an older aggregate.
+- Pin the available upstream EEE validator, `0.2.3rc1`, separately from schema
+  `0.2.2`, and require its runtime validation in the Python 3.12 CI job.
+
+### Changed
+
+- PyPI publication now requires the full Python 3.10–3.13 package validation
+  workflow on the tagged commit and publishes its verified distributions
+  without rebuilding them.
+
+### Security
+
+- Reject aggregate interchange exports when DFAH metrics are unavailable.
+- Hash arbitrary request-parameter maps instead of copying their values into
+  exported metadata, while retaining explicit standard decoding controls.
+- Document the deployment-identification risk of model, provider, adapter,
+  decision-label, tool-name, and equality-hash metadata.
+
 ## [0.1.1] - 2026-07-24
 
 ### Fixed

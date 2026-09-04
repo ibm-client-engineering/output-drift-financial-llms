@@ -125,7 +125,8 @@ manifest.
 - Cost admission is conservative after dispatch, and shadow sampling reports
   both estimated cost and expected flags per 100 cases.
 - The optional OpenTelemetry integration emits GenAI spans without prompts,
-  arguments, or tool results.
+  arguments, or tool results. Normalized decision labels and tool identities
+  remain observable metadata and should be reviewed before export.
 - The pytest plugin lets an existing test suite load a verified report and
   enforce project-specific replay gates.
 
@@ -141,6 +142,47 @@ The repository contains two complementary layers:
 The package does not rewrite historical logs or silently mix old and new
 studies. Its built-in suites validate integration plumbing; they are not
 financial-accuracy benchmarks.
+
+## Replay, review, and retest
+
+Supply a policy when a run should enforce thresholds:
+
+```bash
+dfah run --agent package.module:agent \
+  --mode blocking --policy gate.yaml --episode-timeout-s 30
+```
+
+Blocking mode without a policy is a configuration error. A failed gate keeps
+the report and exits unsuccessfully. In pytest, an explicit `--dfah-policy`
+is enforced before collection, even if no test uses a DFAH fixture.
+
+The [bounded replay-and-review example](docs/dfah/replay-review-loop.md)
+evaluates two explicitly versioned local candidates under one fixed policy:
+the first changes tool paths and fails; the corrected candidate passes. It
+keeps both evidence sets so the change can be reviewed and retested.
+
+## Export replay evidence
+
+Version 0.1.2 includes a local exporter for the Every Eval Ever v0.2.2
+interchange schema:
+
+```bash
+python -m pip install "dfah-bench==0.1.2"
+dfah export .dfah/runs/MY-RUN \
+  --format every-eval-ever \
+  --out .dfah/exports/MY-RUN
+```
+
+The exporter writes local files only. It requires an artifact-verified run
+with at least one eligible replay group, hashes arbitrary request settings,
+and excludes prompts, raw tool arguments, raw results, and reasoning traces.
+Model/provider/adapter identifiers, normalized decision labels, tool names,
+and equality hashes remain metadata; review them before sharing an export.
+
+The exporter works on all supported Python versions. Optional upstream
+validation requires Python 3.12 or newer and `dfah-bench[eee]`; the extra pins
+the upstream 0.2.3rc1 validator for schema 0.2.2. See the
+[export guide](docs/dfah/every-eval-ever.md).
 
 ## Guides
 

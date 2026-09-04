@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 from dfah import (
     AgentResult,
     ChannelState,
@@ -105,8 +107,93 @@ def test_pytest_plugin_loads_verified_run_and_applies_policy(pytester, tmp_path)
         str(failing),
         "-q",
     )
-    failed.assert_outcomes(passed=1, failed=1)
-    failed.stdout.fnmatch_lines(["*DFAH gate failed: observed_groups*"])
+    assert failed.ret == pytest.ExitCode.TESTS_FAILED
+    assert "DFAH gate failed: observed_groups" in failed.stdout.str() + failed.stderr.str()
+
+
+@pytest.mark.parametrize("uses_fixture", [True, False])
+def test_requested_policy_is_enforced_without_an_explicit_gate_test(
+    pytester, tmp_path, uses_fixture
+):
+    run_dir, _report = _verified_run(tmp_path)
+    policy = tmp_path / "failing-policy.json"
+    policy.write_text(GatePolicy(min_observed_groups=3).model_dump_json(), encoding="utf-8")
+    argument = "dfah_report" if uses_fixture else ""
+    pytester.makepyfile(f"def test_release({argument}):\n    assert True\n")
+    result = pytester.runpytest(
+        *_plugin_args(), "--dfah-report", str(run_dir), "--dfah-policy", str(policy), "-q"
+    )
+    assert result.ret == pytest.ExitCode.TESTS_FAILED
+    assert "DFAH gate failed: observed_groups" in result.stdout.str() + result.stderr.str()
+
+
+@pytest.mark.parametrize("required_groups", [2, 3])
+def test_requested_policy_runs_even_when_no_tests_are_collected(
+    pytester, tmp_path, required_groups
+):
+    run_dir, _report = _verified_run(tmp_path)
+    policy = tmp_path / "policy.json"
+    policy.write_text(
+        GatePolicy(min_observed_groups=required_groups).model_dump_json(), encoding="utf-8"
+    )
+    pytester.makepyfile("# Intentionally no tests.\n")
+    result = pytester.runpytest(
+        *_plugin_args(), "--dfah-report", str(run_dir), "--dfah-policy", str(policy), "-q"
+    )
+    if required_groups == 2:
+        assert result.ret == pytest.ExitCode.NO_TESTS_COLLECTED
+        assert "DFAH policy passed" in result.stdout.str()
+    else:
+        assert result.ret == pytest.ExitCode.TESTS_FAILED
+        assert "DFAH gate failed" in result.stdout.str() + result.stderr.str()
+
+
+def test_requested_policy_requires_a_report_even_without_tests(pytester, tmp_path):
+    policy = tmp_path / "policy.json"
+    policy.write_text(GatePolicy().model_dump_json(), encoding="utf-8")
+    result = pytester.runpytest(*_plugin_args(), "--dfah-policy", str(policy), "-q")
+    assert result.ret == pytest.ExitCode.USAGE_ERROR
+    assert "--dfah-policy requires --dfah-report" in result.stderr.str()
+
+
+@pytest.mark.parametrize(
+    ("suffix", "content"),
+    [
+        (".json", "{broken-json"),
+        (".json", '{"min_dar": "private-input-must-not-be-echoed"}'),
+        (".yaml", "min_dar: ["),
+        (".json", None),
+    ],
+)
+def test_requested_policy_rejects_invalid_input_before_collection(
+    pytester, tmp_path, suffix, content
+):
+    run_dir, _report = _verified_run(tmp_path)
+    policy = tmp_path / f"invalid-policy{suffix}"
+    if content is not None:
+        policy.write_text(content, encoding="utf-8")
+    result = pytester.runpytest(
+        *_plugin_args(), "--dfah-report", str(run_dir), "--dfah-policy", str(policy), "-q"
+    )
+    assert result.ret == pytest.ExitCode.USAGE_ERROR
+    output = result.stdout.str() + result.stderr.str()
+    assert "valid policy and verified report" in output
+    assert "private-input-must-not-be-echoed" not in output
+
+
+def test_requested_policy_rejects_missing_report_artifacts(pytester, tmp_path):
+    policy = tmp_path / "policy.json"
+    policy.write_text(GatePolicy().model_dump_json(), encoding="utf-8")
+    result = pytester.runpytest(
+        *_plugin_args(),
+        "--dfah-report",
+        str(tmp_path / "missing-run"),
+        "--dfah-policy",
+        str(policy),
+        "-q",
+    )
+    assert result.ret == pytest.ExitCode.USAGE_ERROR
+    assert "valid policy and verified report" in result.stderr.str()
 
 
 def test_pytest_plugin_rejects_a_detached_report(pytester, tmp_path):

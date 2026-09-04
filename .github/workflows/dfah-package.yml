@@ -1,6 +1,7 @@
 name: DFAH package
 
 on:
+  workflow_call:
   pull_request:
     paths:
       - "src/dfah/**"
@@ -47,6 +48,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.sha }}
       - name: Reject changes outside the prospective package boundary
         if: github.event_name == 'pull_request'
         env:
@@ -68,6 +70,7 @@ jobs:
               "README.md",
               "README_DFAH.md",
               "examples/dfah_gate.yaml",
+              "examples/dfah_gate_loop.py",
               "examples/dfah_quickstart.py",
               "hatch_build.py",
               "noxfile.py",
@@ -101,14 +104,26 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev,otel]"
-      - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
-      - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py hatch_build.py
+      - name: Require the official interchange validator on Python 3.12
+        if: matrix.python-version == '3.12'
+        run: |
+          python -m pip install -e ".[eee]"
+          python - <<'PY'
+          from every_eval_ever.eval_types import EvaluationLog
+          from every_eval_ever.instance_level_types import InstanceLevelEvaluationLog
+
+          print("Official EEE aggregate and instance validators are required on Python 3.12.")
+          PY
+      - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py hatch_build.py
+      - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py hatch_build.py
       - run: mypy src/dfah
       - run: pytest -q tests/dfah
       - name: Enforce metrics and parser coverage
@@ -130,6 +145,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -165,13 +182,26 @@ jobs:
                       assert b"sk-ant-" not in payload and b"sk-proj-" not in payload, name
           PY
       - run: python -m pip install --force-reinstall dist/*.whl
-      - run: dfah doctor
-      - run: dfah suites list
-      - run: pytest --help | grep -- --dfah-report
+      - run: python -m pip check
       - name: Smoke-test the installed wheel outside the repository
+        env:
+          SOURCE_ROOT: ${{ github.workspace }}
         run: |
           smoke_dir="$(mktemp -d)"
           cd "$smoke_dir"
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          import dfah
+
+          source_root = Path(os.environ["SOURCE_ROOT"]).resolve()
+          installed_module = Path(dfah.__file__).resolve()
+          assert not installed_module.is_relative_to(source_root), installed_module
+          print(f"Using installed wheel: {installed_module}")
+          PY
+          dfah doctor
+          dfah suites list
+          pytest --help | grep -- --dfah-report
           dfah check-agent \
             --agent dfah.demo:toy_agent \
             --episode-timeout-s 5
@@ -181,7 +211,10 @@ jobs:
             --episode-timeout-s 5 \
             --out run
           dfah analyze run --report report.html
+          dfah export run --format every-eval-ever --out interchange
       - uses: actions/upload-artifact@v4
         with:
           name: dfah-distributions
-          path: dist/*
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
