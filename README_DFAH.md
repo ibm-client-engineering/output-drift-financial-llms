@@ -183,11 +183,11 @@ keeps both evidence sets so the change can be reviewed and retested.
 
 ## Export replay evidence
 
-Version 0.1.2 includes a local exporter for the Every Eval Ever v0.2.2
+The package includes a local exporter for the Every Eval Ever v0.2.2
 interchange schema:
 
 ```bash
-python -m pip install "dfah-bench==0.1.2"
+python -m pip install "dfah-bench==0.1.3"
 dfah export .dfah/runs/MY-RUN \
   --format every-eval-ever \
   --out .dfah/exports/MY-RUN

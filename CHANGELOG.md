@@ -7,7 +7,14 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
-## [Unreleased]
+## [0.1.3] - Unreleased
+
+Hardening release candidate. No artifact schema change: run plans, episode
+stores, and reports written by 0.1.2 load and verify unchanged under 0.1.3,
+and run directories written by 0.1.3, which add a `gates/` directory, load and
+verify under 0.1.2 because neither the store nor the report loader reads
+`gates/`. Both directions were checked against runs produced by the
+published 0.1.2 wheel.
 
 ### Added
 
@@ -23,8 +30,24 @@ and releases use semantic versioning.
 
 ### Fixed
 
-- Print the shadow-mode policy outcome (`policy=PASS|FAIL` and failed check
-  names) from `dfah run --policy`; previously the evaluation was discarded.
+- Print the policy outcome (`policy=PASS|FAIL` and failed check names) from
+  `dfah run --policy` for shadow runs and passing blocking runs; previously a
+  shadow evaluation was discarded. A failing blocking run prints an error
+  naming the failed checks and the gate record instead.
+- Name the persisted gate record in the blocking-mode `GateViolationError`.
+- Report a run directory that has no persisted report clearly, naming the
+  missing `RUN/reports`. Version 0.1.2 already rejected such a directory, but
+  by attempting to parse the run plan as a report and failing schema
+  validation; the loader no longer falls back to other JSON files in the run
+  root at all.
+
+### Changed
+
+- State in the README and production guide that artifact verification is a
+  consistency check bound to the run directory, not a signature, and how to
+  anchor the run-plan, episode-root, and policy commitments externally.
+- Document that tool return values must be JSON-serializable and that the
+  `gates/` directory sits beside the store.
 
 ## [0.1.2] - 2026-09-04
 
