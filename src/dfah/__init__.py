@@ -24,7 +24,7 @@ from .exporters import (
     export_every_eval_ever,
     validate_every_eval_ever,
 )
-from .gate import Gate, GatePolicy, GateResult, TaskGatePolicy
+from .gate import Gate, GatePolicy, GateRecord, GateResult, TaskGatePolicy
 from .models import (
     Case,
     CaseExplanation,
@@ -79,6 +79,7 @@ __all__ = [
     "EveryEvalEverExportResult",
     "Gate",
     "GatePolicy",
+    "GateRecord",
     "GateResult",
     "GateViolationError",
     "Manifest",

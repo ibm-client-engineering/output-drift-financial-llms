@@ -18,9 +18,11 @@ from dfah import (
     agent,
     build_manifest,
 )
+from dfah._canonical import sha256
 from dfah.cli import app
 from dfah.demo import make_toy_agent
 from dfah.exceptions import ConfigurationError, GateViolationError
+from dfah.gate import GateRecord
 
 
 def test_cli_validates_a_builtin_suite_by_name():
@@ -190,6 +192,22 @@ def test_cli_applies_run_policy_and_preserves_report(
     assert report.artifacts_verified
     assert report.mode.value == mode
     assert report.observed_groups == 2
+    # Every policy evaluation is recorded next to the report, in both modes.
+    records = list((run_dir / "gates").glob("*.json"))
+    assert [path.stem for path in records] == [report.report_id]
+    record = GateRecord.from_json(records[0])
+    assert record.mode.value == mode
+    assert record.manifest_hash == report.manifest.hash
+    assert record.policy_sha256 == sha256(GatePolicy(min_observed_groups=required_groups))
+    gate_passes = required_groups <= 2
+    assert record.result.passed is gate_passes
+    if not should_fail:
+        # The CLI prints the outcome whenever the run itself completes; a shadow
+        # failure is visible without changing the exit code.
+        verdict = "PASS" if gate_passes else "FAIL"
+        assert f"policy={verdict} mode={mode}" in result.output
+        if not gate_passes:
+            assert "failed=observed_groups" in result.output
 
 
 def test_expected_cli_error_is_concise_and_has_no_traceback(monkeypatch, capsys):

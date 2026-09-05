@@ -153,7 +153,12 @@ dfah run --agent my_project.provider_adapter:my_agent \
 
 `--mode blocking` requires `--policy`. Invalid policy files are rejected before
 the agent is imported or called. In shadow mode, `--policy` evaluates the
-policy without making a threshold failure stop the run.
+policy without making a threshold failure stop the run. In both modes the
+outcome is printed as `policy=PASS` or `policy=FAIL` with the failed check
+names, and recorded as `RUN/gates/<report_id>.json` together with the policy
+and its SHA-256 commitment. A shadow failure is therefore visible and
+reviewable; it is not silently discarded. Library callers read the same
+outcome from `Replay.last_gate_result`.
 
 ## Interpret and review
 

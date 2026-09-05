@@ -1096,6 +1096,7 @@ class ConformanceReport(Record):
     cases_selected: int = Field(default=0, ge=0)
     episodes_planned: int = Field(default=0, ge=0)
     estimated_cost_ceiling_usd: float | None = Field(default=None, ge=0.0)
+    selected_case_ids: tuple[str, ...] = ()
 
     @property
     def passed(self) -> bool:

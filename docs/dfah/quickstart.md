@@ -231,5 +231,13 @@ The conformance report records the selected case count, maximum planned calls,
 and estimated cost ceiling. Its `replay_stability_smoke` reports
 replay-visible decision/path variation as an observational warning rather than
 an adapter-contract failure; the deterministic-tool check is `SKIP`, not
-`PASS`, when the agent makes no tool calls. Passing two repetitions does not
-prove the absence of all wall-clock or ambient-state dependencies.
+`PASS`, when the agent makes no tool calls. An observed-empty path is a valid
+observation and is accepted unless you state expectations: pass
+`expected_tools={"CASE-001": ["read_risk_tier"]}` (or
+`--expect-tools CASE-001=read_risk_tier`) to require that those calls are
+captured through the injected session in every conformance replay. The
+`expected_tool_capture` check then fails for an adapter that invokes a tool
+implementation directly, which DFAH cannot otherwise see. Declare every tool a
+case must use; the report's `selected_case_ids` lists the cases the preflight
+ran. Passing two repetitions does not prove the absence of all wall-clock or
+ambient-state dependencies.

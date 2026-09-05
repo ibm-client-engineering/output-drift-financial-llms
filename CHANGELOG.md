@@ -7,6 +7,25 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [Unreleased]
+
+### Added
+
+- Record every `Replay` policy evaluation as `RUN/gates/<report_id>.json`
+  (`GateRecord`: mode, policy, policy SHA-256, and every check) in shadow and
+  blocking mode, and expose it as `Replay.last_gate_result`.
+- Add `check_agent(expected_tools=...)` and `dfah check-agent --expect-tools
+  CASE_ID=tool[,tool]`. The `expected_tool_capture` check fails when an
+  expected call was not captured through the injected session in every
+  conformance replay, which is how an adapter that invokes a tool
+  implementation directly becomes visible. Observed-empty paths remain valid
+  when no expectation is declared; the report lists `selected_case_ids`.
+
+### Fixed
+
+- Print the shadow-mode policy outcome (`policy=PASS|FAIL` and failed check
+  names) from `dfah run --policy`; previously the evaluation was discarded.
+
 ## [0.1.2] - 2026-09-04
 
 ### Added

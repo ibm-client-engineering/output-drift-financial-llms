@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import tempfile
 from collections import Counter, defaultdict
-from collections.abc import Iterator, Sequence
+from collections.abc import Iterator, Mapping, Sequence
 from contextlib import contextmanager
 from pathlib import Path
 
 from ._canonical import redact_text
 from .agents import Agent, AgentResult, RunContext
+from .exceptions import ConfigurationError
 from .models import (
     Case,
     ConformanceCheck,
@@ -55,11 +56,44 @@ def _terminal_summary(episodes: Sequence[Episode]) -> str:
     return f"{summary}; error kinds: {error_text}" if error_text else summary
 
 
+def _normalized_expectations(
+    expected_tools: Mapping[str, Sequence[str]] | None,
+    suite: Suite,
+    selected_ids: Sequence[str],
+) -> dict[str, tuple[str, ...]] | None:
+    """Validate expected tool calls against the suite and the selected cases."""
+
+    if expected_tools is None:
+        return None
+    declared = {spec.name for spec in suite.tools}
+    normalized: dict[str, tuple[str, ...]] = {}
+    for case_id, tools in expected_tools.items():
+        names = tuple(sorted({str(tool) for tool in tools if str(tool)}))
+        if case_id not in selected_ids:
+            raise ConfigurationError(
+                f"expected_tools names case {case_id!r}, which is not among the selected "
+                f"conformance cases {list(selected_ids)}"
+            )
+        if not names:
+            raise ConfigurationError(f"expected_tools for case {case_id!r} must name a tool")
+        unknown = sorted(set(names) - declared)
+        if unknown:
+            raise ConfigurationError(
+                f"expected_tools for case {case_id!r} names tools the suite does not "
+                f"declare: {unknown}"
+            )
+        normalized[case_id] = names
+    if not normalized:
+        raise ConfigurationError("expected_tools must name at least one selected case")
+    return normalized
+
+
 def check_agent(
     candidate: Agent,
     *,
     suite: Suite | str | Path | None = None,
     max_cases: int = 2,
+    expected_tools: Mapping[str, Sequence[str]] | None = None,
     budget_usd: float | None = None,
     estimated_max_episode_cost_usd: float | None = None,
     episode_timeout_s: float | None = None,
@@ -76,6 +110,13 @@ def check_agent(
     diagnostic: it is reported as a warning without treating expected model
     nondeterminism as an integration failure. This bounded smoke test does not
     prove the absence of wall-clock or other ambient-state dependencies.
+
+    An observed-empty tool path is a valid observation and is accepted unless
+    ``expected_tools`` states, per selected artifact case ID, which declared
+    tools must be captured through the injected session in every replay. A
+    call that never reaches the session is invisible to DFAH; expectations are
+    the only way this preflight can reveal an adapter that invokes a tool
+    implementation directly.
     """
 
     if max_cases < 1:
@@ -123,6 +164,8 @@ def check_agent(
             episode_timeout_s=episode_timeout_s,
             tools=getattr(candidate, "tools", None),
         )
+        selected_ids = tuple(case.effective_case_id for case in runner._selected_cases())
+        expectations = _normalized_expectations(expected_tools, selected_suite, selected_ids)
         try:
             first = runner.run(wrapped)
             first_calls = wrapped.calls
@@ -209,6 +252,61 @@ def check_agent(
                     ),
                 )
             )
+            # Capture semantics: an observed-empty path is a valid observation. It
+            # can be told apart from an adapter that bypassed the session only when
+            # the caller states which selected cases must call which tools.
+            if expectations is None:
+                declared_count = len(selected_suite.tools)
+                captured_any = any(episode.trajectory.tool_calls for episode in episodes)
+                skip_detail = "no expected tool calls declared; observed-empty paths are accepted as valid"
+                if declared_count and not captured_any:
+                    skip_detail += (
+                        f"; the suite declares {declared_count} tool(s) and no conformance "
+                        "episode captured a call, so pass expected_tools to verify that calls "
+                        "reach the injected session"
+                    )
+                checks.append(
+                    ConformanceCheck(
+                        name="expected_tool_capture",
+                        status=ConformanceStatus.SKIP,
+                        detail=skip_detail,
+                    )
+                )
+            else:
+                by_case: dict[str, list[Episode]] = defaultdict(list)
+                for episode in episodes:
+                    by_case[episode.case_id].append(episode)
+                missing: list[str] = []
+                for case_id, tools in sorted(expectations.items()):
+                    rows = sorted(by_case.get(case_id, ()), key=lambda row: row.replay_index)
+                    if not rows:
+                        missing.append(f"{case_id}:no_committed_episode")
+                    for episode in rows:
+                        captured = {call.name for call in episode.trajectory.tool_calls}
+                        missing.extend(
+                            f"{case_id}/replay-{episode.replay_index}:{tool}"
+                            for tool in tools
+                            if tool not in captured
+                        )
+                shown = ", ".join(missing[:8]) + (", ..." if len(missing) > 8 else "")
+                checks.append(
+                    ConformanceCheck(
+                        name="expected_tool_capture",
+                        status=(
+                            ConformanceStatus.PASS if not missing else ConformanceStatus.FAIL
+                        ),
+                        detail=(
+                            "every expected tool call was captured in every conformance replay "
+                            f"({len(expectations)} case(s))"
+                            if not missing
+                            else (
+                                "expected tool calls were not captured through the injected "
+                                f"session: {shown}; an adapter that invokes a tool "
+                                "implementation directly is invisible to DFAH"
+                            )
+                        ),
+                    )
+                )
             stable_replays = bool(first.case_reports) and all(
                 row.dar == 1.0 and row.tar.strong == 1.0 for row in first.case_reports
             )
@@ -278,6 +376,7 @@ def check_agent(
         cases_selected=selected_count,
         episodes_planned=planned_episodes,
         estimated_cost_ceiling_usd=estimated_ceiling,
+        selected_case_ids=selected_ids,
     )
     if raise_on_error:
         report.raise_for_failures()

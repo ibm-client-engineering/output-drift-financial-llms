@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 
 from pydantic import Field, model_validator
 
-from .models import Record, Report
+from ._canonical import sha256
+from .models import Record, ReplayMode, Report, utc_now
 
 
 class TaskGatePolicy(Record):
@@ -80,6 +82,35 @@ class GateResult(Record):
         failures = [check.name for check in self.checks if not check.passed]
         if failures:
             raise GateViolationError("DFAH gate failed: " + ", ".join(failures))
+
+
+class GateRecord(Record):
+    """Durable outcome of one policy evaluation against one persisted report.
+
+    ``Replay`` writes one record per evaluation under ``RUN/gates/`` in both
+    shadow and blocking mode, so the policy that was applied, its commitment,
+    and every check remain reviewable next to the report they judged.
+    """
+
+    report_id: str = Field(min_length=1)
+    manifest_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    mode: ReplayMode
+    policy: GatePolicy
+    policy_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    result: GateResult
+    evaluated_at: datetime = Field(default_factory=utc_now)
+
+    @model_validator(mode="after")
+    def _policy_commitment(self) -> GateRecord:
+        if self.policy_sha256 != sha256(self.policy):
+            raise ValueError("gate record policy commitment differs from its policy")
+        return self
+
+    @classmethod
+    def from_json(cls, path: str | Path) -> GateRecord:
+        """Load one persisted gate record."""
+
+        return cls.model_validate_json(Path(path).read_bytes())
 
 
 class Gate:

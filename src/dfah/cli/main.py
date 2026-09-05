@@ -85,6 +85,19 @@ def _print_ineligibility_diagnostics(report: Report) -> None:
     )
 
 
+def _print_gate_outcome(replay: Replay, report: Report, run_path: Path) -> None:
+    result = replay.last_gate_result
+    if result is None:
+        return
+    failed = [check.name for check in result.checks if not check.passed]
+    verdict = "PASS" if result.passed else "FAIL"
+    record = run_path / "gates" / f"{report.report_id}.json"
+    console.print(
+        f"policy={verdict} mode={report.mode.value} record={record}"
+        + (f" failed={', '.join(failed)}" if failed else "")
+    )
+
+
 @app.callback()
 def root(
     version: bool = typer.Option(False, "--version", help="Print the version and exit."),
@@ -180,6 +193,7 @@ def run(
     console.print(f"run={run_path}")
     console.print(f"{_metric_summary(report)} status={report.status.value}")
     _print_ineligibility_diagnostics(report)
+    _print_gate_outcome(replay, report, run_path)
 
 
 @app.command()
@@ -326,11 +340,32 @@ def manifest_show(run_path: Path) -> None:
     console.print(JSON.from_data(report.manifest.model_dump(mode="json")))
 
 
+def _parse_expected_tools(values: list[str] | None) -> dict[str, tuple[str, ...]] | None:
+    if not values:
+        return None
+    parsed: dict[str, tuple[str, ...]] = {}
+    for value in values:
+        case_id, separator, tools = value.partition("=")
+        names = tuple(name.strip() for name in tools.split(",") if name.strip())
+        if not separator or not case_id.strip() or not names:
+            raise ConfigurationError("--expect-tools requires CASE_ID=tool[,tool]")
+        key = case_id.strip()
+        parsed[key] = tuple(sorted(set(parsed.get(key, ()) + names)))
+    return parsed
+
+
 @app.command("check-agent")
 def check_agent_command(
     agent: str = typer.Option(..., help="Import reference, e.g. my.module:agent"),
     suite: str | None = typer.Option(None),
     max_cases: int = typer.Option(2, min=1, help="Bound the smoke-test case count."),
+    expect_tools: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--expect-tools",
+            help="CASE_ID=tool[,tool]; repeatable. Require these calls in every replay.",
+        ),
+    ] = None,
     budget_usd: float | None = typer.Option(None, min=0.000001),
     max_episode_cost_usd: float | None = typer.Option(None, min=0.000001),
     episode_timeout_s: float | None = typer.Option(
@@ -347,6 +382,7 @@ def check_agent_command(
         _load_object(agent),
         suite=suite,
         max_cases=max_cases,
+        expected_tools=_parse_expected_tools(expect_tools),
         budget_usd=budget_usd,
         estimated_max_episode_cost_usd=max_episode_cost_usd,
         episode_timeout_s=episode_timeout_s,
@@ -356,6 +392,7 @@ def check_agent_command(
         f"planned calls: at most {result.episodes_planned} across "
         f"{result.cases_selected} case(s)"
     )
+    console.print("selected cases: " + (", ".join(result.selected_case_ids) or "none"))
     for check in result.checks:
         icon = (
             "[yellow]SKIP[/yellow]"
