@@ -57,11 +57,13 @@ def _report_path(source: Path) -> Path:
 
     if source.is_file():
         return source
-    candidates = list((source / "reports").glob("*.json"))
-    if not candidates and source.is_dir():
-        candidates = list(source.glob("*.json"))
+    reports_dir = source / "reports"
+    candidates = list(reports_dir.glob("*.json"))
     if not candidates:
-        raise typer.BadParameter(f"no DFAH report JSON found under {source}")
+        raise typer.BadParameter(
+            f"no DFAH report JSON found under {reports_dir}; pass a run directory with "
+            "a persisted report or the report file itself"
+        )
     return max(candidates, key=lambda path: path.stat().st_mtime_ns)
 
 

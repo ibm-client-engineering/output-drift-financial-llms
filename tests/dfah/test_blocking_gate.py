@@ -28,7 +28,7 @@ def test_blocking_policy_failure_preserves_verified_evidence(tmp_path):
         replays=2,
         out=tmp_path / "run",
     )
-    with pytest.raises(GateViolationError, match="observed_groups"):
+    with pytest.raises(GateViolationError, match="observed_groups") as excinfo:
         runner.run(candidate)
     assert calls["count"] == 4
     report = Report.from_json(tmp_path / "run")
@@ -39,6 +39,9 @@ def test_blocking_policy_failure_preserves_verified_evidence(tmp_path):
     assert record.mode is ReplayMode.BLOCKING
     assert record.result.passed is False
     assert runner.last_gate_result == record.result
+    assert f"record: {tmp_path / 'run' / 'gates' / (report.report_id + '.json')}" in str(
+        excinfo.value
+    )
 
 
 def test_shadow_policy_outcome_is_recorded_and_exposed(tmp_path):

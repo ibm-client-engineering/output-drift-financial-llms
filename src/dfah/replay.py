@@ -22,6 +22,7 @@ from .exceptions import (
     AgentContractError,
     ArtifactError,
     ConfigurationError,
+    GateViolationError,
     ToolExecutionError,
 )
 from .gate import Gate, GatePolicy, GateRecord, GateResult
@@ -875,13 +876,14 @@ class Replay:
                 policy_sha256=sha256(self.gate_policy),
                 result=gate_result,
             )
-            atomic_private_write(
-                out / "gates" / f"{report.report_id}.json",
-                canonical_bytes(record, redact=True) + b"\n",
-            )
+            record_path = out / "gates" / f"{report.report_id}.json"
+            atomic_private_write(record_path, canonical_bytes(record, redact=True) + b"\n")
             self.last_gate_result = gate_result
             if self.mode is ReplayMode.BLOCKING:
-                gate_result.raise_for_failures()
+                try:
+                    gate_result.raise_for_failures()
+                except GateViolationError as exc:
+                    raise GateViolationError(f"{exc}; record: {record_path}") from None
         return report
 
     async def arun(self, agent: Agent) -> Report:

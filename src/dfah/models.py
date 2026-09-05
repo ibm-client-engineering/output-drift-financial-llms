@@ -1040,11 +1040,15 @@ class Report(Record):
         run_dir: Path | None = None
         if source.is_dir():
             run_dir = source
-            candidates = list((source / "reports").glob("*.json"))
+            reports_dir = source / "reports"
+            candidates = list(reports_dir.glob("*.json"))
             if not candidates:
-                candidates = list(source.glob("*.json"))
-            if not candidates:
-                raise FileNotFoundError(f"no DFAH report JSON found under {source}")
+                # Never fall back to other JSON files in the run root: the run plan
+                # and gate records are not reports and must not be parsed as one.
+                raise FileNotFoundError(
+                    f"no DFAH report JSON found under {reports_dir}; a run without a "
+                    "persisted report cannot be analyzed or gated"
+                )
             source = max(candidates, key=lambda candidate: candidate.stat().st_mtime_ns)
         elif source.parent.name == "reports":
             run_dir = source.parent.parent

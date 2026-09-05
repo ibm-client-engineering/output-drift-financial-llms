@@ -84,6 +84,8 @@ contract error. An adapter version string alone is not source provenance.
 Prefer a `ToolRegistry` bound to the agent. DFAH validates arguments against
 the suite's JSON Schemas, injects a per-episode `ToolSession` as
 `context.tools`, and records results before returning them to the adapter.
+Return values must be JSON-serializable, since only their canonical hash is
+recorded; an unserializable value is recorded as a failed call.
 Return `context.tools.trajectory()` in `AgentResult`. Never call a registered
 implementation directly from the adapter: the session cannot see that call,
 the episode records an observed-empty path, and the run reports perfect path
