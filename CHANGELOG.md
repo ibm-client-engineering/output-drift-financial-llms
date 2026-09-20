@@ -7,6 +7,16 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [Unreleased]
+
+### Added
+
+- Add `dfah.metrics.execution_summary` to distinguish completed invocations,
+  rejected calls, unresolved proposals and errors in a captured trajectory.
+  Unavailable evidence remains unavailable rather than becoming a zero count.
+  The helper leaves DAR/TAR unchanged and makes no policy-correctness or
+  business-success claim. See [execution evidence](docs/dfah/execution-evidence.md).
+
 ## [0.1.3] - Unreleased
 
 Hardening release candidate. No artifact schema change: run plans, episode
