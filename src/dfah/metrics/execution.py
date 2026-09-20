@@ -33,10 +33,12 @@ class ExecutionSummary:
     completed_tool_names: tuple[str, ...] | None
 
     @property
-    def all_invocations_resolved(self) -> bool | None:
+    def all_proposals_terminal(self) -> bool | None:
         """Whether every captured record has a terminal boundary, including error.
 
-        Terminal does not imply success, a captured effect, or absence of harm.
+        Errors are terminal records even when their effects remain unknown.
+        An observed-empty channel returns True; an unavailable channel returns
+        None. Terminal does not imply success, rollback, or absence of harm.
         """
         if not self.source_state.observed:
             return None
