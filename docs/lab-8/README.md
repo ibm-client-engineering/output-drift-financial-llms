@@ -117,6 +117,9 @@ different tasks, replay counts, and capture contracts.
 
 ## Further reading
 
+- [Lab 10: Evidence Before Execution](../lab-10/README.md) — distinguish
+  captured returns from rejected or unresolved proposals, then connect those
+  records to the v3 study.
 - [Lab 9: Replay, Review, and Retest](../lab-9/README.md) — catch a path change,
   check a supplied correction against a fixed gate, and export verified results.
 - [Interactive explorer](../explorer/index.html)

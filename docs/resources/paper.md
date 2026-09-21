@@ -35,8 +35,29 @@ make reproduce-paper-v1  # archived lineage only
 ```
 
 See [Lab 8](../lab-8/README.md) for the guided walkthrough and the
-[README results table](https://github.com/ibm-client-engineering/output-drift-financial-llms#dfah-bench-results-new-paper)
+[README results table](https://github.com/ibm-client-engineering/output-drift-financial-llms#preserved-v2-results)
 for the package and corrected-analysis walkthrough.
+
+### V3: evidence before execution
+
+The v3 manuscript extends the qualification principle to interactive banking
+tasks and fixed-state gate probes. It relates boundary evidence, authorization,
+captured execution, native success and all-role API cost. The new cohorts use
+both open-weight and frontier generators, with their tasks and comparisons
+kept separate.
+
+All 1,080 native episodes reached terminal artifacts; 1,033 have known
+outcomes. Unknown outcomes keep the prespecified complete-cohort test
+unavailable. The primary typed-choice bundle had lower matched mean episode
+cost and fewer successes than the prose-model gate under every assignment of
+the scheduled unknown outcomes. Fixed-state probes also illustrate how higher
+decision agreement can coexist with lower constructed policy-label match.
+
+Read the [v3 study and reproduction guide](../dfah/v3-study.md) for exact
+denominators, inference limits, OpenRouter's role and cost scopes.
+[Lab 10](../lab-10/README.md) is an offline synthetic walkthrough of the
+execution boundary. The manuscript source builds the paper; the existing
+`make reproduce-paper` target continues to reproduce v2.
 
 ---
 

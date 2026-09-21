@@ -1,19 +1,43 @@
 # Reproducibility — DFAH-Bench
 
-This repository contains two related but separate reproducibility surfaces:
+This repository supports three related forms of reproduction:
 
-1. the frozen historical research pipeline under `bench/`, `scripts/`, and
-   `results/`; and
-2. the prospective, pip-installable package under `src/dfah/`.
+| Scope | Public inputs | What the commands reproduce |
+| --- | --- | --- |
+| Corrected v2 research | `bench/`, the sanitized replay fixture, `scripts/`, `results/v2/` | Retrospective CSVs and checks of the aggregate-only prospective extensions |
+| Prospective package | `src/dfah/`, `examples/`, `tests/dfah/` | Local capture, replay, policy and execution-evidence behavior on synthetic examples |
+| V3 manuscript | `paper/arxiv_dfah_bench_v3/` | The manuscript presentation from included LaTeX sources and figures |
 
-Do not treat the package smoke test, historical analysis, prospective API
-diagnostic, and local systems check as a single model comparison. Their tasks,
-replay counts, and capture contracts differ.
+The historical analysis, prospective API diagnostic, local systems check,
+native banking study and fixed-state probes retain separate tasks,
+denominators and capture contracts. Package smoke tests exercise implementation
+behavior; they are not additional study observations.
 
-Package commands and package-document links below require the prospective
-package surface (`pyproject.toml`, `src/dfah/`, and `docs/dfah/`) from the
-first-stage package change. The corrected v2 research reproduction is
-independent of that package surface and runs from `requirements.txt`.
+The package environment uses `pyproject.toml`. The corrected v2 research
+reproduction is independent and runs from `requirements.txt`.
+
+## V3 manuscript
+
+The [v3 manuscript source and build guide](paper/arxiv_dfah_bench_v3/README.md)
+explains how to compile the paper from its active LaTeX inputs and included
+figures. Compilation makes no model calls. The
+[v3 study guide](docs/dfah/v3-study.md) explains the native outcomes, gate probes
+and cost accounting.
+
+The hosted banking and gate-probe runners, frozen collection plans and raw
+provider captures are retained separately from this public checkout. The
+included figures and manuscript are sufficient to rebuild the presentation,
+but not to recompute the hosted-study findings from raw traces. In particular,
+`make reproduce-paper` continues to reproduce the preserved **v2** artifacts;
+it does not execute or verify the hosted v3 collection.
+
+The manuscript reports 1,080 terminal native episodes, with 1,033 known
+outcomes and 47 unknown outcomes, plus 1,944 scheduled fixed-state queries.
+Scheduled, evaluable and paired denominators remain explicit. Missing outcomes
+and unavailable gate decisions leave the prespecified confirmatory families
+unavailable; the reported descriptive intervals and logical missing-outcome
+bounds retain their separate meanings. The hosted runtime remains open:
+retained request identities and settings cannot refreeze a provider's model.
 
 ## Prospective package
 
@@ -33,6 +57,22 @@ dfah analyze .dfah/runs/quickstart
 
 The demo is local and makes no provider calls. Perfect agreement establishes
 that bounded adapter/tool/replay contract only.
+
+### Execution evidence in the source checkout
+
+[Lab 10](docs/lab-10/README.md) runs a synthetic example of
+[`execution_summary`](docs/dfah/execution-evidence.md): completed invocations,
+rejected calls, unresolved proposals, errors and unavailable versus
+observed-empty trajectories. After the editable installation above, its
+focused implementation checks are:
+
+```bash
+python -m pytest tests/dfah/test_execution_evidence.py tests/dfah/test_expected_tool_capture.py -q
+```
+
+These offline checks use constructed records and adapters. They do not import
+the hosted banking traces or supply a generic native-task or policy-correctness
+evaluator. The helper leaves the historical agreement metrics unchanged.
 
 ## Historical public pipeline
 

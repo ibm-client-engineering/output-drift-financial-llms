@@ -24,6 +24,11 @@ DFAH measures repeatability and fidelity to the recorded execution. It does
 not inspect hidden reasoning or establish correctness, safety, deployment
 readiness, or regulatory compliance.
 
+The [v3 manuscript sources and build instructions](paper/arxiv_dfah_bench_v3/README.md)
+connect replay evidence with banking authorization, task outcomes and cost.
+The [v3 study guide](docs/dfah/v3-study.md) explains the completed studies and
+their connection to the package.
+
 ## Key finding
 
 A separate argument-aware prospective API diagnostic found a much wider range
@@ -39,6 +44,32 @@ arguments, and deterministic result identities. The diagnostic retained
 missed by one group, so these aggregates remain diagnostic rather than primary
 inference or a provider ranking. A path difference is evidence for review, not
 automatically a task failure.
+
+## V3: authorization, completion and cost
+
+The v3 manuscript extends the shared-denominator approach from replay paths
+to evidence at the decision boundary, gate decisions, completed actions and
+native task outcomes. Its banking study uses the **τ-Knowledge** environment,
+with separate open-weight DeepSeek and frontier Gemini generator cohorts.
+All **1,080 scheduled episodes** reached terminal records; **1,033 outcomes
+are known and 47 remain unknown**.
+
+In the primary cohort, the typed-choice gate-and-recovery bundle cost less
+than the generative bundle on complete task pairs, yet completed fewer tasks
+under every assignment of the unknown outcomes. Synthetic fixed-state probes
+showed higher repeated decision agreement alongside lower agreement with
+constructed policy labels. Missing outcomes and unavailable gate decisions
+leave the prespecified confirmatory families unavailable; the paper reports
+descriptive comparisons and finite-schedule bounds.
+
+The study also discloses **$38.97 in reported API usage** ($33.74 in OpenRouter
+credits plus $5.23 in BYOK upstream usage), with a **$39.08 conservative
+campaign ledger**. These campaign totals are separate from the matched
+episode-cost comparisons.
+
+For a local example of the distinction between a proposed action and a
+completed invocation, run [Lab 10: execution evidence](docs/lab-10/README.md).
+It uses synthetic package records and requires no model service.
 
 ## Quick start: local, free, and no API key
 
@@ -91,6 +122,8 @@ with the [package guide](README_DFAH.md) and the
 | Explore the published results | [Live results explorer](https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/) |
 | Review community reports and resolved defects | [Community reports and findings](docs/resources/community-findings.md) |
 | Reproduce DFAH-Bench v2 | `make reproduce-paper` and [the reproducibility guide](REPRODUCIBILITY.md) |
+| Read the v3 findings and their limits | [V3 study guide](docs/dfah/v3-study.md) and [manuscript sources](paper/arxiv_dfah_bench_v3/README.md) |
+| Distinguish proposals from completed calls | [Lab 10: execution evidence](docs/lab-10/README.md) |
 | Use the interactive workshop | [Workshop labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
 
 ## What DFAH measures
@@ -125,7 +158,13 @@ visible, a run directory without a persisted report fails closed, and the
 documentation states that artifact verification is a consistency check bound
 to the run directory rather than a signature.
 
-## Current DFAH-Bench results
+The source checkout also includes
+[`execution_summary`](docs/dfah/execution-evidence.md), which separates
+completed invocations, rejected calls, unresolved proposals and errors in a
+captured trajectory. It preserves the distinction between unavailable evidence
+and an observed empty path. See the [unreleased changes](CHANGELOG.md).
+
+## Preserved v2 results
 
 The corrected retrospective analysis covers **4,157 episodes from
 configurations with observed tool use across 719 comparable replay groups**,
@@ -196,12 +235,16 @@ These are three related but distinct studies, not versions of one experiment.
 
 ## Reproduce the research
 
-The frozen paper artifact and the prospective package are separate surfaces:
+The repository supports three distinct forms of reproduction:
 
 - `bench/`, the checked-in replay corpus, and `results/v2/` reproduce the
-  DFAH-Bench paper.
+  corrected DFAH-Bench v2 analysis.
 - `src/dfah/` is the installable package for new integrations and replay
-  captures.
+  captures, with offline examples and tests.
+- `paper/arxiv_dfah_bench_v3/` builds the v3 manuscript from its included
+  sources and figures. The hosted banking and gate-probe runners and raw
+  captures are retained separately; this checkout does not rerun those studies
+  or regenerate their figures from raw traces.
 
 ```bash
 python -m pip install -r requirements.txt
@@ -398,8 +441,9 @@ Removing those launchers would break published labs and external command paths.
 | `src/dfah/` | Installable prospective replay package |
 | `tests/dfah/` | Package conformance, recovery, privacy, and metric tests |
 | `docs/dfah/` | Package quickstart, integration, production, and design guides |
-| `bench/` | Frozen metrics and reproduction code for arXiv:2607.20491 |
+| `bench/` | Frozen metrics and reproduction code for the corrected v2 analysis |
 | `results/v2/` | Corrected v2 paper outputs and release manifest |
+| `paper/arxiv_dfah_bench_v3/` | V3 manuscript sources, included figures and build instructions |
 | `run_evaluation.py`, `run_dfah_demo.py`, `plot_results.py`, `make_tables.py` | Stable compatibility launchers for published commands |
 | `scripts/workshop/` | Maintained implementations behind the root workshop launchers |
 | `harness/`, `providers/`, `prompts/`, `data/` | Historical output-drift evaluation components |

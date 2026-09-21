@@ -108,3 +108,25 @@ econometrics/FINDINGS_EXPLAINED.md
 econometrics/PUBLIC_RELEASE.md
 econometrics/REAL_DATA_ANALYSIS_RESULTS.md
 econometrics/VALIDATION_RESULTS.md
+
+# Reviewed DFAH-Bench v3 manuscript: exact active-input allowlist.
+/paper/*
+!/paper/arxiv_dfah_bench_v3/
+/paper/arxiv_dfah_bench_v3/*
+!/paper/arxiv_dfah_bench_v3/README.md
+!/paper/arxiv_dfah_bench_v3/main.tex
+!/paper/arxiv_dfah_bench_v3/v3_capture_extension.tex
+!/paper/arxiv_dfah_bench_v3/v3_extension.tex
+!/paper/arxiv_dfah_bench_v3/v3_deployment_appendix.tex
+!/paper/arxiv_dfah_bench_v3/references.bib
+!/paper/arxiv_dfah_bench_v3/neurips_2026.sty
+!/paper/arxiv_dfah_bench_v3/figures/
+/paper/arxiv_dfah_bench_v3/figures/*
+!/paper/arxiv_dfah_bench_v3/figures/decision_trajectory_gap.pdf
+!/paper/arxiv_dfah_bench_v3/figures/prospective_argument_aware_gap.pdf
+!/paper/arxiv_dfah_bench_v3/figures/task_gap_heatmap.pdf
+!/paper/arxiv_dfah_bench_v3/figures/decision_concentration_by_task.pdf
+!/paper/arxiv_dfah_bench_v3/figures/native_c_minus_b_cost_success.pdf
+!/paper/arxiv_dfah_bench_v3/figures/task015-factorial-paper.pdf
+!/paper/arxiv_dfah_bench_v3/figures/development_request_latency_cost_compact.pdf
+!/paper/arxiv_dfah_bench_v3/figures/local_weight_storage_paper.pdf
