@@ -85,6 +85,7 @@ include = [
   "/docs/dfah",
   "/examples/dfah_quickstart.py",
   "/examples/dfah_gate_loop.py",
+  "/examples/dfah_execution_evidence.py",
   "/examples/dfah_gate.yaml",
   "/README_DFAH.md",
   "/CHANGELOG.md",

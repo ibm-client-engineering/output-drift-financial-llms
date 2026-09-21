@@ -24,3 +24,7 @@ The input is the final `ToolCall` per invocation, as retained by DFAH's standard
 This helper does not modify historical DAR, TAR, report schemas or eligibility. Use it to explain what the retained path contains. Policy correctness still needs an independently specified task or action contract; repeated agreement alone does not provide that contract.
 
 The addition is motivated by the DFAH-Bench v3 external-benchmark integration, where proposals, gate verdicts, dispatches, returns, database effects and capability changes are retained separately. Those research traces include more channels than the generic `ToolCall` record. This summary does not certify coverage of those additional effects.
+
+Run the standalone synthetic example in [Lab 10](../lab-10/README.md), then
+read the [v3 study guide](v3-study.md) for the native outcomes, missingness and
+cost comparisons that motivated this addition.

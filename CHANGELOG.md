@@ -17,6 +17,15 @@ and releases use semantic versioning.
   The helper leaves DAR/TAR unchanged and makes no policy-correctness or
   business-success claim. See [execution evidence](docs/dfah/execution-evidence.md).
 
+### Documentation
+
+- Add an offline [execution-evidence example](examples/dfah_execution_evidence.py)
+  connecting the helper to the distinction between proposed and completed
+  actions. Its constructed records demonstrate package behavior independently
+  of the hosted study traces that motivated the helper.
+- Add a [v3 study guide](docs/dfah/v3-study.md) explaining the study findings
+  and the boundary between package examples and retained hosted evidence.
+
 ## [0.1.3] - Unreleased
 
 Hardening release candidate. No artifact schema change: run plans, episode

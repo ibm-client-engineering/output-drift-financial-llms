@@ -71,6 +71,7 @@ jobs:
               "README_DFAH.md",
               "examples/dfah_gate.yaml",
               "examples/dfah_gate_loop.py",
+              "examples/dfah_execution_evidence.py",
               "examples/dfah_quickstart.py",
               "hatch_build.py",
               "noxfile.py",
@@ -122,10 +123,12 @@ jobs:
 
           print("Official EEE aggregate and instance validators are required on Python 3.12.")
           PY
-      - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py hatch_build.py
-      - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py hatch_build.py
+      - run: ruff format --check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py examples/dfah_execution_evidence.py hatch_build.py
+      - run: ruff check src/dfah tests/dfah examples/dfah_quickstart.py examples/dfah_gate_loop.py examples/dfah_execution_evidence.py hatch_build.py
       - run: mypy src/dfah
       - run: pytest -q tests/dfah
+      - name: Run the offline execution-evidence example
+        run: python examples/dfah_execution_evidence.py
       - name: Enforce metrics and parser coverage
         env:
           # Avoid importing DFAH through its installed pytest entry point

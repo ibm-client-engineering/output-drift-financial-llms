@@ -149,16 +149,26 @@ manifest.
 
 ## Research artifact versus package
 
-The repository contains two complementary layers:
+The repository contains complementary research and package layers:
 
-- `bench/` and the checked-in replay corpus reproduce the published
-  [DFAH-Bench preprint](https://arxiv.org/abs/2607.20491).
+- `bench/` and the checked-in replay corpus reproduce the corrected v2
+  retrospective analysis of [DFAH-Bench](https://arxiv.org/abs/2607.20491).
+- `paper/arxiv_dfah_bench_v3/` contains the v3 manuscript and its figures.
+  Building that paper and reproducing the new hosted studies have different
+  requirements; see the [v3 study guide](docs/dfah/v3-study.md).
 - `src/dfah/` is the prospective package for new integrations and new replay
   captures.
 
 The package does not rewrite historical logs or silently mix old and new
 studies. Its built-in suites validate integration plumbing; they are not
 financial-accuracy benchmarks.
+
+The 0.1.3 source adds `dfah.metrics.execution_summary`: it separates captured
+returns, rejected invocations, unresolved proposals and errors. An unavailable
+channel keeps unavailable counts, while an observed-empty channel has zero
+counts. See the [execution evidence guide](docs/dfah/execution-evidence.md)
+and the [offline Lab 10](docs/lab-10/README.md). This addition leaves the replay
+agreement metrics and their eligibility rules unchanged.
 
 ## Replay, review, and retest
 
@@ -187,7 +197,6 @@ The package includes a local exporter for the Every Eval Ever v0.2.2
 interchange schema:
 
 ```bash
-python -m pip install "dfah-bench==0.1.3"
 dfah export .dfah/runs/MY-RUN \
   --format every-eval-ever \
   --out .dfah/exports/MY-RUN
