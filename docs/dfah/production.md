@@ -215,6 +215,14 @@ Keep prospective stores outside the historical corpus and under access control.
 The current local `FileStore` supports macOS and POSIX systems; it requires
 advisory file locks and directory-descriptor operations. Windows support needs
 a reviewed storage backend and is not claimed by this alpha.
+
+Suite, policy, report and gate-record loaders require regular files and reject
+final symlinks and special files. Supply a regular-file copy when importing a
+linked artifact. A known run-plan commitment is checked before its schedule is
+expanded for validation. These checks do not impose resource budgets on valid
+inputs: review suite schemas and schedule sizes before use, and apply process
+memory and CPU limits when processing artifacts from an untrusted source.
+
 Artifact verification is a consistency check, not authentication. A report is
 regenerated from its committed episodes and bound to the run plan and episode
 root by SHA-256 commitments, so an inconsistent edit is detected. Anyone with
