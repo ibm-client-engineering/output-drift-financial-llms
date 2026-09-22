@@ -44,6 +44,12 @@ returns the session's exact trajectory. An explicit `Replay(tools=...)`
 override remains available for non-decorator adapters. This prevents a
 separate, hand-recorded path from silently diverging from observed calls.
 
+Await tool calls before returning from `arun`. The injected session closes
+when that invocation returns, raises, times out, or is cancelled, before DFAH
+captures its final trajectory. Later calls through that session are rejected
+before execution. Operations already started can still have effects; a call
+without a captured return remains unresolved and makes the replay ineligible.
+
 The registry validates each call against its declared Draft 2020-12 JSON
 Schema before invoking the implementation. A missing field, wrong type, or
 disallowed extra field is recorded as a rejected call and cannot be coerced
@@ -206,9 +212,19 @@ not prove that every wall-clock or ambient-state dependency is absent.
 ## Persistence, security, and recovery
 
 Keep prospective stores outside the historical corpus and under access control.
+New store directories use private permissions; existing directory permissions
+remain under the caller's control. Choose a dedicated output directory.
 The current local `FileStore` supports macOS and POSIX systems; it requires
 advisory file locks and directory-descriptor operations. Windows support needs
 a reviewed storage backend and is not claimed by this alpha.
+
+Suite, policy, report and gate-record loaders require regular files and reject
+final symlinks and special files. Supply a regular-file copy when importing a
+linked artifact. A known run-plan commitment is checked before its schedule is
+expanded for validation. These checks do not impose resource budgets on valid
+inputs: review suite schemas and schedule sizes before use, and apply process
+memory and CPU limits when processing artifacts from an untrusted source.
+
 Artifact verification is a consistency check, not authentication. A report is
 regenerated from its committed episodes and bound to the run plan and episode
 root by SHA-256 commitments, so an inconsistent edit is detected. Anyone with
@@ -245,7 +261,9 @@ must follow the local control process.
 Raw output is not persisted by `Replay`. The artifact serializer redacts a
 small set of credential-shaped strings, but callers must minimize sensitive
 values before placing them in tool arguments, request parameters, metadata,
-or exceptions. Artifact wire-payload, argument, and result hashes are equality fingerprints,
+or exceptions. Keep authentication credentials out of these fields; arbitrary
+token formats cannot be recognized reliably. Artifact wire-payload, argument,
+and result hashes are equality fingerprints,
 not anonymization: low-entropy values may be recovered by enumeration.
 Pseudonymize or tokenize sensitive values before hashing.
 

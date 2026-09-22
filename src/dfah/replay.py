@@ -522,11 +522,18 @@ class Replay:
 
             before = time.perf_counter()
             try:
-                if self.episode_timeout_s is None:
-                    result = await agent.arun(case, context)
-                else:
-                    with anyio.fail_after(self.episode_timeout_s):
+                try:
+                    if self.episode_timeout_s is None:
                         result = await agent.arun(case, context)
+                    else:
+                        with anyio.fail_after(self.episode_timeout_s):
+                            result = await agent.arun(case, context)
+                finally:
+                    # End admission before comparing or snapshotting capture,
+                    # including on error, timeout, and cancellation. Detached
+                    # tasks cannot start a tool after this episode's boundary.
+                    if tool_session is not None:
+                        tool_session.close()
                 if not isinstance(result, AgentResult):
                     raise AgentContractError(
                         "Agent.arun must return dfah.AgentResult; implicit coercion is disabled"

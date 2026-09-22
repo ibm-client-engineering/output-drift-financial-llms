@@ -7,6 +7,7 @@ import json
 import math
 import os
 import re
+import stat
 import tempfile
 from collections.abc import Mapping, Sequence
 from datetime import date, datetime
@@ -92,6 +93,28 @@ def contains_secret(value: Any) -> bool:
 
     raw = canonical_bytes(value, redact=False).decode("utf-8")
     return any(pattern.search(raw) is not None for pattern in _SECRET_PATTERNS)
+
+
+def read_regular_bytes(path: str | Path) -> bytes:
+    """Read a regular file without following a final link or blocking on a FIFO."""
+
+    source = Path(path).expanduser()
+    named = os.stat(source, follow_symlinks=False)
+    if not stat.S_ISREG(named.st_mode):
+        raise OSError("input must be a regular file")
+    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    descriptor = os.open(source, flags)
+    try:
+        opened = os.fstat(descriptor)
+        if not stat.S_ISREG(opened.st_mode) or (opened.st_dev, opened.st_ino) != (
+            named.st_dev,
+            named.st_ino,
+        ):
+            raise OSError("input changed while opening a regular file")
+        with os.fdopen(descriptor, "rb", closefd=False) as handle:
+            return handle.read()
+    finally:
+        os.close(descriptor)
 
 
 def atomic_private_write(path: str | Path, payload: bytes) -> None:

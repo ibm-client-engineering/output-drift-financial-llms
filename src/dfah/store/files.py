@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 import os
 import random
 import socket
@@ -159,11 +160,11 @@ class FileStore:
             self.stale_leases,
         ):
             if create:
+                # mkdir keeps new store directories private without changing
+                # permissions on a caller-owned directory that already exists.
                 directory.mkdir(parents=True, exist_ok=True, mode=0o700)
             if directory.is_symlink() or not directory.is_dir():
                 raise ArtifactError(f"artifact directory is unsafe: {directory}")
-            if create:
-                os.chmod(directory, 0o700)
         directory_flags = (
             os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
         )
@@ -298,12 +299,15 @@ class FileStore:
                 raise ArtifactError(f"artifact file is unsafe: {path.name}")
             descriptor = os.open(
                 path.name,
-                os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0),
+                os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0),
                 dir_fd=directory,
             )
             try:
                 opened = os.fstat(descriptor)
-                if (opened.st_dev, opened.st_ino) != (metadata.st_dev, metadata.st_ino):
+                if not stat.S_ISREG(opened.st_mode) or (opened.st_dev, opened.st_ino) != (
+                    metadata.st_dev,
+                    metadata.st_ino,
+                ):
                     raise ArtifactError(f"artifact file changed while opening: {path.name}")
                 with os.fdopen(descriptor, "rb", closefd=False) as handle:
                     return handle.read()
@@ -521,18 +525,28 @@ class FileStore:
         try:
             self._exclusive_write(self.plan, payload)
         except FileExistsError:
-            existing = self.read_plan()
+            try:
+                existing = self.read_plan(expected_hash=plan.hash)
+            except EpisodeConflictError:
+                raise EpisodeConflictError(
+                    "artifact directory is already bound to a different replay design"
+                ) from None
             if existing != plan:
                 raise EpisodeConflictError(
                     "artifact directory is already bound to a different replay design"
                 ) from None
         return plan
 
-    def read_plan(self) -> RunPlan:
-        """Read the immutable design for this artifact directory."""
+    def read_plan(self, *, expected_hash: str | None = None) -> RunPlan:
+        """Check a supplied commitment before expanding the persisted schedule."""
 
         try:
-            return RunPlan.model_validate_json(self._read_regular_bytes(self.plan))
+            payload = self._read_regular_bytes(self.plan)
+            if expected_hash is not None and sha256(json.loads(payload)) != expected_hash:
+                raise EpisodeConflictError(
+                    "run-plan commitment does not match the expected replay design"
+                )
+            return RunPlan.model_validate_json(payload)
         except (OSError, ValueError) as exc:
             raise ArtifactError("run plan is missing or unreadable") from exc
 

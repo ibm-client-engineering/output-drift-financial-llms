@@ -11,7 +11,13 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, PrivateAttr, model_validator
 
-from ._canonical import atomic_private_write, canonical_bytes, contains_secret, sha256
+from ._canonical import (
+    atomic_private_write,
+    canonical_bytes,
+    contains_secret,
+    read_regular_bytes,
+    sha256,
+)
 from ._frozen import FrozenJson, FrozenJsonMap
 from .exceptions import EligibilityError
 
@@ -897,7 +903,7 @@ class Report(Record):
         from .store import FileStore
 
         store = FileStore(run_dir, create=False)
-        plan = store.read_plan()
+        plan = store.read_plan(expected_hash=self.run_plan_sha256)
         if plan.hash != self.run_plan_sha256:
             raise ArtifactError("report run-plan commitment does not match the artifact store")
         if (
@@ -1052,7 +1058,7 @@ class Report(Record):
             source = max(candidates, key=lambda candidate: candidate.stat().st_mtime_ns)
         elif source.parent.name == "reports":
             run_dir = source.parent.parent
-        report = cls.model_validate_json(source.read_bytes())
+        report = cls.model_validate_json(read_regular_bytes(source))
         if run_dir is not None:
             return report.verify_artifacts(run_dir)
         if not allow_unverified:

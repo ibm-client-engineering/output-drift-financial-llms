@@ -86,6 +86,10 @@ the suite's JSON Schemas, injects a per-episode `ToolSession` as
 `context.tools`, and records results before returning them to the adapter.
 Return values must be JSON-serializable, since only their canonical hash is
 recorded; an unserializable value is recorded as a failed call.
+Tool schemas must contain their referenced definitions. Local `$defs`, JSON
+pointers, and anchors are supported; validation never retrieves a schema from
+the network or filesystem. An unresolved reference rejects the proposal before
+its tool implementation runs.
 Return `context.tools.trajectory()` in `AgentResult`. Never call a registered
 implementation directly from the adapter: the session cannot see that call,
 the episode records an observed-empty path, and the run reports perfect path

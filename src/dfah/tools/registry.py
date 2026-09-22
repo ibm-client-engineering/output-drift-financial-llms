@@ -12,6 +12,7 @@ from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
 from jsonschema.exceptions import ValidationError as JsonSchemaValidationError
 from jsonschema.protocols import Validator
+from referencing.exceptions import Unresolvable
 
 from .._canonical import sha256
 from ..exceptions import ConfigurationError, ToolExecutionError
@@ -21,7 +22,7 @@ from ..models import (
     ToolExecutionState,
     Trajectory,
 )
-from ..suite import ToolSpec
+from ..suite import ToolSpec, _local_schema_validator
 from ..telemetry import finish_tool_span, tool_span
 
 ToolFunction = Callable[..., Any | Awaitable[Any]]
@@ -65,7 +66,7 @@ class ToolRegistry:
         self._definitions[spec.name] = (
             spec,
             function,
-            Draft202012Validator(schema),
+            _local_schema_validator(schema),
         )
 
     def tool(self, spec: ToolSpec) -> Callable[[ToolFunction], ToolFunction]:
@@ -130,10 +131,28 @@ class ToolSession:
         self._otel = otel
         self._calls: list[ToolCall] = []
         self._lock = anyio.Lock()
+        self._closed = False
+
+    def close(self) -> None:
+        """Reject new calls after the owning agent invocation has exited.
+
+        Already-started operations are not cancelled. Their outstanding records
+        remain unresolved in a trajectory captured before they return.
+        """
+
+        self._closed = True
 
     async def _reserve(self, name: str, arguments: Mapping[str, Any]) -> int:
+        if self._closed:
+            raise ToolExecutionError("tool session is closed; the agent invocation has ended")
         argument_hash = sha256(dict(arguments))
         async with self._lock:
+            # Closing is synchronous: a call waiting for this lock must recheck
+            # before it can register a proposal or reach the implementation.
+            if self._closed:
+                raise ToolExecutionError(
+                    "tool session is closed; the agent invocation has ended"
+                )
             index = len(self._calls)
             self._calls.append(
                 ToolCall(
@@ -168,9 +187,13 @@ class ToolSession:
             before = time.perf_counter()
             try:
                 validator.validate(dict(arguments))
-            except JsonSchemaValidationError as exc:
-                location = ".".join(str(part) for part in exc.absolute_path) or "<root>"
-                keyword = str(exc.validator or "schema")
+            except (JsonSchemaValidationError, Unresolvable) as exc:
+                if isinstance(exc, JsonSchemaValidationError):
+                    location = ".".join(str(part) for part in exc.absolute_path) or "<root>"
+                    keyword = str(exc.validator or "schema")
+                    detail = f"arguments violate its JSON Schema at {location} ({keyword})"
+                else:
+                    detail = "schema reference cannot be resolved locally"
                 async with self._lock:
                     prior = self._calls[index]
                     self._calls[index] = prior.model_copy(
@@ -181,9 +204,7 @@ class ToolSession:
                         }
                     )
                 finish_tool_span(span, self._calls[index])
-                raise ToolExecutionError(
-                    f"tool {name!r} arguments violate its JSON Schema at {location} ({keyword})"
-                ) from None
+                raise ToolExecutionError(f"tool {name!r} {detail}") from None
 
             try:
                 signature = inspect.signature(function)

@@ -42,6 +42,8 @@ against the published 0.1.2 wheel.
   shadow evaluation was discarded. A failing blocking run prints an error
   naming the failed checks and the gate record instead.
 - Name the persisted gate record in the blocking-mode `GateViolationError`.
+- Preserve caller-owned permissions when opening an existing output directory.
+  Newly created store directories retain private permissions.
 - Report a run directory that has no persisted report clearly, naming the
   missing `RUN/reports`. Version 0.1.2 already rejected such a directory, but
   by attempting to parse the run plan as a report and failing schema
@@ -55,6 +57,23 @@ against the published 0.1.2 wheel.
   anchor the run-plan, episode-root, and policy commitments externally.
 - Document that tool return values must be JSON-serializable and that the
   `gates/` directory sits beside the store.
+
+### Security
+
+- Disable implicit network and file retrieval during tool-schema validation.
+  Schemas must carry their referenced definitions; local references still work.
+  An unresolved reference rejects the call before its implementation runs.
+- Close injected tool sessions when the agent invocation exits, before its
+  trajectory is captured. Deferred calls cannot start afterward. Already-started
+  operations without a captured result remain unresolved and ineligible.
+- Require regular files for suite, policy, gate-record, report and verified-export
+  inputs. Reject final symlinks and special files, and detect file replacement
+  while opening. Store reads also avoid blocking if a file becomes a FIFO.
+- Check a loaded run plan against an available expected commitment before
+  expanding its schedule for validation.
+- Require AnyIO 4.14.2 or newer, excluding the affected ranges in
+  GHSA-5p39-cfhj-2xmp, GHSA-82r6-8w77-94w6 and GHSA-3w57-8xmc-8v26.
+  Direct use of the affected AnyIO APIs was not found in DFAH.
 
 ### Documentation
 
