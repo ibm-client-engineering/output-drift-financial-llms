@@ -10,13 +10,9 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/every-eval-ever/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/execution-evidence/">
       
       
-        <link rel="prev" href="../replay-review-loop/">
-      
-      
-        <link rel="next" href="../production/">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Every Eval Ever Export - Output Drift + DFAH</title>
+        <title>Read execution evidence alongside replay agreement - Output Drift + DFAH</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#every-eval-ever-export" class="md-skip">
+        <a href="#read-execution-evidence-alongside-replay-agreement" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Every Eval Ever Export
+              Read execution evidence alongside replay agreement
             
           </span>
         </div>
@@ -235,12 +231,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../quickstart/" class="md-tabs__link">
           
   
@@ -752,31 +746,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -794,7 +785,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -893,37 +884,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Every Eval Ever Export
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../every-eval-ever/" class="md-nav__link">
         
   
   
@@ -939,59 +903,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export a verified run
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Privacy boundary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Semantic mapping
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1281,47 +1192,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export a verified run
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Privacy boundary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Semantic mapping
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1340,91 +1210,26 @@
   
 
 
-<h1 id="every-eval-ever-export">Every Eval Ever export<a class="headerlink" href="#every-eval-ever-export" title="Permanent link">&para;</a></h1>
-<p>DFAH can export an artifact-verified replay run to the Every Eval Ever (EEE)
-v0.2.2 interchange schema. EEE answers “how can evaluation results travel
-between tools?” DFAH answers a different question: “which repeated executions
-are comparable and sufficiently observed, and how far do decision and path
-agreement separate?” The exporter preserves that distinction.</p>
-<h2 id="export-a-verified-run">Export a verified run<a class="headerlink" href="#export-a-verified-run" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN
-</code></pre></div>
-<p>The exporter refuses aggregate output when no replay group is eligible.
-Unavailable DAR, TAR, gap, and flag-rate values are never converted into
-numeric scores.</p>
-<p>This produces:</p>
-<ul>
-<li>one aggregate JSON record with DAR, TARseq, TARbag, TARset, TARstrong,
-  decision–path gap, eligible fraction, and flags per 100 groups; and</li>
-<li>one JSONL record per committed replay episode, including tool names,
-  equality hashes, channel states, parse provenance, and replay identity.</li>
-</ul>
-<p>Use <code>--aggregate-only</code> when episode-level interoperability is unnecessary.
-For upstream model validation (Python 3.12 or newer, matching the upstream
-package requirement). The optional extra pins upstream validator 0.2.3rc1;
-the exported schema remains 0.2.2:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench[eee]==0.1.3'</span>
-python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--validate
-</code></pre></div>
-<p>The Python API is equivalent:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_every_eval_ever</span>
+<h1 id="read-execution-evidence-alongside-replay-agreement">Read execution evidence alongside replay agreement<a class="headerlink" href="#read-execution-evidence-alongside-replay-agreement" title="Permanent link">&para;</a></h1>
+<p>A safety gate can deny a proposal before its tool implementation runs. A model can also emit a proposal that never reaches dispatch because its agent interface rejects the response. Retaining a tool name does not establish that the operation completed.</p>
+<p><code>execution_summary</code> describes the final captured invocation records in an existing <code>Trajectory</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">execution_summary</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">export_every_eval_ever</span><span class="p">(</span>
-    <span class="s2">".dfah/runs/MY-RUN"</span><span class="p">,</span>
-    <span class="s2">".dfah/exports/MY-RUN"</span><span class="p">,</span>
-    <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">aggregate_path</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">instances_sha256</span><span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">execution_summary</span><span class="p">(</span><span class="n">episode</span><span class="o">.</span><span class="n">trajectory</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">completed_invocations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">rejected_invocations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">unresolved_proposals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">errored_invocations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">completed_tool_names</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="privacy-boundary">Privacy boundary<a class="headerlink" href="#privacy-boundary" title="Permanent link">&para;</a></h2>
-<p>The default profile deliberately excludes:</p>
-<ul>
-<li>prompts and raw case inputs;</li>
-<li>raw tool arguments and results;</li>
-<li>reasoning traces;</li>
-<li>provider endpoints and provider-native usage payloads; and</li>
-<li>organization identity unless the caller supplies it explicitly.</li>
-</ul>
-<p>Artifact case identifiers, normalized decision labels, model/provider/adapter
-identifiers, tool names, and SHA-256 equality fingerprints remain. Those
-identifiers can reveal a deployment or business context even when captured
-content is absent. Arbitrary request settings are committed by hash rather than
-copied into the record. Hashes are integrity commitments, not anonymization:
-low-entropy sensitive values can still be guessed. Use pseudonymous artifact
-case IDs, generic deployment identifiers, and tokenize sensitive values before
-capture.</p>
-<p>The command only writes local mode-600 files. It does not upload, publish, or
-register results with EEE or any other service.</p>
-<h2 id="semantic-mapping">Semantic mapping<a class="headerlink" href="#semantic-mapping" title="Permanent link">&para;</a></h2>
-<p>EEE’s aggregate score records carry DFAH’s metrics. Namespaced metadata retains
-the suite version, fixture and schema commitments, manifest hash, replay
-design, eligible denominator, and artifact root.</p>
-<p>EEE instance records require an <code>is_correct</code> field. In a DFAH export that field
-means only that the episode belongs to an eligible replay group in the report. It
-does <strong>not</strong> mean the agent’s financial decision was correct. Each record states
-this as <code>replay_group_retention_not_decision_correctness</code>. A capture can be
-individually valid yet excluded because its replay group is incomplete or
-incomparable. Individual capture eligibility and its reasons remain separately
-available as <code>dfah_episode_capture_eligible</code> and
-<code>dfah_episode_capture_eligibility_reasons</code>; <code>dfah_replay_group_eligible</code> records
-the group-level inclusion decision.</p>
-<p>The eligible fraction is the sum of the instance scores divided by the planned
-episode count. Uncommitted planned episodes have no JSONL row and contribute
-zero to that denominator. Eligible fraction and flags per 100 are pooled rates;
-the agreement metrics retain DFAH's task weighting.</p>
-<p>The exporter checks the exact loaded episode set against the report's artifact
-commitment. A run resumed between report verification and snapshot loading is
-rejected. Once captured, the export uses that immutable snapshot, so a later
-resume cannot change its contents or mix evidence from different report states.</p>
-<p>EEE is therefore an optional reporting layer. It does not relax DFAH’s
-manifest, suite-version, required-channel, or artifact-verification rules, and
-records from different replay contracts must not be silently compared.</p>
-<p>Upstream <a href="https://evalevalai.com/projects/every-eval-ever/">project and schema</a>.</p>
+<p>An unavailable or malformed trajectory returns <code>None</code> for its counts and completed path. An observed empty trajectory returns zero counts and an empty tuple. Repeated names retain their order and multiplicity.</p>
+<p>A completed invocation means the adapter recorded an <code>EXECUTED</code> call with a captured return. It does not mean the business task succeeded, the action followed policy, or all effects were captured. A tool can return a failure message normally. An <code>ERROR</code> can happen after partial effects; the summary does not assume rollback. <code>all_proposals_terminal</code> is true when no captured record remains <code>REQUESTED</code>. Errors count as terminal records even when their effects remain unknown. The value is also true for an observed-empty channel and <code>None</code> for unavailable or malformed channels. It does not establish that any call occurred, that calls succeeded, or that all possible calls were observed.</p>
+<p>The input is the final <code>ToolCall</code> per invocation, as retained by DFAH's standard tool session. Do not concatenate request, verdict and return events for the same invocation into this input. If an external trace is an event stream, reconcile its events into final invocation records first and preserve the original stream separately.</p>
+<p>This helper does not modify historical DAR, TAR, report schemas or eligibility. Use it to explain what the retained path contains. Policy correctness still needs an independently specified task or action contract; repeated agreement alone does not provide that contract.</p>
+<p>The addition is motivated by the DFAH-Bench v3 external-benchmark integration, where proposals, gate verdicts, dispatches, returns, database effects and capability changes are retained separately. Those research traces include more channels than the generic <code>ToolCall</code> record. This summary does not certify coverage of those additional effects.</p>
+<p>Run the standalone synthetic example in <a href="../lab-10/README.md">Lab 10</a>, then
+read the <a href="../v3-study/">v3 study guide</a> for the native outcomes, missingness and
+cost comparisons that motivated this addition.</p>
 
 
 
@@ -1451,44 +1256,6 @@ records from different replay contracts must not be silently compared.</p>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../replay-review-loop/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Replay and Review Loop">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Replay and Review Loop
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../production/" class="md-footer__link md-footer__link--next" aria-label="Next: Production Rollout">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Production Rollout
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">

@@ -1452,7 +1452,9 @@ canonical argument and output hashes. Raw arguments are redacted from the
 record while <code>arguments_hash</code> remains available for strong agreement. Set
 <code>capture_tool_arguments=True</code> only under an approved data-retention policy.
 Unknown, rejected, or failed calls become <code>tool_error</code>; do not convert them to
-an empty trajectory.</p>
+an empty trajectory. Tool return values must be JSON-serializable: the session
+records only their canonical hash as <code>output_hash</code>, and a value it cannot
+serialize is recorded as a failed call.</p>
 <h2 id="start-in-shadow-mode">Start in shadow mode<a class="headerlink" href="#start-in-shadow-mode" title="Permanent link">&para;</a></h2>
 <p><code>Replay</code> defaults to <code>ReplayMode.SHADOW</code>: it always writes the report and, if
 a policy is supplied, evaluates the policy without raising for a failed gate.
@@ -1537,7 +1539,14 @@ and artifact-verification checks.</p>
 </code></pre></div>
 <p><code>--mode blocking</code> requires <code>--policy</code>. Invalid policy files are rejected before
 the agent is imported or called. In shadow mode, <code>--policy</code> evaluates the
-policy without making a threshold failure stop the run.</p>
+policy without making a threshold failure stop the run. Every evaluation is
+recorded as <code>RUN/gates/&lt;report_id&gt;.json</code> together with the policy and its
+SHA-256 commitment. A shadow run, or a blocking run whose gate passes, prints
+<code>policy=PASS</code> or <code>policy=FAIL</code> with the failed check names; a blocking run
+whose gate fails prints an error naming the failed checks and that record
+instead, and exits 1. A shadow failure is therefore visible and reviewable;
+it is not silently discarded. Library callers read the same outcome from
+<code>Replay.last_gate_result</code>.</p>
 <h2 id="interpret-and-review">Interpret and review<a class="headerlink" href="#interpret-and-review" title="Permanent link">&para;</a></h2>
 <p>Require a <code>complete</code> report for a release gate unless an explicit exception is
 approved. A partial report can arise from a budget stop, parse failure,
@@ -1599,7 +1608,15 @@ not prove that every wall-clock or ambient-state dependency is absent.</p>
 The current local <code>FileStore</code> supports macOS and POSIX systems; it requires
 advisory file locks and directory-descriptor operations. Windows support needs
 a reviewed storage backend and is not claimed by this alpha.
-The store never overwrites a committed episode. On a second invocation with
+Artifact verification is a consistency check, not authentication. A report is
+regenerated from its committed episodes and bound to the run plan and episode
+root by SHA-256 commitments, so an inconsistent edit is detected. Anyone with
+write access to the run directory can regenerate a consistent store, report,
+and gate record. When authenticity matters, keep run directories on
+append-only or access-controlled storage and anchor <code>run_plan_sha256</code>,
+<code>episode_artifact_root_sha256</code>, and each gate record's <code>policy_sha256</code> outside
+the directory, for example in CI logs or a signed release note.</p>
+<p>The store never overwrites a committed episode. On a second invocation with
 the same manifest, artifact case ID, replay index, and output location it
 reads the existing committed record instead of invoking the agent.</p>
 <p>Set <code>Case.artifact_case_id</code> to a stable pseudonym for production cases. That

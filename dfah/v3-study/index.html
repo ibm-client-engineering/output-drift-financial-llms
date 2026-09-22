@@ -10,13 +10,9 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/every-eval-ever/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/v3-study/">
       
       
-        <link rel="prev" href="../replay-review-loop/">
-      
-      
-        <link rel="next" href="../production/">
       
       
         
@@ -27,7 +23,7 @@
     
     
       
-        <title>Every Eval Ever Export - Output Drift + DFAH</title>
+        <title>V3: evidence, execution, outcomes and cost - Output Drift + DFAH</title>
       
     
     
@@ -78,7 +74,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#every-eval-ever-export" class="md-skip">
+        <a href="#v3-evidence-execution-outcomes-and-cost" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +108,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Every Eval Ever Export
+              V3: evidence, execution, outcomes and cost
             
           </span>
         </div>
@@ -235,12 +231,10 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
+      <li class="md-tabs__item">
         <a href="../quickstart/" class="md-tabs__link">
           
   
@@ -752,31 +746,28 @@
       
   
   
-    
   
   
-  
     
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -794,7 +785,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -893,37 +884,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Every Eval Ever Export
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../every-eval-ever/" class="md-nav__link">
         
   
   
@@ -939,59 +903,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Export a verified run
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Privacy boundary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Semantic mapping
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1288,10 +1199,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
+  <a href="#what-the-extension-measures" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Export a verified run
+        What the extension measures
       
     </span>
   </a>
@@ -1299,10 +1210,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
+  <a href="#reading-the-completed-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Privacy boundary
+        Reading the completed results
       
     </span>
   </a>
@@ -1310,10 +1221,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
+  <a href="#cost-belongs-beside-the-outcome" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Semantic mapping
+        Cost belongs beside the outcome
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-you-can-reproduce-from-this-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can reproduce from this repository
       
     </span>
   </a>
@@ -1340,91 +1262,167 @@
   
 
 
-<h1 id="every-eval-ever-export">Every Eval Ever export<a class="headerlink" href="#every-eval-ever-export" title="Permanent link">&para;</a></h1>
-<p>DFAH can export an artifact-verified replay run to the Every Eval Ever (EEE)
-v0.2.2 interchange schema. EEE answers “how can evaluation results travel
-between tools?” DFAH answers a different question: “which repeated executions
-are comparable and sufficiently observed, and how far do decision and path
-agreement separate?” The exporter preserves that distinction.</p>
-<h2 id="export-a-verified-run">Export a verified run<a class="headerlink" href="#export-a-verified-run" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN
-</code></pre></div>
-<p>The exporter refuses aggregate output when no replay group is eligible.
-Unavailable DAR, TAR, gap, and flag-rate values are never converted into
-numeric scores.</p>
-<p>This produces:</p>
-<ul>
-<li>one aggregate JSON record with DAR, TARseq, TARbag, TARset, TARstrong,
-  decision–path gap, eligible fraction, and flags per 100 groups; and</li>
-<li>one JSONL record per committed replay episode, including tool names,
-  equality hashes, channel states, parse provenance, and replay identity.</li>
-</ul>
-<p>Use <code>--aggregate-only</code> when episode-level interoperability is unnecessary.
-For upstream model validation (Python 3.12 or newer, matching the upstream
-package requirement). The optional extra pins upstream validator 0.2.3rc1;
-the exported schema remains 0.2.2:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench[eee]==0.1.3'</span>
-python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--validate
-</code></pre></div>
-<p>The Python API is equivalent:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_every_eval_ever</span>
-
-<span class="n">result</span> <span class="o">=</span> <span class="n">export_every_eval_ever</span><span class="p">(</span>
-    <span class="s2">".dfah/runs/MY-RUN"</span><span class="p">,</span>
-    <span class="s2">".dfah/exports/MY-RUN"</span><span class="p">,</span>
-    <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">aggregate_path</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">instances_sha256</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="privacy-boundary">Privacy boundary<a class="headerlink" href="#privacy-boundary" title="Permanent link">&para;</a></h2>
-<p>The default profile deliberately excludes:</p>
-<ul>
-<li>prompts and raw case inputs;</li>
-<li>raw tool arguments and results;</li>
-<li>reasoning traces;</li>
-<li>provider endpoints and provider-native usage payloads; and</li>
-<li>organization identity unless the caller supplies it explicitly.</li>
-</ul>
-<p>Artifact case identifiers, normalized decision labels, model/provider/adapter
-identifiers, tool names, and SHA-256 equality fingerprints remain. Those
-identifiers can reveal a deployment or business context even when captured
-content is absent. Arbitrary request settings are committed by hash rather than
-copied into the record. Hashes are integrity commitments, not anonymization:
-low-entropy sensitive values can still be guessed. Use pseudonymous artifact
-case IDs, generic deployment identifiers, and tokenize sensitive values before
-capture.</p>
-<p>The command only writes local mode-600 files. It does not upload, publish, or
-register results with EEE or any other service.</p>
-<h2 id="semantic-mapping">Semantic mapping<a class="headerlink" href="#semantic-mapping" title="Permanent link">&para;</a></h2>
-<p>EEE’s aggregate score records carry DFAH’s metrics. Namespaced metadata retains
-the suite version, fixture and schema commitments, manifest hash, replay
-design, eligible denominator, and artifact root.</p>
-<p>EEE instance records require an <code>is_correct</code> field. In a DFAH export that field
-means only that the episode belongs to an eligible replay group in the report. It
-does <strong>not</strong> mean the agent’s financial decision was correct. Each record states
-this as <code>replay_group_retention_not_decision_correctness</code>. A capture can be
-individually valid yet excluded because its replay group is incomplete or
-incomparable. Individual capture eligibility and its reasons remain separately
-available as <code>dfah_episode_capture_eligible</code> and
-<code>dfah_episode_capture_eligibility_reasons</code>; <code>dfah_replay_group_eligible</code> records
-the group-level inclusion decision.</p>
-<p>The eligible fraction is the sum of the instance scores divided by the planned
-episode count. Uncommitted planned episodes have no JSONL row and contribute
-zero to that denominator. Eligible fraction and flags per 100 are pooled rates;
-the agreement metrics retain DFAH's task weighting.</p>
-<p>The exporter checks the exact loaded episode set against the report's artifact
-commitment. A run resumed between report verification and snapshot loading is
-rejected. Once captured, the export uses that immutable snapshot, so a later
-resume cannot change its contents or mix evidence from different report states.</p>
-<p>EEE is therefore an optional reporting layer. It does not relax DFAH’s
-manifest, suite-version, required-channel, or artifact-verification rules, and
-records from different replay contracts must not be silently compared.</p>
-<p>Upstream <a href="https://evalevalai.com/projects/every-eval-ever/">project and schema</a>.</p>
+<h1 id="v3-evidence-execution-outcomes-and-cost">V3: evidence, execution, outcomes and cost<a class="headerlink" href="#v3-evidence-execution-outcomes-and-cost" title="Permanent link">&para;</a></h1>
+<p>A repeated decision can still lack a required fact. DFAH-Bench v3 carries the
+replay study's qualification principle into interactive banking tasks: retain
+what the agent saw, what a check permitted, what actually ran and whether the
+task finished successfully. Each measure keeps its own unit and denominator.</p>
+<p>The <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/tree/main/paper/arxiv_dfah_bench_v3">manuscript and build instructions</a>
+contain the full methods and figures. The paper remains part of the
+<a href="https://arxiv.org/abs/2607.20491">DFAH-Bench record, arXiv:2607.20491</a>.
+The source revision and the version currently served by arXiv can differ.</p>
+<h2 id="what-the-extension-measures">What the extension measures<a class="headerlink" href="#what-the-extension-measures" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Unit and question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Replay agreement</td>
+<td>Qualified identical-input replay groups: does the decision or recorded path repeat?</td>
+</tr>
+<tr>
+<td>Decision-boundary evidence</td>
+<td>A proposed action: which policy, dialogue and tool results reached the gate?</td>
+</tr>
+<tr>
+<td>Execution evidence</td>
+<td>A captured invocation: was it rejected, unresolved, returned or errored?</td>
+</tr>
+<tr>
+<td>Native task outcome</td>
+<td>A scheduled interactive episode: did the upstream evaluator score completion?</td>
+</tr>
+<tr>
+<td>Fixed-state gate probes</td>
+<td>Repeated judgments on selected contexts: does the choice repeat and match a constructed policy label?</td>
+</tr>
+<tr>
+<td>Economics</td>
+<td>Qualified matched tasks: how do all-role API costs and native success change together?</td>
+</tr>
+</tbody>
+</table>
+<p>The native environment is Sierra's <strong>τ-Knowledge banking_knowledge</strong>, distributed
+in the τ³-bench codebase under the <code>tau2-bench</code> repository name. The manuscript
+pins its source and credits the benchmark separately from this intervention.
+The three arms share structural checks. A uses those checks alone, B adds a
+prose-model allow/block/review decision and C uses the Jev typed-choice service.
+The comparison includes admission limits and the recovery allowance as well
+as the gate's model response.</p>
+<h2 id="reading-the-completed-results">Reading the completed results<a class="headerlink" href="#reading-the-completed-results" title="Permanent link">&para;</a></h2>
+<p>All <strong>1,080 scheduled native episodes</strong> reached a terminal artifact;
+<strong>1,033 have known outcomes and 47 remain unknown</strong>. The primary cohort uses
+the open-weight DeepSeek v4.1 Flash generator. A separate Gemini 3.8 Flash
+generator cohort provides a frontier-model replication, and a separate
+DeepSeek BM25 cohort changes retrieval. Gemini also supplies simulation and
+grading. The cohorts retain separate comparisons.</p>
+<p>For the primary 810-episode schedule (270 episodes per arm):</p>
+<table>
+<thead>
+<tr>
+<th>Arm</th>
+<th style="text-align: right;">Known successes</th>
+<th style="text-align: right;">Known outcomes</th>
+<th style="text-align: right;">Unknown outcomes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A: structural checks</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">260</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td>B: prose-model gate</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>C: typed-choice gate</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">263</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+<p>On the 77 tasks with all B and C repeats observed, C minus B native success
+is −3.03 percentage points, with a descriptive task-bootstrap interval of
+[−7.79, +1.73]. Across all 90 scheduled tasks, assigning every unknown outcome
+both possible values bounds the difference to [−6.67, −1.48] points. These
+are different quantities: the first describes the complete-task subset; the
+second bounds this finite schedule. The planned complete-cohort confirmatory
+test was <strong>unavailable</strong>, and its secondary gate remained closed.</p>
+<p>The fixed-state probes ask another question. In the constructed synthetic
+bank, C had higher observed decision agreement (98.7% versus 93.1%) and lower
+policy-label match (54.5% versus 82.6%). The selected referral case also showed
+that stable permission can coexist with missing current-time evidence. Those
+labels and selected contexts have their own validation limits; they are not
+native task-success measurements or a general model ranking.</p>
+<h2 id="cost-belongs-beside-the-outcome">Cost belongs beside the outcome<a class="headerlink" href="#cost-belongs-beside-the-outcome" title="Permanent link">&para;</a></h2>
+<p>On the same 77 complete primary task pairs, C's mean all-role episode cost was
+$0.004345 lower than B's. That reduction coexisted with fewer successes under
+every completion of the scheduled unknown outcomes. Input admission and
+recovery exhaustion materially affected the observed bundles, so a cheaper
+episode alone does not establish a better intervention.</p>
+<p>OpenRouter routed generator, simulator, native LLM-grader and B-gate requests
+through its chat-completions endpoint; Jev used its SystemOne endpoint.
+Requested and returned model/provider identities, request settings, accounting
+bases and available cache metadata were retained. Hosted inference is distinct
+from the earlier local Ollama experiments and the paper's illustrative local
+hardware sizing discussion.</p>
+<p>The three native cohorts used <strong><span class="arithmatex">\(27.25** in reconciled API cost. For the broader
+study, a September 21, 2026 key snapshot reported **\)</span>38.97</strong> combined credit
+and BYOK upstream usage; the conservative ledger recorded <strong>$39.08</strong> against
+the $80 ceiling. These totals cover different scopes from the paired episode
+comparison. The manuscript explains the small review allocations and incomplete
+cost traces. Later editorial model review is outside those study totals.</p>
+<h2 id="what-you-can-reproduce-from-this-repository">What you can reproduce from this repository<a class="headerlink" href="#what-you-can-reproduce-from-this-repository" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Local path or command</th>
+<th>What it reproduces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corrected v2 analysis</td>
+<td><code>make reproduce-paper</code></td>
+<td>Preserved retrospective results and aggregate checks from the public fixture</td>
+</tr>
+<tr>
+<td>V3 paper</td>
+<td>Build <code>paper/arxiv_dfah_bench_v3/main.tex</code></td>
+<td>Manuscript presentation from included sources and figure PDFs</td>
+</tr>
+<tr>
+<td>Package behavior</td>
+<td><code>python -m pytest tests/dfah</code></td>
+<td>Capture, eligibility, replay, export and execution-summary contracts</td>
+</tr>
+<tr>
+<td>Offline teaching example</td>
+<td><a href="../lab-10/README.md">Lab 10</a></td>
+<td>Synthetic invocation summaries and shared-denominator behavior</td>
+</tr>
+</tbody>
+</table>
+<p>The public package and lab do not include the hosted τ collection runner or
+the retained provider logs needed to regenerate its new analyses. The paper
+documents those access and runtime limits. Re-running a hosted model today is
+a new experiment; it cannot refreeze the original service. Compiling the paper
+or running the synthetic lab therefore does not regenerate its empirical
+findings.</p>
+<p>Start with <a href="../../lab-8/">Lab 8</a> for replay eligibility,
+<a href="../../lab-9/">Lab 9</a> for a fixed-policy review loop, and
+<a href="../lab-10/README.md">Lab 10</a> for the execution boundary.</p>
 
 
 
@@ -1451,44 +1449,6 @@ records from different replay contracts must not be silently compared.</p>
       
         <footer class="md-footer">
   
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../replay-review-loop/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Replay and Review Loop">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                Replay and Review Loop
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../production/" class="md-footer__link md-footer__link--next" aria-label="Next: Production Rollout">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Production Rollout
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
     
   
   <div class="md-footer-meta md-typeset">

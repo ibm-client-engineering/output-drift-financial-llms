@@ -1525,6 +1525,10 @@ terminal episode, and commit marker. A planned-only episode is safe to resume
 because it did not cross the durable dispatch boundary. A dispatching episode
 without a terminal commit is classified as unknown after dispatch and is not
 automatically called again.</p>
+<p>A <code>gates/</code> directory beside the store holds one record per policy evaluation:
+the policy, its SHA-256, the mode, and every check, bound to the report it
+judged. Artifact verification does not depend on gate records, and the report
+loader never reads them or the run plan as a report.</p>
 <p>Each run directory also has a single-writer lease. A kernel lock protects live
 local writers; a metadata lease remains after an abnormal process exit.
 Recovery is explicit, limited to a confirmed-dead local process, and archives

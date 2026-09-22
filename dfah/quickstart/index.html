@@ -1563,8 +1563,16 @@ counts in the report and removes the temporary episode store.</p>
 and estimated cost ceiling. Its <code>replay_stability_smoke</code> reports
 replay-visible decision/path variation as an observational warning rather than
 an adapter-contract failure; the deterministic-tool check is <code>SKIP</code>, not
-<code>PASS</code>, when the agent makes no tool calls. Passing two repetitions does not
-prove the absence of all wall-clock or ambient-state dependencies.</p>
+<code>PASS</code>, when the agent makes no tool calls. An observed-empty path is a valid
+observation and is accepted unless you state expectations: pass
+<code>expected_tools={"CASE-001": ["read_risk_tier"]}</code> (or
+<code>--expect-tools CASE-001=read_risk_tier</code>) to require that those calls are
+captured through the injected session in every conformance replay. The
+<code>expected_tool_capture</code> check then fails for an adapter that invokes a tool
+implementation directly, which DFAH cannot otherwise see. Declare every tool a
+case must use; the report's <code>selected_case_ids</code> lists the cases the preflight
+ran. Passing two repetitions does not prove the absence of all wall-clock or
+ambient-state dependencies.</p>
 
 
 
