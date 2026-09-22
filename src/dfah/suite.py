@@ -9,12 +9,21 @@ from typing import Any, Literal
 
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError
+from jsonschema.protocols import Validator
 from pydantic import Field, model_validator
+from referencing import Registry
+from referencing.exceptions import Unresolvable
 
-from ._canonical import sha256
+from ._canonical import read_regular_bytes, sha256
 from ._frozen import FrozenJsonMap
 from .exceptions import ConfigurationError
 from .models import SEMVER_PATTERN, Case, Record
+
+
+def _local_schema_validator(schema: Mapping[str, Any]) -> Validator:
+    """Resolve in-document resources without implicit network or file retrieval."""
+
+    return Draft202012Validator(schema, registry=Registry())
 
 
 class ToolSpec(Record):
@@ -40,10 +49,13 @@ class ToolSpec(Record):
     def validate_arguments(self, arguments: Mapping[str, Any]) -> None:
         """Validate one argument object without echoing rejected values."""
 
-        validator = Draft202012Validator(self.model_dump(mode="json")["input_schema"])
-        errors = sorted(
-            validator.iter_errors(dict(arguments)), key=lambda error: list(error.path)
-        )
+        validator = _local_schema_validator(self.model_dump(mode="json")["input_schema"])
+        try:
+            errors = sorted(
+                validator.iter_errors(dict(arguments)), key=lambda error: list(error.path)
+            )
+        except Unresolvable:
+            raise ValueError("tool schema reference cannot be resolved locally") from None
         if not errors:
             return
         error = errors[0]
@@ -124,12 +136,12 @@ class Suite(Record):
         if isinstance(source, Path) or Path(str(source)).is_file():
             path = Path(source)
             if path.suffix.lower() == ".json":
-                return cls.model_validate_json(path.read_bytes())
+                return cls.model_validate_json(read_regular_bytes(path))
             try:
                 import yaml  # type: ignore
             except ImportError as exc:
                 raise ConfigurationError("YAML suite loading requires PyYAML") from exc
-            return cls.model_validate(yaml.safe_load(path.read_text(encoding="utf-8")))
+            return cls.model_validate(yaml.safe_load(read_regular_bytes(path).decode("utf-8")))
         try:
             return _BUILTIN_SUITES[str(source)]
         except KeyError as exc:

@@ -7,7 +7,7 @@ from pathlib import Path
 
 from pydantic import Field, model_validator
 
-from ._canonical import sha256
+from ._canonical import read_regular_bytes, sha256
 from .models import Record, ReplayMode, Report, utc_now
 
 
@@ -51,12 +51,12 @@ class GatePolicy(Record):
 
         source = Path(path)
         if source.suffix.lower() == ".json":
-            return cls.model_validate_json(source.read_bytes())
+            return cls.model_validate_json(read_regular_bytes(source))
         try:
             import yaml  # type: ignore
         except ImportError as exc:
             raise ImportError("YAML policies require PyYAML") from exc
-        return cls.model_validate(yaml.safe_load(source.read_text(encoding="utf-8")))
+        return cls.model_validate(yaml.safe_load(read_regular_bytes(source).decode("utf-8")))
 
 
 class GateCheck(Record):
@@ -110,7 +110,7 @@ class GateRecord(Record):
     def from_json(cls, path: str | Path) -> GateRecord:
         """Load one persisted gate record."""
 
-        return cls.model_validate_json(Path(path).read_bytes())
+        return cls.model_validate_json(read_regular_bytes(path))
 
 
 class Gate:

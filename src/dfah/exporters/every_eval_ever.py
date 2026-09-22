@@ -15,7 +15,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Literal
 
-from .._canonical import atomic_private_write, canonical_bytes, sha256
+from .._canonical import atomic_private_write, canonical_bytes, read_regular_bytes, sha256
 from ..exceptions import ArtifactError, ConfigurationError, OptionalDependencyError
 from ..metrics import evaluate_episode
 from ..models import Episode, Report
@@ -455,10 +455,10 @@ def _official_validate(aggregate_path: Path, instances_path: Path | None) -> Non
             "Python 3.12+ and `python -m pip install 'dfah-bench[eee]'`"
         ) from exc
 
-    EvaluationLog.model_validate_json(aggregate_path.read_bytes())
+    EvaluationLog.model_validate_json(read_regular_bytes(aggregate_path))
     if instances_path is not None:
         for line_number, line in enumerate(
-            instances_path.read_text(encoding="utf-8").splitlines(), start=1
+            read_regular_bytes(instances_path).decode("utf-8").splitlines(), start=1
         ):
             try:
                 InstanceLevelEvaluationLog.model_validate_json(line)
