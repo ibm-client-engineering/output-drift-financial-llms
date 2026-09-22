@@ -163,6 +163,10 @@ before sharing a real deployment's export. Read the
 
 ## Apply this to your own change
 
+Continue with [Lab 10: Evidence Before Execution](../lab-10/README.md) for the
+0.1.3 source example that separates tool completion from proposals and errors.
+This lab's tagged 0.1.2 reproduction remains unchanged.
+
 Choose a small synthetic suite representative of your tool contract. Fix the
 policy before evaluating the change, give each implementation a distinct version
 and run directory, and review the failed checks and paths before accepting it.

@@ -23,10 +23,13 @@ nav:
     - Lab 7. Replayable Financial Agents: lab-7/README.md
     - Lab 8. DFAH-Bench — Replay Measurement: lab-8/README.md
     - Lab 9. Replay, Review, and Retest: lab-9/README.md
+    - Lab 10. Evidence Before Execution: lab-10/README.md
   - DFAH Package:
     - Quickstart: dfah/quickstart.md
     - Bring Your Own Agent: dfah/bring-your-own-agent.md
     - Replay and Review Loop: dfah/replay-review-loop.md
+    - Execution Evidence: dfah/execution-evidence.md
+    - V3 Study and Reproduction: dfah/v3-study.md
     - Every Eval Ever Export: dfah/every-eval-ever.md
     - Production Rollout: dfah/production.md
     - Design Decisions: dfah/design.md

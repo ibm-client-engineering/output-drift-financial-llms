@@ -33,6 +33,12 @@ complicates replay, change review, and monitoring.
     Inspect the corrected replay denominator, regenerate v2, and
     compare decision and path agreement: **[Start Lab 8](lab-8/README.md)**.
 
+!!! tip "V3: evidence before execution"
+    Separate a proposed action from a completed invocation in the offline
+    **[Lab 10](lab-10/README.md)**. The **[v3 study guide](dfah/v3-study.md)**
+    connects the new banking outcomes, fixed-state probes and API costs to
+    the replay measurement framework.
+
 ### What You'll Learn
 
 By the end of this workshop, you will:
@@ -60,8 +66,9 @@ By the end of this workshop, you will:
 | [Lab 7: Replayable Financial Agents](lab-7/README.md) | Run agent benchmarks from the ICLR 2026 paper | 30 min |
 | [Lab 8: DFAH-Bench — Replay Measurement](lab-8/README.md) | Test the package, then reproduce the paper from the checked-in replay corpus | 30 min |
 | [Lab 9: Replay, Review, and Retest](lab-9/README.md) | Evaluate a correction with a fixed policy and export verified results using 0.1.2 | 25 min |
+| [Lab 10: Evidence Before Execution](lab-10/README.md) | Inspect final invocation records and missingness using the 0.1.3 source | 15 min |
 
-**Total Duration**: Approximately 4–4.5 hours. Labs 8 (package track) and 9 can
+**Total Duration**: Approximately 4.5–5 hours. Labs 8 (package track), 9 and 10 can
 also be taken independently, without a model service or API key.
 
 ## Research Foundation
@@ -71,7 +78,8 @@ This workshop is based on three papers from the same research line:
 **["DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"](https://arxiv.org/abs/2607.20491)**
 [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
 [DOI](https://doi.org/10.48550/arXiv.2607.20491) |
-Paper artifacts reproduce from this repository with `make reproduce-paper`
+Corrected v2 artifacts reproduce with `make reproduce-paper`;
+[v3 source, results and reproduction scope](dfah/v3-study.md)
 
 **"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"**
 [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (The 2nd ICLR Workshop on Advances in Financial AI) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
@@ -110,6 +118,18 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - See the dated [community ledger](resources/community-findings.md) for the
   evidence limits, anonymized review themes, and resolution links
 
+**DFAH-Bench v3 extension:**
+- 1,080 native banking episodes reached terminal artifacts; 1,033 have known
+  outcomes and 47 remain unknown across separate generator/retrieval cohorts.
+- The primary typed-choice bundle cost less per episode on complete pairs,
+  while its task-success count remained below the prose-model gate under
+  every assignment of the schedule's unknown outcomes.
+- Higher repeated gate agreement coexisted with lower constructed policy-label
+  match in fixed-state probes. Evidence sufficiency needs direct assessment.
+- See the [study guide](dfah/v3-study.md) for denominators, unavailable planned
+  tests, cost scopes and the distinction between building the paper and
+  reproducing the new empirical analyses.
+
 ## Prerequisites
 
 **Required:**
@@ -122,7 +142,7 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - Basic knowledge of financial concepts
 - Experience with data analysis (pandas, visualization)
 
-**Model access for provider experiments (not needed for Labs 8–9):**
+**Model access for provider experiments (not needed for Labs 8–10):**
 - Ollama (free, local)
 - IBM watsonx.ai (trial available)
 - OpenAI, Anthropic, or other providers
@@ -156,8 +176,9 @@ output-drift-financial-llms/
 ├── Makefile                # make reproduce-paper / make test-bench
 ├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
 ├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-9) and explorer
-├── bench/                  # DFAH-Bench library (v3)
+├── docs/                   # Workshop documentation (labs 0-10) and explorer
+├── paper/arxiv_dfah_bench_v3/ # V3 manuscript inputs and included figures
+├── bench/                  # Historical replay metrics and fixtures
 │   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
 │   ├── spec/               # Replay episode schema + task ontologies
 │   ├── provenance/         # Hash-chained, Ed25519-signed audit bundles
@@ -174,7 +195,7 @@ output-drift-financial-llms/
 │   └── agentic/            # Trajectory determinism & faithfulness metrics
 ├── scripts/                # Replay analysis + reproduce_paper.py
 ├── tests/                  # Offline research and package tests
-├── results/                # Reference CSVs behind every paper number
+├── results/                # Historical reference CSVs and corrected v2 manifest
 ├── data/                   # Test datasets & generators
 ├── examples/               # Audit trails + domain-extension example
 └── requirements.txt        # Python dependencies
