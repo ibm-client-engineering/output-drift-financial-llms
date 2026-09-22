@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making — Explorer</title>
-<meta name="description" content="Explore DFAH-Bench replay measurements, try a local model, and qualify an agent integration.">
+<meta name="description" content="Explore DFAH-Bench v3: replay agreement, decision evidence, completed execution, native task outcomes and cost. Try the 0.1.3 package and offline labs.">
 <style>
   :root{
     --bg:#ffffff; --panel:#ffffff; --panel2:#f4f4f4; --line:#e0e0e0;
@@ -56,7 +56,7 @@
   section{padding:72px 0;border-bottom:1px solid var(--line);scroll-margin-top:56px}
   h2{max-width:800px;font-size:clamp(30px,4vw,48px);line-height:1.05;letter-spacing:-.035em;margin:0 0 14px;font-weight:400}
   .lead{color:var(--muted);margin:0 0 28px;max-width:820px;font-size:16px}
-  .card{background:rgba(255,255,255,.96);border:1px solid var(--line);padding:20px}
+  .card{min-width:0;overflow-x:auto;background:rgba(255,255,255,.96);border:1px solid var(--line);padding:20px}
   .row{display:grid;gap:18px} @media(min-width:900px){.row.two{grid-template-columns:1fr 1fr}.row.scatter{grid-template-columns:1.3fr 1fr}}
   table{width:100%;border-collapse:collapse;font-size:13.5px}
   th{color:#fff;background:#161616;text-align:left;font:500 11px var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:10px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -143,6 +143,7 @@
     <div class="brandlinks">
       <a href="https://arxiv.org/abs/2607.20491"
          aria-label="DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making">Paper</a>
+      <a href="../dfah/v3-study/">V3 study guide</a>
       <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a>
       <a href="../dfah/quickstart/">Package guide</a>
     </div>
@@ -153,17 +154,17 @@
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="kicker">Interactive explorer &middot; versioned replay corpus</div>
+        <div class="kicker">DFAH-Bench v3 &middot; package 0.1.3</div>
         <h1>Same decision.<br><span>Different path.</span></h1>
-        <p class="sub">A final answer is only one part of an agent run. DFAH-Bench
-          checks whether repeated decisions preserve the recorded tool path and,
-          when available, the argument and result identities behind it. Explore
-          the reproduced measurements here, then qualify your own integration
-          before spending on a larger replay.</p>
-        <a class="release-link" href="#review-loop">New in 0.1.2: replay, review, retest &rarr;</a>
+        <p class="sub">A final answer is only one part of an agent run. The
+          Determinism&ndash;Faithfulness Assurance Harness (DFAH) measures whether
+          recorded decisions and tool paths survive replay. V3 follows the
+          evidence further: what a gate saw, what it permitted, what actually
+          executed, and how task outcomes relate to cost.</p>
+        <a class="release-link" href="#v3">New in v3: evidence, execution and outcomes &rarr;</a>
       </div>
       <div class="hero-system" aria-label="DFAH operating loop">
-        <div class="top"><span>Replay contract / v2</span><strong>observable</strong></div>
+        <div class="top"><span>Replay contract</span><strong>observable</strong></div>
         <div class="hero-steps">
           <div class="hero-step"><span>01</span><div><strong>Pin</strong><small>Suite, model, tools, request, and required channels.</small></div></div>
           <div class="hero-step"><span>02</span><div><strong>Replay</strong><small>Run the same case under one declared contract.</small></div></div>
@@ -178,18 +179,84 @@
       <div class="stat"><div class="v">19.5%</div><div class="l">of unanimous-decision groups changed tool sequence</div></div>
       <div class="stat"><div class="v">8</div><div class="l">retained configurations, reported with coverage visible</div></div>
     </div>
+    <p class="small">Replay core retained in v3: these figures come from the corrected public v2 corpus.
+      The new interactive study has its own episodes and comparisons below.</p>
   </div>
 </header>
 
 <div class="wrap">
 <nav class="toc">
-  <a href="#review-loop">0.1.2 review loop</a>
-  <a href="#results">&#9632; Results explorer</a>
-  <a href="#playground">&#9654; Replay playground</a>
-  <a href="#live">&#9889; Live with your own model</a>
-  <a href="#package">&#123; &#125; Bring your agent</a>
-  <a href="#reproduce">&#8635; Reproduce the paper</a>
+  <a href="#v3">V3 study</a>
+  <a href="#review-loop">Review loop</a>
+  <a href="#results">&#9632; Replay results</a>
+  <a href="#playground">&#9654; Playground</a>
+  <a href="#live">&#9889; Local model</a>
+  <a href="#package">&#123; &#125; Your agent</a>
+  <a href="#reproduce">&#8635; Reproduction</a>
 </nav>
+
+<section id="v3">
+  <div class="kicker">Evidence, execution, outcomes and cost</div>
+  <h2 style="margin-top:14px">A stable decision is a starting point.</h2>
+  <p class="lead">V3 connects the replay core to interactive banking tasks and selected gate probes.
+    The question expands from whether a decision repeats to whether its required evidence is present
+    and its permitted action completes. Each measurement keeps its own unit and denominator.</p>
+  <div class="row two">
+    <div class="card">
+      <h3 style="margin-top:0">Native outcomes, with missingness visible</h3>
+      <div class="metrics">
+        <div class="m"><div class="v">1,080</div><div class="l">Scheduled episodes</div></div>
+        <div class="m"><div class="v">1,033</div><div class="l">Known outcomes</div></div>
+        <div class="m"><div class="v">47</div><div class="l">Unknown outcomes</div></div>
+      </div>
+      <p>Three separate cohorts use Sierra&rsquo;s &tau;-Knowledge banking environment: an open-weight
+        DeepSeek v4.1 Flash primary generator, a frontier Gemini 3.8 Flash replication, and a
+        DeepSeek retrieval variant. Gemini also supplied simulation and grading.
+        All scheduled episodes have terminal artifacts.</p>
+      <p class="small">Structural checks alone, a prose-model gate and a typed-choice gate are compared
+        within each cohort. Missing outcomes prevented the planned tests, so comparisons are descriptive.
+        The study also bounds the results over the retained schedule.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Repeatability and policy-label match can diverge</h3>
+      <p>In the constructed fixed-state bank, the typed-choice gate repeated its decision more often
+        than the prose-model gate: <strong>98.7% versus 93.1%</strong> modal agreement.
+        Yet it matched fewer policy labels: <strong>54.5% versus 82.6%</strong>.</p>
+      <p>A selected referral case makes the distinction concrete: repeated permission persisted when
+        required current-time evidence was missing.</p>
+      <p class="small">Agreement averages 105 complete three-repeat state groups for the typed gate
+        and 101 for the prose gate. Policy-label matches use 175/321 and 261/316 qualified decisions,
+        respectively. These descriptive probes concern selected contexts and constructed labels;
+        native task outcomes are measured separately.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Follow the action through completion</h3>
+      <p>The 0.1.3 package adds <code>execution_summary</code> to distinguish completed invocations
+        from rejected, unresolved and errored records. An observed empty call list also stays distinct
+        from an unavailable one.</p>
+      <p><a href="../lab-10/">Lab 10: Evidence Before Execution &rarr;</a></p>
+      <p class="small">The offline lab uses six synthetic records, with three completed invocations.
+        It runs without provider calls and teaches the measurement contract. A returned tool call
+        establishes invocation completion; its business outcome requires its own evidence.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Read cost alongside the task outcome</h3>
+      <p>The three native cohorts incurred <strong>$27.25</strong> in reconciled API cost across
+        all roles and attempts. Matched cost comparisons use complete task pairs and preserve each
+        cohort&rsquo;s coverage.</p>
+      <p>OpenRouter routed generator, simulator, native grader and prose-gate requests. Jev supplied
+        the typed-choice gate through its SystemOne endpoint.</p>
+      <p class="small">These hosted API costs have a different basis from the local Ollama walkthrough
+        and illustrative hardware sizing. The study guide connects the paired costs to native success,
+        admission limits and recovery behavior.</p>
+    </div>
+  </div>
+  <p><a href="../dfah/v3-study/">Read the v3 study guide and full comparisons &rarr;</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/tree/main/paper/arxiv_dfah_bench_v3">Manuscript source and figures</a></p>
+  <p class="small">This overview follows the merged v3 manuscript source. The version currently served
+    by arXiv may differ. The public lab illustrates the contract; access and runtime limits for
+    reproducing the hosted study are described in the guide.</p>
+</section>
 
 <section id="review-loop">
   <div class="kicker">DFAH-Bench 0.1.2 &middot; recorded local example</div>
@@ -198,6 +265,9 @@
     the difference; a second, prewritten candidate passes after its order is made consistent.
     These are saved results from the published package: two synthetic cases, two replays per case,
     and actual local tool calls. Selecting a candidate displays its evidence; the browser does not run Python.</p>
+  <p class="verdict">This versioned 0.1.2 walkthrough remains the fixed-policy replay example.
+    Continue with <a href="../lab-10/">Lab 10&rsquo;s 0.1.3 execution summary</a> and the
+    <a href="#v3">v3 study overview</a> to follow evidence, completion and native outcomes.</p>
   <div class="review-switch" role="group" aria-label="Choose a recorded candidate">
     <button type="button" data-review-candidate="0" aria-pressed="true">01 &middot; Varying path<small>Adapter 1.0.0 &middot; gate fails</small></button>
     <button type="button" data-review-candidate="1" aria-pressed="false">02 &middot; Fixed path<small>Adapter 1.0.1 &middot; gate passes</small></button>
@@ -238,6 +308,7 @@
 
 <!-- ============================ RESULTS ============================ -->
 <section id="results">
+  <div class="kicker" style="margin-bottom:14px">Corrected v2 replay core &middot; retained in v3</div>
   <h2>Results explorer — the DAR&ndash;TAR gap</h2>
   <p class="lead"><b>DAR</b> (Decision Agreement Rate) asks: do N replays reach the same decision?
      <b>TAR<sub>seq</sub></b> asks: do they take the same ordered tool-name path?
@@ -378,7 +449,7 @@ ollama pull qwen2.5:7b-instruct</pre>
       <div class="kicker">01 &middot; Install from PyPI</div>
       <pre>python -m venv .venv-dfah
 source .venv-dfah/bin/activate
-python -m pip install 'dfah-bench==0.1.2'</pre>
+python -m pip install 'dfah-bench==0.1.3'</pre>
     </div>
     <div class="card">
       <div class="kicker">02 &middot; Check, run, inspect</div>
@@ -395,9 +466,10 @@ dfah inspect .dfah/runs/quickstart --case CASE-001</pre>
   <p class="small">A perfect toy score confirms the integration contract, not
     real-world model quality. Continue with a synthetic suite that reflects
     your own tool schema, then use sampled shadow replays before considering a
-    blocking gate. In 0.1.2, blocking runs require an explicit policy; an explicit pytest
+    blocking gate. Blocking runs require an explicit policy; an explicit pytest
     policy is checked before test collection. See the <a href="../dfah/quickstart/">package quickstart</a>
-    and <a href="../lab-9/">Lab 9 for gates and local EEE export</a>.</p>
+    and <a href="../lab-9/">Lab 9 for the versioned review loop</a>, then
+    <a href="../lab-10/">Lab 10 for execution evidence in 0.1.3</a>.</p>
 </section>
 
 <!-- ============================ REPRODUCE ============================ -->
@@ -421,6 +493,12 @@ make reproduce-paper   # regenerates corrected v2 and validates its manifest</pr
     for the exact environment and
     <a href="../lab-8/">Lab 8</a> for the guided walkthrough. Extend to your own domain with zero metric-code changes:
     <code>python examples/domain_extension_medical.py</code>.</p>
+  <div class="verdict"><strong>V3 has several reproduction surfaces.</strong>
+    The public manuscript source builds the paper and included figures; package tests and
+    <a href="../lab-10/">Lab 10</a> exercise the execution-evidence contract.
+    The hosted &tau; collection runner and retained provider logs needed to regenerate its new empirical
+    analyses are outside the public package. See the <a href="../dfah/v3-study/">v3 study guide</a>
+    for each surface&rsquo;s scope.</div>
 </section>
 
 </div>
@@ -429,6 +507,7 @@ make reproduce-paper   # regenerates corrected v2 and validates its manifest</pr
   <div class="wrap">
     DFAH-Bench &middot; <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> &middot;
     <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a> &middot;
+    <a href="../dfah/v3-study/">V3 study guide</a> &middot;
     <a href="../">Workshop</a> &middot; MIT License. Related:
     <a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents</a> &middot;
     <a href="https://arxiv.org/abs/2511.07585">LLM Output Drift</a>.
