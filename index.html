@@ -925,6 +925,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lab-10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 10. Evidence Before Execution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1057,6 +1085,62 @@
     
   
     Replay and Review Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dfah/execution-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Execution Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dfah/v3-study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V3 Study and Reproduction
   
 
     
@@ -1575,6 +1659,13 @@ Live model replay requires Ollama and a downloaded model:
 <p>Inspect the corrected replay denominator, regenerate v2, and
 compare decision and path agreement: <strong><a href="lab-8/">Start Lab 8</a></strong>.</p>
 </div>
+<div class="admonition tip">
+<p class="admonition-title">V3: evidence before execution</p>
+<p>Separate a proposed action from a completed invocation in the offline
+<strong><a href="lab-10/">Lab 10</a></strong>. The <strong><a href="dfah/v3-study/">v3 study guide</a></strong>
+connects the new banking outcomes, fixed-state probes and API costs to
+the replay measurement framework.</p>
+</div>
 <h3 id="what-youll-learn">What You'll Learn<a class="headerlink" href="#what-youll-learn" title="Permanent link">&para;</a></h3>
 <p>By the end of this workshop, you will:</p>
 <ul>
@@ -1648,16 +1739,22 @@ compare decision and path agreement: <strong><a href="lab-8/">Start Lab 8</a></s
 <td style="text-align: left;">Evaluate a correction with a fixed policy and export verified results using 0.1.2</td>
 <td style="text-align: left;">25 min</td>
 </tr>
+<tr>
+<td style="text-align: left;"><a href="lab-10/">Lab 10: Evidence Before Execution</a></td>
+<td style="text-align: left;">Inspect final invocation records and missingness using the 0.1.3 source</td>
+<td style="text-align: left;">15 min</td>
+</tr>
 </tbody>
 </table>
-<p><strong>Total Duration</strong>: Approximately 4–4.5 hours. Labs 8 (package track) and 9 can
+<p><strong>Total Duration</strong>: Approximately 4.5–5 hours. Labs 8 (package track), 9 and 10 can
 also be taken independently, without a model service or API key.</p>
 <h2 id="research-foundation">Research Foundation<a class="headerlink" href="#research-foundation" title="Permanent link">&para;</a></h2>
 <p>This workshop is based on three papers from the same research line:</p>
 <p><strong><a href="https://arxiv.org/abs/2607.20491">"DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"</a></strong>
 <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> |
 <a href="https://doi.org/10.48550/arXiv.2607.20491">DOI</a> |
-Paper artifacts reproduce from this repository with <code>make reproduce-paper</code></p>
+Corrected v2 artifacts reproduce with <code>make reproduce-paper</code>;
+<a href="dfah/v3-study/">v3 source, results and reproduction scope</a></p>
 <p><strong>"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"</strong>
 <a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> (The 2<sup>nd</sup> ICLR Workshop on Advances in Financial AI) | <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
 <p><strong>"LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows"</strong>
@@ -1689,6 +1786,17 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
   evaluations
 - See the dated <a href="resources/community-findings/">community ledger</a> for the
   evidence limits, anonymized review themes, and resolution links</p>
+<p><strong>DFAH-Bench v3 extension:</strong>
+- 1,080 native banking episodes reached terminal artifacts; 1,033 have known
+  outcomes and 47 remain unknown across separate generator/retrieval cohorts.
+- The primary typed-choice bundle cost less per episode on complete pairs,
+  while its task-success count remained below the prose-model gate under
+  every assignment of the schedule's unknown outcomes.
+- Higher repeated gate agreement coexisted with lower constructed policy-label
+  match in fixed-state probes. Evidence sufficiency needs direct assessment.
+- See the <a href="dfah/v3-study/">study guide</a> for denominators, unavailable planned
+  tests, cost scopes and the distinction between building the paper and
+  reproducing the new empirical analyses.</p>
 <h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
 <p><strong>Required:</strong>
 - Python 3.11+
@@ -1698,7 +1806,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 - Familiarity with LLMs and prompt engineering
 - Basic knowledge of financial concepts
 - Experience with data analysis (pandas, visualization)</p>
-<p><strong>Model access for provider experiments (not needed for Labs 8–9):</strong>
+<p><strong>Model access for provider experiments (not needed for Labs 8–10):</strong>
 - Ollama (free, local)
 - IBM watsonx.ai (trial available)
 - OpenAI, Anthropic, or other providers</p>
@@ -1727,8 +1835,9 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 ├── Makefile                # make reproduce-paper / make test-bench
 ├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
 ├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-9) and explorer
-├── bench/                  # DFAH-Bench library (v3)
+├── docs/                   # Workshop documentation (labs 0-10) and explorer
+├── paper/arxiv_dfah_bench_v3/ # V3 manuscript inputs and included figures
+├── bench/                  # Historical replay metrics and fixtures
 │   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
 │   ├── spec/               # Replay episode schema + task ontologies
 │   ├── provenance/         # Hash-chained, Ed25519-signed audit bundles
@@ -1745,7 +1854,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 │   └── agentic/            # Trajectory determinism &amp; faithfulness metrics
 ├── scripts/                # Replay analysis + reproduce_paper.py
 ├── tests/                  # Offline research and package tests
-├── results/                # Reference CSVs behind every paper number
+├── results/                # Historical reference CSVs and corrected v2 manifest
 ├── data/                   # Test datasets &amp; generators
 ├── examples/               # Audit trails + domain-extension example
 └── requirements.txt        # Python dependencies

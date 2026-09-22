@@ -10,31 +10,31 @@
         <meta name="author" content="IBM Client Engineering">
       
       
-        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/dfah/every-eval-ever/">
+        <link rel="canonical" href="https://ibm-client-engineering.github.io/output-drift-financial-llms/lab-10/">
       
       
-        <link rel="prev" href="../v3-study/">
+        <link rel="prev" href="../lab-9/">
       
       
-        <link rel="next" href="../production/">
+        <link rel="next" href="../dfah/quickstart/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Every Eval Ever Export - Output Drift + DFAH</title>
+        <title>Lab 10. Evidence Before Execution - Output Drift + DFAH</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,9 +53,9 @@
       
     
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#every-eval-ever-export" class="md-skip">
+        <a href="#lab-10-evidence-before-execution" class="md-skip">
           Skip to content
         </a>
       
@@ -92,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-header__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Every Eval Ever Export
+              Lab 10. Evidence Before Execution
             
           </span>
         </div>
@@ -199,31 +199,11 @@
     
     
       <li class="md-tabs__item">
-        <a href="../.." class="md-tabs__link">
+        <a href=".." class="md-tabs__link">
           
   
   
   Welcome
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../pre-work/" class="md-tabs__link">
-          
-  
-  
-  Workshop
 
         </a>
       </li>
@@ -241,7 +221,27 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../quickstart/" class="md-tabs__link">
+        <a href="../pre-work/" class="md-tabs__link">
+          
+  
+  
+  Workshop
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../dfah/quickstart/" class="md-tabs__link">
           
   
   
@@ -261,7 +261,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../resources/paper/" class="md-tabs__link">
+        <a href="../resources/paper/" class="md-tabs__link">
           
   
   
@@ -295,7 +295,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
+    <a href=".." title="Output Drift + DFAH" class="md-nav__button md-logo" aria-label="Output Drift + DFAH" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -379,7 +379,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -387,375 +387,6 @@
     
   
     Introduction
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Workshop
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Workshop
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../pre-work/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 0. Workshop Pre-Work
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-1/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 1. Understanding Output Drift
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 2. Setting Up Your Environment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-3/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 3. Running Your First Experiment
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-4/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 4. Analyzing Drift Metrics
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-5/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 5. Cross-Provider Testing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-6/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 6. Extending the Framework
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-7/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 7. Replayable Financial Agents
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-8/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 8. DFAH-Bench — Replay Measurement
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-9/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 9. Replay, Review, and Retest
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../lab-10/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lab 10. Evidence Before Execution
   
 
     
@@ -801,17 +432,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
             
   
   
   <span class="md-ellipsis">
     
   
-    DFAH Package
+    Workshop
   
 
     
@@ -822,12 +453,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
   
-    DFAH Package
+    Workshop
   
 
           </label>
@@ -840,14 +471,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../pre-work/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Quickstart
+    Lab 0. Workshop Pre-Work
   
 
     
@@ -868,14 +499,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../bring-your-own-agent/" class="md-nav__link">
+      <a href="../lab-1/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Bring Your Own Agent
+    Lab 1. Understanding Output Drift
   
 
     
@@ -896,14 +527,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../replay-review-loop/" class="md-nav__link">
+      <a href="../lab-2/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Replay and Review Loop
+    Lab 2. Setting Up Your Environment
   
 
     
@@ -924,14 +555,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../execution-evidence/" class="md-nav__link">
+      <a href="../lab-3/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Execution Evidence
+    Lab 3. Running Your First Experiment
   
 
     
@@ -952,14 +583,154 @@
   
   
     <li class="md-nav__item">
-      <a href="../v3-study/" class="md-nav__link">
+      <a href="../lab-4/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    V3 Study and Reproduction
+    Lab 4. Analyzing Drift Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 5. Cross-Provider Testing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 6. Extending the Framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 7. Replayable Financial Agents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 8. DFAH-Bench — Replay Measurement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lab-9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 9. Replay, Review, and Retest
   
 
     
@@ -996,7 +767,7 @@
   <span class="md-ellipsis">
     
   
-    Every Eval Ever Export
+    Lab 10. Evidence Before Execution
   
 
     
@@ -1014,7 +785,7 @@
   <span class="md-ellipsis">
     
   
-    Every Eval Ever Export
+    Lab 10. Evidence Before Execution
   
 
     
@@ -1040,10 +811,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
+  <a href="#1-install-the-source-checkout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Export a verified run
+        1. Install the source checkout
       
     </span>
   </a>
@@ -1051,10 +822,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
+  <a href="#2-run-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Privacy boundary
+        2. Run the example
       
     </span>
   </a>
@@ -1062,10 +833,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
+  <a href="#3-keep-missing-capture-distinct-from-an-empty-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Semantic mapping
+        3. Keep missing capture distinct from an empty path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-compare-decisions-and-paths-on-the-same-retained-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Compare decisions and paths on the same retained records
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-apply-the-record-boundary-to-your-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Apply the record boundary to your adapter
       
     </span>
   </a>
@@ -1081,6 +874,67 @@
 
               
             
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DFAH Package
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DFAH Package
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
               
                 
   
@@ -1088,7 +942,175 @@
   
   
     <li class="md-nav__item">
-      <a href="../production/" class="md-nav__link">
+      <a href="../dfah/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/bring-your-own-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bring Your Own Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/replay-review-loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Replay and Review Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/execution-evidence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Execution Evidence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/v3-study/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    V3 Study and Reproduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/every-eval-ever/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Every Eval Ever Export
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dfah/production/" class="md-nav__link">
         
   
   
@@ -1116,7 +1138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../design/" class="md-nav__link">
+      <a href="../dfah/design/" class="md-nav__link">
         
   
   
@@ -1144,7 +1166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../releasing/" class="md-nav__link">
+      <a href="../dfah/releasing/" class="md-nav__link">
         
   
   
@@ -1233,7 +1255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resources/paper/" class="md-nav__link">
+      <a href="../resources/paper/" class="md-nav__link">
         
   
   
@@ -1261,7 +1283,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resources/community-findings/" class="md-nav__link">
+      <a href="../resources/community-findings/" class="md-nav__link">
         
   
   
@@ -1289,7 +1311,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resources/api/" class="md-nav__link">
+      <a href="../resources/api/" class="md-nav__link">
         
   
   
@@ -1317,7 +1339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../resources/troubleshooting/" class="md-nav__link">
+      <a href="../resources/troubleshooting/" class="md-nav__link">
         
   
   
@@ -1372,10 +1394,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#export-a-verified-run" class="md-nav__link">
+  <a href="#1-install-the-source-checkout" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Export a verified run
+        1. Install the source checkout
       
     </span>
   </a>
@@ -1383,10 +1405,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#privacy-boundary" class="md-nav__link">
+  <a href="#2-run-the-example" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Privacy boundary
+        2. Run the example
       
     </span>
   </a>
@@ -1394,10 +1416,32 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#semantic-mapping" class="md-nav__link">
+  <a href="#3-keep-missing-capture-distinct-from-an-empty-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Semantic mapping
+        3. Keep missing capture distinct from an empty path
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-compare-decisions-and-paths-on-the-same-retained-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Compare decisions and paths on the same retained records
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-apply-the-record-boundary-to-your-adapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Apply the record boundary to your adapter
       
     </span>
   </a>
@@ -1424,91 +1468,157 @@
   
 
 
-<h1 id="every-eval-ever-export">Every Eval Ever export<a class="headerlink" href="#every-eval-ever-export" title="Permanent link">&para;</a></h1>
-<p>DFAH can export an artifact-verified replay run to the Every Eval Ever (EEE)
-v0.2.2 interchange schema. EEE answers “how can evaluation results travel
-between tools?” DFAH answers a different question: “which repeated executions
-are comparable and sufficiently observed, and how far do decision and path
-agreement separate?” The exporter preserves that distinction.</p>
-<h2 id="export-a-verified-run">Export a verified run<a class="headerlink" href="#export-a-verified-run" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN
+<h1 id="lab-10-evidence-before-execution">Lab 10: Evidence Before Execution<a class="headerlink" href="#lab-10-evidence-before-execution" title="Permanent link">&para;</a></h1>
+<p>A recorded tool proposal, a completed invocation and a successful business task
+answer different questions. This lab uses the public <code>execution_summary</code> API
+to inspect those boundaries, then checks the shared denominator required for a
+small decision/path comparison.</p>
+<p><strong>Duration:</strong> about 15 minutes. <strong>Requirements:</strong> Python 3.10+ and the repository
+checkout containing this lab. Installation needs package dependencies; the
+example itself uses no model service, API key or network call.</p>
+<p>The example constructs <strong>illustrative synthetic records</strong>. No real tool runs,
+and none of its numbers are DFAH-Bench study results.</p>
+<h2 id="1-install-the-source-checkout">1. Install the source checkout<a class="headerlink" href="#1-install-the-source-checkout" title="Permanent link">&para;</a></h2>
+<p>From the repository root:</p>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv-dfah
+<span class="nb">source</span><span class="w"> </span>.venv-dfah/bin/activate
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span>--version
 </code></pre></div>
-<p>The exporter refuses aggregate output when no replay group is eligible.
-Unavailable DAR, TAR, gap, and flag-rate values are never converted into
-numeric scores.</p>
-<p>This produces:</p>
-<ul>
-<li>one aggregate JSON record with DAR, TARseq, TARbag, TARset, TARstrong,
-  decision–path gap, eligible fraction, and flags per 100 groups; and</li>
-<li>one JSONL record per committed replay episode, including tool names,
-  equality hashes, channel states, parse provenance, and replay identity.</li>
-</ul>
-<p>Use <code>--aggregate-only</code> when episode-level interoperability is unnecessary.
-For upstream model validation (Python 3.12 or newer, matching the upstream
-package requirement). The optional extra pins upstream validator 0.2.3rc1;
-the exported schema remains 0.2.2:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'dfah-bench[eee]==0.1.3'</span>
-python<span class="w"> </span>-m<span class="w"> </span>dfah<span class="w"> </span><span class="nb">export</span><span class="w"> </span>.dfah/runs/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--format<span class="w"> </span>every-eval-ever<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--out<span class="w"> </span>.dfah/exports/MY-RUN<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--validate
+<p>This lab targets the <strong>0.1.3 source tree</strong> and its <code>execution_summary</code> API;
+it does not assume a published 0.1.3 package or release tag. On Windows, activate
+with <code>.venv-dfah\Scripts\activate</code>.</p>
+<h2 id="2-run-the-example">2. Run the example<a class="headerlink" href="#2-run-the-example" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>examples/dfah_execution_evidence.py
 </code></pre></div>
-<p>The Python API is equivalent:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_every_eval_ever</span>
+<p>The command prints JSON to standard output and performs its self-checks. It
+writes no run directory. The output identifies the records as
+<code>illustrative_synthetic_records</code>, reports zero provider calls and <code>$0.00</code> in
+provider charges, and leaves native task outcomes <code>not_measured</code>. Local compute
+and energy costs are outside this example.</p>
+<p>The main trajectory has six final invocation records:</p>
+<table>
+<thead>
+<tr>
+<th>Record state</th>
+<th style="text-align: right;">Count</th>
+<th>Meaning in this example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>EXECUTED</code></td>
+<td style="text-align: right;">3</td>
+<td>A return was captured.</td>
+</tr>
+<tr>
+<td><code>REJECTED</code></td>
+<td style="text-align: right;">1</td>
+<td>The proposal did not reach execution under the capture contract.</td>
+</tr>
+<tr>
+<td><code>REQUESTED</code></td>
+<td style="text-align: right;">1</td>
+<td>No terminal boundary was captured.</td>
+</tr>
+<tr>
+<td><code>ERROR</code></td>
+<td style="text-align: right;">1</td>
+<td>An error was recorded; possible partial effects remain unknown.</td>
+</tr>
+</tbody>
+</table>
+<p>Its completed tool names are <code>verify_identity</code>, <code>transfer_funds</code>,
+<code>verify_identity</code>, in that order. Repeated names remain repeated. The original
+six records remain in the trajectory; the helper only summarizes them.</p>
+<p>One completed transfer record has the synthetic return <code>Transfer declined.</code>
+It still counts as a completed invocation because a return exists. The helper
+does not score the business outcome or decide whether the action followed policy.</p>
+<p><code>all_proposals_terminal</code> is false for this mixed trajectory because the
+<code>REQUESTED</code> record remains unresolved. The separate error-only example returns
+true for that property, with zero completed invocations. A terminal error does
+not demonstrate rollback or successful execution.</p>
+<h2 id="3-keep-missing-capture-distinct-from-an-empty-path">3. Keep missing capture distinct from an empty path<a class="headerlink" href="#3-keep-missing-capture-distinct-from-an-empty-path" title="Permanent link">&para;</a></h2>
+<p>The example also summarizes three channel states:</p>
+<table>
+<thead>
+<tr>
+<th>Channel state</th>
+<th style="text-align: right;">Captured count</th>
+<th>Completed tool names</th>
+<th>All proposals terminal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UNAVAILABLE</code></td>
+<td style="text-align: right;"><code>null</code></td>
+<td><code>null</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>MALFORMED</code></td>
+<td style="text-align: right;"><code>null</code></td>
+<td><code>null</code></td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>OBSERVED_EMPTY</code></td>
+<td style="text-align: right;"><code>0</code></td>
+<td><code>[]</code></td>
+<td><code>true</code></td>
+</tr>
+</tbody>
+</table>
+<p>In Python, those unavailable values are <code>None</code>, and the observed-empty path is
+an empty tuple. The JSON representation uses <code>null</code> and <code>[]</code>.</p>
+<p>An observed-empty channel says that capture recorded no invocations. An
+unavailable channel says that the record cannot establish what happened.
+Neither a numeric zero nor a completed path should be invented for unavailable
+capture. Even an observed channel is bounded by what the adapter captured;
+this helper does not verify that every possible effect or call was observed.</p>
+<h2 id="4-compare-decisions-and-paths-on-the-same-retained-records">4. Compare decisions and paths on the same retained records<a class="headerlink" href="#4-compare-decisions-and-paths-on-the-same-retained-records" title="Permanent link">&para;</a></h2>
+<p>The final example compares two deliberately observed toy paths with the same
+decision, <code>review</code>. One path contains two calls and the other one. It reports:</p>
+<div class="highlight"><pre><span></span><code>decision_denominator: 2
+trajectory_denominator: 2
+dar: 1.0
+tar_seq: 0.5
+gap: 0.5
+mismatched_denominators_rejected: true
+</code></pre></div>
+<p>These are arithmetic checks on two supplied records. The example also tries to
+pair two decisions with only one path; <code>delta_dt</code> rejects that mismatch.
+The unavailable and malformed channels above never enter this calculation as
+empty paths.</p>
+<p>The low-level <code>dar</code>, <code>tar</code> and <code>delta_dt</code> functions expect qualified inputs.
+Equal lengths alone do not establish replay eligibility. Real episode groups
+also need <code>evaluate_episode</code> and <code>evaluate_group</code> checks for their required
+channels, replay count and comparable manifest/request identities. An execution
+summary supplies descriptive counts; it does not replace that qualification.</p>
+<h2 id="5-apply-the-record-boundary-to-your-adapter">5. Apply the record boundary to your adapter<a class="headerlink" href="#5-apply-the-record-boundary-to-your-adapter" title="Permanent link">&para;</a></h2>
+<p>Pass the final <code>ToolCall</code> for each invocation in an ordered <code>Trajectory</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">dfah.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">execution_summary</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">export_every_eval_ever</span><span class="p">(</span>
-    <span class="s2">".dfah/runs/MY-RUN"</span><span class="p">,</span>
-    <span class="s2">".dfah/exports/MY-RUN"</span><span class="p">,</span>
-    <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">aggregate_path</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">instances_sha256</span><span class="p">)</span>
+<span class="n">summary</span> <span class="o">=</span> <span class="n">execution_summary</span><span class="p">(</span><span class="n">episode</span><span class="o">.</span><span class="n">trajectory</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">completed_invocations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">rejected_invocations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">unresolved_proposals</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">errored_invocations</span><span class="p">)</span>
 </code></pre></div>
-<h2 id="privacy-boundary">Privacy boundary<a class="headerlink" href="#privacy-boundary" title="Permanent link">&para;</a></h2>
-<p>The default profile deliberately excludes:</p>
+<p>If your trace contains separate proposal, verdict and return events for one
+invocation, reconcile them into one final invocation record before summarizing.
+Keep the original event stream separately. A new retry is a new invocation;
+several events for the same invocation are not several completed calls.</p>
+<p>This lab illustrates a measurement boundary motivated by v3. It adds no gate
+policy, enforcement mechanism, native-benchmark adapter or policy-correctness
+score. Assess actual task outcomes and action prerequisites separately using
+retained evidence and an explicit task contract.</p>
 <ul>
-<li>prompts and raw case inputs;</li>
-<li>raw tool arguments and results;</li>
-<li>reasoning traces;</li>
-<li>provider endpoints and provider-native usage payloads; and</li>
-<li>organization identity unless the caller supplies it explicitly.</li>
+<li><a href="../dfah/execution-evidence/">Execution-evidence API guide</a></li>
+<li><a href="../lab-8/">Lab 8: Replay Measurement</a></li>
+<li><a href="../lab-9/">Lab 9: Replay, Review, and Retest</a></li>
 </ul>
-<p>Artifact case identifiers, normalized decision labels, model/provider/adapter
-identifiers, tool names, and SHA-256 equality fingerprints remain. Those
-identifiers can reveal a deployment or business context even when captured
-content is absent. Arbitrary request settings are committed by hash rather than
-copied into the record. Hashes are integrity commitments, not anonymization:
-low-entropy sensitive values can still be guessed. Use pseudonymous artifact
-case IDs, generic deployment identifiers, and tokenize sensitive values before
-capture.</p>
-<p>The command only writes local mode-600 files. It does not upload, publish, or
-register results with EEE or any other service.</p>
-<h2 id="semantic-mapping">Semantic mapping<a class="headerlink" href="#semantic-mapping" title="Permanent link">&para;</a></h2>
-<p>EEE’s aggregate score records carry DFAH’s metrics. Namespaced metadata retains
-the suite version, fixture and schema commitments, manifest hash, replay
-design, eligible denominator, and artifact root.</p>
-<p>EEE instance records require an <code>is_correct</code> field. In a DFAH export that field
-means only that the episode belongs to an eligible replay group in the report. It
-does <strong>not</strong> mean the agent’s financial decision was correct. Each record states
-this as <code>replay_group_retention_not_decision_correctness</code>. A capture can be
-individually valid yet excluded because its replay group is incomplete or
-incomparable. Individual capture eligibility and its reasons remain separately
-available as <code>dfah_episode_capture_eligible</code> and
-<code>dfah_episode_capture_eligibility_reasons</code>; <code>dfah_replay_group_eligible</code> records
-the group-level inclusion decision.</p>
-<p>The eligible fraction is the sum of the instance scores divided by the planned
-episode count. Uncommitted planned episodes have no JSONL row and contribute
-zero to that denominator. Eligible fraction and flags per 100 are pooled rates;
-the agreement metrics retain DFAH's task weighting.</p>
-<p>The exporter checks the exact loaded episode set against the report's artifact
-commitment. A run resumed between report verification and snapshot loading is
-rejected. Once captured, the export uses that immutable snapshot, so a later
-resume cannot change its contents or mix evidence from different report states.</p>
-<p>EEE is therefore an optional reporting layer. It does not relax DFAH’s
-manifest, suite-version, required-channel, or artifact-verification rules, and
-records from different replay contracts must not be silently compared.</p>
-<p>Upstream <a href="https://evalevalai.com/projects/every-eval-ever/">project and schema</a>.</p>
 
 
 
@@ -1540,7 +1650,7 @@ records from different replay contracts must not be silently compared.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../v3-study/" class="md-footer__link md-footer__link--prev" aria-label="Previous: V3 Study and Reproduction">
+          <a href="../lab-9/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Lab 9. Replay, Review, and Retest">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1550,20 +1660,20 @@ records from different replay contracts must not be silently compared.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                V3 Study and Reproduction
+                Lab 9. Replay, Review, and Retest
               </div>
             </div>
           </a>
         
         
           
-          <a href="../production/" class="md-footer__link md-footer__link--next" aria-label="Next: Production Rollout">
+          <a href="../dfah/quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Quickstart">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Production Rollout
+                Quickstart
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1627,10 +1737,10 @@ records from different replay contracts must not be silently compared.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.footer", "content.code.copy", "content.tabs.link", "navigation.sections", "navigation.expand"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
