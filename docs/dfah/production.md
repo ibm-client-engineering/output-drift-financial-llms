@@ -212,6 +212,8 @@ not prove that every wall-clock or ambient-state dependency is absent.
 ## Persistence, security, and recovery
 
 Keep prospective stores outside the historical corpus and under access control.
+New store directories use private permissions; existing directory permissions
+remain under the caller's control. Choose a dedicated output directory.
 The current local `FileStore` supports macOS and POSIX systems; it requires
 advisory file locks and directory-descriptor operations. Windows support needs
 a reviewed storage backend and is not claimed by this alpha.
@@ -259,7 +261,9 @@ must follow the local control process.
 Raw output is not persisted by `Replay`. The artifact serializer redacts a
 small set of credential-shaped strings, but callers must minimize sensitive
 values before placing them in tool arguments, request parameters, metadata,
-or exceptions. Artifact wire-payload, argument, and result hashes are equality fingerprints,
+or exceptions. Keep authentication credentials out of these fields; arbitrary
+token formats cannot be recognized reliably. Artifact wire-payload, argument,
+and result hashes are equality fingerprints,
 not anonymization: low-entropy values may be recovered by enumeration.
 Pseudonymize or tokenize sensitive values before hashing.
 

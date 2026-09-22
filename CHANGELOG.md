@@ -42,6 +42,8 @@ against the published 0.1.2 wheel.
   shadow evaluation was discarded. A failing blocking run prints an error
   naming the failed checks and the gate record instead.
 - Name the persisted gate record in the blocking-mode `GateViolationError`.
+- Preserve caller-owned permissions when opening an existing output directory.
+  Newly created store directories retain private permissions.
 - Report a run directory that has no persisted report clearly, naming the
   missing `RUN/reports`. Version 0.1.2 already rejected such a directory, but
   by attempting to parse the run plan as a report and failing schema

@@ -160,11 +160,11 @@ class FileStore:
             self.stale_leases,
         ):
             if create:
+                # mkdir keeps new store directories private without changing
+                # permissions on a caller-owned directory that already exists.
                 directory.mkdir(parents=True, exist_ok=True, mode=0o700)
             if directory.is_symlink() or not directory.is_dir():
                 raise ArtifactError(f"artifact directory is unsafe: {directory}")
-            if create:
-                os.chmod(directory, 0o700)
         directory_flags = (
             os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
         )
