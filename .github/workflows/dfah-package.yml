@@ -130,13 +130,16 @@ jobs:
       - name: Run the offline execution-evidence example
         run: python examples/dfah_execution_evidence.py
       - name: Enforce metrics and parser coverage
+        timeout-minutes: 5
         env:
           # Avoid importing DFAH through its installed pytest entry point
           # before coverage starts measuring the target modules.
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        # Initialize asyncio before coverage to avoid the reproduced timeout hang
+        # on Python 3.10/3.11. DFAH itself is still imported under measurement.
         run: >-
-          pytest -p pytest_cov -q tests/dfah
-          -k "not episode_timeout_is_unknown_after_dispatch_and_never_reissued"
+          python -c 'import asyncio, pytest; raise SystemExit(pytest.main())'
+          -p pytest_cov -q tests/dfah
           --cov=dfah.metrics
           --cov=dfah.parse
           --cov-report=term-missing

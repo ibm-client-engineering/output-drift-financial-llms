@@ -38,13 +38,13 @@ def lifecycle_agent(behavior):
     effects = []
     sessions = []
     tasks = []
-    started = []
+    started = {}
 
     @registry.tool(spec)
     async def increment_counter():
         effects.append("synthetic increment")
         if behavior == "pending":
-            started[-1].set()
+            started[asyncio.current_task()].set()
             await asyncio.Event().wait()
         return {"ok": True}
 
@@ -67,10 +67,12 @@ def lifecycle_agent(behavior):
         if behavior == "awaited":
             await context.tools.call("increment_counter")
         else:
-            started.append(asyncio.Event())
-            tasks.append(asyncio.create_task(context.tools.call("increment_counter")))
+            started_event = asyncio.Event()
+            task = asyncio.create_task(context.tools.call("increment_counter"))
+            started[task] = started_event
+            tasks.append(task)
             if behavior == "pending":
-                await started[-1].wait()
+                await asyncio.wait_for(started_event.wait(), timeout=5)
         return AgentResult(
             output_text="DECISION: PASS",
             trajectory=context.tools.trajectory(),
@@ -129,7 +131,7 @@ def test_awaited_calls_are_still_captured_before_closure(tmp_path):
 
 def test_already_started_calls_remain_unresolved_at_agent_return(tmp_path):
     candidate, suite, effects, sessions, tasks = lifecycle_agent("pending")
-    report = Replay(suite=suite, replays=2, out=tmp_path / "run").run(candidate)
+    report = Replay(suite=suite, replays=2, concurrency=2, out=tmp_path / "run").run(candidate)
     with FileStore(tmp_path / "run", create=False) as store:
         episodes = store.list(manifest_hash=candidate.manifest.hash)
     assert len(effects) == 4
