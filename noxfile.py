@@ -11,6 +11,7 @@ def tests(session: nox.Session) -> None:
 
     session.install("-e", ".[dev,otel]")
     session.run("pytest", "-q", "tests/dfah")
+    session.run("python", "examples/dfah_execution_evidence.py")
 
 
 @nox.session
@@ -22,6 +23,8 @@ def quality(session: nox.Session) -> None:
         "src/dfah",
         "tests/dfah",
         "examples/dfah_quickstart.py",
+        "examples/dfah_gate_loop.py",
+        "examples/dfah_execution_evidence.py",
         "hatch_build.py",
     )
     session.run("ruff", "format", "--check", *paths)

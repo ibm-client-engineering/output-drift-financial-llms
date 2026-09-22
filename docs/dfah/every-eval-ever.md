@@ -31,7 +31,7 @@ package requirement). The optional extra pins upstream validator 0.2.3rc1;
 the exported schema remains 0.2.2:
 
 ```bash
-python -m pip install 'dfah-bench[eee]==0.1.2'
+python -m pip install 'dfah-bench[eee]==0.1.3'
 python -m dfah export .dfah/runs/MY-RUN \
   --format every-eval-ever \
   --out .dfah/exports/MY-RUN \

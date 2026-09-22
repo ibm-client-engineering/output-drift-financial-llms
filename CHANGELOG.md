@@ -7,6 +7,67 @@ provenance and are not versioned by this changelog.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and releases use semantic versioning.
 
+## [Unreleased]
+
+### Added
+
+- Add `dfah.metrics.execution_summary` to distinguish completed invocations,
+  rejected calls, unresolved proposals and errors in a captured trajectory.
+  Unavailable evidence remains unavailable rather than becoming a zero count.
+  The helper leaves DAR/TAR unchanged and makes no policy-correctness or
+  business-success claim. See [execution evidence](docs/dfah/execution-evidence.md).
+
+### Documentation
+
+- Add an offline [execution-evidence example](examples/dfah_execution_evidence.py)
+  connecting the helper to the distinction between proposed and completed
+  actions. Its constructed records demonstrate package behavior independently
+  of the hosted study traces that motivated the helper.
+- Add a [v3 study guide](docs/dfah/v3-study.md) explaining the study findings
+  and the boundary between package examples and retained hosted evidence.
+
+## [0.1.3] - Unreleased
+
+Hardening release candidate. No artifact schema change: run plans, episode
+stores, and reports written by 0.1.2 load and verify unchanged under 0.1.3,
+and run directories written by 0.1.3, which add a `gates/` directory, load and
+verify under 0.1.2 because neither the store nor the report loader reads
+`gates/`. Both directions were checked against runs produced by the
+published 0.1.2 wheel.
+
+### Added
+
+- Record every `Replay` policy evaluation as `RUN/gates/<report_id>.json`
+  (`GateRecord`: mode, policy, policy SHA-256, and every check) in shadow and
+  blocking mode, and expose it as `Replay.last_gate_result`.
+- Add `check_agent(expected_tools=...)` and `dfah check-agent --expect-tools
+  CASE_ID=tool[,tool]`. The `expected_tool_capture` check fails when an
+  expected call was not captured through the injected session in every
+  conformance replay, which is how an adapter that invokes a tool
+  implementation directly becomes visible. Observed-empty paths remain valid
+  when no expectation is declared; the report lists `selected_case_ids`.
+
+### Fixed
+
+- Print the policy outcome (`policy=PASS|FAIL` and failed check names) from
+  `dfah run --policy` for shadow runs and passing blocking runs; previously a
+  shadow evaluation was discarded. A failing blocking run prints an error
+  naming the failed checks and the gate record instead.
+- Name the persisted gate record in the blocking-mode `GateViolationError`.
+- Report a run directory that has no persisted report clearly, naming the
+  missing `RUN/reports`. Version 0.1.2 already rejected such a directory, but
+  by attempting to parse the run plan as a report and failing schema
+  validation; the loader no longer falls back to other JSON files in the run
+  root at all.
+
+### Changed
+
+- State in the README and production guide that artifact verification is a
+  consistency check bound to the run directory, not a signature, and how to
+  anchor the run-plan, episode-root, and policy commitments externally.
+- Document that tool return values must be JSON-serializable and that the
+  `gates/` directory sits beside the store.
+
 ## [0.1.2] - 2026-09-04
 
 ### Added

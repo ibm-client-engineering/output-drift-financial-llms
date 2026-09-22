@@ -116,6 +116,15 @@ session-wide pytest policy enforcement, and a
 [bounded replay-and-review example](docs/dfah/replay-review-loop.md).
 See the [package guide](README_DFAH.md) and [changelog](CHANGELOG.md).
 
+The next release candidate, 0.1.3, hardens the package with no artifact schema
+change: every
+shadow or blocking policy evaluation is recorded under `RUN/gates/` and
+printed as `policy=PASS` or `policy=FAIL`, the conformance preflight accepts
+explicit `expected_tools` so an adapter that bypasses tool capture becomes
+visible, a run directory without a persisted report fails closed, and the
+documentation states that artifact verification is a consistency check bound
+to the run directory rather than a signature.
+
 ## Current DFAH-Bench results
 
 The corrected retrospective analysis covers **4,157 episodes from

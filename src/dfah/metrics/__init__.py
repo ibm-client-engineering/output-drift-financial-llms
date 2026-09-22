@@ -11,6 +11,7 @@ from .agreement import (
     task_weighted,
 )
 from .eligibility import evaluate_episode, evaluate_group
+from .execution import ExecutionSummary, execution_summary
 from .sensitivity import (
     BoundPoint,
     BoundResult,
@@ -30,6 +31,7 @@ __all__ = [
     "BoundPoint",
     "BoundResult",
     "ConfigReport",
+    "ExecutionSummary",
     "IntervalResult",
     "LOOResult",
     "PathMode",
@@ -42,6 +44,7 @@ __all__ = [
     "delta_dt",
     "evaluate_episode",
     "evaluate_group",
+    "execution_summary",
     "first_anchored_agreement",
     "leave_one_case_out",
     "modal_agreement",

@@ -15,16 +15,17 @@ from typing import Any
 
 import anyio
 
-from ._canonical import sha256
+from ._canonical import atomic_private_write, canonical_bytes, sha256
 from ._meta import package_version
 from .agents import Agent, AgentResult, RunContext
 from .exceptions import (
     AgentContractError,
     ArtifactError,
     ConfigurationError,
+    GateViolationError,
     ToolExecutionError,
 )
-from .gate import Gate, GatePolicy
+from .gate import Gate, GatePolicy, GateRecord, GateResult
 from .metrics.agreement import (
     case_reports_from_episodes,
     ineligibility_summary_from_episodes,
@@ -228,6 +229,8 @@ class Replay:
         self.capture_tool_arguments = capture_tool_arguments
         self.recover_stale_lease = recover_stale_lease
         self.episode_timeout_s = episode_timeout_s
+        # Outcome of the most recent policy evaluation, in shadow or blocking mode.
+        self.last_gate_result: GateResult | None = None
         if tools is not None and tools.schema_hash != self.suite.tool_schema_hash:
             raise ConfigurationError("tool registry schemas differ from the selected suite")
 
@@ -772,6 +775,7 @@ class Replay:
     ) -> Report:
         """Execute while the caller holds the artifact directory writer lease."""
 
+        self.last_gate_result = None
         selected = self._selected_cases()
         schedule = [(case, replay) for case in selected for replay in range(self.replays)]
         random.Random(self.seed).shuffle(schedule)
@@ -861,8 +865,25 @@ class Replay:
         report.to_json(reports_dir / f"{report.report_id}.json")
         if self.gate_policy is not None:
             gate_result = Gate(self.gate_policy).evaluate(report)
+            # A shadow evaluation that is neither returned nor persisted gives no
+            # signal. Record the policy, its commitment, and every check next to
+            # the report before deciding whether to raise.
+            record = GateRecord(
+                report_id=report.report_id,
+                manifest_hash=agent.manifest.hash,
+                mode=self.mode,
+                policy=self.gate_policy,
+                policy_sha256=sha256(self.gate_policy),
+                result=gate_result,
+            )
+            record_path = out / "gates" / f"{report.report_id}.json"
+            atomic_private_write(record_path, canonical_bytes(record, redact=True) + b"\n")
+            self.last_gate_result = gate_result
             if self.mode is ReplayMode.BLOCKING:
-                gate_result.raise_for_failures()
+                try:
+                    gate_result.raise_for_failures()
+                except GateViolationError as exc:
+                    raise GateViolationError(f"{exc}; record: {record_path}") from None
         return report
 
     async def arun(self, agent: Agent) -> Report:

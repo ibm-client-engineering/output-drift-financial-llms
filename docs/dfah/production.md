@@ -54,7 +54,9 @@ canonical argument and output hashes. Raw arguments are redacted from the
 record while `arguments_hash` remains available for strong agreement. Set
 `capture_tool_arguments=True` only under an approved data-retention policy.
 Unknown, rejected, or failed calls become `tool_error`; do not convert them to
-an empty trajectory.
+an empty trajectory. Tool return values must be JSON-serializable: the session
+records only their canonical hash as `output_hash`, and a value it cannot
+serialize is recorded as a failed call.
 
 ## Start in shadow mode
 
@@ -153,7 +155,14 @@ dfah run --agent my_project.provider_adapter:my_agent \
 
 `--mode blocking` requires `--policy`. Invalid policy files are rejected before
 the agent is imported or called. In shadow mode, `--policy` evaluates the
-policy without making a threshold failure stop the run.
+policy without making a threshold failure stop the run. Every evaluation is
+recorded as `RUN/gates/<report_id>.json` together with the policy and its
+SHA-256 commitment. A shadow run, or a blocking run whose gate passes, prints
+`policy=PASS` or `policy=FAIL` with the failed check names; a blocking run
+whose gate fails prints an error naming the failed checks and that record
+instead, and exits 1. A shadow failure is therefore visible and reviewable;
+it is not silently discarded. Library callers read the same outcome from
+`Replay.last_gate_result`.
 
 ## Interpret and review
 
@@ -200,6 +209,15 @@ Keep prospective stores outside the historical corpus and under access control.
 The current local `FileStore` supports macOS and POSIX systems; it requires
 advisory file locks and directory-descriptor operations. Windows support needs
 a reviewed storage backend and is not claimed by this alpha.
+Artifact verification is a consistency check, not authentication. A report is
+regenerated from its committed episodes and bound to the run plan and episode
+root by SHA-256 commitments, so an inconsistent edit is detected. Anyone with
+write access to the run directory can regenerate a consistent store, report,
+and gate record. When authenticity matters, keep run directories on
+append-only or access-controlled storage and anchor `run_plan_sha256`,
+`episode_artifact_root_sha256`, and each gate record's `policy_sha256` outside
+the directory, for example in CI logs or a signed release note.
+
 The store never overwrites a committed episode. On a second invocation with
 the same manifest, artifact case ID, replay index, and output location it
 reads the existing committed record instead of invoking the agent.

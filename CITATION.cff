@@ -2,8 +2,7 @@ cff-version: 1.2.0
 message: "If you use DFAH-Bench or its replay artifacts, please cite the paper below."
 title: "DFAH-Bench"
 type: software
-version: 0.1.2
-date-released: 2026-09-04
+version: 0.1.3
 authors:
   - family-names: Khatchadourian
     given-names: Raffi

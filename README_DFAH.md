@@ -97,12 +97,19 @@ from dfah.testing import check_agent
 conformance = check_agent(
     my_agent,
     max_cases=2,
+    expected_tools={"CASE-001": ["read_risk_tier"]},
     budget_usd=0.20,
     estimated_max_episode_cost_usd=0.05,
     episode_timeout_s=30.0,
     raise_on_error=True,
 )
 ```
+
+`expected_tools` names, per selected artifact case ID, the declared tools whose
+calls must be captured through the injected session in every replay. Without
+it an observed-empty path is accepted as valid, so an adapter that invokes a
+tool implementation directly stays invisible; the report's `selected_case_ids`
+lists the cases the preflight ran.
 
 An integration implements the small `Agent` protocol and returns a typed
 `AgentResult` containing an observed trajectory, parse provenance, and a
@@ -122,6 +129,11 @@ manifest.
   without placing raw values in reports.
 - Run plans are immutable, episode commits are append-only, and resumability
   does not resend an already committed episode.
+- Artifact verification regenerates a report from its committed episode store
+  and binds the two by commitment. It is tamper-evident within a run
+  directory, not a signature: protect the directory, and anchor
+  `run_plan_sha256`, `episode_artifact_root_sha256`, and each gate record's
+  `policy_sha256` outside it when authenticity matters.
 - Cost admission is conservative after dispatch, and shadow sampling reports
   both estimated cost and expected flags per 100 cases.
 - The optional OpenTelemetry integration emits GenAI spans without prompts,
@@ -129,19 +141,34 @@ manifest.
   remain observable metadata and should be reviewed before export.
 - The pytest plugin lets an existing test suite load a verified report and
   enforce project-specific replay gates.
+- Every policy evaluation, shadow or blocking, is recorded as
+  `RUN/gates/<report_id>.json` with the policy and its SHA-256. The CLI prints
+  `policy=PASS` or `policy=FAIL` with the failed check names for shadow runs
+  and passing blocking runs, and an error naming the record for a failing
+  blocking run.
 
 ## Research artifact versus package
 
-The repository contains two complementary layers:
+The repository contains complementary research and package layers:
 
-- `bench/` and the checked-in replay corpus reproduce the published
-  [DFAH-Bench preprint](https://arxiv.org/abs/2607.20491).
+- `bench/` and the checked-in replay corpus reproduce the corrected v2
+  retrospective analysis of [DFAH-Bench](https://arxiv.org/abs/2607.20491).
+- `paper/arxiv_dfah_bench_v3/` contains the v3 manuscript and its figures.
+  Building that paper and reproducing the new hosted studies have different
+  requirements; see the [v3 study guide](docs/dfah/v3-study.md).
 - `src/dfah/` is the prospective package for new integrations and new replay
   captures.
 
 The package does not rewrite historical logs or silently mix old and new
 studies. Its built-in suites validate integration plumbing; they are not
 financial-accuracy benchmarks.
+
+The 0.1.3 source adds `dfah.metrics.execution_summary`: it separates captured
+returns, rejected invocations, unresolved proposals and errors. An unavailable
+channel keeps unavailable counts, while an observed-empty channel has zero
+counts. See the [execution evidence guide](docs/dfah/execution-evidence.md)
+and the [offline Lab 10](docs/lab-10/README.md). This addition leaves the replay
+agreement metrics and their eligibility rules unchanged.
 
 ## Replay, review, and retest
 
@@ -153,8 +180,11 @@ dfah run --agent package.module:agent \
 ```
 
 Blocking mode without a policy is a configuration error. A failed gate keeps
-the report and exits unsuccessfully. In pytest, an explicit `--dfah-policy`
-is enforced before collection, even if no test uses a DFAH fixture.
+the report, records the evaluation under `RUN/gates/`, names that record in
+its error, and exits unsuccessfully. In shadow mode the same record is written
+and the outcome is printed without stopping the run. In pytest, an explicit
+`--dfah-policy` is enforced before collection, even if no test uses a DFAH
+fixture.
 
 The [bounded replay-and-review example](docs/dfah/replay-review-loop.md)
 evaluates two explicitly versioned local candidates under one fixed policy:
@@ -163,11 +193,10 @@ keeps both evidence sets so the change can be reviewed and retested.
 
 ## Export replay evidence
 
-Version 0.1.2 includes a local exporter for the Every Eval Ever v0.2.2
+The package includes a local exporter for the Every Eval Ever v0.2.2
 interchange schema:
 
 ```bash
-python -m pip install "dfah-bench==0.1.2"
 dfah export .dfah/runs/MY-RUN \
   --format every-eval-ever \
   --out .dfah/exports/MY-RUN
