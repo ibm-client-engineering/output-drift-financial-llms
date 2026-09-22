@@ -9,6 +9,15 @@ and releases use semantic versioning.
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-09-21
+
+Execution evidence and replay-gate hardening. Persisted run plans, episode
+stores, and replay reports retain their 0.1.2 schemas. Those run artifacts
+load and verify in both directions; the additional `gates/` directory is
+separate from the store and replay report. Conformance diagnostics add
+`selected_case_ids`. Cross-version run-artifact compatibility was checked
+against the published 0.1.2 wheel.
+
 ### Added
 
 - Add `dfah.metrics.execution_summary` to distinguish completed invocations,
@@ -16,27 +25,6 @@ and releases use semantic versioning.
   Unavailable evidence remains unavailable rather than becoming a zero count.
   The helper leaves DAR/TAR unchanged and makes no policy-correctness or
   business-success claim. See [execution evidence](docs/dfah/execution-evidence.md).
-
-### Documentation
-
-- Add an offline [execution-evidence example](examples/dfah_execution_evidence.py)
-  connecting the helper to the distinction between proposed and completed
-  actions. Its constructed records demonstrate package behavior independently
-  of the hosted study traces that motivated the helper.
-- Add a [v3 study guide](docs/dfah/v3-study.md) explaining the study findings
-  and the boundary between package examples and retained hosted evidence.
-
-## [0.1.3] - Unreleased
-
-Hardening release candidate. No artifact schema change: run plans, episode
-stores, and reports written by 0.1.2 load and verify unchanged under 0.1.3,
-and run directories written by 0.1.3, which add a `gates/` directory, load and
-verify under 0.1.2 because neither the store nor the report loader reads
-`gates/`. Both directions were checked against runs produced by the
-published 0.1.2 wheel.
-
-### Added
-
 - Record every `Replay` policy evaluation as `RUN/gates/<report_id>.json`
   (`GateRecord`: mode, policy, policy SHA-256, and every check) in shadow and
   blocking mode, and expose it as `Replay.last_gate_result`.
@@ -67,6 +55,15 @@ published 0.1.2 wheel.
   anchor the run-plan, episode-root, and policy commitments externally.
 - Document that tool return values must be JSON-serializable and that the
   `gates/` directory sits beside the store.
+
+### Documentation
+
+- Add an offline [execution-evidence example](examples/dfah_execution_evidence.py)
+  connecting the helper to the distinction between proposed and completed
+  actions. Its constructed records demonstrate package behavior independently
+  of the hosted study traces that motivated the helper.
+- Add a [v3 study guide](docs/dfah/v3-study.md) explaining the study findings
+  and the boundary between package examples and retained hosted evidence.
 
 ## [0.1.2] - 2026-09-04
 
