@@ -131,10 +131,28 @@ class ToolSession:
         self._otel = otel
         self._calls: list[ToolCall] = []
         self._lock = anyio.Lock()
+        self._closed = False
+
+    def close(self) -> None:
+        """Reject new calls after the owning agent invocation has exited.
+
+        Already-started operations are not cancelled. Their outstanding records
+        remain unresolved in a trajectory captured before they return.
+        """
+
+        self._closed = True
 
     async def _reserve(self, name: str, arguments: Mapping[str, Any]) -> int:
+        if self._closed:
+            raise ToolExecutionError("tool session is closed; the agent invocation has ended")
         argument_hash = sha256(dict(arguments))
         async with self._lock:
+            # Closing is synchronous: a call waiting for this lock must recheck
+            # before it can register a proposal or reach the implementation.
+            if self._closed:
+                raise ToolExecutionError(
+                    "tool session is closed; the agent invocation has ended"
+                )
             index = len(self._calls)
             self._calls.append(
                 ToolCall(

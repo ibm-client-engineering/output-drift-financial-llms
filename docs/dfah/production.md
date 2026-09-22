@@ -44,6 +44,12 @@ returns the session's exact trajectory. An explicit `Replay(tools=...)`
 override remains available for non-decorator adapters. This prevents a
 separate, hand-recorded path from silently diverging from observed calls.
 
+Await tool calls before returning from `arun`. The injected session closes
+when that invocation returns, raises, times out, or is cancelled, before DFAH
+captures its final trajectory. Later calls through that session are rejected
+before execution. Operations already started can still have effects; a call
+without a captured return remains unresolved and makes the replay ineligible.
+
 The registry validates each call against its declared Draft 2020-12 JSON
 Schema before invoking the implementation. A missing field, wrong type, or
 disallowed extra field is recorded as a rejected call and cannot be coerced
