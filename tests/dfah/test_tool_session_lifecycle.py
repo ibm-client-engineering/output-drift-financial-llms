@@ -22,7 +22,7 @@ from dfah.metrics import execution_summary
 from dfah.store import FileStore
 
 
-def lifecycle_agent(behavior):
+def lifecycle_agent(behavior, *, entered=None):
     spec = ToolSpec(
         name="increment_counter",
         input_schema={"type": "object", "additionalProperties": False},
@@ -60,6 +60,8 @@ def lifecycle_agent(behavior):
     @agent(manifest=manifest, suite=suite, tools=registry)
     async def candidate(case, context):
         sessions.append(context.tools)
+        if entered is not None:
+            entered.set()
         if behavior == "error":
             raise RuntimeError("synthetic failure")
         if behavior == "wait":
@@ -160,12 +162,17 @@ def test_agent_failure_or_timeout_closes_its_session(tmp_path, behavior):
 
 
 def test_external_cancellation_closes_the_active_session(tmp_path):
-    candidate, suite, effects, sessions, _tasks = lifecycle_agent("wait")
+    entered = asyncio.Event()
+    candidate, suite, effects, sessions, _tasks = lifecycle_agent("wait", entered=entered)
 
     async def cancel_run():
-        with anyio.move_on_after(0.02) as scope:
-            await Replay(suite=suite, replays=2, out=tmp_path / "run").arun(candidate)
-        assert scope.cancel_called
+        task = asyncio.create_task(
+            Replay(suite=suite, replays=2, out=tmp_path / "run").arun(candidate)
+        )
+        await asyncio.wait_for(entered.wait(), timeout=5)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
 
     anyio.run(cancel_run)
     assert sessions
