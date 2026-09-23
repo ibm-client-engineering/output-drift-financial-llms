@@ -153,8 +153,8 @@ The repository contains complementary research and package layers:
 
 - `bench/` and the checked-in replay corpus reproduce the corrected v2
   retrospective analysis of [DFAH-Bench](https://arxiv.org/abs/2607.20491).
-- `paper/arxiv_dfah_bench_v3/` contains the v3 manuscript and its figures.
-  Building that paper and reproducing the new hosted studies have different
+- The [published v3 paper](https://arxiv.org/abs/2607.20491) contains the
+  manuscript and figures. Its hosted studies have separate evidence and access
   requirements; see the [v3 study guide](docs/dfah/v3-study.md).
 - `src/dfah/` is the prospective package for new integrations and new replay
   captures.

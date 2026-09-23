@@ -56,8 +56,9 @@ decision agreement can coexist with lower constructed policy-label match.
 Read the [v3 study and reproduction guide](../dfah/v3-study.md) for exact
 denominators, inference limits, OpenRouter's role and cost scopes.
 [Lab 10](../lab-10/README.md) is an offline synthetic walkthrough of the
-execution boundary. The manuscript source builds the paper; the existing
-`make reproduce-paper` target continues to reproduce v2.
+execution boundary. Read the [published paper](https://arxiv.org/abs/2607.20491)
+for the full study; the existing `make reproduce-paper` target continues to
+reproduce v2.
 
 ---
 

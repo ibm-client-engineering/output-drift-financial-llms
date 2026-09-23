@@ -1,12 +1,13 @@
 # Reproducibility — DFAH-Bench
 
-This repository supports three related forms of reproduction:
+This repository supports two local forms of reproduction and documents the
+published v3 study:
 
-| Scope | Public inputs | What the commands reproduce |
+| Scope | Public materials | What can be checked |
 | --- | --- | --- |
 | Corrected v2 research | `bench/`, the sanitized replay fixture, `scripts/`, `results/v2/` | Retrospective CSVs and checks of the aggregate-only prospective extensions |
 | Prospective package | `src/dfah/`, `examples/`, `tests/dfah/` | Local capture, replay, policy and execution-evidence behavior on synthetic examples |
-| V3 manuscript | `paper/arxiv_dfah_bench_v3/` | The manuscript presentation from included LaTeX sources and figures |
+| Published v3 study | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | Methods, figures, findings and stated access limits; no local manuscript build |
 
 The historical analysis, prospective API diagnostic, local systems check,
 native banking study and fixed-state probes retain separate tasks,
@@ -16,18 +17,15 @@ behavior; they are not additional study observations.
 The package environment uses `pyproject.toml`. The corrected v2 research
 reproduction is independent and runs from `requirements.txt`.
 
-## V3 manuscript
+## Published v3 study
 
-The [v3 manuscript source and build guide](paper/arxiv_dfah_bench_v3/README.md)
-explains how to compile the paper from its active LaTeX inputs and included
-figures. Compilation makes no model calls. The
-[v3 study guide](docs/dfah/v3-study.md) explains the native outcomes, gate probes
-and cost accounting.
+The [paper on arXiv](https://arxiv.org/abs/2607.20491) contains the methods,
+figures and findings. The [v3 study guide](docs/dfah/v3-study.md) explains the
+native outcomes, gate probes and cost accounting. Manuscript build inputs are
+maintained outside this public checkout.
 
 The hosted banking and gate-probe runners, frozen collection plans and raw
-provider captures are retained separately from this public checkout. The
-included figures and manuscript are sufficient to rebuild the presentation,
-but not to recompute the hosted-study findings from raw traces. In particular,
+provider captures are retained separately from this public checkout.
 `make reproduce-paper` continues to reproduce the preserved **v2** artifacts;
 it does not execute or verify the hosted v3 collection.
 

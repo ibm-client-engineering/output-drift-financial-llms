@@ -24,8 +24,8 @@ DFAH measures repeatability and fidelity to the recorded execution. It does
 not inspect hidden reasoning or establish correctness, safety, deployment
 readiness, or regulatory compliance.
 
-The [v3 manuscript sources and build instructions](paper/arxiv_dfah_bench_v3/README.md)
-connect replay evidence with banking authorization, task outcomes and cost.
+The [published paper](https://arxiv.org/abs/2607.20491)
+connects replay evidence with banking authorization, task outcomes and cost.
 The [v3 study guide](docs/dfah/v3-study.md) explains the completed studies and
 their connection to the package.
 
@@ -122,7 +122,7 @@ with the [package guide](README_DFAH.md) and the
 | Explore the published results | [Live results explorer](https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/) |
 | Review community reports and resolved defects | [Community reports and findings](docs/resources/community-findings.md) |
 | Reproduce DFAH-Bench v2 | `make reproduce-paper` and [the reproducibility guide](REPRODUCIBILITY.md) |
-| Read the v3 findings and their limits | [V3 study guide](docs/dfah/v3-study.md) and [manuscript sources](paper/arxiv_dfah_bench_v3/README.md) |
+| Read the v3 findings and their limits | [V3 study guide](docs/dfah/v3-study.md) and [published paper](https://arxiv.org/abs/2607.20491) |
 | Distinguish proposals from completed calls | [Lab 10: execution evidence](docs/lab-10/README.md) |
 | Use the interactive workshop | [Workshop labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
 
@@ -241,10 +241,10 @@ The repository supports three distinct forms of reproduction:
   corrected DFAH-Bench v2 analysis.
 - `src/dfah/` is the installable package for new integrations and replay
   captures, with offline examples and tests.
-- `paper/arxiv_dfah_bench_v3/` builds the v3 manuscript from its included
-  sources and figures. The hosted banking and gate-probe runners and raw
-  captures are retained separately; this checkout does not rerun those studies
-  or regenerate their figures from raw traces.
+- The [published v3 paper](https://arxiv.org/abs/2607.20491) documents the
+  banking and gate-probe studies. Manuscript build inputs, hosted runners and
+  raw captures are outside this public checkout; its local reproduction
+  commands do not rerun those studies.
 
 ```bash
 python -m pip install -r requirements.txt
@@ -443,7 +443,6 @@ Removing those launchers would break published labs and external command paths.
 | `docs/dfah/` | Package quickstart, integration, production, and design guides |
 | `bench/` | Frozen metrics and reproduction code for the corrected v2 analysis |
 | `results/v2/` | Corrected v2 paper outputs and release manifest |
-| `paper/arxiv_dfah_bench_v3/` | V3 manuscript sources, included figures and build instructions |
 | `run_evaluation.py`, `run_dfah_demo.py`, `plot_results.py`, `make_tables.py` | Stable compatibility launchers for published commands |
 | `scripts/workshop/` | Maintained implementations behind the root workshop launchers |
 | `harness/`, `providers/`, `prompts/`, `data/` | Historical output-drift evaluation components |

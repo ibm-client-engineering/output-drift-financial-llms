@@ -5,10 +5,9 @@ replay study's qualification principle into interactive banking tasks: retain
 what the agent saw, what a check permitted, what actually ran and whether the
 task finished successfully. Each measure keeps its own unit and denominator.
 
-The [manuscript and build instructions](https://github.com/ibm-client-engineering/output-drift-financial-llms/tree/main/paper/arxiv_dfah_bench_v3)
-contain the full methods and figures. The paper remains part of the
-[DFAH-Bench record, arXiv:2607.20491](https://arxiv.org/abs/2607.20491).
-The source revision and the version currently served by arXiv can differ.
+The [published paper](https://arxiv.org/abs/2607.20491) contains the full
+methods and figures. Manuscript build inputs are maintained outside this
+public checkout.
 
 ## What the extension measures
 
@@ -83,21 +82,20 @@ the $80 ceiling. These totals cover different scopes from the paired episode
 comparison. The manuscript explains the small review allocations and incomplete
 cost traces. Later editorial model review is outside those study totals.
 
-## What you can reproduce from this repository
+## What this repository offers
 
-| Surface | Local path or command | What it reproduces |
+| Surface | Location or command | Scope |
 |---|---|---|
 | Corrected v2 analysis | `make reproduce-paper` | Preserved retrospective results and aggregate checks from the public fixture |
-| V3 paper | Build `paper/arxiv_dfah_bench_v3/main.tex` | Manuscript presentation from included sources and figure PDFs |
+| Published v3 paper | [Read on arXiv](https://arxiv.org/abs/2607.20491) | Methods, figures and reported findings; no local manuscript build |
 | Package behavior | `python -m pytest tests/dfah` | Capture, eligibility, replay, export and execution-summary contracts |
 | Offline teaching example | [Lab 10](../lab-10/README.md) | Synthetic invocation summaries and shared-denominator behavior |
 
 The public package and lab do not include the hosted τ collection runner or
 the retained provider logs needed to regenerate its new analyses. The paper
 documents those access and runtime limits. Re-running a hosted model today is
-a new experiment; it cannot refreeze the original service. Compiling the paper
-or running the synthetic lab therefore does not regenerate its empirical
-findings.
+a new experiment; it cannot refreeze the original service. Running the
+synthetic lab does not regenerate the hosted findings.
 
 Start with [Lab 8](../lab-8/README.md) for replay eligibility,
 [Lab 9](../lab-9/README.md) for a fixed-policy review loop, and
