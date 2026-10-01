@@ -9,6 +9,11 @@
 <meta property="og:title" content="DFAH-Bench Explorer — Same Decision. Different Path.">
 <meta property="og:description" content="Compare recorded agent replays, explore the banking study, and try an interactive replay playground.">
 <meta property="og:url" content="https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/">
+<meta property="og:image" content="https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/featured.png">
+<meta property="og:image:alt" content="DFAH-Bench: the same decision follows two different recorded tool paths">
+<meta property="og:image:width" content="1672">
+<meta property="og:image:height" content="941">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   :root{
     --bg:#ffffff; --panel:#ffffff; --panel2:#f4f4f4; --line:#e0e0e0;
@@ -105,6 +110,7 @@
   .verdict.bad{border-color:var(--red);background:#fff1f1}
   .verdict.good{border-color:var(--green);background:#defbe6}
   code,pre{font-family:var(--mono)}
+  p code{overflow-wrap:anywhere}
   pre{background:#161616;color:#f4f4f4;border-left:4px solid var(--blue);padding:16px;font-size:12.5px;overflow:auto}
   .small{font-size:12.5px;color:var(--muted)}
   .status{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-left:12px}
@@ -123,6 +129,11 @@
   .study-notes{border-top:1px solid var(--line);margin-top:16px;color:var(--muted);font-size:13px}
   .study-notes summary{cursor:pointer;padding:12px 0;color:var(--blue);font-weight:600}
   .study-notes p{margin:0 0 12px}
+  .lexicon{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:28px 0 0}
+  .lexicon div{background:#fff;border:1px solid var(--line);padding:18px 20px}
+  .lexicon dt{display:flex;align-items:baseline;gap:10px;color:var(--blue);font-size:20px;font-weight:600}
+  .lexicon dt span{color:var(--muted);font:11px var(--mono);text-transform:uppercase}
+  .lexicon dd{margin:9px 0 0;color:var(--muted);font-size:14px}
   :focus-visible{outline:3px solid var(--blue);outline-offset:4px}
   footer{margin-top:0;padding:36px 0 54px;color:#c6c6c6;background:#161616;font-size:13px}
   footer a{color:#78a9ff}
@@ -134,6 +145,7 @@
   }
   @media(max-width:560px){
     .wrap{padding:0 18px}
+    .lexicon{grid-template-columns:1fr}
     nav.toc{position:relative}nav.toc a{width:50%;border-bottom:1px solid var(--line)}
   }
   @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
@@ -237,6 +249,23 @@
     <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/dfah-v0.1.2/examples/dfah_gate_loop.py">Versioned source</a></p>
 </section>
 
+<section id="meaning">
+  <h2>What DFAH means here</h2>
+  <p class="lead">Four plain-language terms behind the measurement.</p>
+  <dl class="lexicon">
+    <div><dt>Determinism <span>noun</span></dt>
+      <dd>The &ldquo;same decision?&rdquo; test: with the case and setup fixed, how often does the decision repeat?</dd></div>
+    <div><dt>Faithfulness <span>noun</span></dt>
+      <dd>The &ldquo;same work?&rdquo; test: replay fidelity of the recorded path&mdash;tool names,
+        order and, when captured, arguments and results.</dd></div>
+    <div><dt>Assurance <span>noun</span></dt>
+      <dd>A claim with receipts: qualified runs, required capture, shared denominators
+        and explicit unknowns.</dd></div>
+    <div><dt>Harness <span>noun</span></dt>
+      <dd>The test rig that pins a case, replays it, records what happened and compares the runs.</dd></div>
+  </dl>
+</section>
+
 <section id="v3">
   <h2>What happens after the decision?</h2>
   <p class="lead">Replay tells us whether a decision and path repeat. The banking study asks
@@ -244,32 +273,34 @@
     the task succeeded. It also tracks what the runs cost.</p>
   <div class="row two">
     <div class="card">
-      <h3 style="margin-top:0">Did the task finish?</h3>
+      <h3 style="margin-top:0">Which setup had more successes?</h3>
+      <p class="small" style="margin-bottom:8px">Known successful episodes in the primary banking study; 270 scheduled per setup.</p>
       <div class="metrics">
-        <div class="m"><div class="v">1,080</div><div class="l">Scheduled episodes</div></div>
-        <div class="m"><div class="v">1,033</div><div class="l">Known outcomes</div></div>
-        <div class="m"><div class="v">47</div><div class="l">Unknown outcomes</div></div>
+        <div class="m"><div class="v">121</div><div class="l">Structural checks</div></div>
+        <div class="m"><div class="v">81</div><div class="l">Prose gate</div></div>
+        <div class="m"><div class="v">70</div><div class="l">Typed gate</div></div>
       </div>
-      <p>On the primary banking schedule, structural checks alone produced more task successes than either
-        gate-and-recovery bundle under every assignment of the unknown outcomes.</p>
-      <p class="small">The 47 unknown outcomes prevented the planned statistical tests;
-        these comparisons are descriptive.</p>
+      <p>Structural checks alone led this retained schedule. Assigning every unknown outcome
+        in favor of either gate would not reverse the ordering.</p>
       <details class="study-notes"><summary>How were these runs compared?</summary>
+        <p>All 1,080 scheduled episodes across three cohorts reached terminal artifacts;
+          1,033 outcomes are known and 47 remain unknown. In the primary cohort, the
+          unknown counts are 10 for structural checks, 7 for the prose gate and 7 for
+          the typed gate. The planned statistical tests could not run, so these are
+          descriptive comparisons of the retained schedule.</p>
         <p>Three separate cohorts use Sierra&rsquo;s &tau;-Knowledge banking environment:
           an open-weight DeepSeek v4.1 Flash primary generator, a frontier Gemini 3.8 Flash
           replication, and a DeepSeek retrieval variant. Gemini also supplied simulation and grading.
-          All scheduled episodes have terminal artifacts.</p>
-        <p>Structural checks alone, a prose-model gate and a typed-choice gate are compared within
-          each cohort. The study also bounds the results over the retained schedule.</p>
+          Each cohort compares structural checks alone, a prose-model gate and a typed-choice gate.</p>
       </details>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">A repeatable gate can still miss a rule</h3>
-      <p>In the constructed fixed-state bank, the typed-choice gate repeated its decision more often
-        than the prose-model gate: <strong>98.7% versus 93.1%</strong> modal agreement.
-        Yet it matched fewer policy labels: <strong>54.5% versus 82.6%</strong>.</p>
-      <p>A selected referral case makes the distinction concrete: repeated permission persisted when
-        required current-time evidence was missing.</p>
+      <h3 style="margin-top:0">More repeatable, fewer rule matches</h3>
+      <p>The typed-choice gate repeated its decision more often than the prose-model gate:
+        <strong>98.7% versus 93.1%</strong>. But it matched fewer constructed policy labels:
+        <strong>54.5% versus 82.6%</strong>.</p>
+      <p>In one referral case, it repeatedly permitted action even though required current-time
+        evidence was missing.</p>
       <details class="study-notes"><summary>What do these percentages cover?</summary>
         <p>Agreement averages 105 complete three-repeat state groups for the typed gate
           and 101 for the prose gate. Policy-label matches use 175/321 and 261/316 qualified
@@ -290,13 +321,16 @@
       </details>
     </div>
     <div class="card">
-      <h3 style="margin-top:0">What did the runs cost?</h3>
-      <p>The three native cohorts incurred <strong>$27.25</strong> in reconciled API cost across
-        all roles and attempts. Matched cost comparisons use complete task pairs and preserve each
-        cohort&rsquo;s coverage.</p>
+      <h3 style="margin-top:0">Lower cost, fewer task successes</h3>
+      <p>On 77 matched primary tasks, the typed gate cost <strong>$0.0043 less per episode</strong>
+        than the prose gate. That saving came alongside fewer native successes on the retained
+        schedule.</p>
+      <p>The three banking cohorts used <strong>$27.25</strong> in reconciled API cost across
+        all roles and attempts.</p>
       <details class="study-notes"><summary>What is included in the cost?</summary>
         <p>OpenRouter routed generator, simulator, native grader and prose-gate requests. Jev supplied
-          the typed-choice gate through its SystemOne endpoint. These hosted API costs have a different
+          the typed-choice gate through its SystemOne endpoint. Matched cost comparisons use complete
+          task pairs and preserve each cohort&rsquo;s coverage. These hosted API costs have a different
           basis from the local Ollama walkthrough and illustrative hardware sizing. The
           <a href="../dfah/v3-study/">study guide</a> connects paired costs to native success,
           admission limits and recovery behavior.</p>
@@ -305,8 +339,6 @@
   </div>
   <p><a href="../dfah/v3-study/">Read the methods and full comparisons &rarr;</a> &nbsp;&middot;&nbsp;
     <a href="https://arxiv.org/abs/2607.20491">Published paper and figures</a></p>
-  <p class="small">Based on the published DFAH-Bench paper. The offline lab demonstrates the
-    measurement contract; the study guide describes access and runtime requirements for the hosted analyses.</p>
 </section>
 
 <!-- ============================ RESULTS ============================ -->
@@ -335,8 +367,8 @@
       </div>
       <p class="small" style="margin:6px 0 14px">
         122/627 (19.5%) changed sequence: 17 changed only order, 58 changed call multiplicity
-        while retaining the same tool-name set, and 47 changed the set itself. The logs do not
-        establish that order-only changes are harmless.</p>
+        while retaining the same tool-name set, and 47 changed the set itself. Order can matter
+        when a control depends on which tool runs first.</p>
       <p class="small" style="margin-top:10px">Path agreement measures repeatability. Policy
         compliance and task success need separate evidence.</p>
     </div>
@@ -350,24 +382,32 @@
       <tbody></tbody>
     </table>
     <p class="small" style="margin-top:10px">Task-weighted over synthetic compliance and financial-DataOps cases.
-      Complete rows cover 100 groups; limited rows are retained contiguous prefixes and are not directly comparable
-      as a ranking. Gaps are paired by case and computed before displayed values are rounded.</p>
+      Complete rows cover 100 groups; limited rows cover shorter contiguous prefixes. Gaps are paired
+      by case before rounding.</p>
   </div>
   <div class="row two" style="margin-top:18px">
     <div class="card">
       <div class="kicker">Prospective API diagnostic &middot; July 23, 2026</div>
-      <h3 style="margin:8px 0 10px">Argument-aware capture widens the view</h3>
+      <h3 style="margin:8px 0 10px">Recording the full path reveals a larger gap</h3>
+      <p>Across these two API configurations, decision agreement was
+        <strong>94.2&ndash;95.1%</strong>; full-path agreement was
+        <strong>45.0&ndash;51.5%</strong>.</p>
       <table>
-        <thead><tr><th>Configuration</th><th>Groups</th><th>Episodes</th><th>DAR</th><th>Names</th><th>Name + args</th><th>Result only</th></tr></thead>
+        <thead><tr><th>Configuration</th><th>Groups</th><th>Episodes</th><th>Decision</th><th>Tool names</th><th>Full path</th><th>Result only</th></tr></thead>
         <tbody>
           <tr><td class="name">gpt-5.6-terra</td><td>96/100</td><td>288/300</td><td>95.1%</td><td>69.4%</td><td>51.5%</td><td>54.3%</td></tr>
           <tr><td class="name">claude-sonnet-5</td><td>94/100</td><td>282/300</td><td>94.2%</td><td>66.9%</td><td>45.0%</td><td>56.9%</td></tr>
         </tbody>
       </table>
-      <p class="small">All 600 scheduled episodes reached a terminal state; ten lacked a required channel,
-        making ten groups ineligible and leaving 570 eligible episodes across 190 groups. One Sonnet/DataOps
-        stratum retained 44 groups against a predeclared minimum of 45, so this remains a diagnostic extension,
-        not a provider ranking.</p>
+      <details class="study-notes"><summary>What counts as a full path?</summary>
+        <p>Full path means ordered tool names, canonical arguments and deterministic result
+          hashes. The displayed percentages retain the paper&rsquo;s exact configuration-specific
+          coverage.</p>
+        <p>All 600 scheduled episodes reached a terminal state; ten lacked a required channel,
+          making ten groups ineligible and leaving 570 eligible episodes across 190 groups.
+          One Sonnet/DataOps stratum retained 44 groups against a predeclared minimum of 45.
+          These rows are a diagnostic comparison with their coverage shown, not a provider ranking.</p>
+      </details>
     </div>
     <div class="card">
       <div class="kicker">Local systems check &middot; July 22, 2026</div>
@@ -375,9 +415,8 @@
       <p>Gemma 4 E4B retained 400/400 episodes. Qwen 3.5 retained 392/400 after eight
         identical parse failures made one group ineligible. Across the 99 eligible groups,
         the required four-tool path repeated exactly.</p>
-      <p class="small">That is 100% observed agreement inside one fixed synthetic harness.
-        It validates capture and replay mechanics; it is not evidence of general model determinism,
-        financial accuracy, or production fitness.</p>
+      <p class="small">The 100% observation belongs to this fixed synthetic harness and checks
+        its capture and replay mechanics.</p>
     </div>
   </div>
 </section>
@@ -461,11 +500,9 @@ dfah analyze .dfah/runs/quickstart \
 dfah inspect .dfah/runs/quickstart --case CASE-001</pre>
     </div>
   </div>
-  <p class="small">A perfect toy score confirms the integration contract, not
-    real-world model quality. Continue with a synthetic suite that reflects
-    your own tool schema, then use sampled shadow replays before considering a
-    blocking gate. Blocking runs require an explicit policy; an explicit pytest
-    policy is checked before test collection. See the <a href="../dfah/quickstart/">package quickstart</a>
+  <p class="small">The toy run checks the integration. Next, try a synthetic suite that reflects
+    your tool schema, then sampled shadow replays. Blocking runs require an explicit policy.
+    See the <a href="../dfah/quickstart/">package quickstart</a>
     and <a href="../lab-9/">Lab 9 for the versioned review loop</a>, then
     <a href="../lab-10/">Lab 10 for execution evidence in 0.1.3</a>.</p>
 </section>
@@ -481,22 +518,20 @@ cd output-drift-financial-llms
 pip install -r requirements.txt
 make test-bench        # offline test suite
 make reproduce-paper   # regenerates v2 analysis and validates its manifest</pre>
-  <p class="small">The revised v2 eligibility rules and their provenance are recorded in the
-    manifest. The ledger lineage is 8,129 raw records, 8,127 in the legacy analysis,
-    5,501 after task/configuration exclusions, and 4,157 in configurations with observed
-    tool use. Use <code>make reproduce-paper-v1</code> only for the archived v1 pipeline.
-    Prospective provider extensions are public as aggregate-only, checksum-pinned artifacts;
-    their approval-gated raw captures are not part of the public reproduction target. See
+  <p class="small">Use <a href="../lab-8/">Lab 8</a> for a guided walkthrough and
     <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/REPRODUCIBILITY.md">REPRODUCIBILITY.md</a>
-    for the exact environment and
-    <a href="../lab-8/">Lab 8</a> for the guided walkthrough. Extend to your own domain with zero metric-code changes:
-    <code>python examples/domain_extension_medical.py</code>.</p>
-  <div class="verdict"><strong>Follow the study at the right level.</strong>
-    The paper and figures are on arXiv; package tests and
-    <a href="../lab-10/">Lab 10</a> exercise the execution-evidence contract.
-    The hosted &tau; collection runner and retained provider logs needed to regenerate its new empirical
-    analyses are outside the public package. See the <a href="../dfah/v3-study/">study guide</a>
-    for each surface&rsquo;s scope.</div>
+    for the exact environment. The <a href="../dfah/v3-study/">study guide</a> explains how
+    the public replay fixture, offline execution lab, and hosted banking study fit together.</p>
+  <details class="study-notes"><summary>See artifact lineage and access scope</summary>
+    <p>The revised v2 eligibility rules and their provenance are recorded in the manifest.
+      The ledger lineage is 8,129 raw records, 8,127 in the legacy analysis, 5,501 after
+      task/configuration exclusions, and 4,157 in configurations with observed tool use.
+      <code>make reproduce-paper-v1</code> runs the archived v1 pipeline. Prospective provider
+      extensions are public as aggregate-only, checksum-pinned artifacts; raw captures require
+      separate approval. The hosted &tau; collection runner and retained provider logs for the
+      banking analyses are outside this public package.</p>
+    <p>Extend to your own domain with <code>python examples/domain_extension_medical.py</code>.</p>
+  </details>
 </section>
 
 </div>
