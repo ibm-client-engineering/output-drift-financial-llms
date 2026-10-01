@@ -1643,28 +1643,14 @@
 temperature=0.0. In the tested tasks, that variation reached 35%, which
 complicates replay, change review, and monitoring.</p>
 <div class="admonition tip">
-<p class="admonition-title">New in 0.1.2: replay, review, retest</p>
-<p>See a stable decision hide a changing tool path, inspect the failed gate, and check a supplied
-correction: <strong><a href="explorer/#review-loop">Open the recorded example</a></strong> or
-<strong><a href="lab-9/">run it locally in Lab 9</a></strong>. The lab also covers blocking policies and verified EEE export.</p>
+<p class="admonition-title">Explore the results</p>
+<p>Compare recorded decisions and tool paths, browse the study findings,
+then try the replay playground: <strong><a href="explorer/">Open the interactive explorer</a></strong>.</p>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Interactive results explorer</p>
-<p>Explore the research results and simulate replay metrics in your browser with no installation.
-Live model replay requires Ollama and a downloaded model:
-<strong><a href="explorer/">Open the explorer</a></strong>.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">New: corrected DFAH-Bench walkthrough</p>
-<p>Inspect the corrected replay denominator, regenerate v2, and
-compare decision and path agreement: <strong><a href="lab-8/">Start Lab 8</a></strong>.</p>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">V3: evidence before execution</p>
-<p>Separate a proposed action from a completed invocation in the offline
-<strong><a href="lab-10/">Lab 10</a></strong>. The <strong><a href="dfah/v3-study/">v3 study guide</a></strong>
-connects the new banking outcomes, fixed-state probes and API costs to
-the replay measurement framework.</p>
+<p class="admonition-title">Try an offline lab</p>
+<p>See the difference between a proposed tool call and a completed one using
+six synthetic records: <strong><a href="lab-10/">Start Lab 10</a></strong>.</p>
 </div>
 <h3 id="what-youll-learn">What You'll Learn<a class="headerlink" href="#what-youll-learn" title="Permanent link">&para;</a></h3>
 <p>By the end of this workshop, you will:</p>
@@ -1675,10 +1661,6 @@ the replay measurement framework.</p>
 <li>Analyze cross-provider reliability patterns</li>
 <li>Implement replay and observability checks for AI deployments</li>
 </ul>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>This workshop is hands-on and collaborative. We encourage you to experiment, ask questions, and share your findings with other participants. The framework is designed to be extensible—feel free to add your own tasks and providers!</p>
-</div>
 <h2 id="workshop-structure">Workshop Structure<a class="headerlink" href="#workshop-structure" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -1753,7 +1735,7 @@ also be taken independently, without a model service or API key.</p>
 <p><strong><a href="https://arxiv.org/abs/2607.20491">"DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"</a></strong>
 <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> |
 <a href="https://doi.org/10.48550/arXiv.2607.20491">DOI</a> |
-Corrected v2 artifacts reproduce with <code>make reproduce-paper</code>;
+The v2 replay analysis reproduces with <code>make reproduce-paper</code>;
 <a href="dfah/v3-study/">v3 source, results and reproduction scope</a></p>
 <p><strong>"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"</strong>
 <a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> (The 2<sup>nd</sup> ICLR Workshop on Advances in Financial AI) | <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
@@ -1769,8 +1751,8 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
   correlated (r = -0.11, p = 0.63)
 - This descriptive result does not identify model strategy or hidden reasoning
 - The portfolio fixture and its dependent task-label matches are not evidence
-  in corrected DFAH-Bench v2</p>
-<p><strong>Corrected DFAH-Bench analysis (arXiv v2):</strong>
+  in the DFAH-Bench replay analysis</p>
+<p><strong>DFAH-Bench replay analysis (arXiv v2):</strong>
 - The primary slice contains <strong>4,157 episodes from configurations with observed tool use across 719 groups</strong>, eight configurations, and two synthetic tasks
 - Among 627 unanimous-decision groups, <strong>122 (19.5%) change tool sequence</strong> and 47 (7.5%) change the tool-name set
 - A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
@@ -1786,7 +1768,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
   evaluations
 - See the dated <a href="resources/community-findings/">community ledger</a> for the
   evidence limits, anonymized review themes, and resolution links</p>
-<p><strong>DFAH-Bench v3 extension:</strong>
+<p><strong>Banking and evidence extension (arXiv v3):</strong>
 - 1,080 native banking episodes reached terminal artifacts; 1,033 have known
   outcomes and 47 remain unknown across separate generator/retrieval cohorts.
 - The primary typed-choice bundle cost less per episode on complete pairs,
@@ -1853,7 +1835,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 │   └── agentic/            # Trajectory determinism &amp; faithfulness metrics
 ├── scripts/                # Replay analysis + reproduce_paper.py
 ├── tests/                  # Offline research and package tests
-├── results/                # Historical reference CSVs and corrected v2 manifest
+├── results/                # Historical reference CSVs and v2 manifest
 ├── data/                   # Test datasets &amp; generators
 ├── examples/               # Audit trails + domain-extension example
 └── requirements.txt        # Python dependencies
@@ -1864,7 +1846,7 @@ Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</
 git<span class="w"> </span>checkout<span class="w"> </span>v0.1.0
 </code></pre></div>
 <p>The sanitized DFAH-Bench replay fixture is checked in. The default target
-regenerates the corrected v2 retrospective slice and verifies the
+regenerates the v2 retrospective slice under its revised eligibility rules and verifies the
 aggregate-only extensions and manifest:</p>
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper
 make<span class="w"> </span>reproduce-paper-v1<span class="w">  </span><span class="c1"># archived v1 lineage only</span>

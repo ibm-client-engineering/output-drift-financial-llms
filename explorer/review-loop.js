@@ -4,29 +4,24 @@
 (() => {
   const example = DFAH_REVIEW_EXAMPLE;
   const byId = id => document.getElementById(id);
-  const labels = {
-    tar_seq: "ordered-path agreement",
-    gap: "decision–path gap",
-    flags_per_100_cases: "flag rate"
-  };
   const buttons = document.querySelectorAll("[data-review-candidate]");
   byId("review-policy").textContent = JSON.stringify(example.policy, null, 2);
 
   function renderCandidate(index) {
     const candidate = example.candidates[index];
     buttons.forEach(button => button.setAttribute("aria-pressed", String(Number(button.dataset.reviewCandidate) === index)));
-    byId("review-dar").textContent = candidate.dar.toFixed(2);
-    byId("review-tar").textContent = candidate.tar_seq.toFixed(2);
+    byId("review-dar").textContent = `${Math.round(candidate.dar * 100)}%`;
+    byId("review-tar").textContent = `${Math.round(candidate.tar_seq * 100)}%`;
     byId("review-flags").textContent = `${candidate.flagged_groups} / ${candidate.groups}`;
     const verdict = byId("review-verdict");
     verdict.className = `verdict ${candidate.passed ? "good" : "bad"}`;
     verdict.textContent = candidate.passed
-      ? "PASS — all checks meet the unchanged policy."
-      : `FAIL — ${candidate.failed_checks.map(check => labels[check] || check).join(", ")} miss the policy.`;
+      ? "Policy passes — decisions and tool paths repeat."
+      : "Policy flags this run — the tool order changes across replays.";
     byId("review-explanation").textContent = candidate.passed
-      ? "Each case now preserves both its decision and its ordered tool path. The supplied correction changes the adapter implementation; the cases, tools, and gate stay fixed."
-      : "Both replays reach the same decision for each case. Reversing the two tool calls creates a review signal.";
-    byId("review-caption").textContent = `${candidate.candidate} · ${candidate.episodes} episodes`;
+      ? "The second supplied implementation keeps the same cases, tools, and policy. Both decisions and ordered paths repeat."
+      : "Both replays reach the same decision for each case, but the tool order changes.";
+    byId("review-caption").textContent = `${candidate.passed ? "Consistent" : "Varying"} tool path · ${candidate.episodes} recorded runs`;
     const rows = candidate.replays.map(replay => {
       const row = document.createElement("tr");
       [`${replay.case} / ${replay.replay}`, replay.decision, replay.tools.join(" → ")].forEach(value => {
