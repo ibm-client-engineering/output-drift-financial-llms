@@ -19,25 +19,13 @@ This workshop is based on research showing that LLM outputs can drift even at
 temperature=0.0. In the tested tasks, that variation reached 35%, which
 complicates replay, change review, and monitoring.
 
-!!! tip "New in 0.1.2: replay, review, retest"
-    See a stable decision hide a changing tool path, inspect the failed gate, and check a supplied
-    correction: **[Open the recorded example](explorer/index.html#review-loop)** or
-    **[run it locally in Lab 9](lab-9/README.md)**. The lab also covers blocking policies and verified EEE export.
+!!! tip "Explore the results"
+    Compare recorded decisions and tool paths, browse the study findings,
+    then try the replay playground: **[Open the interactive explorer](explorer/index.html)**.
 
-!!! tip "Interactive results explorer"
-    Explore the research results and simulate replay metrics in your browser with no installation.
-    Live model replay requires Ollama and a downloaded model:
-    **[Open the explorer](explorer/index.html)**.
-
-!!! tip "New: corrected DFAH-Bench walkthrough"
-    Inspect the corrected replay denominator, regenerate v2, and
-    compare decision and path agreement: **[Start Lab 8](lab-8/README.md)**.
-
-!!! tip "V3: evidence before execution"
-    Separate a proposed action from a completed invocation in the offline
-    **[Lab 10](lab-10/README.md)**. The **[v3 study guide](dfah/v3-study.md)**
-    connects the new banking outcomes, fixed-state probes and API costs to
-    the replay measurement framework.
+!!! tip "Try an offline lab"
+    See the difference between a proposed tool call and a completed one using
+    six synthetic records: **[Start Lab 10](lab-10/README.md)**.
 
 ### What You'll Learn
 
@@ -48,9 +36,6 @@ By the end of this workshop, you will:
 * Measure drift using industry-standard metrics (consistency, Jaccard similarity, schema violations)
 * Analyze cross-provider reliability patterns
 * Implement replay and observability checks for AI deployments
-
-!!! tip
-    This workshop is hands-on and collaborative. We encourage you to experiment, ask questions, and share your findings with other participants. The framework is designed to be extensible—feel free to add your own tasks and providers!
 
 ## Workshop Structure
 
@@ -78,7 +63,7 @@ This workshop is based on three papers from the same research line:
 **["DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"](https://arxiv.org/abs/2607.20491)**
 [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
 [DOI](https://doi.org/10.48550/arXiv.2607.20491) |
-Corrected v2 artifacts reproduce with `make reproduce-paper`;
+The v2 replay analysis reproduces with `make reproduce-paper`;
 [v3 source, results and reproduction scope](dfah/v3-study.md)
 
 **"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"**
@@ -98,9 +83,9 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
   correlated (r = -0.11, p = 0.63)
 - This descriptive result does not identify model strategy or hidden reasoning
 - The portfolio fixture and its dependent task-label matches are not evidence
-  in corrected DFAH-Bench v2
+  in the DFAH-Bench replay analysis
 
-**Corrected DFAH-Bench analysis (arXiv v2):**
+**DFAH-Bench replay analysis (arXiv v2):**
 - The primary slice contains **4,157 episodes from configurations with observed tool use across 719 groups**, eight configurations, and two synthetic tasks
 - Among 627 unanimous-decision groups, **122 (19.5%) change tool sequence** and 47 (7.5%) change the tool-name set
 - A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
@@ -118,7 +103,7 @@ Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv
 - See the dated [community ledger](resources/community-findings.md) for the
   evidence limits, anonymized review themes, and resolution links
 
-**DFAH-Bench v3 extension:**
+**Banking and evidence extension (arXiv v3):**
 - 1,080 native banking episodes reached terminal artifacts; 1,033 have known
   outcomes and 47 remain unknown across separate generator/retrieval cohorts.
 - The primary typed-choice bundle cost less per episode on complete pairs,
@@ -194,7 +179,7 @@ output-drift-financial-llms/
 │   └── agentic/            # Trajectory determinism & faithfulness metrics
 ├── scripts/                # Replay analysis + reproduce_paper.py
 ├── tests/                  # Offline research and package tests
-├── results/                # Historical reference CSVs and corrected v2 manifest
+├── results/                # Historical reference CSVs and v2 manifest
 ├── data/                   # Test datasets & generators
 ├── examples/               # Audit trails + domain-extension example
 └── requirements.txt        # Python dependencies
@@ -210,7 +195,7 @@ git checkout v0.1.0
 ```
 
 The sanitized DFAH-Bench replay fixture is checked in. The default target
-regenerates the corrected v2 retrospective slice and verifies the
+regenerates the v2 retrospective slice under its revised eligibility rules and verifies the
 aggregate-only extensions and manifest:
 
 ```bash
