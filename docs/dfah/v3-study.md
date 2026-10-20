@@ -1,13 +1,14 @@
-# V3: evidence, execution, outcomes and cost
+# Banking study: evidence, execution, outcomes and cost
 
 A repeated decision can still lack a required fact. DFAH-Bench v3 carries the
 replay study's qualification principle into interactive banking tasks: retain
 what the agent saw, what a check permitted, what actually ran and whether the
 task finished successfully. Each measure keeps its own unit and denominator.
 
-The [published paper](https://arxiv.org/abs/2607.20491) contains the full
-methods and figures. Manuscript build inputs are maintained outside this
-public checkout.
+The [AI4F paper at ACM ICAIF 2026](https://openreview.net/forum?id=VWQqIgrKw4)
+and [DFAH-Bench v3](https://arxiv.org/abs/2607.20491v3) describe these methods
+and findings. See the [workshop guide](workshop-studies.md) for the connection
+to the SLM-Agents capture study and its released supplement.
 
 ## What the extension measures
 
@@ -75,19 +76,18 @@ bases and available cache metadata were retained. Hosted inference is distinct
 from the earlier local Ollama experiments and the paper's illustrative local
 hardware sizing discussion.
 
-The three native cohorts used **$27.25** in reconciled API cost. For the broader
-study, a September 21, 2026 key snapshot reported **$38.97** combined credit
-and BYOK upstream usage; the conservative ledger recorded **$39.08** against
-the $80 ceiling. These totals cover different scopes from the paired episode
-comparison. The manuscript explains the small review allocations and incomplete
-cost traces. Later editorial model review is outside those study totals.
+The three native cohorts used **$27.25** in reconciled API cost. Of the
+1,080 scheduled episodes, 1,047 have usable cost traces. The matched comparisons
+exclude eight inferred zero-dollar settlements and retain each cohort's complete
+task pairs. These are observed API charges; they exclude human review and
+production operating costs.
 
 ## What this repository offers
 
 | Surface | Location or command | Scope |
 |---|---|---|
 | Corrected v2 analysis | `make reproduce-paper` | Preserved retrospective results and aggregate checks from the public fixture |
-| Published v3 paper | [Read on arXiv](https://arxiv.org/abs/2607.20491) | Methods, figures and reported findings; no local manuscript build |
+| Published v3 paper | [Read on arXiv](https://arxiv.org/abs/2607.20491v3) | Methods, figures and reported findings; no local manuscript build |
 | Package behavior | `python -m pytest tests/dfah` | Capture, eligibility, replay, export and execution-summary contracts |
 | Offline teaching example | [Lab 10](../lab-10/README.md) | Synthetic invocation summaries and shared-denominator behavior |
 

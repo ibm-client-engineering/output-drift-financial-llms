@@ -153,9 +153,11 @@ The repository contains complementary research and package layers:
 
 - `bench/` and the checked-in replay corpus reproduce the corrected v2
   retrospective analysis of [DFAH-Bench](https://arxiv.org/abs/2607.20491).
-- The [published v3 paper](https://arxiv.org/abs/2607.20491) contains the
+- The [published v3 paper](https://arxiv.org/abs/2607.20491v3) contains the
   manuscript and figures. Its hosted studies have separate evidence and access
-  requirements; see the [v3 study guide](docs/dfah/v3-study.md).
+  requirements; see the [banking study guide](docs/dfah/v3-study.md).
+- The [workshop guide](docs/dfah/workshop-studies.md) connects the two accepted
+  workshop papers and links the separate capture-study supplement.
 - `src/dfah/` is the prospective package for new integrations and new replay
   captures.
 
@@ -163,7 +165,7 @@ The package does not rewrite historical logs or silently mix old and new
 studies. Its built-in suites validate integration plumbing; they are not
 financial-accuracy benchmarks.
 
-The 0.1.3 source adds `dfah.metrics.execution_summary`: it separates captured
+Version 0.1.3 adds `dfah.metrics.execution_summary`: it separates captured
 returns, rejected invocations, unresolved proposals and errors. An unavailable
 channel keeps unavailable counts, while an observed-empty channel has zero
 counts. See the [execution evidence guide](docs/dfah/execution-evidence.md)
