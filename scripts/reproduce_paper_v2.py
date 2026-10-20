@@ -29,22 +29,43 @@ SECRET_PATTERN = re.compile(
     r"(?i)(?:sk-[a-z0-9_-]{12,}|bearer\s+[a-z0-9._-]{12,}|"
     r"(?:api[_-]?key|password|secret|credential)\s*[:=])"
 )
+PUBLIC_VENUE_PAGES = frozenset(
+    {
+        "README.md",
+        "REPRODUCIBILITY.md",
+        "docs/README.md",
+        "docs/dfah/v3-study.md",
+        "docs/dfah/workshop-studies.md",
+        "docs/explorer/index.html",
+        "docs/lab-10/README.md",
+        "docs/lab-11/README.md",
+        "docs/resources/paper.md",
+    }
+)
 
 
 def validate_public_boundary() -> None:
-    """Fail if internal venue/review-system identifiers enter public text."""
+    """Permit announced venue names on curated pages; reject private sources."""
     venue_token = "ic" + "aif"
     review_token = "cm" + "t"
     excluded_parts = {".git", "__pycache__", "site"}
     for path in REPO_ROOT.rglob("*"):
         if not path.is_file() or excluded_parts.intersection(path.parts):
             continue
+        relative = path.relative_to(REPO_ROOT)
+        if relative.parts[0] in {"paper", "main.tex", "docs-internal"} or path.suffix in {
+            ".tex", ".bib", ".bbl"
+        }:
+            raise AssertionError(f"manuscript or internal source in {relative}")
         try:
             text = path.read_text(encoding="utf-8")
         except (UnicodeDecodeError, OSError):
             continue
         lowered = text.lower()
-        if venue_token in lowered or re.search(rf"\b{review_token}\b", lowered):
+        private_venue_mention = (
+            venue_token in lowered and relative.as_posix() not in PUBLIC_VENUE_PAGES
+        )
+        if private_venue_mention or re.search(rf"\b{review_token}\b", lowered):
             raise AssertionError(
                 f"non-public conference identifier in {path.relative_to(REPO_ROOT)}"
             )

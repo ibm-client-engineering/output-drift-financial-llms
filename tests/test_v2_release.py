@@ -11,6 +11,8 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 V2_DIR = REPO_ROOT / "results" / "v2"
 FIXTURE = V2_DIR / "fixtures" / "retrospective_episodes.jsonl"
@@ -93,3 +95,34 @@ def test_extension_sidecars_and_manifest_are_current() -> None:
 
 def test_public_boundary_has_no_internal_conference_identifiers() -> None:
     _load_reproducer().validate_public_boundary()
+
+
+def test_announced_venue_is_allowed_on_curated_page(tmp_path) -> None:
+    module = _load_reproducer()
+    module.REPO_ROOT = tmp_path
+    (tmp_path / "README.md").write_text("Accepted poster at ACM " + "IC" + "AIF 2026")
+    module.validate_public_boundary()
+
+
+def test_venue_details_remain_blocked_outside_curated_pages(tmp_path) -> None:
+    module = _load_reproducer()
+    module.REPO_ROOT = tmp_path
+    (tmp_path / "private-notes.md").write_text("IC" + "AIF review correspondence")
+    with pytest.raises(AssertionError, match="non-public conference identifier"):
+        module.validate_public_boundary()
+
+
+def test_private_review_system_is_blocked_even_on_curated_page(tmp_path) -> None:
+    module = _load_reproducer()
+    module.REPO_ROOT = tmp_path
+    (tmp_path / "README.md").write_text("CM" + "T reviewer record")
+    with pytest.raises(AssertionError, match="non-public conference identifier"):
+        module.validate_public_boundary()
+
+
+def test_manuscript_source_is_blocked_without_venue_identifier(tmp_path) -> None:
+    module = _load_reproducer()
+    module.REPO_ROOT = tmp_path
+    (tmp_path / "main.tex").write_text("Manuscript source")
+    with pytest.raises(AssertionError, match="manuscript or internal source"):
+        module.validate_public_boundary()
