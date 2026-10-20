@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Learn how to measure, analyze, and mitigate output drift in financial AI systems">
+        <meta name="description" content="Explore the DFAH studies and learn to measure repeated decisions, execution records, and completed work.">
       
       
         <meta name="author" content="IBM Client Engineering">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Output Drift in Financial LLMs Workshop - Output Drift + DFAH</title>
+        <title>DFAH — Replay, Evidence, and Outcomes - Output Drift + DFAH</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#output-drift-in-financial-llms-workshop" class="md-skip">
+        <a href="#what-does-a-successful-agent-run-tell-us" class="md-skip">
           Skip to content
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Output Drift in Financial LLMs Workshop
+              DFAH — Replay, Evidence, and Outcomes
             
           </span>
         </div>
@@ -388,6 +388,8 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -430,6 +432,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -438,49 +442,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#output-drift-in-financial-llms-workshop" class="md-nav__link">
+  <a href="#two-2026-workshop-papers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output Drift in Financial LLMs Workshop
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Drift in Financial LLMs Workshop">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why This Matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-youll-learn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What You'll Learn
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workshop-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workshop Structure
+        Two 2026 workshop papers
       
     </span>
   </a>
@@ -488,10 +453,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#research-foundation" class="md-nav__link">
+  <a href="#choose-a-starting-point" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Research Foundation
+        Choose a starting point
       
     </span>
   </a>
@@ -499,10 +464,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#what-the-findings-show" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        What the findings show
       
     </span>
   </a>
@@ -510,10 +475,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#target-audience" class="md-nav__link">
+  <a href="#labs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Target Audience
+        Labs
       
     </span>
   </a>
@@ -521,10 +486,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#getting-help" class="md-nav__link">
+  <a href="#recompute-the-research" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Getting Help
+        Recompute the research
       
     </span>
   </a>
@@ -532,10 +497,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repository-structure" class="md-nav__link">
+  <a href="#earlier-studies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository Structure
+        Earlier studies
       
     </span>
   </a>
@@ -543,32 +508,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reproducibility-citations" class="md-nav__link">
+  <a href="#get-help" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproducibility &amp; Citations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        License
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributors-acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contributors &amp; Acknowledgments
+        Get help
       
     </span>
   </a>
@@ -953,6 +896,34 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lab-11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lab 11. Capture Loss and Agreement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1133,6 +1104,34 @@
   
   
     <li class="md-nav__item">
+      <a href="dfah/workshop-studies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workshop Studies and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="dfah/v3-study/" class="md-nav__link">
         
   
@@ -1140,7 +1139,7 @@
   <span class="md-ellipsis">
     
   
-    V3 Study and Reproduction
+    Banking Study and Reproduction
   
 
     
@@ -1463,6 +1462,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1471,49 +1472,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#output-drift-in-financial-llms-workshop" class="md-nav__link">
+  <a href="#two-2026-workshop-papers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Output Drift in Financial LLMs Workshop
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Output Drift in Financial LLMs Workshop">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#why-this-matters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Why This Matters
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#what-youll-learn" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        What You'll Learn
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#workshop-structure" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workshop Structure
+        Two 2026 workshop papers
       
     </span>
   </a>
@@ -1521,10 +1483,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#research-foundation" class="md-nav__link">
+  <a href="#choose-a-starting-point" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Research Foundation
+        Choose a starting point
       
     </span>
   </a>
@@ -1532,10 +1494,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#what-the-findings-show" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        What the findings show
       
     </span>
   </a>
@@ -1543,10 +1505,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#target-audience" class="md-nav__link">
+  <a href="#labs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Target Audience
+        Labs
       
     </span>
   </a>
@@ -1554,10 +1516,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#getting-help" class="md-nav__link">
+  <a href="#recompute-the-research" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Getting Help
+        Recompute the research
       
     </span>
   </a>
@@ -1565,10 +1527,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repository-structure" class="md-nav__link">
+  <a href="#earlier-studies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repository Structure
+        Earlier studies
       
     </span>
   </a>
@@ -1576,32 +1538,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reproducibility-citations" class="md-nav__link">
+  <a href="#get-help" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproducibility &amp; Citations
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#license" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        License
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributors-acknowledgments" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contributors &amp; Acknowledgments
+        Get help
       
     </span>
   </a>
@@ -1628,40 +1568,70 @@
   
 
 
-  <h1>Introduction</h1>
-
-<h2 id="output-drift-in-financial-llms-workshop">Output Drift in Financial LLMs Workshop<a class="headerlink" href="#output-drift-in-financial-llms-workshop" title="Permanent link">&para;</a></h2>
-<p>Welcome to the Output Drift in Financial LLMs Workshop! This hands-on workshop teaches you how to measure and analyze non-determinism in large language model (LLM) outputs for financial applications.</p>
-<h3 id="why-this-matters">Why This Matters<a class="headerlink" href="#why-this-matters" title="Permanent link">&para;</a></h3>
-<p>Financial institutions deploying AI systems need evidence for:</p>
-<ul>
-<li><strong>Governance Review</strong>: Reconstructable decisions and execution records</li>
-<li><strong>Risk Management</strong>: Predictable behavior in production</li>
-<li><strong>Trust &amp; Reliability</strong>: Stakeholder confidence in AI-driven recommendations</li>
-</ul>
-<p>This workshop is based on research showing that LLM outputs can drift even at
-temperature=0.0. In the tested tasks, that variation reached 35%, which
-complicates replay, change review, and monitoring.</p>
+<h1 id="what-does-a-successful-agent-run-tell-us">What does a successful agent run tell us?<a class="headerlink" href="#what-does-a-successful-agent-run-tell-us" title="Permanent link">&para;</a></h1>
+<p>An agent can repeat its answer while changing the work behind it. Its records
+can also agree because they leave out the same calls. Understanding outcomes
+means examining what ran, whether the record preserves it, and whether the
+available evidence supports the action.</p>
+<p>DFAH connects these questions through replay experiments, capture diagnostics,
+and banking studies. The labs turn the distinctions into examples you can run.</p>
 <div class="admonition tip">
-<p class="admonition-title">Explore the results</p>
-<p>Compare recorded decisions and tool paths, browse the study findings,
-then try the replay playground: <strong><a href="explorer/">Open the interactive explorer</a></strong>.</p>
+<p class="admonition-title">Explore the story</p>
+<p><a href="explorer/">Open the interactive explorer</a> to compare recorded
+paths and see how the capture and banking findings fit together.</p>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Try an offline lab</p>
-<p>See the difference between a proposed tool call and a completed one using
-six synthetic records: <strong><a href="lab-10/">Start Lab 10</a></strong>.</p>
-</div>
-<h3 id="what-youll-learn">What You'll Learn<a class="headerlink" href="#what-youll-learn" title="Permanent link">&para;</a></h3>
-<p>By the end of this workshop, you will:</p>
+<h2 id="two-2026-workshop-papers">Two 2026 workshop papers<a class="headerlink" href="#two-2026-workshop-papers" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Accepted poster</th>
+<th>Main question</th>
+<th>Start here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AI4F at ACM ICAIF</strong> — <a href="https://openreview.net/forum?id=VWQqIgrKw4">Evidence Before Execution in Financial Agent Gates</a></td>
+<td>Does the evidence justify an action, and what happens to completion and cost?</td>
+<td><a href="dfah/v3-study/">Banking study</a>, <a href="lab-10/">Lab 10</a></td>
+</tr>
+<tr>
+<td><strong>SLM-Agents at NeurIPS</strong> — <a href="https://openreview.net/forum?id=njEKVxonV2">When Replay Agreement Misleads</a></td>
+<td>Can averages hide path changes and repeated records hide omissions?</td>
+<td><a href="dfah/workshop-studies/">Study and supplement</a>, <a href="lab-11/">Lab 11</a></td>
+</tr>
+</tbody>
+</table>
+<p>These papers develop different parts of DFAH and share some historical
+observations. The <a href="resources/paper/">research guide</a> connects them with the
+preprint and earlier work.</p>
+<h2 id="choose-a-starting-point">Choose a starting point<a class="headerlink" href="#choose-a-starting-point" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Understand output drift and its implications for financial AI systems</li>
-<li>Set up and run reproducible LLM experiments across multiple providers</li>
-<li>Measure drift using industry-standard metrics (consistency, Jaccard similarity, schema violations)</li>
-<li>Analyze cross-provider reliability patterns</li>
-<li>Implement replay and observability checks for AI deployments</li>
+<li><strong>Try a 15-minute example without installing packages:</strong> <a href="lab-11/">Lab 11</a>
+  uses Python's standard library to show capture loss.</li>
+<li><strong>Measure your agent's replays:</strong> start with the <a href="dfah/quickstart/">package quickstart</a>
+  and <a href="lab-8/">Lab 8</a>.</li>
+<li><strong>Follow the evidence through a workflow:</strong> <a href="lab-9/">Lab 9</a> inspects path
+  changes; <a href="lab-10/">Lab 10</a> separates proposed and completed calls.</li>
+<li><strong>Study output drift across providers:</strong> Labs 1–6 use the earlier output-drift
+  framework; <a href="pre-work/">Lab 0</a> explains setup and model access.</li>
 </ul>
-<h2 id="workshop-structure">Workshop Structure<a class="headerlink" href="#workshop-structure" title="Permanent link">&para;</a></h2>
+<h2 id="what-the-findings-show">What the findings show<a class="headerlink" href="#what-the-findings-show" title="Permanent link">&para;</a></h2>
+<p>The prospective replay diagnostic retained <strong>570 episodes</strong>. Decisions agreed
+at <strong>94–95%</strong>, while paths including arguments and results agreed at <strong>45–52%</strong>.
+One condition missed the planned minimum by one group, so the comparison is
+diagnostic.</p>
+<p>In <strong>800 historical Qwen episodes</strong>, decision and path agreement both averaged
+<strong>99.625%</strong>, yet opposing case-level gaps hid a path change. In the separate
+<strong>48-execution capture study</strong>, deleting the same calls from repeated records
+left agreement at <strong>100%</strong>. Compare the per-case evidence and the execution
+reference to see what those averages leave out.</p>
+<p>The banking study scheduled <strong>1,080 episodes</strong>, with <strong>1,033 known outcomes</strong>.
+The typed-choice bundle cost less on complete task pairs but had fewer primary
+successes than the generative bundle under every assignment of unknown
+outcomes. Input limits and recovery behavior are part of those setups;
+<a href="dfah/v3-study/">the banking guide</a> keeps the comparison populations explicit.</p>
+<h2 id="labs">Labs<a class="headerlink" href="#labs" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1718,187 +1688,47 @@ six synthetic records: <strong><a href="lab-10/">Start Lab 10</a></strong>.</p>
 </tr>
 <tr>
 <td style="text-align: left;"><a href="lab-9/">Lab 9: Replay, Review, and Retest</a></td>
-<td style="text-align: left;">Evaluate a correction with a fixed policy and export verified results using 0.1.2</td>
+<td style="text-align: left;">Evaluate a correction with a fixed policy and export verified results</td>
 <td style="text-align: left;">25 min</td>
 </tr>
 <tr>
 <td style="text-align: left;"><a href="lab-10/">Lab 10: Evidence Before Execution</a></td>
-<td style="text-align: left;">Inspect final invocation records and missingness using the 0.1.3 source</td>
+<td style="text-align: left;">Inspect proposals, completed calls, and missing records</td>
+<td style="text-align: left;">15 min</td>
+</tr>
+<tr>
+<td style="text-align: left;"><a href="lab-11/">Lab 11: Capture Loss and Agreement</a></td>
+<td style="text-align: left;">See how repeated omissions preserve agreement, then compare against execution evidence</td>
 <td style="text-align: left;">15 min</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Total Duration</strong>: Approximately 4.5–5 hours. Labs 8 (package track), 9 and 10 can
-also be taken independently, without a model service or API key.</p>
-<h2 id="research-foundation">Research Foundation<a class="headerlink" href="#research-foundation" title="Permanent link">&para;</a></h2>
-<p>This workshop is based on three papers from the same research line:</p>
-<p><strong><a href="https://arxiv.org/abs/2607.20491">"DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"</a></strong>
-<a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> |
-<a href="https://doi.org/10.48550/arXiv.2607.20491">DOI</a> |
-The v2 replay analysis reproduces with <code>make reproduce-paper</code>;
-<a href="dfah/v3-study/">v3 source, results and reproduction scope</a></p>
-<p><strong>"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"</strong>
-<a href="https://sites.google.com/view/iclr2026finai/home">ICLR 2026 FinAI Workshop</a> (The 2<sup>nd</sup> ICLR Workshop on Advances in Financial AI) | <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a></p>
-<p><strong>"LLM Output Drift: Cross-Provider Validation &amp; Mitigation for Financial Workflows"</strong>
-Presented at the <a href="https://ai4f-workshop.github.io/">AI4F Workshop 2025</a> | <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a></p>
-<p><strong>Key Findings (v1, Output Drift):</strong>
-- Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
-- Several tested 7-20B configurations repeated all sampled outputs at T=0.0
-- RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
-- Structured output tasks (SQL, summarization) maintain better determinism</p>
-<p><strong>Earlier Replayable Agents study (4,705 runs):</strong>
-- Decision determinism and the historical task-label match were not detectably
-  correlated (r = -0.11, p = 0.63)
-- This descriptive result does not identify model strategy or hidden reasoning
-- The portfolio fixture and its dependent task-label matches are not evidence
-  in the DFAH-Bench replay analysis</p>
-<p><strong>DFAH-Bench replay analysis (arXiv v2):</strong>
-- The primary slice contains <strong>4,157 episodes from configurations with observed tool use across 719 groups</strong>, eight configurations, and two synthetic tasks
-- Among 627 unanimous-decision groups, <strong>122 (19.5%) change tool sequence</strong> and 47 (7.5%) change the tool-name set
-- A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
-- Missing or malformed required channels make a replay group ineligible; they are not treated as agreement</p>
-<p><strong>Community reports and findings:</strong>
-- A November 17, 2025 contributor report preserved four of six stated results
-  but not the materials needed for independent reproduction
-- The bounded observations vary by model/task combination; they do not
-  establish a size law or isolate architecture, provider, task, or harness
-  effects
-- Public issue #2, reported July 20 and fixed August 2, 2026, hardened the
-  legacy validators against absent outputs, unknown task types, and missing
-  evaluations
-- See the dated <a href="resources/community-findings/">community ledger</a> for the
-  evidence limits, anonymized review themes, and resolution links</p>
-<p><strong>Banking and evidence extension (arXiv v3):</strong>
-- 1,080 native banking episodes reached terminal artifacts; 1,033 have known
-  outcomes and 47 remain unknown across separate generator/retrieval cohorts.
-- The primary typed-choice bundle cost less per episode on complete pairs,
-  while its task-success count remained below the prose-model gate under
-  every assignment of the schedule's unknown outcomes.
-- Higher repeated gate agreement coexisted with lower constructed policy-label
-  match in fixed-state probes. Evidence sufficiency needs direct assessment.
-- See the <a href="dfah/v3-study/">study guide</a> for denominators, unavailable planned
-  tests, cost scopes and the distinction between building the paper and
-  reproducing the new empirical analyses.</p>
-<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
-<p><strong>Required:</strong>
-- Python 3.11+
-- Basic command line proficiency
-- Understanding of APIs and environment variables</p>
-<p><strong>Recommended:</strong>
-- Familiarity with LLMs and prompt engineering
-- Basic knowledge of financial concepts
-- Experience with data analysis (pandas, visualization)</p>
-<p><strong>Model access for provider experiments (not needed for Labs 8–10):</strong>
-- Ollama (free, local)
-- IBM watsonx.ai (trial available)
-- OpenAI, Anthropic, or other providers</p>
-<h2 id="target-audience">Target Audience<a class="headerlink" href="#target-audience" title="Permanent link">&para;</a></h2>
-<p>This workshop is designed for:</p>
-<ul>
-<li><strong>AI/ML Engineers</strong> building production LLM systems</li>
-<li><strong>Risk &amp; Compliance Officers</strong> evaluating AI deployments</li>
-<li><strong>Financial Technologists</strong> integrating AI into workflows</li>
-<li><strong>Researchers</strong> studying LLM reliability and non-determinism</li>
-<li><strong>Product Managers</strong> planning AI-powered financial products</li>
-</ul>
-<h2 id="getting-help">Getting Help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
-<p>If you encounter issues or have questions:</p>
-<ol>
-<li>Check the <a href="resources/troubleshooting/">Troubleshooting Guide</a></li>
-<li>Review the <a href="resources/api/">API Reference</a></li>
-<li>Ask workshop facilitators or teaching assistants</li>
-<li>Open an <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/issues/new">Issue</a> on GitHub</li>
-<li>Submit a <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/pulls">Pull Request</a> with improvements</li>
-</ol>
-<h2 id="repository-structure">Repository Structure<a class="headerlink" href="#repository-structure" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code>output-drift-financial-llms/
-├── run_evaluation.py       # Main experiment orchestrator (v1 Output Drift)
-├── run_dfah_demo.py        # DFAH demo (no LLM needed)
-├── Makefile                # make reproduce-paper / make test-bench
-├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
-├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-10) and explorer
-├── bench/                  # Historical replay metrics and fixtures
-│   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
-│   ├── spec/               # Replay episode schema + task ontologies
-│   ├── provenance/         # Hash-chained, Ed25519-signed audit bundles
-│   └── stats/              # Bootstrap CIs, significance tests
-├── src/dfah/               # Prospective pip-installable replay package
-├── harness/                # v1 framework core
-│   ├── deterministic_retriever.py
-│   ├── task_definitions.py
-│   └── cross_provider_validation.py
-├── providers/              # LLM providers (watsonx, anthropic, gemini)
-├── econometrics/           # Replayable Agents (v2) - benchmarks &amp; metrics
-│   ├── benchmarks/         # 3 financial agent benchmarks (50 cases each)
-│   │   └── results/run_logs/  # Raw replay corpus: 8,129 episodes
-│   └── agentic/            # Trajectory determinism &amp; faithfulness metrics
-├── scripts/                # Replay analysis + reproduce_paper.py
-├── tests/                  # Offline research and package tests
-├── results/                # Historical reference CSVs and v2 manifest
-├── data/                   # Test datasets &amp; generators
-├── examples/               # Audit trails + domain-extension example
-└── requirements.txt        # Python dependencies
-</code></pre></div>
-<h2 id="reproducibility-citations">Reproducibility &amp; Citations<a class="headerlink" href="#reproducibility-citations" title="Permanent link">&para;</a></h2>
-<p>The v1 drift experiments are pinned at <strong>release v0.1.0 (commit c19dac5)</strong>:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/ibm-client-engineering/output-drift-financial-llms
-git<span class="w"> </span>checkout<span class="w"> </span>v0.1.0
-</code></pre></div>
-<p>The sanitized DFAH-Bench replay fixture is checked in. The default target
-regenerates the v2 retrospective slice under its revised eligibility rules and verifies the
-aggregate-only extensions and manifest:</p>
+<p>Allow roughly five hours for the whole sequence, or take a single lab.
+The package track in Lab 8 and Labs 9–11 do not need a model service or API key.
+Provider experiments in earlier labs require the corresponding model access.</p>
+<h2 id="recompute-the-research">Recompute the research<a class="headerlink" href="#recompute-the-research" title="Permanent link">&para;</a></h2>
+<p>The public historical fixture supports:</p>
 <div class="highlight"><pre><span></span><code>make<span class="w"> </span>reproduce-paper
-make<span class="w"> </span>reproduce-paper-v1<span class="w">  </span><span class="c1"># archived v1 lineage only</span>
+make<span class="w"> </span>verify-v2-manifest
 </code></pre></div>
-<p>If you use this framework in your research, please cite:</p>
-<div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">khatchadourian2026replayable</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2601.15322}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2026}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">eprint</span><span class="p">=</span><span class="s">{2601.15322}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">archivePrefix</span><span class="p">=</span><span class="s">{arXiv}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">doi</span><span class="p">=</span><span class="s">{10.48550/arXiv.2601.15322}</span>
-<span class="p">}</span>
-
-<span class="nc">@inproceedings</span><span class="p">{</span><span class="nl">khatchadourian2025output</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{LLM Output Drift: Cross-Provider Validation \&amp; Mitigation for Financial Workflows}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi and Franco, Rolando}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">booktitle</span><span class="p">=</span><span class="s">{AI4F Workshop}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2025}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">eprint</span><span class="p">=</span><span class="s">{2511.07585}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">archivePrefix</span><span class="p">=</span><span class="s">{arXiv}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">doi</span><span class="p">=</span><span class="s">{10.48550/arXiv.2511.07585}</span>
-<span class="p">}</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="nc">@article</span><span class="p">{</span><span class="nl">khatchadourian2026dfahbench</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="p">=</span><span class="s">{DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="p">=</span><span class="s">{Khatchadourian, Raffi}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">journal</span><span class="p">=</span><span class="s">{arXiv preprint arXiv:2607.20491}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="p">=</span><span class="s">{2026}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">eprint</span><span class="p">=</span><span class="s">{2607.20491}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">archivePrefix</span><span class="p">=</span><span class="s">{arXiv}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">primaryClass</span><span class="p">=</span><span class="s">{cs.AI}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">doi</span><span class="p">=</span><span class="s">{10.48550/arXiv.2607.20491}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">url</span><span class="p">=</span><span class="s">{https://arxiv.org/abs/2607.20491}</span>
-<span class="p">}</span>
-</code></pre></div>
-<p><strong>DFAH-Bench</strong>: <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> |
-<strong>Replayable Agents</strong>: <a href="https://arxiv.org/abs/2601.15322">arXiv:2601.15322</a> |
-<strong>Output Drift</strong>: <a href="https://arxiv.org/abs/2511.07585">arXiv:2511.07585</a></p>
-<h2 id="license">License<a class="headerlink" href="#license" title="Permanent link">&para;</a></h2>
-<p>This project is licensed under the MIT License. See the
-<a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/LICENSE">repository license</a>
-for details.</p>
-<h2 id="contributors-acknowledgments">Contributors &amp; Acknowledgments<a class="headerlink" href="#contributors-acknowledgments" title="Permanent link">&para;</a></h2>
-<p>This workshop and framework were developed by Raffi Khatchadourian and Rolando Franco in IBM Financial Services in collaboration with researchers focused on responsible AI deployment in regulated industries.</p>
-<p>Special thanks to the open-source community and the contributors who helped build and test this framework.</p>
-<hr />
-<div class="admonition success">
-<p class="admonition-title">Ready to Begin?</p>
-<p>Start with <a href="pre-work/">Lab 0: Workshop Pre-work</a> to set up your environment!</p>
-</div>
+<p>Use the repository's research dependencies for those commands. The separate
+<a href="https://openreview.net/attachment?id=njEKVxonV2&amp;name=supplementary_material">SLM supplement</a>
+provides standard-library verifiers for its historical summaries and capture
+projections. <a href="dfah/workshop-studies/">Read the reproduction guide</a> to select
+the right material. The hosted banking inputs are not released here.</p>
+<h2 id="earlier-studies">Earlier studies<a class="headerlink" href="#earlier-studies" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2607.20491">DFAH-Bench preprint</a>: replay, capture, and authorization evidence.</li>
+<li><a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents</a>: the earlier ICLR 2026 FinAI study, used in Lab 7.</li>
+<li><a href="https://arxiv.org/abs/2511.07585">LLM Output Drift</a>: the AI4F 2025 study behind Labs 1–6.</li>
+</ul>
+<h2 id="get-help">Get help<a class="headerlink" href="#get-help" title="Permanent link">&para;</a></h2>
+<p>See <a href="resources/troubleshooting/">troubleshooting</a>, the
+<a href="resources/api/">API reference</a>, or the
+<a href="resources/community-findings/">community findings</a>. Report a problem through
+<a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/issues">GitHub issues</a>.</p>
+<p>The software is distributed under the <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/LICENSE">repository license</a>.
+External research materials retain their own terms.</p>
 
 
 

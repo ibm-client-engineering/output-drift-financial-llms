@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DFAH-Bench Explorer — Same Decision. Different Path.</title>
-<meta name="description" content="See when an agent repeats a decision but changes its work. Explore recorded replays, banking study findings, and hands-on DFAH-Bench examples.">
+<meta name="description" content="Explore what repeated answers leave unmeasured: changed paths, missing calls, and unsupported actions. DFAH findings from AI4F and SLM-Agents, with offline labs.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="DFAH-Bench Explorer — Same Decision. Different Path.">
-<meta property="og:description" content="Compare recorded agent replays, explore the banking study, and try an interactive replay playground.">
+<meta property="og:description" content="Compare recorded replays, explore capture loss and banking findings, and try hands-on DFAH labs.">
 <meta property="og:url" content="https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/">
 <meta property="og:image" content="https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/featured.png">
 <meta property="og:image:alt" content="DFAH-Bench: the same decision follows two different recorded tool paths">
@@ -161,8 +161,8 @@
     </a>
     <div class="brandlinks">
       <a href="https://arxiv.org/abs/2607.20491"
-         aria-label="DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making">Paper</a>
-      <a href="../dfah/v3-study/">Study guide</a>
+         aria-label="DFAH-Bench preprint">Paper</a>
+      <a href="../dfah/workshop-studies/">Workshop studies</a>
       <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a>
       <a href="../dfah/quickstart/">Package guide</a>
     </div>
@@ -176,11 +176,11 @@
         <h1>Same decision.<br><span>Different path.</span></h1>
         <p class="sub">DFAH-Bench (Determinism&ndash;Faithfulness Assurance Harness)
           compares recorded decisions and tool paths across replays. Start with
-          two runs of the same case, then explore what the banking study adds
-          about evidence, completed actions, task outcomes and cost.</p>
+          two runs of the same case, then ask whether the record preserves what ran
+          and whether the evidence supports the action. Task outcomes and cost complete the picture.</p>
         <div class="hero-actions">
           <a class="primary" href="#review-loop">Compare the recorded runs</a>
-          <a class="secondary" href="#v3">Explore study findings</a>
+          <a class="secondary" href="#capture">Explore study findings</a>
         </div>
       </div>
       <div class="hero-system" aria-label="Two recorded replays of the same case">
@@ -200,7 +200,9 @@
 <div class="wrap">
 <nav class="toc">
   <a href="#review-loop">Recorded example</a>
-  <a href="#v3">Study findings</a>
+  <a href="#capture">Capture loss</a>
+  <a href="#v3">Banking outcomes</a>
+  <a href="#workshops">Workshops</a>
   <a href="#results">Replay results</a>
   <a href="#playground">Playground</a>
   <a href="#live">Your model</a>
@@ -266,6 +268,34 @@
   </dl>
 </section>
 
+<section id="capture">
+  <h2>Agreement can hide what happened</h2>
+  <p class="lead">A successful rerun may improve the final answer. If its records overwrite earlier
+    attempts, can we still reconstruct earlier actions or access? The SLM-Agents study tests two
+    specific ways that agreement can leave execution differences hidden.</p>
+  <div class="row two">
+    <div class="card">
+      <h3 style="margin-top:0">The same average, different cases</h3>
+      <p>Across 800 retained Qwen2.5 7B episodes, decision and tool-path agreement both averaged
+        <strong>99.625%</strong>. Two case gaps, +0.125 and &minus;0.125, canceled in that average.</p>
+      <p>One of 97 groups with unanimous decisions still changed its tool path.
+        Looking at the individual cases exposes what the average hides.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">The same omission in every record</h3>
+      <p>In a separate study of <strong>48 executions</strong> using Qwen3.5 and Granite 4.1,
+        deleting the first call or all calls from repeated records left agreement at
+        <strong>100%</strong>.</p>
+      <p>Comparing those records with the retained dispatcher observations detected every
+        simulated omission. The three views are 144 record views of 48 executions.</p>
+      <p><a href="../lab-11/">Try the offline capture-loss lab &rarr;</a></p>
+    </div>
+  </div>
+  <p class="review-meta">These experiments examine case-level cancellation and controlled record
+    deletion. They do not test script revision or context compression. Preserving earlier execution
+    evidence is the engineering question they motivate.</p>
+</section>
+
 <section id="v3">
   <h2>What happens after the decision?</h2>
   <p class="lead">Replay tells us whether a decision and path repeat. The banking study asks
@@ -291,7 +321,9 @@
         <p>Three separate cohorts use Sierra&rsquo;s &tau;-Knowledge banking environment:
           an open-weight DeepSeek v4.1 Flash primary generator, a frontier Gemini 3.8 Flash
           replication, and a DeepSeek retrieval variant. Gemini also supplied simulation and grading.
-          Each cohort compares structural checks alone, a prose-model gate and a typed-choice gate.</p>
+          Each cohort compares structural checks alone, a prose-model gate and a typed-choice gate.
+          These are implemented gate-and-recovery bundles: input limits and recovery behavior
+          contribute to the results, which do not isolate model architecture.</p>
       </details>
     </div>
     <div class="card">
@@ -339,6 +371,30 @@
   </div>
   <p><a href="../dfah/v3-study/">Read the methods and full comparisons &rarr;</a> &nbsp;&middot;&nbsp;
     <a href="https://arxiv.org/abs/2607.20491">Published paper and figures</a></p>
+</section>
+
+<section id="workshops">
+  <h2>Two workshop papers, one connected question</h2>
+  <p class="lead">Consistent answers are one signal. Understanding outcomes also means examining
+    execution, checking the evidence, and deciding whether a difference matters.</p>
+  <div class="row two">
+    <div class="card">
+      <p class="small">Accepted poster &middot; AI4F at ACM ICAIF 2026</p>
+      <h3>Evidence Before Execution in Financial Agent Gates</h3>
+      <p>How authorization evidence, gate decisions, completed work, and cost fit together.</p>
+      <p><a href="https://openreview.net/forum?id=VWQqIgrKw4">Workshop paper</a> &middot;
+        <a href="../dfah/v3-study/">Banking findings</a> &middot; <a href="../lab-10/">Lab 10</a></p>
+    </div>
+    <div class="card">
+      <p class="small">Accepted poster &middot; SLM-Agents at NeurIPS 2026</p>
+      <h3>When Replay Agreement Misleads</h3>
+      <p>How cancellation and capture loss can hide changes behind repeated decisions.</p>
+      <p><a href="https://openreview.net/forum?id=njEKVxonV2">Workshop paper</a> &middot;
+        <a href="https://openreview.net/attachment?id=njEKVxonV2&amp;name=supplementary_material">Original supplement</a> &middot;
+        <a href="../lab-11/">Lab 11</a></p>
+    </div>
+  </div>
+  <p><a href="../dfah/workshop-studies/">Read the studies and find their code and evidence &rarr;</a></p>
 </section>
 
 <!-- ============================ RESULTS ============================ -->
@@ -540,7 +596,7 @@ make reproduce-paper   # regenerates v2 analysis and validates its manifest</pre
   <div class="wrap">
     DFAH-Bench &middot; <a href="https://arxiv.org/abs/2607.20491">arXiv:2607.20491</a> &middot;
     <a href="https://github.com/ibm-client-engineering/output-drift-financial-llms">GitHub</a> &middot;
-    <a href="../dfah/v3-study/">Study guide</a> &middot;
+    <a href="../dfah/workshop-studies/">Workshop studies</a> &middot;
     <a href="../">Workshop</a> &middot; MIT License. Related:
     <a href="https://arxiv.org/abs/2601.15322">Replayable Financial Agents</a> &middot;
     <a href="https://arxiv.org/abs/2511.07585">LLM Output Drift</a>.
