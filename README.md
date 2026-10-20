@@ -26,8 +26,21 @@ readiness, or regulatory compliance.
 
 The [published paper](https://arxiv.org/abs/2607.20491)
 connects replay evidence with banking authorization, task outcomes and cost.
-The [v3 study guide](docs/dfah/v3-study.md) explains the completed studies and
-their connection to the package.
+The [workshop study guide](docs/dfah/workshop-studies.md) connects the replay,
+capture, and authorization findings with the available code and evidence.
+
+## 2026 workshop papers
+
+| Workshop | Accepted poster | Focus |
+|---|---|---|
+| AI4F at ACM ICAIF 2026 | [Evidence Before Execution in Financial Agent Gates](https://openreview.net/forum?id=VWQqIgrKw4) | Authorization evidence, task completion, and cost |
+| SLM-Agents at NeurIPS 2026 | [When Replay Agreement Misleads](https://openreview.net/forum?id=njEKVxonV2) | Capture loss and case-level cancellation |
+
+These papers develop different parts of DFAH. Some historical observations
+are shared; the papers are not independent replications of one experiment.
+The [SLM-Agents supplement](https://openreview.net/attachment?id=njEKVxonV2&name=supplementary_material)
+provides its frozen capture plan, synthetic records, collector, and offline
+verifiers as a separate distribution.
 
 ## Key finding
 
@@ -45,9 +58,9 @@ missed by one group, so these aggregates remain diagnostic rather than primary
 inference or a provider ranking. A path difference is evidence for review, not
 automatically a task failure.
 
-## V3: authorization, completion and cost
+## AI4F: authorization, completion and cost
 
-The v3 manuscript extends the shared-denominator approach from replay paths
+The banking study extends the shared-denominator approach from replay paths
 to evidence at the decision boundary, gate decisions, completed actions and
 native task outcomes. Its banking study uses the **τ-Knowledge** environment,
 with separate open-weight DeepSeek and frontier Gemini generator cohorts.
@@ -62,14 +75,20 @@ constructed policy labels. Missing outcomes and unavailable gate decisions
 leave the prespecified confirmatory families unavailable; the paper reports
 descriptive comparisons and finite-schedule bounds.
 
-The study also discloses **$38.97 in reported API usage** ($33.74 in OpenRouter
-credits plus $5.23 in BYOK upstream usage), with a **$39.08 conservative
-campaign ledger**. These campaign totals are separate from the matched
-episode-cost comparisons.
+The [banking guide](docs/dfah/v3-study.md) keeps matched episode costs,
+completion counts, and missing-outcome bounds together.
 
 For a local example of the distinction between a proposed action and a
 completed invocation, run [Lab 10: execution evidence](docs/lab-10/README.md).
 It uses synthetic package records and requires no model service.
+
+## SLM-Agents: agreement can hide capture loss
+
+In a separate **48-execution diagnostic**, deleting the first call or every
+call from repeated records left agreement at **1.0**. Comparing each record
+with the retained dispatcher observations detected the omissions. The
+[workshop guide](docs/dfah/workshop-studies.md) links the supplement and its
+offline verification commands.
 
 ## Quick start: local, free, and no API key
 
@@ -122,7 +141,8 @@ with the [package guide](README_DFAH.md) and the
 | Explore the published results | [Live results explorer](https://ibm-client-engineering.github.io/output-drift-financial-llms/explorer/) |
 | Review community reports and resolved defects | [Community reports and findings](docs/resources/community-findings.md) |
 | Reproduce DFAH-Bench v2 | `make reproduce-paper` and [the reproducibility guide](REPRODUCIBILITY.md) |
-| Read the v3 findings and their limits | [V3 study guide](docs/dfah/v3-study.md) and [published paper](https://arxiv.org/abs/2607.20491) |
+| Read the banking findings and their limits | [Banking study guide](docs/dfah/v3-study.md) and [published paper](https://arxiv.org/abs/2607.20491) |
+| Connect the two workshop papers | [Workshop studies and materials](docs/dfah/workshop-studies.md) |
 | Distinguish proposals from completed calls | [Lab 10: execution evidence](docs/lab-10/README.md) |
 | Use the interactive workshop | [Workshop labs](https://ibm-client-engineering.github.io/output-drift-financial-llms/) |
 
@@ -149,7 +169,7 @@ session-wide pytest policy enforcement, and a
 [bounded replay-and-review example](docs/dfah/replay-review-loop.md).
 See the [package guide](README_DFAH.md) and [changelog](CHANGELOG.md).
 
-The next release candidate, 0.1.3, hardens the package with no artifact schema
+Version 0.1.3 hardens the package with no artifact schema
 change: every
 shadow or blocking policy evaluation is recorded under `RUN/gates/` and
 printed as `policy=PASS` or `policy=FAIL`, the conformance preflight accepts
@@ -158,11 +178,11 @@ visible, a run directory without a persisted report fails closed, and the
 documentation states that artifact verification is a consistency check bound
 to the run directory rather than a signature.
 
-The source checkout also includes
+Version 0.1.3 also includes
 [`execution_summary`](docs/dfah/execution-evidence.md), which separates
 completed invocations, rejected calls, unresolved proposals and errors in a
 captured trajectory. It preserves the distinction between unavailable evidence
-and an observed empty path. See the [unreleased changes](CHANGELOG.md).
+and an observed empty path. See the [release notes](CHANGELOG.md#013---2026-09-21).
 
 ## Preserved v2 results
 
