@@ -22,3 +22,16 @@ repository root, including `results/`, `traces/`, `figs/`, `tables/`, and
 The corrected v2 reproduction under `bench/` and `results/v2/` is a separate,
 frozen publication surface. Do not move or rename its manifest-listed files as
 part of workshop maintenance.
+
+## Capture-loss example (Lab 11)
+
+```bash
+python3 scripts/workshop/capture_loss_demo.py
+```
+
+This standard-library example constructs three replays and shows how repeated
+omissions preserve agreement. It compares each record with its supplied
+execution reference and keeps missing records distinct from observed empty
+paths. It makes no model or network calls and contains no workshop study data.
+See [Lab 11](../../docs/lab-11/README.md) and the
+[workshop studies](../../docs/dfah/workshop-studies.md).

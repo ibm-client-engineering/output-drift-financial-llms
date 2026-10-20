@@ -61,11 +61,10 @@ git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
 cd output-drift-financial-llms
 ```
 
-For reproducibility, checkout the v0.1.0 release:
-
-```bash
-git checkout v0.1.0
-```
+Use the current default branch for the DFAH package and Labs 8–11.
+Lab 11 needs only Python's standard library. For the original 2025 output-drift
+release, use a separate checkout of `v0.1.0`; that older release does not contain
+the newer DFAH labs.
 
 ## Step 2: Set Up a Virtual Environment
 

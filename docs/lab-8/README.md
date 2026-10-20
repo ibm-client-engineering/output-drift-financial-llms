@@ -18,6 +18,11 @@ are replay and observability results, not claims about correctness or safety.
 **Duration**: about 30 minutes. The package track is local and makes no provider
 calls.
 
+The next steps are [Lab 9](../lab-9/README.md) for case-level review,
+[Lab 10](../lab-10/README.md) for execution evidence, and
+[Lab 11](../lab-11/README.md) for capture loss. The
+[workshop guide](../dfah/workshop-studies.md) connects them to AI4F and SLM-Agents.
+
 ## Learning objectives
 
 By the end of this lab, you will be able to:

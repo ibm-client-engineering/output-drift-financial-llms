@@ -1,5 +1,9 @@
 # Lab 10: Evidence Before Execution
 
+**Research connection:** the [AI4F paper at ACM ICAIF 2026](https://openreview.net/forum?id=VWQqIgrKw4)
+separates authorization evidence, task completion, and cost. This lab teaches
+the execution-record distinction using synthetic data.
+
 A recorded tool proposal, a completed invocation and a successful business task
 answer different questions. This lab uses the public `execution_summary` API
 to inspect those boundaries, then checks the shared denominator required for a
@@ -23,9 +27,9 @@ python -m pip install -e .
 python -m dfah --version
 ```
 
-This lab targets the **0.1.3 source tree** and its `execution_summary` API;
-it does not assume a published 0.1.3 package or release tag. On Windows, activate
-with `.venv-dfah\Scripts\activate`.
+This lab uses the `execution_summary` API introduced in **DFAH-Bench 0.1.3**.
+Run the teaching example from the same checkout used for the editable installation.
+On Windows, activate with `.venv-dfah\Scripts\activate`.
 
 ## 2. Run the example
 
@@ -124,7 +128,7 @@ invocation, reconcile them into one final invocation record before summarizing.
 Keep the original event stream separately. A new retry is a new invocation;
 several events for the same invocation are not several completed calls.
 
-This lab illustrates a measurement boundary motivated by v3. It adds no gate
+This lab illustrates one measurement boundary from the banking work. It adds no gate
 policy, enforcement mechanism, native-benchmark adapter or policy-correctness
 score. Assess actual task outcomes and action prerequisites separately using
 retained evidence and an explicit task contract.
@@ -132,3 +136,6 @@ retained evidence and an explicit task contract.
 - [Execution-evidence API guide](../dfah/execution-evidence.md)
 - [Lab 8: Replay Measurement](../lab-8/README.md)
 - [Lab 9: Replay, Review, and Retest](../lab-9/README.md)
+
+Continue with [Lab 11](../lab-11/README.md) to see why matching records can
+still omit calls, or read the [two workshop studies](../dfah/workshop-studies.md).
