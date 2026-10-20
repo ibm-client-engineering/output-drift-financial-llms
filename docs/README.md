@@ -1,43 +1,64 @@
 ---
-title: Output Drift in Financial LLMs Workshop
-description: Learn how to measure, analyze, and mitigate output drift in financial AI systems
+title: DFAH — Replay, Evidence, and Outcomes
+description: Explore the DFAH studies and learn to measure repeated decisions, execution records, and completed work.
 ---
 
-## Output Drift in Financial LLMs Workshop
+# What does a successful agent run tell us?
 
-Welcome to the Output Drift in Financial LLMs Workshop! This hands-on workshop teaches you how to measure and analyze non-determinism in large language model (LLM) outputs for financial applications.
+An agent can repeat its answer while changing the work behind it. Its records
+can also agree because they leave out the same calls. Understanding outcomes
+means examining what ran, whether the record preserves it, and whether the
+available evidence supports the action.
 
-### Why This Matters
+DFAH connects these questions through replay experiments, capture diagnostics,
+and banking studies. The labs turn the distinctions into examples you can run.
 
-Financial institutions deploying AI systems need evidence for:
+!!! tip "Explore the story"
+    [Open the interactive explorer](explorer/index.html) to compare recorded
+    paths and see how the capture and banking findings fit together.
 
-- **Governance Review**: Reconstructable decisions and execution records
-- **Risk Management**: Predictable behavior in production
-- **Trust & Reliability**: Stakeholder confidence in AI-driven recommendations
+## Two 2026 workshop papers
 
-This workshop is based on research showing that LLM outputs can drift even at
-temperature=0.0. In the tested tasks, that variation reached 35%, which
-complicates replay, change review, and monitoring.
+| Accepted poster | Main question | Start here |
+|---|---|---|
+| **AI4F at ACM ICAIF** — [Evidence Before Execution in Financial Agent Gates](https://openreview.net/forum?id=VWQqIgrKw4) | Does the evidence justify an action, and what happens to completion and cost? | [Banking study](dfah/v3-study.md), [Lab 10](lab-10/README.md) |
+| **SLM-Agents at NeurIPS** — [When Replay Agreement Misleads](https://openreview.net/forum?id=njEKVxonV2) | Can averages hide path changes and repeated records hide omissions? | [Study and supplement](dfah/workshop-studies.md), [Lab 11](lab-11/README.md) |
 
-!!! tip "Explore the results"
-    Compare recorded decisions and tool paths, browse the study findings,
-    then try the replay playground: **[Open the interactive explorer](explorer/index.html)**.
+These papers develop different parts of DFAH and share some historical
+observations. The [research guide](resources/paper.md) connects them with the
+preprint and earlier work.
 
-!!! tip "Try an offline lab"
-    See the difference between a proposed tool call and a completed one using
-    six synthetic records: **[Start Lab 10](lab-10/README.md)**.
+## Choose a starting point
 
-### What You'll Learn
+- **Try a 15-minute example without installing packages:** [Lab 11](lab-11/README.md)
+  uses Python's standard library to show capture loss.
+- **Measure your agent's replays:** start with the [package quickstart](dfah/quickstart.md)
+  and [Lab 8](lab-8/README.md).
+- **Follow the evidence through a workflow:** [Lab 9](lab-9/README.md) inspects path
+  changes; [Lab 10](lab-10/README.md) separates proposed and completed calls.
+- **Study output drift across providers:** Labs 1–6 use the earlier output-drift
+  framework; [Lab 0](pre-work/README.md) explains setup and model access.
 
-By the end of this workshop, you will:
+## What the findings show
 
-* Understand output drift and its implications for financial AI systems
-* Set up and run reproducible LLM experiments across multiple providers
-* Measure drift using industry-standard metrics (consistency, Jaccard similarity, schema violations)
-* Analyze cross-provider reliability patterns
-* Implement replay and observability checks for AI deployments
+The prospective replay diagnostic retained **570 episodes**. Decisions agreed
+at **94–95%**, while paths including arguments and results agreed at **45–52%**.
+One condition missed the planned minimum by one group, so the comparison is
+diagnostic.
 
-## Workshop Structure
+In **800 historical Qwen episodes**, decision and path agreement both averaged
+**99.625%**, yet opposing case-level gaps hid a path change. In the separate
+**48-execution capture study**, deleting the same calls from repeated records
+left agreement at **100%**. Compare the per-case evidence and the execution
+reference to see what those averages leave out.
+
+The banking study scheduled **1,080 episodes**, with **1,033 known outcomes**.
+The typed-choice bundle cost less on complete task pairs but had fewer primary
+successes than the generative bundle under every assignment of unknown
+outcomes. Input limits and recovery behavior are part of those setups;
+[the banking guide](dfah/v3-study.md) keeps the comparison populations explicit.
+
+## Labs
 
 | Lab  | Description  | Duration |
 | :--- | :--- | :--- |
@@ -50,214 +71,41 @@ By the end of this workshop, you will:
 | [Lab 6: Extending the Framework](lab-6/README.md) | Add custom tasks and integrate with your workflows | 30 min |
 | [Lab 7: Replayable Financial Agents](lab-7/README.md) | Run agent benchmarks from the ICLR 2026 paper | 30 min |
 | [Lab 8: DFAH-Bench — Replay Measurement](lab-8/README.md) | Test the package, then reproduce the paper from the checked-in replay corpus | 30 min |
-| [Lab 9: Replay, Review, and Retest](lab-9/README.md) | Evaluate a correction with a fixed policy and export verified results using 0.1.2 | 25 min |
-| [Lab 10: Evidence Before Execution](lab-10/README.md) | Inspect final invocation records and missingness using the 0.1.3 source | 15 min |
+| [Lab 9: Replay, Review, and Retest](lab-9/README.md) | Evaluate a correction with a fixed policy and export verified results | 25 min |
+| [Lab 10: Evidence Before Execution](lab-10/README.md) | Inspect proposals, completed calls, and missing records | 15 min |
+| [Lab 11: Capture Loss and Agreement](lab-11/README.md) | See how repeated omissions preserve agreement, then compare against execution evidence | 15 min |
 
-**Total Duration**: Approximately 4.5–5 hours. Labs 8 (package track), 9 and 10 can
-also be taken independently, without a model service or API key.
+Allow roughly five hours for the whole sequence, or take a single lab.
+The package track in Lab 8 and Labs 9–11 do not need a model service or API key.
+Provider experiments in earlier labs require the corresponding model access.
 
-## Research Foundation
+## Recompute the research
 
-This workshop is based on three papers from the same research line:
-
-**["DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making"](https://arxiv.org/abs/2607.20491)**
-[arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
-[DOI](https://doi.org/10.48550/arXiv.2607.20491) |
-The v2 replay analysis reproduces with `make reproduce-paper`;
-[v3 source, results and reproduction scope](dfah/v3-study.md)
-
-**"Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents"**
-[ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) (The 2nd ICLR Workshop on Advances in Financial AI) | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322)
-
-**"LLM Output Drift: Cross-Provider Validation & Mitigation for Financial Workflows"**
-Presented at the [AI4F Workshop 2025](https://ai4f-workshop.github.io/) | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
-
-**Key Findings (v1, Output Drift):**
-- Even at temperature=0.0, frontier models exhibit 5.5-35% output variance
-- Several tested 7-20B configurations repeated all sampled outputs at T=0.0
-- RAG tasks show the highest drift (56.25% consistency at temperature=0.2)
-- Structured output tasks (SQL, summarization) maintain better determinism
-
-**Earlier Replayable Agents study (4,705 runs):**
-- Decision determinism and the historical task-label match were not detectably
-  correlated (r = -0.11, p = 0.63)
-- This descriptive result does not identify model strategy or hidden reasoning
-- The portfolio fixture and its dependent task-label matches are not evidence
-  in the DFAH-Bench replay analysis
-
-**DFAH-Bench replay analysis (arXiv v2):**
-- The primary slice contains **4,157 episodes from configurations with observed tool use across 719 groups**, eight configurations, and two synthetic tasks
-- Among 627 unanimous-decision groups, **122 (19.5%) change tool sequence** and 47 (7.5%) change the tool-name set
-- A separate 570-episode API diagnostic finds 94.2–95.1% decision agreement but only 66.9–69.4% exact name-path agreement
-- Missing or malformed required channels make a replay group ineligible; they are not treated as agreement
-
-**Community reports and findings:**
-- A November 17, 2025 contributor report preserved four of six stated results
-  but not the materials needed for independent reproduction
-- The bounded observations vary by model/task combination; they do not
-  establish a size law or isolate architecture, provider, task, or harness
-  effects
-- Public issue #2, reported July 20 and fixed August 2, 2026, hardened the
-  legacy validators against absent outputs, unknown task types, and missing
-  evaluations
-- See the dated [community ledger](resources/community-findings.md) for the
-  evidence limits, anonymized review themes, and resolution links
-
-**Banking and evidence extension (arXiv v3):**
-- 1,080 native banking episodes reached terminal artifacts; 1,033 have known
-  outcomes and 47 remain unknown across separate generator/retrieval cohorts.
-- The primary typed-choice bundle cost less per episode on complete pairs,
-  while its task-success count remained below the prose-model gate under
-  every assignment of the schedule's unknown outcomes.
-- Higher repeated gate agreement coexisted with lower constructed policy-label
-  match in fixed-state probes. Evidence sufficiency needs direct assessment.
-- See the [study guide](dfah/v3-study.md) for denominators, unavailable planned
-  tests, cost scopes and the distinction between building the paper and
-  reproducing the new empirical analyses.
-
-## Prerequisites
-
-**Required:**
-- Python 3.11+
-- Basic command line proficiency
-- Understanding of APIs and environment variables
-
-**Recommended:**
-- Familiarity with LLMs and prompt engineering
-- Basic knowledge of financial concepts
-- Experience with data analysis (pandas, visualization)
-
-**Model access for provider experiments (not needed for Labs 8–10):**
-- Ollama (free, local)
-- IBM watsonx.ai (trial available)
-- OpenAI, Anthropic, or other providers
-
-## Target Audience
-
-This workshop is designed for:
-
-- **AI/ML Engineers** building production LLM systems
-- **Risk & Compliance Officers** evaluating AI deployments
-- **Financial Technologists** integrating AI into workflows
-- **Researchers** studying LLM reliability and non-determinism
-- **Product Managers** planning AI-powered financial products
-
-## Getting Help
-
-If you encounter issues or have questions:
-
-1. Check the [Troubleshooting Guide](resources/troubleshooting.md)
-2. Review the [API Reference](resources/api.md)
-3. Ask workshop facilitators or teaching assistants
-4. Open an [Issue](https://github.com/ibm-client-engineering/output-drift-financial-llms/issues/new) on GitHub
-5. Submit a [Pull Request](https://github.com/ibm-client-engineering/output-drift-financial-llms/pulls) with improvements
-
-## Repository Structure
-
-```
-output-drift-financial-llms/
-├── run_evaluation.py       # Main experiment orchestrator (v1 Output Drift)
-├── run_dfah_demo.py        # DFAH demo (no LLM needed)
-├── Makefile                # make reproduce-paper / make test-bench
-├── REPRODUCIBILITY.md      # Exact environment, commands, disclosed caveats
-├── COMMUNITY_FINDINGS.md   # Stable pointer to the dated community ledger
-├── docs/                   # Workshop documentation (labs 0-10) and explorer
-├── bench/                  # Historical replay metrics and fixtures
-│   ├── metrics/            # DAR/TAR, ECD, DCB, SCDR implementations
-│   ├── spec/               # Replay episode schema + task ontologies
-│   ├── provenance/         # Hash-chained, Ed25519-signed audit bundles
-│   └── stats/              # Bootstrap CIs, significance tests
-├── src/dfah/               # Prospective pip-installable replay package
-├── harness/                # v1 framework core
-│   ├── deterministic_retriever.py
-│   ├── task_definitions.py
-│   └── cross_provider_validation.py
-├── providers/              # LLM providers (watsonx, anthropic, gemini)
-├── econometrics/           # Replayable Agents (v2) - benchmarks & metrics
-│   ├── benchmarks/         # 3 financial agent benchmarks (50 cases each)
-│   │   └── results/run_logs/  # Raw replay corpus: 8,129 episodes
-│   └── agentic/            # Trajectory determinism & faithfulness metrics
-├── scripts/                # Replay analysis + reproduce_paper.py
-├── tests/                  # Offline research and package tests
-├── results/                # Historical reference CSVs and v2 manifest
-├── data/                   # Test datasets & generators
-├── examples/               # Audit trails + domain-extension example
-└── requirements.txt        # Python dependencies
-```
-
-## Reproducibility & Citations
-
-The v1 drift experiments are pinned at **release v0.1.0 (commit c19dac5)**:
-
-```bash
-git clone https://github.com/ibm-client-engineering/output-drift-financial-llms
-git checkout v0.1.0
-```
-
-The sanitized DFAH-Bench replay fixture is checked in. The default target
-regenerates the v2 retrospective slice under its revised eligibility rules and verifies the
-aggregate-only extensions and manifest:
+The public historical fixture supports:
 
 ```bash
 make reproduce-paper
-make reproduce-paper-v1  # archived v1 lineage only
+make verify-v2-manifest
 ```
 
-If you use this framework in your research, please cite:
+Use the repository's research dependencies for those commands. The separate
+[SLM supplement](https://openreview.net/attachment?id=njEKVxonV2&name=supplementary_material)
+provides standard-library verifiers for its historical summaries and capture
+projections. [Read the reproduction guide](dfah/workshop-studies.md) to select
+the right material. The hosted banking inputs are not released here.
 
-```bibtex
-@article{khatchadourian2026replayable,
-  title={Replayable Financial Agents: A Determinism-Faithfulness Assurance Harness for Tool-Using LLM Agents},
-  author={Khatchadourian, Raffi},
-  journal={arXiv preprint arXiv:2601.15322},
-  year={2026},
-  eprint={2601.15322},
-  archivePrefix={arXiv},
-  doi={10.48550/arXiv.2601.15322}
-}
+## Earlier studies
 
-@inproceedings{khatchadourian2025output,
-  title={LLM Output Drift: Cross-Provider Validation \& Mitigation for Financial Workflows},
-  author={Khatchadourian, Raffi and Franco, Rolando},
-  booktitle={AI4F Workshop},
-  year={2025},
-  eprint={2511.07585},
-  archivePrefix={arXiv},
-  doi={10.48550/arXiv.2511.07585}
-}
-```
+- [DFAH-Bench preprint](https://arxiv.org/abs/2607.20491): replay, capture, and authorization evidence.
+- [Replayable Financial Agents](https://arxiv.org/abs/2601.15322): the earlier ICLR 2026 FinAI study, used in Lab 7.
+- [LLM Output Drift](https://arxiv.org/abs/2511.07585): the AI4F 2025 study behind Labs 1–6.
 
-```bibtex
-@article{khatchadourian2026dfahbench,
-  title={DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making},
-  author={Khatchadourian, Raffi},
-  journal={arXiv preprint arXiv:2607.20491},
-  year={2026},
-  eprint={2607.20491},
-  archivePrefix={arXiv},
-  primaryClass={cs.AI},
-  doi={10.48550/arXiv.2607.20491},
-  url={https://arxiv.org/abs/2607.20491}
-}
-```
+## Get help
 
-**DFAH-Bench**: [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) |
-**Replayable Agents**: [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) |
-**Output Drift**: [arXiv:2511.07585](https://arxiv.org/abs/2511.07585)
+See [troubleshooting](resources/troubleshooting.md), the
+[API reference](resources/api.md), or the
+[community findings](resources/community-findings.md). Report a problem through
+[GitHub issues](https://github.com/ibm-client-engineering/output-drift-financial-llms/issues).
 
-## License
-
-This project is licensed under the MIT License. See the
-[repository license](https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/LICENSE)
-for details.
-
-## Contributors & Acknowledgments
-
-This workshop and framework were developed by Raffi Khatchadourian and Rolando Franco in IBM Financial Services in collaboration with researchers focused on responsible AI deployment in regulated industries.
-
-Special thanks to the open-source community and the contributors who helped build and test this framework.
-
----
-
-!!! success "Ready to Begin?"
-    Start with [Lab 0: Workshop Pre-work](pre-work/README.md) to set up your environment!
+The software is distributed under the [repository license](https://github.com/ibm-client-engineering/output-drift-financial-llms/blob/main/LICENSE).
+External research materials retain their own terms.

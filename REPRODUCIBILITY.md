@@ -1,13 +1,16 @@
 # Reproducibility — DFAH-Bench
 
-This repository supports two local forms of reproduction and documents the
-published v3 study:
+This repository contains historical replay analysis and package examples.
+The workshop papers and the separate SLM-Agents supplement add the following
+research paths:
 
 | Scope | Public materials | What can be checked |
 | --- | --- | --- |
 | Corrected v2 research | `bench/`, the sanitized replay fixture, `scripts/`, `results/v2/` | Retrospective CSVs and checks of the aggregate-only prospective extensions |
 | Prospective package | `src/dfah/`, `examples/`, `tests/dfah/` | Local capture, replay, policy and execution-evidence behavior on synthetic examples |
-| Published v3 study | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) | Methods, figures, findings and stated access limits; no local manuscript build |
+| Banking / AI4F study | [AI4F paper](https://openreview.net/forum?id=VWQqIgrKw4) and [arXiv v3](https://arxiv.org/abs/2607.20491v3) | Methods and findings; hosted study inputs are not distributed here |
+| SLM-Agents capture study | [OpenReview supplement](https://openreview.net/attachment?id=njEKVxonV2&name=supplementary_material) | Offline recomputation of 48 synthetic episode projections, 16 groups, and 144 record views; separate distribution |
+| Capture-loss teaching example | `python3 scripts/workshop/capture_loss_demo.py` | Three constructed replays; illustrates the measurement problem without study data |
 
 The historical analysis, prospective API diagnostic, local systems check,
 native banking study and fixed-state probes retain separate tasks,
@@ -17,7 +20,7 @@ behavior; they are not additional study observations.
 The package environment uses `pyproject.toml`. The corrected v2 research
 reproduction is independent and runs from `requirements.txt`.
 
-## Published v3 study
+## AI4F banking study
 
 The [paper on arXiv](https://arxiv.org/abs/2607.20491) contains the methods,
 figures and findings. The [v3 study guide](docs/dfah/v3-study.md) explains the
@@ -36,6 +39,19 @@ and unavailable gate decisions leave the prespecified confirmatory families
 unavailable; the reported descriptive intervals and logical missing-outcome
 bounds retain their separate meanings. The hosted runtime remains open:
 retained request identities and settings cannot refreeze a provider's model.
+
+## SLM-Agents capture study
+
+The [workshop guide](docs/dfah/workshop-studies.md) links the original
+supplement and its standard-library verification commands. Its historical
+verifier checks 400 derived groups; its capture verifier recomputes the
+controlled-deletion diagnostic from synthetic episode projections. Neither
+command starts model inference. The collector is for a separate fresh study
+and is not part of the offline verification.
+
+[Lab 11](docs/lab-11/README.md) offers a smaller teaching example in this
+repository. Its records are constructed examples, not additional observations
+from the paper.
 
 ## Prospective package
 
