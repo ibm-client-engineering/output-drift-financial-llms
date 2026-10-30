@@ -248,7 +248,7 @@ These are three related but distinct studies, not versions of one experiment.
 
 | Paper | Venue | Focus | Links |
 | --- | --- | --- | --- |
-| **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | arXiv | Observable decision and trajectory instability | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) · [DOI](https://doi.org/10.48550/arXiv.2607.20491) |
+| **DFAH-Bench: Benchmarking Observable Agent Instability in Financial Decision-Making** (2026) | AI4F at ACM ICAIF 2026 | Observable decision and trajectory instability | [arXiv:2607.20491](https://arxiv.org/abs/2607.20491) · [DOI](https://doi.org/10.48550/arXiv.2607.20491) |
 | Replayable Financial Agents (2026) | [ICLR 2026 FinAI Workshop](https://sites.google.com/view/iclr2026finai/home) | Agent determinism, faithfulness metrics, and stress testing | [arXiv:2601.15322](https://arxiv.org/abs/2601.15322) · [DOI](https://doi.org/10.48550/arXiv.2601.15322) |
 | LLM Output Drift (2025) | [AI4F Workshop 2025](https://ai4f.org/) | Cross-provider validation and mitigation | [arXiv:2511.07585](https://arxiv.org/abs/2511.07585) · [DOI](https://doi.org/10.48550/arXiv.2511.07585) |
 
