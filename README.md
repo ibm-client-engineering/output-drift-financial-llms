@@ -11,7 +11,6 @@ measuring whether repeated agent runs preserve both their decisions and their
 observable execution paths.
 
 [![DFAH-Bench paper](https://img.shields.io/badge/arXiv-2607.20491-b31b1b.svg)](https://arxiv.org/abs/2607.20491)
-[![PyPI](https://img.shields.io/pypi/v/dfah-bench.svg)](https://pypi.org/project/dfah-bench/)
 [![Python](https://img.shields.io/pypi/pyversions/dfah-bench.svg)](https://pypi.org/project/dfah-bench/)
 [![DFAH package](https://github.com/ibm-client-engineering/output-drift-financial-llms/actions/workflows/dfah-package.yml/badge.svg)](https://github.com/ibm-client-engineering/output-drift-financial-llms/actions/workflows/dfah-package.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
